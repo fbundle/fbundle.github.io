@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
-mkdir -p ".tmp"
-cd ".tmp"
+mkdir -p build
+cd build
 make4ht -d ../docs ../src/index.tex

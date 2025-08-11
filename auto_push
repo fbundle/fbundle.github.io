@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-./build
+./build.sh
 git add .
 git commit -m "auto_push"
 git push
