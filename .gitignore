@@ -306,7 +306,7 @@ TSWLatexianTemp*
 #*Notes.bib
 
 # pdf
-*.pdf
+# *.pdf
 
 # user-defined
 .DS_Store
