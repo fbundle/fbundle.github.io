@@ -2,7 +2,7 @@
 import os
 import shutil
 
-dst_dir = "docs/blog/pdf"
+dst_dir = "docs/build_out/pdf"
 src_dir = "/Users/khanh/mathdoc/public_doc"
 
 if __name__ == "__main__":
