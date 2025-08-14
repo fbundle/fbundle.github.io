@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
-python copy_all_pdf_from_docs.py
 
-./build.sh
+set -xe
+
+python bin/copy_all_pdf_from_docs.py
+
+bash bin/build.sh
 
 git add .
 git commit -m "auto_push"
