@@ -4,7 +4,10 @@ set -xe
 
 python bin/copy_all_pdf_from_docs.py
 
+bash bin/copy_latex_styles.sh
+
 bash bin/build_cv.sh
+
 
 git add .
 git commit -m "auto_push"

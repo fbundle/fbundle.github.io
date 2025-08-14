@@ -1,0 +1,102 @@
+% Color scheme inspired by "Morris topology without tears"
+% Code inspired by "Andrew Lin"
+\ProvidesPackage{color_sty}[2025/01/18]
+
+% --- Font and Paragraph Settings ---
+\usepackage{cmbright} % sans serif font
+\setlength{\parindent}{0pt} % no paragraph indent
+\usepackage[T1]{fontenc} % font encoding - install cm-super package for better rendering https://ctan.org/pkg/cm-super?lang=en
+\usepackage{lmodern} % latin modern font - install lmodern package for better rendering https://ctan.org/pkg/lmodern?lang=en 
+
+
+% --- Page Geometry and Header ---
+\usepackage[left=0.8in,top=1.6cm,bottom=2.4cm,right=0.8in]{geometry}
+
+% --- Standard Packages ---
+\usepackage[svgnames,dvipsnames,usenames]{xcolor}  % for color support
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{bbm}
+\usepackage[colorlinks]{hyperref}
+\hypersetup{urlcolor=RedViolet,linkcolor=RoyalBlue,citecolor=ForestGreen}
+\urlstyle{same}
+\usepackage{mhsetup,mathtools}
+\usepackage[capitalize]{cleveref}
+\usepackage{graphicx}
+\usepackage{verbatim}
+\usepackage[nodisplayskipstretch,onehalfspacing]{setspace}
+\usepackage{cite}
+\usepackage{multicol}
+\usepackage{array,multirow}
+\usepackage[normalem]{ulem}
+
+% --- Custom Commands ---
+\newcommand{\vocab}[1]{\textbf{\color{blue!90}\boldmath #1}}
+\newcommand{\paren}[1]{\left(#1\right)}
+\newcommand{\pnorm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+
+% --- Itemize Spacing ---
+\usepackage{enumitem}
+\setlist{itemsep=0.2em, topsep=0.4em}
+\renewcommand\labelitemi{\raisebox{0.15em}{\tiny$\bullet$}}
+
+% --- Section Header Formatting ---
+\usepackage{titlesec}
+\titleformat*{\section}{\LARGE\bfseries}
+\titleformat{\subsection}{\Large\bfseries}{\thesubsection}{0.4cm}{}
+
+% --- Title Bold Patch ---
+\makeatletter
+\patchcmd{\@maketitle}{\LARGE}{\LARGE\bfseries}{}{}
+\makeatother
+
+% --- Theorem Box Configuration ---
+\usepackage{thmtools}
+\usepackage[framemethod=default]{mdframed} % Andrew Lin used TikZ which was very slow, changed to default
+\usepackage{silence}
+\WarningFilter{mdframed}{You got a bad break}
+
+\mdfsetup{
+    linewidth=0.3mm,
+    innertopmargin=2mm,
+    innerbottommargin=3.5mm,
+    innerleftmargin=3mm,
+    innerrightmargin=3mm
+}
+
+\newcommand{\thmboxstyle}[4]{%
+    \mdfdefinestyle{#2}{%
+        linecolor=#3,%
+        backgroundcolor=#4,%
+        nobreak=true%
+    }%
+    \declaretheoremstyle[
+        headfont=\bfseries\color{#3},
+        mdframed={style=#2},
+        headpunct={\\[0.4pt]},
+        postheadspace={0pt}
+    ]{#1}%
+}
+
+% --- Define Theorem Box Styles ---
+\thmboxstyle{defbox}{mdyellowbox}{black}{yellow!5!olive!5}
+\thmboxstyle{propbox}{mdgreenbox}{green!70!black}{teal!4}
+\thmboxstyle{thmbox}{mdbluecyanbox}{blue!90!red}{cyan!4}
+\thmboxstyle{lembox}{mdpurplebox}{purple!50!blue}{purple!5!blue!3}
+\thmboxstyle{corbox}{mdplainbox}{black}{white}
+
+% --- Declare Theorem Environments ---
+\declaretheorem[style=thmbox, name=Theorem]{theorem} % numbering theorems by Z
+
+\declaretheorem[style=defbox, name=Definition, sibling=theorem]{definition}
+\declaretheorem[style=defbox, name=Definition, numbered=no]{definition*}
+\declaretheorem[style=propbox, name=Proposition, sibling=theorem]{proposition}
+\declaretheorem[style=propbox, name=Proposition, numbered=no]{proposition*}
+\declaretheorem[style=corbox, name=Corollary, sibling=theorem]{corollary}
+\declaretheorem[style=corbox, name=Corollary, numbered=no]{corollary*}
+\declaretheorem[style=lembox, name=Lemma, sibling=theorem]{lemma}
+\declaretheorem[style=lembox, name=Lemma, numbered=no]{lemma*}
+\declaretheorem[style=corbox, name=Remark, sibling=theorem]{remark}
+\declaretheorem[style=corbox, name=Remark, numbered=no]{remark*}
+\declaretheorem[style=corbox, name=Problem, sibling=theorem]{problem}
+\declaretheorem[style=corbox, name=Problem, numbered=no]{problem*}

@@ -1,0 +1,77 @@
+\ProvidesPackage{plain_sty}[2025/01/18]
+
+%% natbib
+\usepackage{natbib}
+\bibliographystyle{plain}
+
+%% comment
+\usepackage{comment}
+
+% no automatic indentation
+\usepackage{indentfirst}
+
+% manually indent
+\usepackage{xargs} % \newcommandx
+\usepackage{calc} % calculation
+\newcommandx{\tab}[1][1=1]{\hspace{\fpeval{#1 * 10}pt}}
+% \newcommand[number of parameters]{output}
+% \newcommandx[number of parameters][parameter index = x]{output}
+% use parameter index = x to substitute the default argument
+% use #1, #2, ... to get the first, second, ... arguments
+% \tab for indentation
+% \tab{2} for for indentation twice
+
+%% math package
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz-cd}
+\usepackage{mathtools}
+\usepackage{amsthm}
+
+%% theorems
+\newtheorem{axiom}{Axiom}
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{lemma}{Lemma}
+\newtheorem{remark}{Remark}
+\newtheorem{claim}{Claim}
+\newtheorem{problem}{Problem}
+\newtheorem{assumption}{Assumption}
+\newtheorem{example}{Example}
+\newtheorem{exercise}{Exercise}
+
+%% empty set
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+\newcommand\eps{\epsilon}
+
+% algorithm
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+
+% for (i) enumerate
+% \begin{enumerate}[label=(\roman*)]
+%   \item First item
+%   \item Second item
+%   \item Third item
+% \end{enumerate}
+\usepackage{enumitem}
+
+% insert url by \url{}
+\usepackage{hyperref}
+
+% margin
+\usepackage{geometry}
+\geometry{
+a4paper,
+total={190mm,257mm},
+left=10mm,
+top=20mm,
+}
+
+\newif\iflinindent \linindentfalse % by default, don't do paragraph indent
