@@ -3,6 +3,7 @@
 set -xe
 
 python bin/copy_all_pdf_from_docs.py
+python bin/generate_pdf_index.py
 
 bash bin/copy_latex_styles.sh
 
