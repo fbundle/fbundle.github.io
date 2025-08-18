@@ -2,12 +2,8 @@
 
 set -xe
 
-python bin/copy_all_pdf_from_docs.py
-python bin/generate_pdf_index.py
-
-bash bin/copy_latex_styles.sh
-
-bash bin/build_cv.sh
+python bin/generate_public_doc.py
+bash bin/build_vitae.sh
 
 
 git add .

@@ -3,6 +3,6 @@ set -xe
 
 mkdir -p build
 cd build
-make4ht -d ../docs/build_out/cv ../src/cv/main.tex
+make4ht -d ../docs/generate/cv ../src/cv/main.tex
 cd ..
 rm -rf build
