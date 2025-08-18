@@ -64,7 +64,7 @@ def gen_html():
     for name, creation_date, modified_date in item_list:
         modified_date_str = datetime_to_str(modified_date)
         link = f"{html_doc_dir}/{name}"
-        content += ' ' * 16 + f'<li> {modified_date_str}: <a href="{link}">{name}</a> </li>' + '\n'
+        content += f'<li> {modified_date_str}: <a href="{link}">{name}</a> </li>' + '\n'
 
     html = html_template.format(public_doc_content=content)
     with open(html_target[1], "w") as f:
