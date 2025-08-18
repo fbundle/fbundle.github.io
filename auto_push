@@ -2,7 +2,7 @@
 
 set -xe
 
-python bin/generate_public_doc.py
+python bin/generate_text.py
 bash bin/build_vitae.sh
 
 
