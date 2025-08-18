@@ -27,18 +27,14 @@ def copy_doc():
 
 
 def get_pdf_dates(pdf_path: str) -> tuple[datetime, datetime]:
-    def parse_pdf_date(date_str: str) -> datetime:
+    def parse_pdf_date(date_str: str) -> datetime | None:
         if not date_str:
             return None
-        # Strip leading "D:" if present
         if date_str.startswith("D:"):
-            date_str = date_str[2:]
-        # Remove timezone part like +08'00'
-        date_str = re.sub(r"[+-].*", "", date_str)
-        # Parse the date
-        dt = datetime.strptime(date_str[:14], "%Y%m%d%H%M%S")
+            date_str = date_str[2:] # Strip leading "D:" if present
+        date_str = re.sub(r"[+-].*", "", date_str) # Remove the timezone part like +08'00'
+        dt = datetime.strptime(date_str[:14], "%Y%m%d%H%M%S") # Parse the date
         return dt
-        # return dt.strftime("%b %Y")
 
     doc = pymupdf.Document(pdf_path)
     creation_date = parse_pdf_date(doc.metadata.get("creationDate"))
@@ -49,6 +45,9 @@ def get_pdf_dates(pdf_path: str) -> tuple[datetime, datetime]:
         modified_date = datetime.min
 
     return creation_date, modified_date
+
+def datetime_to_str(dt: datetime) -> str:
+    return dt.strftime("%d %b %Y")
 
 def gen_html():
     html_template = open(html_target[0]).read()
@@ -63,8 +62,7 @@ def gen_html():
 
     content = ""
     for name, creation_date, modified_date in item_list:
-        creation_date_str = creation_date.strftime("%b %Y")
-        modified_date_str = modified_date.strftime("%b %Y")
+        modified_date_str = datetime_to_str(modified_date)
         link = f"{html_doc_dir}/{name}"
         content += ' ' * 16 + f'<li> {modified_date_str}: <a href="{link}">{link}</a> </li>' + '\n'
 
