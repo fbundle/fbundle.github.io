@@ -29,7 +29,7 @@ html_template = """
 dst_dir = "docs/build_out/pdf"
 if __name__ == "__main__":
     item_list = []
-    for name in os.listdir(dst_dir):
+    for name in sorted(os.listdir(dst_dir)):
         item_list.append(f"<li> <a href=\"/build_out/pdf/{name}\">{name}</a> </li>")
     
     content = f"<ul>\n{'\n'.join(item_list)}\n</ul>"
