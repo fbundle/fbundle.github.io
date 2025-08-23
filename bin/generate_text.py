@@ -123,8 +123,7 @@ def generate_text_html(
     description = {}
     
     if model is not None:
-        print(f"DEBUG: Processing {len(item_list)} documents with AI...")
-        for name, path, creation_date, modified_date in item_list:
+        for name, path, creation_date, modified_date in tqdm(item_list, desc="Processing {len(item_list)} documents with AI..."):
             print(f"DEBUG: Processing document: {name} at {path}")
             try:
                 # Extract text from the full file path, not just the filename
