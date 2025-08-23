@@ -9,6 +9,9 @@ from tqdm import tqdm
 
 import pymupdf
 
+def debug_mode() -> bool:
+    return os.environ.get("DEBUG", "0") == "1"
+
 model = None
 
 try:
@@ -124,7 +127,12 @@ def generate_text_html(
     description = {}
     
     if model is not None:
-        for name, path, creation_date, modified_date in tqdm(item_list, desc="Processing {len(item_list)} documents with AI..."):
+        if debug_mode():
+            ai_desc_item_list = item_list[:5]
+        else:
+            ai_desc_item_list = item_list
+
+        for name, path, creation_date, modified_date in tqdm(ai_desc_item_list, desc=f"Processing {len(item_list)} documents with AI..."):
             print(f"DEBUG: Processing document: {name} at {path}")
             try:
                 # Extract text from the full file path, not just the filename
