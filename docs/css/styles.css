@@ -12,46 +12,98 @@ body {
     min-height: 100%; /* Set the min-height to 100% */
 }
 
-/* Create a container to hold both the left-panel and main-content */
+/* Create a container to hold both the top-navbar and main-content */
 .container {
     display: flex;
+    flex-direction: column; /* Change to column layout */
     flex-grow: 1; /* Add flex-grow: 1 to make the container fill the available space */
 }
 
-/* Style the left-panel with a fixed width and full height */
-.left-panel {
+/* Style the top navbar */
+.top-navbar {
     background-color: #2c3e50;
-    width: 250px;
-    height: 100vh;
-    padding: 20px;
+    width: 100%;
+    padding: 0 20px;
     box-sizing: border-box;
-    min-height: 100%; /* Set the min-height to 100% */
-    display: flex; /* Add display: flex */
-    flex-direction: column; /* Set the flex direction to column */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-/* Remove default padding and bullets from unordered lists in the left-panel */
-.left-panel ul {
+/* Style the brand/logo area */
+.nav-brand h2 {
+    color: #ecf0f1;
+    margin: 0;
+    padding: 15px 0;
+}
+
+/* Style the navigation menu */
+.nav-menu {
     list-style-type: none;
     padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
 }
 
-/* Style the links in the left-panel */
-.left-panel ul li a {
+/* Style the navigation menu items */
+.nav-menu li {
+    position: relative;
+}
+
+/* Style the links in the navbar */
+.nav-menu li a {
     text-decoration: none;
     color: #bdc3c7;
     display: block;
-    padding: 10px 0;
+    padding: 20px 15px;
+    transition: color 0.3s ease;
 }
 
 /* Change the link color on hover */
-.left-panel ul li a:hover {
+.nav-menu li a:hover {
     color: #ffffff;
 }
 
-/* Add left padding to nested unordered lists in the left-panel */
-.left-panel ul ul {
-    padding-left: 20px;
+/* Style the dropdown */
+.dropdown {
+    position: relative;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #34495e;
+    min-width: 200px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    border-radius: 4px;
+}
+
+.dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-menu li a {
+    padding: 12px 20px;
+    border-bottom: 1px solid #2c3e50;
+}
+
+.dropdown-menu li:last-child a {
+    border-bottom: none;
 }
 
 /* Style the main content area */
@@ -59,5 +111,122 @@ body {
     flex-grow: 1;
     padding: 20px;
     background-color: #ecf0f1;
+    min-height: calc(100vh - 80px); /* Adjust for navbar height */
+    max-width: 1200px; /* Limit width for better readability */
+    margin: 0 auto; /* Center the content */
+    box-sizing: border-box;
+}
+
+/* Add responsive max-width for different screen sizes */
+@media screen and (max-width: 1400px) {
+    .main-content {
+        max-width: 1000px;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .main-content {
+        max-width: 900px;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .main-content {
+        max-width: 800px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .main-content {
+        max-width: 100%;
+        padding: 15px;
+    }
+}
+
+/* Mobile menu toggle button */
+.mobile-menu-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.mobile-menu-toggle span {
+    width: 25px;
+    height: 3px;
+    background-color: #ecf0f1;
+    margin: 3px 0;
+    transition: 0.3s;
+}
+
+/* Responsive design */
+@media screen and (max-width: 768px) {
+    .top-navbar {
+        padding: 0 15px;
+    }
+    
+    .nav-menu {
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 70px);
+        background-color: #2c3e50;
+        flex-direction: column;
+        align-items: flex-start;
+        transition: left 0.3s ease;
+        overflow-y: auto;
+    }
+    
+    .nav-menu.active {
+        left: 0;
+    }
+    
+    .nav-menu li {
+        width: 100%;
+        border-bottom: 1px solid #34495e;
+    }
+    
+    .nav-menu li a {
+        padding: 15px 20px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .dropdown-menu {
+        position: static;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        background-color: #34495e;
+        box-shadow: none;
+        width: 100%;
+        display: none;
+    }
+    
+    .dropdown.active .dropdown-menu {
+        display: block;
+    }
+    
+    .mobile-menu-toggle {
+        display: flex;
+    }
+    
+    .nav-brand h2 {
+        font-size: 1.2em;
+    }
+}
+
+/* Animation for mobile menu toggle */
+.mobile-menu-toggle.active span:nth-child(1) {
+    transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.mobile-menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-toggle.active span:nth-child(3) {
+    transform: rotate(45deg) translate(-5px, -6px);
 }
 

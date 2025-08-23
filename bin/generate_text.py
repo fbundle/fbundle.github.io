@@ -8,8 +8,8 @@ import pymupdf
 doc_dir = "docs/generate/public_doc"
 html_doc_dir = "/generate/public_doc"
 html_target = (
-    "docs/posts/text.template.html",
-    "docs/posts/text.html",
+    "docs/pages/posts/text.template.html",
+    "docs/pages/posts/text.html",
 )
 
 src_dir = "/Users/khanh/mathdoc/public_doc"
