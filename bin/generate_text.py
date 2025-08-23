@@ -30,29 +30,7 @@ def copy_public_doc(input_dir: str, doc_htmldir: HtmlPath):
             shutil.copyfile(input_path, output_path)
 
 
-def get_pdf_dates(pdf_path: str) -> tuple[datetime, datetime]:
-    def parse_pdf_date(date_str: str) -> datetime | None:
-        if not date_str:
-            return None
-        if date_str.startswith("D:"):
-            date_str = date_str[2:]  # Strip leading "D:" if present
-        date_str = re.sub(r"[+-].*", "", date_str)  # Remove the timezone part like +08'00'
-        dt = datetime.strptime(date_str[:14], "%Y%m%d%H%M%S")  # Parse the date
-        return dt
 
-    doc = pymupdf.Document(pdf_path)
-    creation_date = parse_pdf_date(doc.metadata.get("creationDate"))
-    modified_date = parse_pdf_date(doc.metadata.get("modDate"))
-    if creation_date is None:
-        creation_date = datetime.min
-    if modified_date is None:
-        modified_date = datetime.min
-
-    return creation_date, modified_date
-
-
-def datetime_to_str(dt: datetime) -> str:
-    return dt.strftime("%d %b %Y")
 
 
 def generate_text_html(
@@ -60,6 +38,29 @@ def generate_text_html(
         text_template_path: str,
         text_output_path: str,
 ):
+    def get_pdf_dates(pdf_path: str) -> tuple[datetime, datetime]:
+        def parse_pdf_date(date_str: str) -> datetime | None:
+            if not date_str:
+                return None
+            if date_str.startswith("D:"):
+                date_str = date_str[2:]  # Strip leading "D:" if present
+            date_str = re.sub(r"[+-].*", "", date_str)  # Remove the timezone part like +08'00'
+            dt = datetime.strptime(date_str[:14], "%Y%m%d%H%M%S")  # Parse the date
+            return dt
+
+        doc = pymupdf.Document(pdf_path)
+        creation_date = parse_pdf_date(doc.metadata.get("creationDate"))
+        modified_date = parse_pdf_date(doc.metadata.get("modDate"))
+        if creation_date is None:
+            creation_date = datetime.min
+        if modified_date is None:
+            modified_date = datetime.min
+
+        return creation_date, modified_date
+
+
+    def datetime_to_str(dt: datetime) -> str:
+        return dt.strftime("%d %b %Y")
     doc_dir = doc_htmldir.to_path()
 
     html_template = open(text_template_path).read()
@@ -76,7 +77,12 @@ def generate_text_html(
     for name, creation_date, modified_date in item_list:
         modified_date_str = datetime_to_str(modified_date)
 
-        content += f'<li> {modified_date_str}: <a href="{doc_htmldir}/{name}">{name}</a> </li>' + '\n'
+        content += f"""
+        <li>
+            {modified_date_str}: <a href="{doc_htmldir}/{name}">{name}</a>
+        </li>
+        """
+
         print(f"DEBUG: generated entry for {name}")
 
 
