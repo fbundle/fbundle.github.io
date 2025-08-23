@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """
-AI Tools for PDF Analysis
+AI Tools for PDF Description Generation
 
 This module provides the get_ai_description function that generate_text.py expects.
 """
 
 import os
 import re
-from typing import Dict, Tuple
+from pathlib import Path
+from typing import Optional
 
 try:
     import pymupdf
@@ -17,15 +18,18 @@ except ImportError:
     print("Warning: PyMuPDF not available. PDF analysis will be limited.")
 
 
-def get_ai_description(text_dict: Dict[str, str]) -> Tuple[str, Dict[str, str]]:
+def get_ai_description(text_dict: dict) -> tuple[str, dict]:
     """
     Generate AI descriptions for PDFs based on their text content.
     
     Args:
-        text_dict (Dict[str, str]): Dictionary mapping PDF paths to their text content
+        text_dict (dict): Dictionary mapping PDF paths to their extracted text content
         
     Returns:
-        Tuple[str, Dict[str, str]]: (summary_string, descriptions_dict)
+        tuple: (summary_string, descriptions_dict) where descriptions_dict maps paths to descriptions
+        
+    Raises:
+        Exception: If there's an error processing the PDF data
     """
     if not text_dict:
         return "No PDF files found.", {}
@@ -189,11 +193,24 @@ def _identify_topics(text_content: str) -> list:
 
 # Example usage and testing
 if __name__ == "__main__":
-    # Test the function
-    test_text = "This is a test document about algebra and rings"
-    test_data = {"test.pdf": test_text}
-    
-    summary, descriptions = get_ai_description(test_data)
-    print(f"Summary: {summary}")
-    for path, desc in descriptions.items():
-        print(f"Description: {desc}")
+    # Test the function with text data
+    test_path = "../docs/assets/public_doc/ma5204_notes.pdf"
+    if os.path.exists(test_path):
+        try:
+            # Simulate text extraction
+            import pymupdf
+            doc = pymupdf.Document(test_path)
+            text_content = ""
+            if len(doc) > 0:
+                text_content = doc[0].get_text()[:1000]  # First 1000 chars
+            doc.close()
+            
+            test_data = {test_path: text_content}
+            summary, descriptions = get_ai_description(test_data)
+            print(f"Summary: {summary}")
+            for path, desc in descriptions.items():
+                print(f"Description: {desc}")
+        except Exception as e:
+            print(f"Error testing: {e}")
+    else:
+        print("Test file not found")

@@ -137,7 +137,7 @@ def generate_text_html(
 
         comment = ""
         if path in description:
-            comment = f"<small><i>(AI generated description: {description[path]})</i></small>"
+            comment = f'<small style="opacity: 0.6; color: #666; font-style: italic; filter: blur(0.3px);">(AI generated description: {description[path]})</small>'
 
         content += f"""
         <li>
