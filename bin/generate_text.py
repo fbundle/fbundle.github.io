@@ -6,11 +6,18 @@ import re
 import sys
 from datetime import datetime
 
-# Add the parent directory to the path so we can import vendor modules
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-from vendor.cursor_ai_pdf_tools import get_pdf_desc
 import pymupdf
+
+get_ai_desc = None
+
+try:
+    sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    from vendor.ai_tools import get_ai_desc
+except ImportError as e:
+    print("DEBUG: AI import failed", e)
+except Exception as e:
+    print("DEBUG: AI import failed", e)
+
 
 class HtmlPath:
     def __init__(self, html_root_dir: str, htmlpath: str):
@@ -59,6 +66,41 @@ def get_pdf_dates(pdf_path: str) -> tuple[datetime, datetime]:
 def datetime_to_str(dt: datetime) -> str:
     return dt.strftime("%d %b %Y")
 
+def get_pdf_text(pdf_path: str) -> str:
+    """
+    Extract text content from a PDF file.
+    
+    Args:
+        pdf_path (str): Path to the PDF file
+        
+    Returns:
+        str: Extracted text content from the PDF
+    """
+    try:
+        doc = pymupdf.Document(pdf_path)
+        text_content = ""
+        
+        # Extract text from first few pages for efficiency
+        max_pages = min(3, len(doc))
+        for page_num in range(max_pages):
+            try:
+                page_text = doc[page_num].get_text()
+                text_content += page_text + " "
+            except Exception:
+                continue
+        
+        doc.close()
+        
+        # Clean up text: remove extra whitespace and normalize
+        import re
+        text_content = re.sub(r'\s+', ' ', text_content).strip()
+        
+        return text_content
+        
+    except Exception as e:
+        print(f"Error extracting text from {pdf_path}: {e}")
+        return "" 
+
 def generate_text_html(
         doc_htmldir: HtmlPath,
         text_template_path: str,
@@ -76,21 +118,25 @@ def generate_text_html(
 
     item_list.sort(key=lambda x: x[2], reverse=True)  # sort by modified date
 
-    summary, description = get_pdf_desc([path for name, path, creation_date, modified_date in item_list])
-
-    content = f"""
-    AI generated summary: {summary}
-    """
-    content += "<hr>\n"
+    content = ""
+    description = {}
+    
+    if get_ai_desc is not None:
+        summary, description = get_ai_desc(text_dict)
+        content += f"AI generated summary: {summary} <hr>\n"
+    
+    
     for name, path, creation_date, modified_date in item_list:
         modified_date_str = datetime_to_str(modified_date)
 
+        comment = ""
+        if path in description:
+            comment = f"<small><i>(AI generated description: {description[path]})</i></small>"
+
         content += f"""
         <li>
-            {modified_date_str}: <a href="{doc_htmldir}/{name}">{name}</a> 
-            <small><i>
-            (AI generated description: {description[path]})
-            </i></small>
+            {modified_date_str}: <a href="{doc_htmldir}/{name}">{name}</a>
+            {comment}
         </li>
         """
 
