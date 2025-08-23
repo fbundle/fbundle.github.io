@@ -80,9 +80,7 @@ def get_pdf_text(pdf_path: str) -> str:
         doc = pymupdf.Document(pdf_path)
         text_content = ""
         
-        # Extract text from first few pages for efficiency
-        max_pages = min(3, len(doc))
-        for page_num in range(max_pages):
+        for page_num in range(len(doc)):
             try:
                 page_text = doc[page_num].get_text()
                 text_content += page_text + " "
@@ -137,7 +135,7 @@ def generate_text_html(
 
         comment = ""
         if path in description:
-            comment = f'<small style="opacity: 0.6; color: #666; font-style: italic; filter: blur(0.3px);">(AI generated description: {description[path]})</small>'
+            comment = f'<small style="opacity: 0.6; color: #666; font-style: italic; filter: blur(0.3px);">(ai: {description[path]})</small>'
 
         content += f"""
         <li>
