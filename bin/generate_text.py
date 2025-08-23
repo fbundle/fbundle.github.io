@@ -11,14 +11,17 @@ import pymupdf
 
 model = None
 
-try:
-    sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    from src.ai_chat_completion.ai_tools import get_doc_description_model
-    model = get_doc_description_model()
-except ImportError as e:
-    print(f"DEBUG: import ai_tools failed ({e})")
-except Exception as e:
-    print(f"DEBUG: import ai_tools failed ({e})")
+enable_ai = False
+
+if enable_ai:
+    try:
+        sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        from src.ai_chat_completion.ai_tools import get_doc_description_model
+        model = get_doc_description_model()
+    except ImportError as e:
+        print(f"DEBUG: import ai_tools failed ({e})")
+    except Exception as e:
+        print(f"DEBUG: import ai_tools failed ({e})")
 
 
 class HtmlPath:
@@ -125,7 +128,6 @@ def generate_text_html(
     description = {}
     
     if model is not None:
-        ai_desc_item_list = item_list[:5]
         ai_desc_item_list = item_list
 
         for name, text_content, creation_date, modified_date in tqdm(ai_desc_item_list, desc=f"Processing {len(item_list)} documents with AI..."):
@@ -171,7 +173,6 @@ if __name__ == "__main__":
     parser.add_argument("--doc_htmldir", type=str)
     parser.add_argument("--text_template_path", type=str)
     parser.add_argument("--text_output_path", type=str)
-    parser.add_argument("--input_dir", type=str)
     args = parser.parse_args()
 
 
@@ -180,10 +181,6 @@ if __name__ == "__main__":
         htmlpath=args.doc_htmldir,
     )
 
-    copy_public_doc(
-        input_dir=args.input_dir,
-        doc_htmldir=DOC_HTMLDIR,
-    )
     generate_text_html(
         doc_htmldir=DOC_HTMLDIR,
         text_template_path=args.text_template_path,
