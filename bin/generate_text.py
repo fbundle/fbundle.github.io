@@ -11,7 +11,7 @@ import pymupdf
 
 model = None
 
-enable_ai = False
+enable_ai = True
 
 if enable_ai:
     try:
