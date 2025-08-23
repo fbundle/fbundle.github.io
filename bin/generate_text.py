@@ -11,7 +11,7 @@ import pymupdf
 
 model = None
 
-enable_ai = True
+enable_ai = False
 
 if enable_ai:
     try:
@@ -35,17 +35,6 @@ class HtmlPath:
 
     def __str__(self) -> str:
         return self.htmlpath
-
-def copy_public_doc(input_dir: str, doc_htmldir: HtmlPath):
-    output_dir = doc_htmldir.to_path()
-
-    os.makedirs(output_dir, exist_ok=True)
-
-    for name in os.listdir(input_dir):
-        input_path = f"{input_dir}/{name}/main.pdf"
-        output_path = f"{output_dir}/{name}.pdf"
-        if os.path.exists(input_path):
-            shutil.copyfile(input_path, output_path)
 
 def get_pdf_dates(pdf_path: str) -> tuple[datetime, datetime]:
     def parse_pdf_date(date_str: str) -> datetime | None:
