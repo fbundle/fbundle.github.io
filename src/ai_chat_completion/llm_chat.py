@@ -161,10 +161,21 @@ def get_model_factory() -> dict[str, Callable[[], Model]]:
             },
         )
 
+    def get_qwen3_30b_a3b_transformers_model(device: torch.device | None, cache_dir: str):
+        return TransformersModel(
+            model_path="Qwen/Qwen3-30B-A3B",
+            dtype=torch.bfloat16,
+            device=device,
+            model_kwargs={
+                "cache_dir": cache_dir,
+            },
+        )
+
     return {
         "deepseekr1_distill_qwen1p5b_transformers": get_deepseekr1_distill_qwen1p5b_transformers_model,
         "qwq_32b_transformers": get_qwq_32b_transformers_model,
         "gpt_oss_20b_transformers": get_openai_gpt_oss_20b_transformers_model,
+        "qwen3_30b_a3b_transformers": get_qwen3_30b_a3b_transformers_model,
     }
 
 def get_args():
