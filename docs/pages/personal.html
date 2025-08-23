@@ -8,7 +8,32 @@
 </head>
 <body>
     <div class="container">
-        <div class="include" url="/include/navbar.html"></div>
+        <!-- <div class="include" url="/include/navbar.html"></div> -->
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h2>khanh nguyen</h2>
+            </div>
+            <div class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-menu">
+                <li><a id="home" href="/pages/home.html">home</a></li>
+                <li><a id="biography" href="/pages/biography.html">biography</a></li>
+                <li class="dropdown">
+                    <a id="posts" href="#" class="dropdown-toggle">posts</a>
+                    <ul class="dropdown-menu">
+                        <li><a id="text" href="/pages/posts/text.html">text</a></li>
+                        <li><a id="book" href="/pages/posts/book.html">book</a></li>
+                        <li><a id="tech" href="/pages/posts/tech.html">tech</a></li>
+                    </ul>
+                </li>
+                <li><a id="personal" href="/pages/personal.html">personal life</a></li>
+                <li><a id="contact" href="/pages/contact.html">contact</a></li>
+            </ul>
+        </nav>
+
         <div class="main-content">
 
 
@@ -76,7 +101,23 @@
 <!-- INSERT_CONTENT_END -->
 
 
-        <div class="include" url="/include/footer.html"></div>
+        <!-- <div class="include" url="/include/footer.html"></div> -->
+        <footer>
+            <hr>
+            <small>
+            check out my
+            <a href="mailto:khanh.nguyen.contact@gmail.com">email</a>
+            <a href="https://fbundle.github.io">home</a>
+            <a href="https://scholar.google.com/citations?user=XwyPq0BBEzAC&hl=en">scholar</a>
+            <a href="https://mathstodon.xyz/@khanh">mathstodon</a>
+            <a href="https://stackexchange.com/users/13198520">stackexchange</a>
+            <a href="https://github.com/fbundle">github</a>
+            <a href="https://www.linkedin.com/in/khanh-nguyen-446809140">linkedin</a>
+            <small>
+                <i>(a special thanks to <a href="https://openai.com/product/gpt-4">gpt4</a> and <a href="https://cursor.com">cursor</a> for making this website possible)</i>
+            </small>
+            </small>
+        </footer>
         </div>
     </div>
     <script src="/js/post-script.js"></script>

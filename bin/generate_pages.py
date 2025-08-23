@@ -3,14 +3,12 @@ import os
 import pathlib
 
 
-def generate_pages(input_dir: str,output_dir: str):
-    template: str = open(os.path.join(input_dir, "template.html")).read()
-
-    content_dir = os.path.join(input_dir, "content")
+def generate_pages(input_dir: str,output_dir: str, template: str):
+    template: str = open(template).read()
 
     total_pages = 0
-    for path in pathlib.Path(content_dir).rglob("*.html"):
-        rel_path = path.relative_to(content_dir)
+    for path in pathlib.Path(input_dir).rglob("*.html"):
+        rel_path = path.relative_to(input_dir)
 
         content = "\n<!-- INSERT_CONTENT_BEGIN -->\n" + open(path).read() + "\n<!-- INSERT_CONTENT_END -->\n"
 
@@ -31,11 +29,13 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--input_dir", type=str)
     parser.add_argument("--output_dir", type=str)
+    parser.add_argument("--template", type=str)
     args = parser.parse_args()
 
     generate_pages(
         input_dir=args.input_dir,
         output_dir=args.output_dir,
+        template=args.template,
     )
 
 
