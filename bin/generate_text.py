@@ -77,6 +77,7 @@ def get_pdf_text(pdf_path: str) -> str:
         str: Extracted text content from the PDF
     """
     try:
+        print(f"DEBUG: Extracting text from {pdf_path}")
         doc = pymupdf.Document(pdf_path)
         text_content = ""
         
@@ -84,7 +85,8 @@ def get_pdf_text(pdf_path: str) -> str:
             try:
                 page_text = doc[page_num].get_text()
                 text_content += page_text + " "
-            except Exception:
+            except Exception as e:
+                print(f"DEBUG: Error on page {page_num}: {e}")
                 continue
         
         doc.close()
@@ -93,6 +95,7 @@ def get_pdf_text(pdf_path: str) -> str:
         import re
         text_content = re.sub(r'\s+', ' ', text_content).strip()
         
+        print(f"DEBUG: Extracted {len(text_content)} characters from {pdf_path}")
         return text_content
         
     except Exception as e:
@@ -119,11 +122,20 @@ def generate_text_html(
     description = {}
     
     if get_ai_doc_description is not None:
+        print(f"DEBUG: Processing {len(item_list)} documents with AI...")
         for name, path, creation_date, modified_date in item_list:
+            print(f"DEBUG: Processing document: {name} at {path}")
             try:
-                description[name] = get_ai_doc_description(get_pdf_text(name))
+                # Extract text from the full file path, not just the filename
+                text_content = get_pdf_text(path)
+                if text_content.strip():  # Only process if we got actual text
+                    print(f"DEBUG: Calling AI for {name} with {len(text_content)} characters")
+                    description[name] = get_ai_doc_description(text_content)
+                    print(f"DEBUG: AI description for {name}: {description[name][:100]}...")
+                else:
+                    print(f"DEBUG: No text content extracted from {path}")
             except Exception as e:
-                print(f"DEBUG: get_ai_doc_description failed ({e})")
+                print(f"DEBUG: get_ai_doc_description failed for {name}: {e}")
     
     content = ""
     for name, path, creation_date, modified_date in item_list:
