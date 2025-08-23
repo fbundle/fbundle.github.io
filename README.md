@@ -12,5 +12,15 @@
 <div class="include" url="/include/before_content.html"></div>
 <div class="include" url="/content/text.html"></div>
 <div class="include" url="/include/after_content.html"></div>
-
 ```
+
+or `content/text.html` is like
+
+
+```html
+{before_content}
+<div> actual content </div>
+{after_content}
+```
+
+then python will generate the full html `pages/text.html`
