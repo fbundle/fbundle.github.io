@@ -9,9 +9,6 @@ from tqdm import tqdm
 
 import pymupdf
 
-def debug_mode() -> bool:
-    return os.environ.get("DEBUG", "0") == "1"
-
 model = None
 
 try:
@@ -119,7 +116,8 @@ def generate_text_html(
     for name in sorted(os.listdir(doc_dir)):
         path = f"{doc_dir}/{name}"
         creation_date, modified_date = get_pdf_dates(path)
-        item = (name, path, creation_date, modified_date)
+        text_content = get_pdf_text(path).strip()
+        item = (name, text_content, creation_date, modified_date)
         item_list.append(item)
 
     item_list.sort(key=lambda x: x[2], reverse=True)  # sort by modified date
@@ -127,32 +125,28 @@ def generate_text_html(
     description = {}
     
     if model is not None:
-        if debug_mode():
-            ai_desc_item_list = item_list[:5]
-        else:
-            ai_desc_item_list = item_list
+        ai_desc_item_list = item_list[:5]
 
-        for name, path, creation_date, modified_date in tqdm(ai_desc_item_list, desc=f"Processing {len(item_list)} documents with AI..."):
-            print(f"DEBUG: Processing document: {name} at {path}")
+        for name, text_content, creation_date, modified_date in tqdm(ai_desc_item_list, desc=f"Processing {len(item_list)} documents with AI..."):
+            print(f"DEBUG: Processing document: {name}")
             try:
                 # Extract text from the full file path, not just the filename
-                text_content = get_pdf_text(path)
-                if text_content.strip():  # Only process if we got actual text
+                if text_content:  # Only process if we got actual text
                     print(f"DEBUG: Calling AI for {name} with {len(text_content)} characters")
                     description[name] = model.get_ai_doc_description(text_content)
                     print(f"DEBUG: AI description for {name}: {description[name][:100]}...")
                 else:
-                    print(f"DEBUG: No text content extracted from {path}")
+                    print(f"DEBUG: No text content extracted from {name}")
             except Exception as e:
                 print(f"DEBUG: get_ai_doc_description failed for {name}: {e}")
     
     content = ""
-    for name, path, creation_date, modified_date in item_list:
+    for name, text_content, creation_date, modified_date in item_list:
         modified_date_str = datetime_to_str(modified_date)
 
         comment = ""
-        if path in description:
-            comment = f'<small style="opacity: 0.6; color: #666; font-style: italic; filter: blur(0.3px);">(ai: {description[path]})</small>'
+        if name in description:
+            comment = f'<small style="opacity: 0.6; color: #666; font-style: italic; filter: blur(0.3px);">(ai: {description[name]})</small>'
 
         content += f"""
         <li>
