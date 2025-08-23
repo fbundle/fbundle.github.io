@@ -410,158 +410,227 @@ def get_ai_description_batched(text_dict: Dict[str, str], batch_size: Optional[i
     return overall_summary, all_descriptions
 
 
-def get_ai_doc_description(text_content: str) -> str:
+class DocDescriptionModel:
     """
-    Generate AI description for a single PDF document.
-    This function is designed to be called by generate_text.py for each individual document.
-    
-    Args:
-        text_content: Text content extracted from a single PDF
-        
-    Returns:
-        str: Brief description of the document (2-3 sentences)
+    A model class that loads the AI model once and provides methods for document processing.
+    This prevents reloading the model for each document, making it much more efficient.
     """
-    # Check configuration
-    config = get_ai_config()
-    if not config["use_ai_model"]:
-        print("⚠ AI model disabled in configuration, using simple description...")
-        return _generate_simple_doc_description(text_content)
     
-    print("🔄 Processing single document with AI...")
+    def __init__(self):
+        self.model = None
+        self.tokenizer = None
+        self.device = None
+        self.cache_dir = None
+        self.config = get_ai_config()
+        self._load_model()
     
-    # Read the single document prompt file
-    prompt_file = os.path.join(os.path.dirname(__file__), "ai_single_doc_prompt.txt")
-    try:
-        with open(prompt_file, 'r') as f:
-            prompt = f.read()
-        print(f"✓ Loaded single document prompt template ({len(prompt)} characters)")
-    except FileNotFoundError:
-        print("⚠ Single document prompt not found, using fallback...")
-        return _generate_simple_doc_description(text_content)
-    
-    # Prepare the input for the AI model
-    print("🔄 Preparing document input...")
-    # Truncate if too long to avoid memory issues
-    max_chars = config["max_chars_per_doc"]
-    if len(text_content) > max_chars:
-        print(f"⚠ Document too long ({len(text_content)} chars), truncating to {max_chars} chars...")
-        text_content = text_content[:max_chars] + "..."
-    
-    print(f"✓ Prepared input ({len(text_content)} characters)")
-    
-    try:
-        # Get the model
-        print(f"🔄 Setting up device: {config['device']}")
-        device = torch.device(config["device"])
-        print(f"✓ Using device: {device}")
+    def _load_model(self):
+        """Load the AI model once during initialization."""
+        if not self.config["use_ai_model"]:
+            print("⚠ AI model disabled in configuration")
+            return
         
-        # Try to find cache directory
-        print("🔄 Searching for model cache directory...")
-        cache_dir = ""
         try:
-            from .ai_config import CACHE_DIRS
-            cache_dir_list = CACHE_DIRS
-        except ImportError:
-            cache_dir_list = [
-                "/Users/khanh/vault/downloads/model",
-                "/home/khanh/Downloads/model/"
-            ]
-        
-        for cd in cache_dir_list:
-            if os.path.exists(cd):
-                cache_dir = cd
-                break
-        
-        if not cache_dir:
-            raise RuntimeError("No cache directory found for models")
-        print(f"✓ Found cache directory: {cache_dir}")
-        
-        # Load the model
-        print("🔄 Loading AI model...")
-        model_factory = get_model_factory()
-        model = model_factory["deepseekr1_distill_qwen1p5b_transformers"](
-            device=device, 
-            cache_dir=cache_dir
-        )
-        print("✓ AI model loaded successfully")
-        
-        # Create message list for the chat
-        messages = [
-            Message(role=ROLE_SYSTEM, content=prompt),
-            Message(role=ROLE_USER, content=f"Please analyze this document:\n\n{text_content}")
-        ]
-        
-        # Get response from the model with real-time output
-        print(f"\n{'='*50}")
-        print("AI is generating document description...")
-        print(f"Document length: {len(text_content)} characters")
-        print(f"{'='*50}")
-        
-        response = ""
-        for text in model.chat(messages):
-            print(text, end="", flush=True)  # Print each token as it's generated
-            response += text
-        print()  # New line after completion
-        
-        print(f"{'='*50}")
-        print("AI generation completed!")
-        print(f"{'='*50}")
-        
-        # Parse the response - for single document, we expect just the description
-        print("Parsing AI response...")
-        
-        # Clean up the response and extract the description
-        response = response.strip()
-        
-        # Remove any markdown formatting or extra text
-        if response.startswith("```"):
-            response = response[3:]
-        if response.endswith("```"):
-            response = response[:-3]
-        
-        response = response.strip()
-        
-        # Remove thinking process text (common patterns)
-        thinking_patterns = [
-            "Alright,",
-            "Let me",
-            "I need to",
-            "First,",
-            "So,",
-            "Putting it all together,",
-            "In conclusion,",
-            "<think>",
-            "</think>"
-        ]
-        
-        for pattern in thinking_patterns:
-            if pattern in response:
-                # Find the start of thinking text and remove it
-                parts = response.split(pattern)
-                if len(parts) > 1:
-                    # Keep only the last part (the actual description)
-                    response = parts[-1].strip()
+            print("🔄 Initializing AI model for document processing...")
+            
+            # Set up device
+            print(f"🔄 Setting up device: {self.config['device']}")
+            self.device = torch.device(self.config["device"])
+            print(f"✓ Using device: {self.device}")
+            
+            # Find cache directory
+            print("🔄 Searching for model cache directory...")
+            self.cache_dir = ""
+            try:
+                from .ai_config import CACHE_DIRS
+                cache_dir_list = CACHE_DIRS
+            except ImportError:
+                cache_dir_list = [
+                    "/Users/khanh/vault/downloads/model",
+                    "/home/khanh/Downloads/model/"
+                ]
+            
+            for cd in cache_dir_list:
+                if os.path.exists(cd):
+                    self.cache_dir = cd
                     break
+            
+            if not self.cache_dir:
+                raise RuntimeError("No cache directory found for models")
+            print(f"✓ Found cache directory: {self.cache_dir}")
+            
+            # Load the model
+            print("🔄 Loading AI model...")
+            model_factory = get_model_factory()
+            self.model = model_factory["deepseekr1_distill_qwen1p5b_transformers"](
+                device=self.device, 
+                cache_dir=self.cache_dir
+            )
+            print("✓ AI model loaded successfully")
+            
+        except Exception as e:
+            print(f"✗ Failed to load AI model: {e}")
+            print("⚠ Will use simple descriptions as fallback")
+            self.model = None
+    
+    def get_ai_doc_description(self, text_content: str) -> str:
+        """
+        Generate AI description for a single PDF document using the pre-loaded model.
         
-        # If response is too long, truncate it
-        if len(response) > 500:
-            response = response[:500] + "..."
+        Args:
+            text_content: Text content extracted from a single PDF
+            
+        Returns:
+            str: Brief description of the document (2-3 sentences)
+        """
+        if self.model is None:
+            print("⚠ AI model not available, using simple description...")
+            return _generate_simple_doc_description(text_content)
         
-        print("✓ Successfully generated document description")
+        print("🔄 Processing single document with AI...")
         
-        # Display final result
-        print(f"\n{'='*50}")
-        print("🎉 SINGLE DOCUMENT DESCRIPTION COMPLETED!")
-        print(f"{'='*50}")
-        print(f"Description: {response[:100]}{'...' if len(response) > 100 else ''}")
-        print(f"{'='*50}")
+        # Read the single document prompt file
+        prompt_file = os.path.join(os.path.dirname(__file__), "ai_single_doc_prompt.txt")
+        try:
+            with open(prompt_file, 'r') as f:
+                prompt = f.read()
+            print(f"✓ Loaded single document prompt template ({len(prompt)} characters)")
+        except FileNotFoundError:
+            print("⚠ Single document prompt not found, using fallback...")
+            return _generate_simple_doc_description(text_content)
         
-        return response
+        # Prepare the input for the AI model
+        print("🔄 Preparing document input...")
+        # Truncate if too long to avoid memory issues
+        max_chars = self.config["max_chars_per_doc"]
+        if len(text_content) > max_chars:
+            print(f"⚠ Document too long ({len(text_content)} chars), truncating to {max_chars} chars...")
+            text_content = text_content[:max_chars] + "..."
         
-    except Exception as e:
-        print(f"Error in AI description generation: {e}")
-        print("Falling back to simple description generation...")
+        print(f"✓ Prepared input ({len(text_content)} characters)")
+        
+        try:
+            # Create message list for the chat
+            messages = [
+                Message(role=ROLE_SYSTEM, content=prompt),
+                Message(role=ROLE_USER, content=f"Please analyze this document:\n\n{text_content}")
+            ]
+            
+            # Get response from the model with real-time output
+            print(f"\n{'='*50}")
+            print("AI is generating document description...")
+            print(f"Document length: {len(text_content)} characters")
+            print(f"{'='*50}")
+            
+            response = ""
+            for text in self.model.chat(messages):
+                print(text, end="", flush=True)  # Print each token as it's generated
+                response += text
+            print()  # New line after completion
+            
+            print(f"{'='*50}")
+            print("AI generation completed!")
+            print(f"{'='*50}")
+            
+            # Parse the response - for single document, we expect just the description
+            print("Parsing AI response...")
+            
+            # Clean up the response and extract the description
+            response = response.strip()
+            
+            # Remove any markdown formatting or extra text
+            if response.startswith("```"):
+                response = response[3:]
+            if response.endswith("```"):
+                response = response[:-3]
+            
+            response = response.strip()
+            
+            # Remove thinking process text (common patterns)
+            thinking_patterns = [
+                "Alright,",
+                "Let me",
+                "I need to",
+                "First,",
+                "So,",
+                "Putting it all together,",
+                "In conclusion,",
+                "<think>",
+                "</think>",
+                "Next,",
+                "I should",
+                "I'll",
+                "The user",
+                "This document",
+                "The document"
+            ]
+            
+            # More aggressive pattern removal
+            for pattern in thinking_patterns:
+                if pattern in response:
+                    # Find the start of thinking text and remove it
+                    parts = response.split(pattern)
+                    if len(parts) > 1:
+                        # Keep only the last part (the actual description)
+                        response = parts[-1].strip()
+                        # Continue checking for more patterns
+                        continue
+            
+            # Additional cleanup: remove any remaining thinking text
+            lines = response.split('\n')
+            clean_lines = []
+            for line in lines:
+                line = line.strip()
+                # Skip lines that look like thinking process
+                if any(skip in line.lower() for skip in ['think', 'user', 'document', 'should', 'need to']):
+                    continue
+                if line and len(line) > 10:  # Only keep substantial lines
+                    clean_lines.append(line)
+            
+            if clean_lines:
+                response = ' '.join(clean_lines)
+            
+            # If response is too long, truncate it
+            if len(response) > 500:
+                response = response[:500] + "..."
+            
+            print("✓ Successfully generated document description")
+            
+            # Display final result
+            print(f"\n{'='*50}")
+            print("🎉 SINGLE DOCUMENT DESCRIPTION COMPLETED!")
+            print(f"{'='*50}")
+            print(f"Description: {response[:100]}{'...' if len(response) > 100 else ''}")
+            print(f"{'='*50}")
+            
+            return response
+            
+        except Exception as e:
+            print(f"Error in AI description generation: {e}")
+            print("Falling back to simple description generation...")
+            return _generate_simple_doc_description(text_content)
+    
+    def get_simple_doc_description(self, text_content: str) -> str:
+        """
+        Generate a simple description without using AI.
+        
+        Args:
+            text_content: Text content from the document
+            
+        Returns:
+            str: Simple description based on content analysis
+        """
         return _generate_simple_doc_description(text_content)
+
+
+def get_doc_description_model() -> DocDescriptionModel:
+    """
+    Factory function to create a DocDescriptionModel instance.
+    
+    Returns:
+        DocDescriptionModel: A model instance with the AI model pre-loaded
+    """
+    return DocDescriptionModel()
 
 
 def _generate_simple_doc_description(text_content: str) -> str:

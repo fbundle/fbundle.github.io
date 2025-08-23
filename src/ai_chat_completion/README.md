@@ -46,7 +46,12 @@ summary, descriptions = ai_tools.get_ai_description_simple(text_dict)
 summary, descriptions = ai_tools.get_ai_description_batched(text_dict, batch_size=2)
 
 # Generate AI description for a single document (for generate_text.py)
+# Option 1: Direct function call (loads model each time)
 description = ai_tools.get_ai_doc_description(text_content)
+
+# Option 2: Class-based approach (loads model once, more efficient)
+model = ai_tools.get_doc_description_model()
+description = model.get_ai_doc_description(text_content)
 ```
 
 ### Input Format
@@ -87,6 +92,25 @@ The AI tools support different processing approaches:
 2. **Individual Analysis** (`get_ai_doc_description`): Process each document separately (used by generate_text.py)
 3. **Batch Processing** (`get_ai_description_batched`): Process large collections in memory-efficient batches
 4. **Simple Fallback** (`get_ai_description_simple`): Rule-based descriptions without AI processing
+
+## Efficiency Optimization
+
+For processing multiple documents individually (like in `generate_text.py`), use the class-based approach:
+
+```python
+# Load model once
+model = ai_tools.get_doc_description_model()
+
+# Process multiple documents with the same model instance
+for document in documents:
+    description = model.get_ai_doc_description(document_text)
+```
+
+This approach:
+- **Loads the AI model only once** instead of for each document
+- **Significantly reduces processing time** for multiple documents
+- **Maintains memory efficiency** by reusing the loaded model
+- **Provides better error handling** with fallback to simple descriptions
 
 ## Troubleshooting
 

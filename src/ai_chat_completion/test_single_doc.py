@@ -26,8 +26,9 @@ def test_single_document():
     print(f"Sample text length: {len(sample_text)} characters")
     
     try:
-        # Test the AI function
-        description = ai_tools.get_ai_doc_description(sample_text)
+        # Test the new class-based approach
+        model = ai_tools.get_doc_description_model()
+        description = model.get_ai_doc_description(sample_text)
         print(f"\n✓ AI description generated: {description}")
         return True
     except Exception as e:
