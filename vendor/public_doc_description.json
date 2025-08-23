@@ -1,0 +1,736 @@
+{
+  "summary": {
+    "total_documents": 72,
+    "categories": {
+      "computer_science": 3,
+      "mathematics": 65,
+      "research_papers": 3,
+      "personal": 1
+    },
+    "total_size_mb": 22.0,
+    "date_range": "Academic documents spanning multiple years",
+    "description": "A comprehensive collection of academic materials including mathematics coursework, computer science assignments, research papers, and personal documents. The collection covers advanced topics in algebra, analysis, geometry, algorithms, and network science."
+  },
+  "documents": {
+    "CZ4071 Network Science Assignment 2.pdf": {
+      "category": "computer_science",
+      "topic": "Algebra",
+      "description": "Network Science assignment covering network analysis",
+      "size_kb": 622,
+      "pages": 18,
+      "course_code": null,
+      "author": "",
+      "title": ""
+    },
+    "Linear Algebra for MASSP DS.pdf": {
+      "category": "mathematics",
+      "topic": "Linear Algebra",
+      "description": "Document covering linear algebra concepts and applications",
+      "size_kb": 168,
+      "pages": 2,
+      "course_code": null,
+      "author": "",
+      "title": ""
+    },
+    "adjunction.pdf": {
+      "category": "mathematics",
+      "topic": "Set Theory",
+      "description": "Document covering set theory concepts and applications",
+      "size_kb": 324,
+      "pages": 8,
+      "course_code": null,
+      "author": "",
+      "title": ""
+    },
+    "approximation-pattern.pdf": {
+      "category": "mathematics",
+      "topic": "Set Theory",
+      "description": "Document covering set theory concepts and applications",
+      "size_kb": 222,
+      "pages": 2,
+      "course_code": null,
+      "author": "",
+      "title": ""
+    },
+    "calculus.pdf": {
+      "category": "mathematics",
+      "topic": "Analysis",
+      "description": "Document covering analysis concepts and applications",
+      "size_kb": 248,
+      "pages": 7,
+      "course_code": null,
+      "author": "",
+      "title": ""
+    },
+    "complex.pdf": {
+      "category": "mathematics",
+      "topic": "Analysis",
+      "description": "Document covering analysis concepts and applications",
+      "size_kb": 238,
+      "pages": 5,
+      "course_code": null,
+      "author": "",
+      "title": ""
+    },
+    "complex_analysis_ahlfors.pdf": {
+      "category": "mathematics",
+      "topic": "Analysis",
+      "description": "Document covering analysis concepts and applications",
+      "size_kb": 233,
+      "pages": 10,
+      "course_code": null,
+      "author": "",
+      "title": ""
+    },
+    "conflict-based-search.pdf": {
+      "category": "mathematics",
+      "topic": "Set Theory",
+      "description": "Document covering set theory concepts and applications",
+      "size_kb": 117,
+      "pages": 2,
+      "course_code": null,
+      "author": "",
+      "title": ""
+    },
+    "cycle.pdf": {
+      "category": "mathematics",
+      "topic": "Set Theory",
+      "description": "Document covering set theory concepts and applications",
+      "size_kb": 150,
+      "pages": 2,
+      "course_code": null,
+      "author": "",
+      "title": ""
+    },
+    "differential_forms_and_stoke_theorem.pdf": {
+      "category": "mathematics",
+      "topic": "Linear Algebra",
+      "description": "Document covering linear algebra concepts and applications",
+      "size_kb": 262,
+      "pages": 4,
+      "course_code": null,
+      "author": "",
+      "title": ""
+    },
+    "diffusion-convection.pdf": {
+      "category": "mathematics",
+      "topic": "Research",
+      "description": "Document covering research concepts and applications",
+      "size_kb": 267,
+      "pages": 3,
+      "course_code": null,
+      "author": "",
+      "title": ""
+    },
+    "dummit_foote_algebra.pdf": {
+      "category": "mathematics",
+      "topic": "Algebra",
+      "description": "Document covering algebra concepts and applications",
+      "size_kb": 970,
+      "pages": 62,
+      "course_code": null,
+      "author": "",
+      "title": ""
+    },
+    "filter.pdf": {
+      "category": "mathematics",
+      "topic": "Set Theory",
+      "description": "Document covering set theory concepts and applications",
+      "size_kb": 99,
+      "pages": 1,
+      "course_code": null,
+      "author": "",
+      "title": ""
+    },
+    "finite_union_compactness.pdf": {
+      "category": "mathematics",
+      "topic": "Topology",
+      "description": "Document covering topology concepts and applications",
+      "size_kb": 185,
+      "pages": 3,
+      "course_code": null,
+      "author": "",
+      "title": ""
+    },
+    "fyp.pdf": {
+      "category": "research_papers",
+      "topic": "Algebra",
+      "description": "Final Year Project report and research findings",
+      "size_kb": 595,
+      "pages": 39,
+      "course_code": null,
+      "author": "",
+      "title": ""
+    },
+    "hartshorne_algebraic_geometry.pdf": {
+      "category": "mathematics",
+      "topic": "Geometry",
+      "description": "Document covering geometry concepts and applications",
+      "size_kb": 49,
+      "pages": 3,
+      "course_code": null,
+      "author": "",
+      "title": ""
+    },
+    "kunneth_theorem.pdf": {
+      "category": "mathematics",
+      "topic": "Algebra",
+      "description": "Document covering algebra concepts and applications",
+      "size_kb": 480,
+      "pages": 6,
+      "course_code": null,
+      "author": "",
+      "title": ""
+    },
+    "ma4261_hw1.pdf": {
+      "category": "mathematics",
+      "topic": "Set Theory",
+      "description": "Homework assignment for MA4261 Real Analysis course",
+      "size_kb": 170,
+      "pages": 4,
+      "course_code": "MA4261",
+      "author": "",
+      "title": ""
+    },
+    "ma4261_hw2.pdf": {
+      "category": "mathematics",
+      "topic": "Computer Science",
+      "description": "Homework assignment for MA4261 Real Analysis course",
+      "size_kb": 655,
+      "pages": 9,
+      "course_code": "MA4261",
+      "author": "",
+      "title": ""
+    },
+    "ma4261_hw3.pdf": {
+      "category": "mathematics",
+      "topic": "Set Theory",
+      "description": "Homework assignment for MA4261 Real Analysis course",
+      "size_kb": 482,
+      "pages": 8,
+      "course_code": "MA4261",
+      "author": "",
+      "title": ""
+    },
+    "ma4261_paper_review.pdf": {
+      "category": "mathematics",
+      "topic": "Algebra",
+      "description": "Assignment for MA4261 Real Analysis course",
+      "size_kb": 268,
+      "pages": 7,
+      "course_code": "MA4261",
+      "author": "",
+      "title": ""
+    },
+    "ma4271_hw1.pdf": {
+      "category": "mathematics",
+      "topic": "Linear Algebra",
+      "description": "Homework assignment for MA4271 Differential Equations course",
+      "size_kb": 195,
+      "pages": 6,
+      "course_code": "MA4271",
+      "author": "",
+      "title": ""
+    },
+    "ma4271_hw2.pdf": {
+      "category": "mathematics",
+      "topic": "Analysis",
+      "description": "Homework assignment for MA4271 Differential Equations course",
+      "size_kb": 206,
+      "pages": 5,
+      "course_code": "MA4271",
+      "author": "",
+      "title": ""
+    },
+    "ma4271_hw3.pdf": {
+      "category": "mathematics",
+      "topic": "Analysis",
+      "description": "Homework assignment for MA4271 Differential Equations course",
+      "size_kb": 237,
+      "pages": 3,
+      "course_code": "MA4271",
+      "author": "",
+      "title": ""
+    },
+    "ma4271_tut_wk3.pdf": {
+      "category": "mathematics",
+      "topic": "Linear Algebra",
+      "description": "Assignment for MA4271 Differential Equations course",
+      "size_kb": 107,
+      "pages": 2,
+      "course_code": "MA4271",
+      "author": "",
+      "title": ""
+    },
+    "ma4271_tut_wk4.pdf": {
+      "category": "mathematics",
+      "topic": "Set Theory",
+      "description": "Assignment for MA4271 Differential Equations course",
+      "size_kb": 122,
+      "pages": 1,
+      "course_code": "MA4271",
+      "author": "",
+      "title": ""
+    },
+    "ma5204_hw1.pdf": {
+      "category": "mathematics",
+      "topic": "General Mathematics",
+      "description": "Homework assignment for MA5204 Commutative and Homological Algebra course",
+      "size_kb": 259,
+      "pages": 10,
+      "course_code": "MA5204",
+      "author": "",
+      "title": ""
+    },
+    "ma5204_hw2.pdf": {
+      "category": "mathematics",
+      "topic": "General Mathematics",
+      "description": "Homework assignment for MA5204 Commutative and Homological Algebra course",
+      "size_kb": 345,
+      "pages": 20,
+      "course_code": "MA5204",
+      "author": "",
+      "title": ""
+    },
+    "ma5204_hw3.pdf": {
+      "category": "mathematics",
+      "topic": "General Mathematics",
+      "description": "Homework assignment for MA5204 Commutative and Homological Algebra course",
+      "size_kb": 265,
+      "pages": 7,
+      "course_code": "MA5204",
+      "author": "",
+      "title": ""
+    },
+    "ma5204_hw4.pdf": {
+      "category": "mathematics",
+      "topic": "General Mathematics",
+      "description": "Homework assignment for MA5204 Commutative and Homological Algebra course",
+      "size_kb": 343,
+      "pages": 15,
+      "course_code": "MA5204",
+      "author": "",
+      "title": ""
+    },
+    "ma5204_hw5.pdf": {
+      "category": "mathematics",
+      "topic": "General Mathematics",
+      "description": "Homework assignment for MA5204 Commutative and Homological Algebra course",
+      "size_kb": 250,
+      "pages": 7,
+      "course_code": "MA5204",
+      "author": "",
+      "title": ""
+    },
+    "ma5204_notes.pdf": {
+      "category": "mathematics",
+      "topic": "Algebra",
+      "description": "Course notes for MA5204 Commutative and Homological Algebra course",
+      "size_kb": 1281,
+      "pages": 173,
+      "course_code": "MA5204",
+      "author": "",
+      "title": ""
+    },
+    "ma5205_chapter2_hw.pdf": {
+      "category": "mathematics",
+      "topic": "Topology",
+      "description": "Homework assignment for MA5205 Measure and Integral course",
+      "size_kb": 181,
+      "pages": 6,
+      "course_code": "MA5205",
+      "author": "",
+      "title": ""
+    },
+    "ma5205_notes.pdf": {
+      "category": "mathematics",
+      "topic": "Analysis",
+      "description": "Course notes for MA5205 Measure and Integral course",
+      "size_kb": 413,
+      "pages": 26,
+      "course_code": "MA5205",
+      "author": "",
+      "title": ""
+    },
+    "ma5209_a1.pdf": {
+      "category": "mathematics",
+      "topic": "Set Theory",
+      "description": "Assignment for MA5209 Advanced Mathematics course",
+      "size_kb": 632,
+      "pages": 10,
+      "course_code": "MA5209",
+      "author": "",
+      "title": ""
+    },
+    "ma5209_a2.pdf": {
+      "category": "mathematics",
+      "topic": "Set Theory",
+      "description": "Assignment for MA5209 Advanced Mathematics course",
+      "size_kb": 295,
+      "pages": 12,
+      "course_code": "MA5209",
+      "author": "",
+      "title": ""
+    },
+    "ma5209_a3.pdf": {
+      "category": "mathematics",
+      "topic": "Number Theory",
+      "description": "Assignment for MA5209 Advanced Mathematics course",
+      "size_kb": 483,
+      "pages": 13,
+      "course_code": "MA5209",
+      "author": "",
+      "title": ""
+    },
+    "ma5209_notes_at.pdf": {
+      "category": "mathematics",
+      "topic": "Algebra",
+      "description": "Course notes for MA5209 Advanced Mathematics course",
+      "size_kb": 507,
+      "pages": 36,
+      "course_code": "MA5209",
+      "author": "",
+      "title": ""
+    },
+    "ma5209_notes_ha.pdf": {
+      "category": "mathematics",
+      "topic": "Algebra",
+      "description": "Course notes for MA5209 Advanced Mathematics course",
+      "size_kb": 288,
+      "pages": 10,
+      "course_code": "MA5209",
+      "author": "",
+      "title": ""
+    },
+    "ma5210_a1.pdf": {
+      "category": "mathematics",
+      "topic": "Topology",
+      "description": "Assignment for MA5210 Advanced Mathematics course",
+      "size_kb": 203,
+      "pages": 3,
+      "course_code": "MA5210",
+      "author": "",
+      "title": ""
+    },
+    "ma5210_a2.pdf": {
+      "category": "mathematics",
+      "topic": "Linear Algebra",
+      "description": "Assignment for MA5210 Advanced Mathematics course",
+      "size_kb": 223,
+      "pages": 8,
+      "course_code": "MA5210",
+      "author": "",
+      "title": ""
+    },
+    "ma5210_notes.pdf": {
+      "category": "mathematics",
+      "topic": "Analysis",
+      "description": "Course notes for MA5210 Advanced Mathematics course",
+      "size_kb": 712,
+      "pages": 54,
+      "course_code": "MA5210",
+      "author": "",
+      "title": ""
+    },
+    "ma5211_hw1.pdf": {
+      "category": "mathematics",
+      "topic": "Linear Algebra",
+      "description": "Homework assignment for MA5211 Advanced Mathematics course",
+      "size_kb": 164,
+      "pages": 3,
+      "course_code": "MA5211",
+      "author": "",
+      "title": ""
+    },
+    "ma5216_hw1.pdf": {
+      "category": "mathematics",
+      "topic": "General Mathematics",
+      "description": "Homework assignment for MA5216 Advanced Mathematics course",
+      "size_kb": 266,
+      "pages": 9,
+      "course_code": "MA5216",
+      "author": "",
+      "title": ""
+    },
+    "ma5216_hw2.pdf": {
+      "category": "mathematics",
+      "topic": "General Mathematics",
+      "description": "Homework assignment for MA5216 Advanced Mathematics course",
+      "size_kb": 249,
+      "pages": 11,
+      "course_code": "MA5216",
+      "author": "",
+      "title": ""
+    },
+    "ma5216_notes.pdf": {
+      "category": "mathematics",
+      "topic": "Geometry",
+      "description": "Course notes for MA5216 Advanced Mathematics course",
+      "size_kb": 374,
+      "pages": 20,
+      "course_code": "MA5216",
+      "author": "",
+      "title": ""
+    },
+    "ma5216_test.pdf": {
+      "category": "mathematics",
+      "topic": "General Mathematics",
+      "description": "Assignment for MA5216 Advanced Mathematics course",
+      "size_kb": 248,
+      "pages": 11,
+      "course_code": "MA5216",
+      "author": "",
+      "title": ""
+    },
+    "ma5232_a1.pdf": {
+      "category": "mathematics",
+      "topic": "General Mathematics",
+      "description": "Assignment for MA5232 Advanced Mathematics course",
+      "size_kb": 396,
+      "pages": 11,
+      "course_code": "MA5232",
+      "author": "",
+      "title": ""
+    },
+    "ma5232_a2.pdf": {
+      "category": "mathematics",
+      "topic": "Set Theory",
+      "description": "Assignment for MA5232 Advanced Mathematics course",
+      "size_kb": 760,
+      "pages": 14,
+      "course_code": "MA5232",
+      "author": "",
+      "title": ""
+    },
+    "ma5232_a3.pdf": {
+      "category": "mathematics",
+      "topic": "Analysis",
+      "description": "Assignment for MA5232 Advanced Mathematics course",
+      "size_kb": 278,
+      "pages": 9,
+      "course_code": "MA5232",
+      "author": "",
+      "title": ""
+    },
+    "ma5259_hw1.pdf": {
+      "category": "mathematics",
+      "topic": "Set Theory",
+      "description": "Homework assignment for MA5259 Advanced Mathematics course",
+      "size_kb": 263,
+      "pages": 15,
+      "course_code": "MA5259",
+      "author": "",
+      "title": ""
+    },
+    "ma5259_hw2.pdf": {
+      "category": "mathematics",
+      "topic": "Linear Algebra",
+      "description": "Homework assignment for MA5259 Advanced Mathematics course",
+      "size_kb": 281,
+      "pages": 13,
+      "course_code": "MA5259",
+      "author": "",
+      "title": ""
+    },
+    "ma5259_hw3.pdf": {
+      "category": "mathematics",
+      "topic": "General Mathematics",
+      "description": "Homework assignment for MA5259 Advanced Mathematics course",
+      "size_kb": 269,
+      "pages": 7,
+      "course_code": "MA5259",
+      "author": "",
+      "title": ""
+    },
+    "ma5259_notes.pdf": {
+      "category": "mathematics",
+      "topic": "General Mathematics",
+      "description": "Course notes for MA5259 Advanced Mathematics course",
+      "size_kb": 448,
+      "pages": 26,
+      "course_code": "MA5259",
+      "author": "",
+      "title": ""
+    },
+    "ma5271_a.pdf": {
+      "category": "mathematics",
+      "topic": "General Mathematics",
+      "description": "Assignment for MA5271 Advanced Mathematics course",
+      "size_kb": 268,
+      "pages": 6,
+      "course_code": "MA5271",
+      "author": "",
+      "title": ""
+    },
+    "ma5271_notes.pdf": {
+      "category": "mathematics",
+      "topic": "General Mathematics",
+      "description": "Course notes for MA5271 Advanced Mathematics course",
+      "size_kb": 90,
+      "pages": 2,
+      "course_code": "MA5271",
+      "author": "",
+      "title": ""
+    },
+    "mapf-gp-summary.pdf": {
+      "category": "research_papers",
+      "topic": "General Mathematics",
+      "description": "Multi-Agent Pathfinding research using genetic programming",
+      "size_kb": 1027,
+      "pages": 23,
+      "course_code": null,
+      "author": "",
+      "title": ""
+    },
+    "mapf-gp.pdf": {
+      "category": "research_papers",
+      "topic": "General Mathematics",
+      "description": "Multi-Agent Pathfinding research using genetic programming",
+      "size_kb": 480,
+      "pages": 20,
+      "course_code": null,
+      "author": "",
+      "title": ""
+    },
+    "module.pdf": {
+      "category": "mathematics",
+      "topic": "Algebra",
+      "description": "Document covering algebra concepts and applications",
+      "size_kb": 141,
+      "pages": 2,
+      "course_code": null,
+      "author": "",
+      "title": ""
+    },
+    "paxos-algorithm.pdf": {
+      "category": "computer_science",
+      "topic": "Computer Science",
+      "description": "Documentation on Paxos consensus algorithm for distributed systems",
+      "size_kb": 168,
+      "pages": 2,
+      "course_code": null,
+      "author": "",
+      "title": ""
+    },
+    "pca.pdf": {
+      "category": "computer_science",
+      "topic": "Analysis",
+      "description": "Principal Component Analysis notes and applications",
+      "size_kb": 231,
+      "pages": 7,
+      "course_code": null,
+      "author": "",
+      "title": ""
+    },
+    "pi.pdf": {
+      "category": "mathematics",
+      "topic": "General Mathematics",
+      "description": "Document covering general mathematics concepts and applications",
+      "size_kb": 54,
+      "pages": 1,
+      "course_code": null,
+      "author": "",
+      "title": ""
+    },
+    "real_analysis.pdf": {
+      "category": "mathematics",
+      "topic": "Topology",
+      "description": "Document covering topology concepts and applications",
+      "size_kb": 119,
+      "pages": 1,
+      "course_code": null,
+      "author": "",
+      "title": ""
+    },
+    "set.pdf": {
+      "category": "mathematics",
+      "topic": "Algebra",
+      "description": "Document covering algebra concepts and applications",
+      "size_kb": 227,
+      "pages": 4,
+      "course_code": null,
+      "author": "",
+      "title": ""
+    },
+    "set_function.pdf": {
+      "category": "mathematics",
+      "topic": "Analysis",
+      "description": "Document covering analysis concepts and applications",
+      "size_kb": 265,
+      "pages": 4,
+      "course_code": null,
+      "author": "",
+      "title": ""
+    },
+    "sheaf_iso.pdf": {
+      "category": "mathematics",
+      "topic": "Linear Algebra",
+      "description": "Document covering linear algebra concepts and applications",
+      "size_kb": 135,
+      "pages": 2,
+      "course_code": null,
+      "author": "",
+      "title": ""
+    },
+    "single_solution.pdf": {
+      "category": "mathematics",
+      "topic": "Set Theory",
+      "description": "Document covering set theory concepts and applications",
+      "size_kb": 104,
+      "pages": 2,
+      "course_code": null,
+      "author": "",
+      "title": ""
+    },
+    "spectral.pdf": {
+      "category": "mathematics",
+      "topic": "Algebra",
+      "description": "Document covering algebra concepts and applications",
+      "size_kb": 306,
+      "pages": 5,
+      "course_code": null,
+      "author": "",
+      "title": ""
+    },
+    "ssc_td.pdf": {
+      "category": "mathematics",
+      "topic": "Linear Algebra",
+      "description": "Document covering linear algebra concepts and applications",
+      "size_kb": 264,
+      "pages": 2,
+      "course_code": null,
+      "author": "",
+      "title": ""
+    },
+    "tikzcd_externalize_example.pdf": {
+      "category": "mathematics",
+      "topic": "General Mathematics",
+      "description": "Document covering general mathematics concepts and applications",
+      "size_kb": 88,
+      "pages": 1,
+      "course_code": null,
+      "author": "",
+      "title": ""
+    },
+    "vitae.pdf": {
+      "category": "personal",
+      "topic": "Analysis",
+      "description": "Personal curriculum vitae and academic background",
+      "size_kb": 90,
+      "pages": 1,
+      "course_code": null,
+      "author": "",
+      "title": ""
+    },
+    "zorn_lemma.pdf": {
+      "category": "mathematics",
+      "topic": "Set Theory",
+      "description": "Document covering set theory concepts and applications",
+      "size_kb": 107,
+      "pages": 1,
+      "course_code": null,
+      "author": "",
+      "title": ""
+    }
+  }
+}

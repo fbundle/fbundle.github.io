@@ -3,7 +3,13 @@ import argparse
 import shutil
 import os
 import re
+import sys
 from datetime import datetime
+
+# Add the parent directory to the path so we can import vendor modules
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from vendor.cursor_ai_pdf_tools import get_pdf_desc
 import pymupdf
 
 class HtmlPath:
@@ -29,57 +35,62 @@ def copy_public_doc(input_dir: str, doc_htmldir: HtmlPath):
         if os.path.exists(input_path):
             shutil.copyfile(input_path, output_path)
 
+def get_pdf_dates(pdf_path: str) -> tuple[datetime, datetime]:
+    def parse_pdf_date(date_str: str) -> datetime | None:
+        if not date_str:
+            return None
+        if date_str.startswith("D:"):
+            date_str = date_str[2:]  # Strip leading "D:" if present
+        date_str = re.sub(r"[+-].*", "", date_str)  # Remove the timezone part like +08'00'
+        dt = datetime.strptime(date_str[:14], "%Y%m%d%H%M%S")  # Parse the date
+        return dt
+
+    doc = pymupdf.Document(pdf_path)
+    creation_date = parse_pdf_date(doc.metadata.get("creationDate"))
+    modified_date = parse_pdf_date(doc.metadata.get("modDate"))
+    if creation_date is None:
+        creation_date = datetime.min
+    if modified_date is None:
+        modified_date = datetime.min
+
+    return creation_date, modified_date
 
 
-
+def datetime_to_str(dt: datetime) -> str:
+    return dt.strftime("%d %b %Y")
 
 def generate_text_html(
         doc_htmldir: HtmlPath,
         text_template_path: str,
         text_output_path: str,
 ):
-    def get_pdf_dates(pdf_path: str) -> tuple[datetime, datetime]:
-        def parse_pdf_date(date_str: str) -> datetime | None:
-            if not date_str:
-                return None
-            if date_str.startswith("D:"):
-                date_str = date_str[2:]  # Strip leading "D:" if present
-            date_str = re.sub(r"[+-].*", "", date_str)  # Remove the timezone part like +08'00'
-            dt = datetime.strptime(date_str[:14], "%Y%m%d%H%M%S")  # Parse the date
-            return dt
-
-        doc = pymupdf.Document(pdf_path)
-        creation_date = parse_pdf_date(doc.metadata.get("creationDate"))
-        modified_date = parse_pdf_date(doc.metadata.get("modDate"))
-        if creation_date is None:
-            creation_date = datetime.min
-        if modified_date is None:
-            modified_date = datetime.min
-
-        return creation_date, modified_date
-
-
-    def datetime_to_str(dt: datetime) -> str:
-        return dt.strftime("%d %b %Y")
     doc_dir = doc_htmldir.to_path()
-
     html_template = open(text_template_path).read()
 
     item_list = []
     for name in sorted(os.listdir(doc_dir)):
-        creation_date, modified_date = get_pdf_dates(f"{doc_dir}/{name}")
-        item = (name, creation_date, modified_date)
+        path = f"{doc_dir}/{name}"
+        creation_date, modified_date = get_pdf_dates(path)
+        item = (name, path, creation_date, modified_date)
         item_list.append(item)
 
     item_list.sort(key=lambda x: x[2], reverse=True)  # sort by modified date
 
-    content = ""
-    for name, creation_date, modified_date in item_list:
+    summary, description = get_pdf_desc([path for name, path, creation_date, modified_date in item_list])
+
+    content = f"""
+    AI generated summary: {summary}
+    """
+    content += "<hr>\n"
+    for name, path, creation_date, modified_date in item_list:
         modified_date_str = datetime_to_str(modified_date)
 
         content += f"""
         <li>
-            {modified_date_str}: <a href="{doc_htmldir}/{name}">{name}</a>
+            {modified_date_str}: <a href="{doc_htmldir}/{name}">{name}</a> 
+            <small><i>
+            (AI generated description: {description[path]})
+            </i></small>
         </li>
         """
 
