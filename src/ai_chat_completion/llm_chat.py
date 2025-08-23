@@ -4,7 +4,8 @@ import sys
 import time
 import torch
 from threading import Thread
-import pydantic
+from dataclasses import dataclass, asdict
+import json
 import importlib
 from transformers import AutoModelForCausalLM, AutoTokenizer, TextIteratorStreamer
 
@@ -16,9 +17,24 @@ ROLE_USER = "user"
 ROLE_SYSTEM = "system"
 ROLE_ASSISTANT = "assistant"
 
-class Message(pydantic.BaseModel):
+@dataclass
+class Message:
     role: str
     content: str
+    
+    def model_dump(self) -> dict:
+        """Convert to dictionary (compatibility with Pydantic API)"""
+        return asdict(self)
+    
+    def model_dump_json(self) -> str:
+        """Convert to JSON string (compatibility with Pydantic API)"""
+        return json.dumps(asdict(self))
+    
+    @classmethod
+    def model_validate_json(cls, json_str: str) -> 'Message':
+        """Create from JSON string (compatibility with Pydantic API)"""
+        data = json.loads(json_str)
+        return cls(**data)
 
 class Model:
     def chat(self, message_list: list[Message]) -> Iterator[str]:

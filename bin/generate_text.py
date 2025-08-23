@@ -126,11 +126,11 @@ def generate_text_html(
     
     if model is not None:
         ai_desc_item_list = item_list[:5]
+        ai_desc_item_list = item_list
 
         for name, text_content, creation_date, modified_date in tqdm(ai_desc_item_list, desc=f"Processing {len(item_list)} documents with AI..."):
             print(f"DEBUG: Processing document: {name}")
             try:
-                # Extract text from the full file path, not just the filename
                 if text_content:  # Only process if we got actual text
                     print(f"DEBUG: Calling AI for {name} with {len(text_content)} characters")
                     description[name] = model.get_ai_doc_description(text_content)
@@ -146,11 +146,12 @@ def generate_text_html(
 
         comment = ""
         if name in description:
-            comment = f'<small style="opacity: 0.6; color: #666; font-style: italic; filter: blur(0.3px);">(ai: {description[name]})</small>'
+            comment = f'<small style="opacity: 0.6; color: #666; font-style: italic; filter: blur(0.3px);">(AI generated description: {description[name]})</small>'
 
         content += f"""
         <li>
             {modified_date_str}: <a href="{doc_htmldir}/{name}">{name}</a>
+            <br>
             {comment}
         </li>
         """
