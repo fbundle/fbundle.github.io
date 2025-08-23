@@ -7,7 +7,6 @@ from threading import Thread
 import pydantic
 import importlib
 from transformers import AutoModelForCausalLM, AutoTokenizer, TextIteratorStreamer
-from llama_cpp import Llama
 
 
 def print_and_flush(*args, **kwargs):
@@ -77,39 +76,6 @@ class TransformersModel(Model):
             yield from text_streamer
             thread.join()
             
-        return streamer()
-
-class LlamaCPPModel(Model):
-    def __init__(
-            self,
-            repo_id: str,
-            filename: str,
-            model_kwargs: dict | None = None,
-            create_chat_completion_kwargs: dict | None = None,
-        ):
-        super().__init__()
-        if model_kwargs is None:
-            model_kwargs = {}
-        self.llm = Llama.from_pretrained(
-            repo_id=repo_id,
-            filename=filename,
-            **model_kwargs,
-        )
-        self.create_chat_completion_kwargs = {}
-        if create_chat_completion_kwargs is not None:
-            self.create_chat_completion_kwargs.update(create_chat_completion_kwargs)
-    
-    def chat(self, message_list: list[Message]) -> Iterator[str]:
-        response = self.llm.create_chat_completion(
-            messages=[message.model_dump() for message in message_list],
-            stream=True,
-            stop=["<|User|>"],
-            **self.create_chat_completion_kwargs,
-        )
-        def streamer():
-            for chunk in response:
-                yield chunk["choices"][0]["delta"].get("content", "")
-
         return streamer()
 
 class Conversation:
@@ -185,84 +151,6 @@ def get_model_factory() -> dict[str, Callable[[], Model]]:
             },
         )
 
-    def get_deepseekr1_distill_qwen1p5b_llamacpp_model(device: torch.device | None, cache_dir: str):
-        return LlamaCPPModel(
-            repo_id="lmstudio-community/DeepSeek-R1-Distill-Qwen-1.5B-GGUF",
-            filename="DeepSeek-R1-Distill-Qwen-1.5B-Q4_K_M.gguf",
-            model_kwargs={
-                "verbose": False,
-                "n_gpu_layers": -1,
-                "n_ctx": 4096, 
-                "cache_dir": cache_dir,
-            },
-            create_chat_completion_kwargs={
-                "max_tokens": 131072,
-                "temperature": 0.6,
-                "top_p": 0.95,
-            },
-        )
-    def get_deepseekr1_distill_qwen32b_llamacpp_model(device: torch.device | None, cache_dir: str):
-        return LlamaCPPModel(
-            repo_id="bartowski/DeepSeek-R1-Distill-Qwen-32B-GGUF",
-            filename="DeepSeek-R1-Distill-Qwen-32B-Q4_K_M.gguf",
-            model_kwargs={
-                "verbose": False,
-                "n_gpu_layers": -1,
-                "n_ctx": 4096,
-                "cache_dir": cache_dir,
-            },
-            create_chat_completion_kwargs={
-                "temperature": 0.6,
-                "top_p": 0.95,
-            },
-        )
-    def get_deepseekr1_distill_qwen7b_llamacpp_model(device: torch.device | None, cache_dir: str):
-        return LlamaCPPModel(
-            repo_id="bartowski/DeepSeek-R1-Distill-Qwen-7B-GGUF",
-            filename="DeepSeek-R1-Distill-Qwen-7B-Q4_K_M.gguf",
-            model_kwargs={
-                "verbose": False,
-                "n_gpu_layers": -1,
-                "n_ctx": 4096,
-                "cache_dir": cache_dir,
-            },
-            create_chat_completion_kwargs={
-                "temperature": 0.6,
-                "top_p": 0.95,
-            },
-        )
-
-    def get_qwq_32b_llamacpp_model(device: torch.device | None, cache_dir: str):
-        return LlamaCPPModel(
-            repo_id="bartowski/Qwen_QwQ-32B-GGUF",
-            filename="Qwen_QwQ-32B-IQ2_XXS.gguf",
-            model_kwargs={
-                "verbose": False,
-                "n_gpu_layers": -1,
-                "n_ctx": 4096,
-                "cache_dir": cache_dir,
-            },
-            create_chat_completion_kwargs={
-                "temperature": 0.6,
-                "top_p": 0.95,
-            },
-        )
-
-    def get_gemma_3_27b_llamacpp_model(device: torch.device | None, cache_dir: str):
-        return LlamaCPPModel(
-            repo_id="bartowski/google_gemma-3-27b-it-GGUF",
-            filename="google_gemma-3-27b-it-IQ2_XS.gguf",
-            model_kwargs={
-                "verbose": False,
-                "n_gpu_layers": -1,
-                "n_ctx": 4096,
-                "cache_dir": cache_dir,
-            },
-            create_chat_completion_kwargs={
-                "temperature": 0.6,
-                "top_p": 0.95,
-            },
-        )
     def get_qwq_32b_transformers_model(device: torch.device | None, cache_dir: str):
         return TransformersModel(
             model_path="Qwen/QwQ-32B",
@@ -272,33 +160,10 @@ def get_model_factory() -> dict[str, Callable[[], Model]]:
                 "cache_dir": cache_dir,
             },
         )
-    
-    def get_qwen3_30b_llamacpp_model(device: torch.device | None, cache_dir: str):
-        return LlamaCPPModel(
-            repo_id="bartowski/Qwen_Qwen3-30B-A3B-GGUF",
-            filename="Qwen_Qwen3-30B-A3B-Q6_K_L.gguf",
-            model_kwargs={
-                "verbose": False,
-                "n_gpu_layers": -1,
-                "n_ctx": 4096,
-                "cache_dir": cache_dir,
-            },
-            create_chat_completion_kwargs={
-                "temperature": 0.6,
-                "top_p": 0.95,
-            },
-        )
-    
 
     return {
         "deepseekr1_distill_qwen1p5b_transformers": get_deepseekr1_distill_qwen1p5b_transformers_model,
-        "deepseekr1_distill_qwen1p5b_llamacpp": get_deepseekr1_distill_qwen1p5b_llamacpp_model,
-        "deepseekr1_distill_qwen32b_llamacpp": get_deepseekr1_distill_qwen32b_llamacpp_model,
-        "deepseekr1_distill_qwen7b_llamacpp": get_deepseekr1_distill_qwen7b_llamacpp_model,
         "qwq_32b_transformers": get_qwq_32b_transformers_model,
-        "qwq_32b_llamacpp": get_qwq_32b_llamacpp_model,
-        "gemma_3_27b_llamacpp": get_gemma_3_27b_llamacpp_model,
-        "qwen3_30b_llamacpp": get_qwen3_30b_llamacpp_model,
         "gpt_oss_20b_transformers": get_openai_gpt_oss_20b_transformers_model,
     }
 
