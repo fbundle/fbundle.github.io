@@ -8,11 +8,12 @@ from datetime import datetime
 
 import pymupdf
 
-get_ai_doc_description = None
+model = None
 
 try:
     sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    from src.ai_chat_completion.ai_tools import get_ai_doc_description
+    from src.ai_chat_completion.ai_tools import get_doc_description_model
+    model = get_doc_description_model()
 except ImportError as e:
     print(f"DEBUG: import ai_tools failed ({e})")
 except Exception as e:
@@ -121,7 +122,7 @@ def generate_text_html(
 
     description = {}
     
-    if get_ai_doc_description is not None:
+    if model is not None:
         print(f"DEBUG: Processing {len(item_list)} documents with AI...")
         for name, path, creation_date, modified_date in item_list:
             print(f"DEBUG: Processing document: {name} at {path}")
@@ -130,7 +131,7 @@ def generate_text_html(
                 text_content = get_pdf_text(path)
                 if text_content.strip():  # Only process if we got actual text
                     print(f"DEBUG: Calling AI for {name} with {len(text_content)} characters")
-                    description[name] = get_ai_doc_description(text_content)
+                    description[name] = model.get_ai_doc_description(text_content)
                     print(f"DEBUG: AI description for {name}: {description[name][:100]}...")
                 else:
                     print(f"DEBUG: No text content extracted from {path}")
