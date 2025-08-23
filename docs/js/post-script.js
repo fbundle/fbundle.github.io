@@ -29,23 +29,30 @@ async function highlightTab() {
     // highlight a tab name
 
     // how to use
-    // <div id="highlight" highlight_id="about" ></div>
+    // <div id="highlight" highlight_id="home" ></div>
     //
-    // result: if there is an element of id "about", its color will change to white
+    // result: the navbar item with id "home" will be highlighted
 
     const highlighter = document.getElementById("highlight");
     if (highlighter === null) {
-        throw new Error("Error: there is no element \"highlight\" ");
+        return; // No highlight element found, just continue
     }
+    
     const elementId = highlighter.getAttribute("highlight_id");
     if (elementId === null) {
-        throw new Error("Error: highlight element has no field \"highlight_id\"")
+        return; // No highlight_id attribute, just continue
     }
-    const element = document.getElementById(elementId);
-    if (element === null) {
-        throw new Error(`Error: there is no element \"${elementId}\"`)
+    
+    // Find the navbar item to highlight
+    const navItem = document.getElementById(elementId);
+    if (navItem === null) {
+        return; // Navbar item not found, just continue
     }
-    element.style.color = "#ffffff";
+    
+    // Apply highlight styling using CSS variables
+    navItem.style.color = "var(--text-light)";
+    navItem.style.background = "rgba(236, 240, 241, 0.15)";
+    navItem.style.boxShadow = "var(--shadow-light)";
 }
 
 function setupMobileMenu() {

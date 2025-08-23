@@ -230,3 +230,11 @@ body {
     transform: rotate(45deg) translate(-5px, -6px);
 }
 
+
+
+/* Table Alignment Fix */
+.main-content table td {
+    vertical-align: top;
+    padding: 1.5rem;
+}
+

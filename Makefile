@@ -17,7 +17,7 @@ pages:
 	python bin/generate_pages.py \
 		--input_dir "src/pages" \
 		--output_dir "docs/pages" \
-		--template "src/template_nojs.html"
+		--template "src/template.html"
 
 text: pages
 	# generate public_doc text
