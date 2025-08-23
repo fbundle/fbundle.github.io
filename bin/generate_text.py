@@ -8,15 +8,14 @@ from datetime import datetime
 
 import pymupdf
 
-get_ai_desc = None
-
 try:
-    sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    from vendor.ai_tools import get_ai_desc
+    from vendor.ai_tools import get_pdf_desc
+    ai_available = True
+    print("DEBUG: AI descriptions generated successfully")
 except ImportError as e:
-    print("DEBUG: AI import failed", e)
+    print(f"DEBUG: AI import failed ({e}), proceeding without AI descriptions")
 except Exception as e:
-    print("DEBUG: AI import failed", e)
+    print(f"DEBUG: AI description generation failed ({e}), proceeding without AI descriptions")
 
 
 class HtmlPath:
@@ -118,13 +117,22 @@ def generate_text_html(
 
     item_list.sort(key=lambda x: x[2], reverse=True)  # sort by modified date
 
-    content = ""
+
+    # Add the parent directory to the path so we can import vendor modules
+    sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+    # Try to import AI description function, fall back gracefully if it fails
+    ai_available = False
+
+    summary = ""
     description = {}
     
-    if get_ai_desc is not None:
-        summary, description = get_ai_desc(text_dict)
-        content += f"AI generated summary: {summary} <hr>\n"
-    
+    if ai_available:
+        # Generate content with or without AI descriptions
+        summary, description = get_pdf_desc([(path, get_pdf_text(path)) for name, path, creation_date, modified_date in item_list])
+        content = f"AI generated summary: {summary} <hr>\n"
+    else:
+        content = ""
     
     for name, path, creation_date, modified_date in item_list:
         modified_date_str = datetime_to_str(modified_date)
