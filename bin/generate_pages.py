@@ -7,6 +7,8 @@ def generate_pages(input_dir: str,output_dir: str):
     template: str = open(os.path.join(input_dir, "template.html")).read()
 
     content_dir = os.path.join(input_dir, "content")
+
+    total_pages = 0
     for path in pathlib.Path(content_dir).rglob("*.html"):
         rel_path = path.relative_to(content_dir)
 
@@ -17,6 +19,11 @@ def generate_pages(input_dir: str,output_dir: str):
         output_path = os.path.join(output_dir, rel_path)
         os.makedirs(os.path.dirname(output_path), exist_ok=True)
         open(output_path, "w").write(html)
+
+        print(f"DEBUG: generated {output_path}")
+        total_pages += 1
+
+    print(f"DEBUG: generated {total_pages} pages")
 
 
 

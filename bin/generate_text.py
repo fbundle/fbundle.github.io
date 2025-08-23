@@ -77,10 +77,14 @@ def generate_text_html(
         modified_date_str = datetime_to_str(modified_date)
 
         content += f'<li> {modified_date_str}: <a href="{doc_htmldir}/{name}">{name}</a> </li>' + '\n'
+        print(f"DEBUG: generated entry for {name}")
+
 
     html = html_template.format(public_doc_content=content)
     with open(text_output_path, "w") as f:
         f.write(html)
+
+    print(f"DEBUG: generated {len(item_list)} entries in {text_output_path}")
 
 
 
