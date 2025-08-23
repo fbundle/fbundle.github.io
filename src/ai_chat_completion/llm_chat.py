@@ -224,7 +224,8 @@ if __name__ == "__main__":
     if len(cache_dir) == 0:
         cache_dir_list = [
             "/Users/khanh/vault/downloads/model",
-            "/home/khanh/Downloads/model/"
+            "/home/khanh/Downloads/model/",
+            "/home/khanh/ws/cache",
         ]
         for cd in cache_dir_list:
             if os.path.exists(cd):

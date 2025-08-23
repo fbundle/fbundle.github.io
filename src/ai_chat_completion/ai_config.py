@@ -22,6 +22,6 @@ CACHE_DIRS = [
 ]
 
 # Model Selection
-DEFAULT_MODEL = "deepseekr1_distill_qwen1p5b_transformers"
+DEFAULT_MODEL = "gpt_oss_20b_transformers"
 
 
