@@ -2,6 +2,9 @@
 
 all: vitae pages text
 
+run:
+	go run bin/fileserver.go docs
+
 vitae:
 	# generate vitae
 	make4ht \
