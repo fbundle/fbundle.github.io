@@ -75,7 +75,7 @@ function setupMobileMenu() {
 
     // Close mobile menu when clicking outside
     document.addEventListener('click', (e) => {
-        if (!e.target.closest('.top-navbar')) {
+        if (!e.target.closest('.navbar')) {
             if (mobileToggle) mobileToggle.classList.remove('active');
             if (navMenu) navMenu.classList.remove('active');
             dropdowns.forEach(dropdown => dropdown.classList.remove('active'));
