@@ -311,3 +311,4 @@ TSWLatexianTemp*
 # user-defined
 .DS_Store
 build
+tmp/
