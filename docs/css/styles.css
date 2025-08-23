@@ -12,7 +12,7 @@ body {
     min-height: 100%; /* Set the min-height to 100% */
 }
 
-/* Create a container to hold both the top-navbar and main-content */
+/* Create a container to hold both the navbar and main-content */
 .container {
     display: flex;
     flex-direction: column; /* Change to column layout */
@@ -20,7 +20,7 @@ body {
 }
 
 /* Style the top navbar */
-.top-navbar {
+.navbar {
     background-color: #2c3e50;
     width: 100%;
     padding: 0 20px;
@@ -161,7 +161,7 @@ body {
 
 /* Responsive design */
 @media screen and (max-width: 768px) {
-    .top-navbar {
+    .navbar {
         padding: 0 15px;
     }
     
