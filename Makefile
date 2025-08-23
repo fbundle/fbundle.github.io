@@ -7,7 +7,7 @@ vitae:
 	make4ht \
   		--output-dir "docs/assets/vitae" \
   		--build-dir "tmp" \
-  		"src/vitae/main.tex"
+  		"/Users/khanh/mathdoc/public_doc/vitae/main.tex"
 
 pages:
 	# generate pages
