@@ -26,7 +26,7 @@ text: pages
 
 
 clean:
-	rm -rf tmp
+	rm -rf "tmp"
 	rm -rf "docs/assets/vitae"
 	rm -rf "docs/pages"
 	rm -rf "docs/assets/public_doc"

@@ -29,17 +29,17 @@ async function highlightTab() {
     // highlight a tab name
 
     // how to use
-    // <div id="highlight" name="about" ></div>
+    // <div id="highlight" highlight_id="about" ></div>
     //
-    // result : if there is an element of id "about", its color will change to white
+    // result: if there is an element of id "about", its color will change to white
 
     const highlighter = document.getElementById("highlight");
     if (highlighter === null) {
         throw new Error("Error: there is no element \"highlight\" ");
     }
-    const elementId = highlighter.getAttribute("name");
+    const elementId = highlighter.getAttribute("highlight_id");
     if (elementId === null) {
-        throw new Error("Error: highlight element has no field \"name\"")
+        throw new Error("Error: highlight element has no field \"highlight_id\"")
     }
     const element = document.getElementById(elementId);
     if (element === null) {
