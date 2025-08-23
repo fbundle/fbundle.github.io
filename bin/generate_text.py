@@ -12,7 +12,7 @@ get_ai_description = None
 
 try:
     sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    from vendor.ai_tools import get_ai_description
+    from src.ai_chat_completion.ai_tools import get_ai_description
 except ImportError as e:
     print(f"DEBUG: import ai_tools failed ({e})")
 except Exception as e:
