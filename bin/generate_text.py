@@ -5,6 +5,7 @@ import os
 import re
 import sys
 from datetime import datetime
+from tqdm import tqdm
 
 import pymupdf
 
