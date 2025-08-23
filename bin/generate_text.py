@@ -144,8 +144,6 @@ def generate_text_html(
         </li>
         """
 
-        print(f"DEBUG: generated entry for {name}")
-
 
     html = html_template.format(public_doc_content=content)
     with open(text_output_path, "w") as f:
