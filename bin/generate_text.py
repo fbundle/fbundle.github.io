@@ -8,11 +8,11 @@ from datetime import datetime
 
 import pymupdf
 
-get_ai_description = None
+get_ai_doc_description = None
 
 try:
     sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    from src.ai_chat_completion.ai_tools import get_ai_description
+    from src.ai_chat_completion.ai_tools import get_ai_doc_description
 except ImportError as e:
     print(f"DEBUG: import ai_tools failed ({e})")
 except Exception as e:
@@ -116,20 +116,16 @@ def generate_text_html(
 
     item_list.sort(key=lambda x: x[2], reverse=True)  # sort by modified date
 
-    summary = ""
     description = {}
     
-    if get_ai_description is not None:
-        try:
-            text_dict = {path: get_pdf_text(path) for name, path, creation_date, modified_date in item_list}
-            summary, description = get_ai_description(text_dict)
-            content = f"AI generated summary: {summary} <hr>\n"
-        except Exception as e:
-            print(f"DEBUG: get_ai_description failed ({e})")
-            content = ""
-    else:
-        content = ""
+    if get_ai_doc_description is not None:
+        for name, path, creation_date, modified_date in item_list:
+            try:
+                description[name] = get_ai_doc_description(get_pdf_text(name))
+            except Exception as e:
+                print(f"DEBUG: get_ai_doc_description failed ({e})")
     
+    content = ""
     for name, path, creation_date, modified_date in item_list:
         modified_date_str = datetime_to_str(modified_date)
 
