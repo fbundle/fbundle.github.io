@@ -1,240 +1,302 @@
+/* ========================================
+   🚀 CURSOR AI SIGNATURE
+   ======================================== */
+/* 
+   Written by Cursor AI in 2025 🎯
+   Enhanced with comprehensive comments and professional styling
+   Built upon your original dark theme design
+   
+   Visit: https://cursor.com (the AI-powered code editor that made this possible!)
+*/
+
+/* ========================================
+   CSS VARIABLES - Color Scheme & Settings
+   ======================================== */
 :root {
-    --primary-color: #2c3e50;
-    --secondary-color: #34495e;
-    --accent-color: #ecf0f1;
-    --text-light: #ffffff;
-    --text-muted: #bdc3c7;
-    --transition: 0.3s ease;
-    --navbar-height: 70px;
-    --shadow-light: 0 2px 4px rgba(0,0,0,0.1);
-    --shadow-medium: 0 2px 8px rgba(0,0,0,0.2);
+    --primary-color: #2c3e50;        /* Main dark blue for navbar and headings */
+    --secondary-color: #34495e;      /* Slightly lighter blue for dropdowns */
+    --accent-color: #ecf0f1;        /* Light gray for highlights and borders */
+    --text-light: #ffffff;          /* White text for dark backgrounds */
+    --text-muted: #bdc3c7;          /* Muted gray for secondary text */
+    --transition: 0.3s ease;        /* Standard transition timing for animations */
+    --navbar-height: 70px;          /* Fixed height for sticky navigation */
+    --shadow-light: 0 2px 4px rgba(0,0,0,0.1);    /* Subtle shadow for depth */
+    --shadow-medium: 0 2px 8px rgba(0,0,0,0.2);   /* Medium shadow for cards */
 }
 
-/* Base Layout */
+/* ========================================
+   BASE LAYOUT & RESET
+   ======================================== */
 html {
-    min-height: 100%;
+    min-height: 100%;               /* Ensure full height coverage */
 }
 
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+    margin: 0;                      /* Remove default browser margins */
+    font-family: Arial, sans-serif; /* Clean, readable font stack */
+    display: flex;                  /* Use flexbox for full-height layout */
+    flex-direction: column;         /* Stack elements vertically */
+    min-height: 100vh;             /* Full viewport height */
 }
 
+/* Main container for page layout */
 .container {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
+    display: flex;                  /* Enable flexbox layout */
+    flex-direction: column;         /* Stack navbar, content, footer vertically */
+    flex: 1;                       /* Take up remaining space */
 }
 
-/* Navigation Bar */
+/* ========================================
+   NAVIGATION BAR - Sticky Header
+   ======================================== */
 .navbar {
-    background-color: var(--primary-color);
-    width: 100%;
-    padding: 0 20px;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: var(--shadow-light);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+    background-color: var(--primary-color);  /* Dark blue background */
+    width: 100%;                             /* Full width */
+    padding: 0 20px;                         /* Horizontal padding */
+    box-sizing: border-box;                  /* Include padding in width calculation */
+    display: flex;                           /* Flexbox for navbar layout */
+    justify-content: space-between;          /* Space brand and menu apart */
+    align-items: center;                     /* Center items vertically */
+    box-shadow: var(--shadow-light);        /* Subtle shadow for depth */
+    position: sticky;                        /* Stick to top when scrolling */
+    top: 0;                                 /* Position at very top */
+    z-index: 1000;                          /* Ensure navbar stays above content */
 }
 
+/* Brand/logo section */
 .nav-brand h2 {
-    color: var(--text-light);
-    margin: 0;
-    padding: 15px 0;
+    color: var(--text-light);               /* White text */
+    margin: 0;                              /* Remove default margins */
+    padding: 15px 0;                        /* Vertical padding for clickable area */
 }
 
-/* Navigation Menu */
+/* ========================================
+   NAVIGATION MENU - Main Navigation Links
+   ======================================== */
 .nav-menu {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    align-items: center;
+    list-style-type: none;          /* Remove bullet points */
+    padding: 0;                     /* Remove default padding */
+    margin: 0;                      /* Remove default margins */
+    display: flex;                  /* Horizontal menu layout */
+    align-items: center;            /* Center items vertically */
 }
 
 .nav-menu li {
-    position: relative;
+    position: relative;             /* Enable dropdown positioning */
 }
 
+/* Individual navigation links */
 .nav-menu li a {
-    text-decoration: none;
-    color: var(--text-muted);
-    display: block;
-    padding: 20px 15px;
-    transition: color var(--transition);
+    text-decoration: none;          /* Remove underlines */
+    color: var(--text-muted);      /* Light gray text */
+    display: block;                 /* Make entire area clickable */
+    padding: 20px 15px;            /* Generous padding for touch targets */
+    transition: color var(--transition);  /* Smooth color transitions */
 }
 
+/* Hover effect for navigation links */
 .nav-menu li a:hover {
-    color: var(--text-light);
+    color: var(--text-light);      /* Bright white on hover */
 }
 
-/* Dropdown System */
+/* ========================================
+   DROPDOWN SYSTEM - Posts Submenu
+   ======================================== */
 .dropdown {
-    position: relative;
+    position: relative;             /* Enable dropdown positioning */
 }
 
+/* Dropdown menu container */
 .dropdown-menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: var(--secondary-color);
-    min-width: 200px;
-    box-shadow: var(--shadow-medium);
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-10px);
-    transition: all var(--transition);
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    border-radius: 4px;
+    position: absolute;             /* Position relative to parent */
+    top: 100%;                     /* Position below parent link */
+    left: 0;                       /* Align to left edge */
+    background-color: var(--secondary-color);  /* Darker blue background */
+    min-width: 200px;              /* Minimum width for readability */
+    box-shadow: var(--shadow-medium);         /* Stronger shadow for depth */
+    opacity: 0;                    /* Hidden by default */
+    visibility: hidden;            /* Completely hidden */
+    transform: translateY(-10px);  /* Start slightly above final position */
+    transition: all var(--transition);        /* Smooth transitions */
+    list-style-type: none;         /* Remove bullet points */
+    padding: 0;                    /* Remove default padding */
+    margin: 0;                     /* Remove default margins */
+    border-radius: 4px;            /* Rounded corners */
 }
 
+/* Show dropdown on hover */
 .dropdown:hover .dropdown-menu {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
+    opacity: 1;                    /* Fully visible */
+    visibility: visible;           /* Show the menu */
+    transform: translateY(0);      /* Move to final position */
 }
 
+/* Individual dropdown menu items */
 .dropdown-menu li a {
-    padding: 12px 20px;
-    border-bottom: 1px solid var(--primary-color);
+    padding: 12px 20px;           /* Comfortable padding */
+    border-bottom: 1px solid var(--primary-color);  /* Separator lines */
 }
 
+/* Remove border from last dropdown item */
 .dropdown-menu li:last-child a {
     border-bottom: none;
 }
 
-/* Main Content Area */
+/* ========================================
+   MAIN CONTENT AREA - Page Content Container
+   ======================================== */
 .main-content {
-    flex: 1;
-    padding: 20px;
-    background-color: var(--accent-color);
-    min-height: calc(100vh - 80px);
-    max-width: 1200px;
-    margin: 0 auto;
-    box-sizing: border-box;
+    flex: 1;                       /* Take up remaining space */
+    padding: 20px;                 /* Content padding */
+    background-color: var(--accent-color);  /* Light gray background */
+    min-height: calc(100vh - 80px);        /* Full height minus navbar */
+    max-width: 1200px;             /* Maximum content width */
+    margin: 0 auto;                /* Center content horizontally */
+    box-sizing: border-box;        /* Include padding in width calculation */
 }
 
-/* Responsive Content Widths */
+/* ========================================
+   RESPONSIVE CONTENT WIDTHS - Mobile-First Design
+   ======================================== */
 @media screen and (max-width: 1400px) {
-    .main-content { max-width: 1000px; }
+    .main-content { max-width: 1000px; }    /* Large screens */
 }
-
 @media screen and (max-width: 1200px) {
-    .main-content { max-width: 900px; }
+    .main-content { max-width: 900px; }     /* Medium screens */
 }
-
 @media screen and (max-width: 992px) {
-    .main-content { max-width: 800px; }
+    .main-content { max-width: 800px; }     /* Small screens */
 }
-
 @media screen and (max-width: 768px) {
     .main-content { 
-        max-width: 100%; 
-        padding: 15px; 
+        max-width: 100%;           /* Full width on mobile */
+        padding: 15px;             /* Reduced padding on mobile */
     }
 }
 
-/* Mobile Menu Toggle Button */
+/* ========================================
+   MOBILE MENU TOGGLE - Hamburger Menu Button
+   ======================================== */
 .mobile-menu-toggle {
-    display: none;
-    flex-direction: column;
-    cursor: pointer;
-    padding: 10px;
+    display: none;                 /* Hidden on desktop */
+    flex-direction: column;        /* Stack hamburger lines vertically */
+    cursor: pointer;               /* Show pointer cursor */
+    padding: 10px;                 /* Touch-friendly padding */
 }
 
+/* Individual hamburger menu lines */
 .mobile-menu-toggle span {
-    width: 25px;
-    height: 3px;
-    background-color: var(--text-light);
-    margin: 3px 0;
-    transition: var(--transition);
+    width: 25px;                   /* Line width */
+    height: 3px;                   /* Line height */
+    background-color: var(--text-light);  /* White lines */
+    margin: 3px 0;                 /* Space between lines */
+    transition: var(--transition);  /* Smooth transitions */
 }
 
-/* Mobile Responsive Design */
+/* ========================================
+   MOBILE RESPONSIVE DESIGN - Mobile-First Approach
+   ======================================== */
 @media screen and (max-width: 768px) {
     .navbar {
-        padding: 0 15px;
+        padding: 0 15px;           /* Reduced padding on mobile */
     }
     
+    /* Mobile navigation menu */
     .nav-menu {
-        position: fixed;
-        top: -100vh;
-        left: 0;
-        width: 100%;
-        height: calc(100vh - var(--navbar-height));
-        background-color: var(--primary-color);
-        flex-direction: column;
-        align-items: flex-start;
-        transition: top var(--transition);
-        overflow-y: auto;
+        position: fixed;           /* Fixed positioning for overlay */
+        top: -100vh;               /* Start above viewport (hidden) */
+        left: 0;                   /* Full width */
+        width: 100%;               /* Full width */
+        height: calc(100vh - var(--navbar-height));  /* Full height minus navbar */
+        background-color: var(--primary-color);      /* Dark background */
+        flex-direction: column;    /* Stack items vertically */
+        align-items: flex-start;   /* Align to left edge */
+        transition: top var(--transition);           /* Smooth slide animation */
+        overflow-y: auto;          /* Scrollable if content is long */
     }
     
+    /* Show mobile menu when active */
     .nav-menu.active {
-        top: var(--navbar-height);
+        top: var(--navbar-height); /* Slide down to show */
     }
     
+    /* Full-width mobile menu items */
     .nav-menu li {
-        width: 100%;
-        border-bottom: 1px solid var(--secondary-color);
+        width: 100%;               /* Full width */
+        border-bottom: 1px solid var(--secondary-color);  /* Separator lines */
     }
     
+    /* Mobile menu link styling */
     .nav-menu li a {
-        padding: 15px 20px;
-        width: 100%;
-        box-sizing: border-box;
+        padding: 15px 20px;        /* Comfortable touch targets */
+        width: 100%;               /* Full width */
+        box-sizing: border-box;    /* Include padding in width */
     }
     
+    /* Mobile dropdown behavior */
     .dropdown-menu {
-        position: static;
-        opacity: 1;
-        visibility: visible;
-        transform: none;
-        background-color: var(--secondary-color);
-        box-shadow: none;
-        width: 100%;
-        display: none;
+        position: static;          /* Stack vertically instead of overlay */
+        opacity: 1;                /* Always visible */
+        visibility: visible;       /* Always visible */
+        transform: none;           /* No transform animation */
+        background-color: var(--secondary-color);  /* Darker background */
+        box-shadow: none;          /* No shadow needed */
+        width: 100%;               /* Full width */
+        display: none;             /* Hidden by default */
     }
     
+    /* Show mobile dropdown when active */
     .dropdown.active .dropdown-menu {
-        display: block;
+        display: block;            /* Show the dropdown */
     }
     
+    /* Show mobile menu toggle on mobile */
     .mobile-menu-toggle {
-        display: flex;
+        display: flex;             /* Show hamburger menu */
     }
     
+    /* Smaller brand text on mobile */
     .nav-brand h2 {
-        font-size: 1.2em;
+        font-size: 1.2em;         /* Reduced font size */
     }
 }
 
-/* Mobile Menu Toggle Animation */
+/* ========================================
+   MOBILE MENU ANIMATIONS - Smooth Transitions
+   ======================================== */
+/* Rotate first hamburger line to form X */
 .mobile-menu-toggle.active span:nth-child(1) {
     transform: rotate(-45deg) translate(-5px, 6px);
 }
 
+/* Hide middle hamburger line */
 .mobile-menu-toggle.active span:nth-child(2) {
     opacity: 0;
 }
 
+/* Rotate third hamburger line to form X */
 .mobile-menu-toggle.active span:nth-child(3) {
     transform: rotate(45deg) translate(-5px, -6px);
 }
 
-
-
-/* Table Alignment Fix */
+/* ========================================
+   TABLE STYLING - Content Layout & Alignment
+   ======================================== */
+/* Table cell alignment and spacing */
 .main-content table td {
-    vertical-align: top;
-    padding: 1.5rem;
+    vertical-align: top;           /* Align content to top of cells */
+    padding: 1.5rem;               /* Generous padding for readability */
+}
+
+/* Fix photo alignment in tables */
+.main-content table img {
+    display: block;                /* Remove inline spacing issues */
+    margin: 0;                     /* Remove default margins */
+}
+
+/* Fix text alignment in table cells */
+.main-content table td p:first-child,
+.main-content table td ul:first-child {
+    margin-top: 0;                 /* Remove top margin from first elements */
 }
 
