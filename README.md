@@ -7,3 +7,5 @@
 ## TODO
 
 - instead of every page is of `template.html`, I can make every page be `page_name.content.html` and use python to wrap the necessary header and footer
+
+- moreover, source files should be separated from `docs`
