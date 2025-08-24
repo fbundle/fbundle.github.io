@@ -147,6 +147,13 @@ def get_model_factory() -> dict[str, ModelConstructor]:
             tokenizer=tokenizer,
             model=model,
             generate_kwargs={
+                "max_new_tokens": 131072,
+                "min_new_tokens": 200,      # encourage substance, not just 1-liner
+                "temperature": 0.7,         # balanced creativity
+                "top_p": 0.9,               # nucleus sampling
+                "repetition_penalty": 1.1,  # avoid loops
+                "do_sample": True,          # needed with temperature/top_p
+                "eos_token_id": tokenizer.eos_token_id,
             },
         )
 
