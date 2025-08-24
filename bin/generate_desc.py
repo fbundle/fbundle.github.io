@@ -59,16 +59,24 @@ def generate_public_doc_desc(
         )
 
         def helper(name: str):
-            path = f"{doc_dir}/{name}"
-            text_content = get_pdf_text(path).strip()
-            summary = model.get_ai_doc_description(text_content=text_content)
+            try:
+                path = f"{doc_dir}/{name}"
+                text_content = get_pdf_text(path).strip()
+                summary = model.get_ai_doc_description(text_content=text_content)
 
-            desc = DocDescription(
-                name=name,
-                summary=summary,
-                model=model_name,
-            )
-            return desc
+                desc = DocDescription(
+                    name=name,
+                    summary=summary,
+                    model=model_name,
+                )
+                return desc
+            except Exception as e:
+                print(f"DEBUG: failed to generate description for {name}: {e}")
+                return DocDescription(
+                    name=name,
+                    summary="",
+                    model=model_name,
+                )
 
         return helper
 
@@ -79,6 +87,8 @@ def generate_public_doc_desc(
         make_map=make_generate_desc,
         nproc=len(device_name_list),
     ), desc="Generating descriptions", total=len(unloaded_name_list)):
+        if len(desc.summary) == 0:
+            continue
         with open(desc_output_path, "a") as f:
             f.write(desc.model_dump_json() + "\n")
         print(f"DEBUG: generated {desc.name} summary: {desc.summary}")

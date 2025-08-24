@@ -26,7 +26,7 @@ ai_desc: public_doc
 		--html_root_dir $(HTML_ROOT_DIR) \
 		--doc_htmldir $(PUBLIC_DOC_HTMLDIR) \
 		--desc_output_path $(PUBLIC_DOC_DESC_PATH) \
-		--model "openai_gpt_oss_20b:cuda"
+		--model "openai_gpt_oss_20b:0,1,2,3,4,5,6,7"
 vitae:
 	# generate vitae
 	make4ht \
