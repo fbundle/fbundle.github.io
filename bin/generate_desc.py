@@ -2,6 +2,7 @@
 import sys; import os;
 
 import pydantic
+from tqdm import tqdm
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -35,9 +36,10 @@ def generate_public_doc_desc(doc_htmldir: HtmlPath, desc_output_path: str, model
         device_name=device_name,
     )
 
-    for name in os.listdir(doc_dir):
-        if name in loaded:
-            continue
+    name_list = list(os.listdir(doc_dir))
+    unloaded_name_list = [name for name in name_list if name not in loaded]
+
+    for name in tqdm(unloaded_name_list, desc="Generating descriptions", total=len(unloaded_name_list)):
 
         path = f"{doc_dir}/{name}"
 
