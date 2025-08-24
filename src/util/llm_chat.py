@@ -222,7 +222,7 @@ def main():
     )
     parser.add_argument("--list_model", help="list all models", default=False, action='store_true')
     parser.add_argument("--model", type=str, help="model name", default="deepseekr1_distill_qwen1p5b")
-    parser.add_argument("--device", type=str, help="device", default="mps")
+    parser.add_argument("--device", type=str, help="device", default="cpu")
     parser.add_argument("--conversation", type=str, help="conversation.json", default="")
     parser.add_argument("--cache", type=str, help="cache dir", default="")
     args = parser.parse_args()
