@@ -167,6 +167,19 @@ def get_model_factory() -> dict[str, ModelConstructor]:
             },
         )
 
+    def deepseekr1_distill_qwen32b(device_name: Optional[str], cache_dir: Optional[str]):
+        path = "deepseek-ai/DeepSeek-R1-Distill-Qwen-32B"
+        tokenizer = AutoTokenizer.from_pretrained(path)
+        model = AutoModelForCausalLM.from_pretrained(path, cache_dir=cache_dir).to(device_name)
+        return TransformersModel(
+            tokenizer=tokenizer,
+            model=model,
+            generate_kwargs={
+                "max_new_tokens": 131072,
+                "temperature": 0.6,
+                "top_p": 0.95,
+            },
+        )
 
 
     def qwen3_30b_a3b(device_name: Optional[str], cache_dir: Optional[str]):
