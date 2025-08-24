@@ -144,7 +144,11 @@ def get_model_factory() -> dict[str, ModelConstructor]:
     def openai_gpt_oss_20b(device_name: Optional[str], cache_dir: Optional[str]):
         path = "openai/gpt-oss-20b"
         tokenizer = AutoTokenizer.from_pretrained(path)
-        model = AutoModelForCausalLM.from_pretrained(path, cache_dir=cache_dir).to(torch.device(device_name))
+        model = AutoModelForCausalLM.from_pretrained(
+            pretrained_model_name_or_path=path,
+            device_map={"": device_name},
+            cache_dir=cache_dir,
+        )
         return TransformersModel(
             tokenizer=tokenizer,
             model=model,
@@ -162,7 +166,11 @@ def get_model_factory() -> dict[str, ModelConstructor]:
     def deepseekr1_distill_qwen1p5b(device_name: Optional[str], cache_dir: Optional[str]):
         path = "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B"
         tokenizer = AutoTokenizer.from_pretrained(path)
-        model = AutoModelForCausalLM.from_pretrained(path, cache_dir=cache_dir).to(torch.device(device_name))
+        model = AutoModelForCausalLM.from_pretrained(
+            pretrained_model_name_or_path=path,
+            device_map={"": device_name},
+            cache_dir=cache_dir,
+        )
         return TransformersModel(
             tokenizer=tokenizer,
             model=model,
@@ -176,7 +184,11 @@ def get_model_factory() -> dict[str, ModelConstructor]:
     def deepseekr1_distill_qwen32b(device_name: Optional[str], cache_dir: Optional[str]):
         path = "deepseek-ai/DeepSeek-R1-Distill-Qwen-32B"
         tokenizer = AutoTokenizer.from_pretrained(path)
-        model = AutoModelForCausalLM.from_pretrained(path, cache_dir=cache_dir).to(torch.device(device_name))
+        model = AutoModelForCausalLM.from_pretrained(
+            pretrained_model_name_or_path=path,
+            device_map={"": device_name},
+            cache_dir=cache_dir,
+        )
         return TransformersModel(
             tokenizer=tokenizer,
             model=model,
@@ -191,7 +203,11 @@ def get_model_factory() -> dict[str, ModelConstructor]:
     def qwen3_30b_a3b(device_name: Optional[str], cache_dir: Optional[str]):
         path = "Qwen/Qwen3-30B-A3B"
         tokenizer = AutoTokenizer.from_pretrained(path)
-        model = AutoModelForCausalLM.from_pretrained(path, cache_dir=cache_dir).to(torch.device(device_name))
+        model = AutoModelForCausalLM.from_pretrained(
+            pretrained_model_name_or_path=path,
+            device_map={"": device_name},
+            cache_dir=cache_dir,
+        )
         return TransformersModel(
             tokenizer=tokenizer,
             model=model,
@@ -204,7 +220,11 @@ def get_model_factory() -> dict[str, ModelConstructor]:
     def qwen3_30b_a3b_instruct_2507(device_name: Optional[str], cache_dir: Optional[str]):
         path = "Qwen/Qwen3-30B-A3B-Instruct-2507"
         tokenizer = AutoTokenizer.from_pretrained(path)
-        model = AutoModelForCausalLM.from_pretrained(path, cache_dir=cache_dir).to(torch.device(device_name))
+        model = AutoModelForCausalLM.from_pretrained(
+            pretrained_model_name_or_path=path,
+            device_map={"": device_name},
+            cache_dir=cache_dir,
+        )
         return TransformersModel(
             tokenizer=tokenizer,
             model=model,
@@ -216,7 +236,11 @@ def get_model_factory() -> dict[str, ModelConstructor]:
     def qwen3_30b_a3b_thinking_2507(device_name: Optional[str], cache_dir: Optional[str]):
         path = "Qwen/Qwen3-30B-A3B-Thinking-2507"
         tokenizer = AutoTokenizer.from_pretrained(path)
-        model = AutoModelForCausalLM.from_pretrained(path, cache_dir=cache_dir).to(torch.device(device_name))
+        model = AutoModelForCausalLM.from_pretrained(
+            pretrained_model_name_or_path=path,
+            device_map={"": device_name},
+            cache_dir=cache_dir,
+        )
         return TransformersModel(
             tokenizer=tokenizer,
             model=model,
@@ -227,7 +251,11 @@ def get_model_factory() -> dict[str, ModelConstructor]:
     def mistral_small_3_1_24b_instruct_2503(device_name: Optional[str], cache_dir: Optional[str]):
         path = "mistralai/Mistral-Small-3.1-24B-Instruct-2503"
         tokenizer = AutoTokenizer.from_pretrained(path)
-        model = Mistral3ForConditionalGeneration.from_pretrained(path, cache_dir=cache_dir).to(torch.device(device_name))
+        model = Mistral3ForConditionalGeneration.from_pretrained(
+            pretrained_model_name_or_path=path,
+            device_map={"": device_name},
+            cache_dir=cache_dir,
+        )
         return TransformersModel(
             tokenizer=tokenizer,
             model=model,
