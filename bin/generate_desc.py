@@ -5,6 +5,8 @@ from typing import Set
 import pydantic
 from tqdm import tqdm
 
+from src.util.pipe import ValueIter
+
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from src.util.util import HtmlPath
@@ -19,7 +21,13 @@ class DocDescription(pydantic.BaseModel):
     model: str
 
 
-def generate_public_doc_desc(doc_htmldir: HtmlPath, desc_output_path: str, model: str = "deepseekr1_distill_qwen1p5b:cpu"):
+
+
+
+def generate_public_doc_desc(
+        doc_htmldir: HtmlPath, desc_output_path: str,
+        model: str = "deepseekr1_distill_qwen1p5b:0,1,2,3,4,5,6,7",
+):
     doc_dir = doc_htmldir.to_path()
 
     loaded: Set[tuple[str, str]] = set()
@@ -31,34 +39,50 @@ def generate_public_doc_desc(doc_htmldir: HtmlPath, desc_output_path: str, model
             desc = DocDescription.model_validate_json(line)
             loaded.add((desc.name, desc.model))
 
-    model_name, device_name = model.split(":")
-    model = DocDescriptionModel(
-        model_name=model_name,
-        device_name=device_name,
-    )
+    parts = model.split(":")
+    if len(parts) == 1:
+        model_name = parts[0]
+        device_name_list = ["cpu"]
+    else:
+        model_name, device_name_list = parts[1].split(",")
+        device_name_list = [f"cuda:{int(device_name)}" for device_name in device_name_list]
+
+
 
     name_list = list(os.listdir(doc_dir))
     unloaded_name_list = [name for name in name_list if (name, model_name) not in loaded]
 
-    for name in tqdm(unloaded_name_list, desc="Generating descriptions", total=len(unloaded_name_list)):
-
-        path = f"{doc_dir}/{name}"
-
-        text_content = get_pdf_text(path).strip()
-        summary = model.get_ai_doc_description(text_content=text_content)
-
-        desc = DocDescription(
-            name=name,
-            summary=summary,
-            model=model_name,
+    def make_generate_desc(i: int):
+        model = DocDescriptionModel(
+            model_name=model_name,
+            device_name=device_name_list[i],
         )
-        parent_path = os.path.dirname(desc_output_path)
-        if len(parent_path) > 0:
-            os.makedirs(parent_path, exist_ok=True)
 
+        def helper(name: str):
+            path = f"{doc_dir}/{name}"
+            text_content = get_pdf_text(path).strip()
+            summary = model.get_ai_doc_description(text_content=text_content)
+
+            desc = DocDescription(
+                name=name,
+                summary=summary,
+                model=model_name,
+            )
+            return desc
+
+        return helper
+
+    parent_path = os.path.dirname(desc_output_path)
+    if len(parent_path) > 0:
+        os.makedirs(parent_path, exist_ok=True)
+    for desc in tqdm(ValueIter(x_iter=unloaded_name_list).apply_parallel(
+        make_map=make_generate_desc,
+        nproc=len(device_name_list),
+    ), desc="Generating descriptions", total=len(unloaded_name_list)):
         with open(desc_output_path, "a") as f:
             f.write(desc.model_dump_json() + "\n")
         print(f"DEBUG: generated {desc.name} summary: {desc.summary}")
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
