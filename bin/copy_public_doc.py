@@ -10,15 +10,18 @@ from src.util.util import HtmlPath
 
 
 def copy_public_doc(input_dir: str, doc_htmldir: HtmlPath):
-    output_dir = doc_htmldir.to_path()
+    try:
+        output_dir = doc_htmldir.to_path()
 
-    os.makedirs(output_dir, exist_ok=True)
+        os.makedirs(output_dir, exist_ok=True)
 
-    for name in os.listdir(input_dir):
-        input_path = f"{input_dir}/{name}/main.pdf"
-        output_path = f"{output_dir}/{name}.pdf"
-        if os.path.exists(input_path):
-            shutil.copyfile(input_path, output_path)
+        for name in os.listdir(input_dir):
+            input_path = f"{input_dir}/{name}/main.pdf"
+            output_path = f"{output_dir}/{name}.pdf"
+            if os.path.exists(input_path):
+                shutil.copyfile(input_path, output_path)
+    except Exception as e:
+        print(f"DEBUG: failed to copy public docs: {e}")
 
 
 if __name__ == "__main__":
