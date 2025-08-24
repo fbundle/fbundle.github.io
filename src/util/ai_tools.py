@@ -90,8 +90,8 @@ class DocDescriptionModel:
         chunk = True
         if chunk: # don't need to chunk for mistral model
             words = text_content.split()
-            if len(words) > 5000:
-                words = words[:5000]
+            if len(words) > 1000:
+                words = words[:1000]
             text_content = " ".join(words)
 
         messages = [
