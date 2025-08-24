@@ -26,7 +26,6 @@ class DocDescription(pydantic.BaseModel):
 
 def generate_public_doc_desc(
         doc_htmldir: HtmlPath, desc_output_path: str,
-        model: str = "deepseekr1_distill_qwen1p5b:0,1,2,3,4,5,6,7",
 ):
     doc_dir = doc_htmldir.to_path()
 
@@ -39,14 +38,8 @@ def generate_public_doc_desc(
             desc = DocDescription.model_validate_json(line)
             loaded.add((desc.name, desc.model))
 
-    parts = model.split(":")
-    if len(parts) == 1:
-        model_name, device_name_list = parts[0], ["cpu"]
-    else:
-        model_name, device_name_list = parts[0], parts[1].split(",")
-        device_name_list = [f"cuda:{int(device_name)}" for device_name in device_name_list]
-
-
+    model_name = "openai_gpt_oss_20b"
+    device_name_list = ["cuda:0", "cuda:1", "cuda:2", "cuda:3", "cuda:4", "cuda:5", "cuda:6", "cuda:7"]
 
     name_list = list(os.listdir(doc_dir))
     unloaded_name_list = [name for name in name_list if (name, model_name) not in loaded]
@@ -91,7 +84,6 @@ if __name__ == "__main__":
     parser.add_argument("--html_root_dir", type=str)
     parser.add_argument("--doc_htmldir", type=str)
     parser.add_argument("--desc_output_path", type=str)
-    parser.add_argument("--model", type=str, default="deepseekr1_distill_qwen1p5b:cpu")
     args = parser.parse_args()
 
 
@@ -103,5 +95,4 @@ if __name__ == "__main__":
     generate_public_doc_desc(
         doc_htmldir=DOC_HTMLDIR,
         desc_output_path=args.desc_output_path,
-        model=args.model,
     )
