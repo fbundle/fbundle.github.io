@@ -1,7 +1,34 @@
 #!/usr/bin/env python3
 import os
-import torch
+import re
+import string
+
 from .llm_chat import get_model_factory, Message, ROLE_SYSTEM, ROLE_USER
+
+
+def clean_text(doc: str) -> str:
+    """
+    Normalize and clean an English document string.
+    """
+    # Lowercase
+    doc = doc.lower()
+
+    # Remove non-ASCII characters (emoji, foreign symbols, etc.)
+    doc = doc.encode("ascii", errors="ignore").decode()
+
+    # Replace newlines and tabs with space
+    doc = re.sub(r"[\r\n\t]+", " ", doc)
+
+    # Remove punctuation
+    doc = doc.translate(str.maketrans("", "", string.punctuation))
+
+    # Normalize multiple spaces → single space
+    doc = re.sub(r"\s+", " ", doc)
+
+    # Trim leading/trailing spaces
+    doc = doc.strip()
+
+    return doc
 
 
 def parse_response(response: str):
@@ -78,6 +105,8 @@ class DocDescriptionModel:
             self.prompt = f.read()
 
     def get_ai_doc_description(self, text_content: str) -> str:
+        text_content = clean_text(text_content)
+
         messages = [
             Message(role=ROLE_SYSTEM, content=self.prompt),
             Message(role=ROLE_USER, content=f"Please analyze this document:\n\n{text_content}")
