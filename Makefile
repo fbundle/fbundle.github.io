@@ -11,6 +11,7 @@ HTML_ROOT_DIR="docs"
 PUBLIC_DOC_HTMLDIR="/assets/public_doc"
 PUBLIC_DOC_INPUT_DIR="/Users/khanh/mathdoc/public_doc"
 
+PUBLIC_DOC_DESC_PATH="data/public_doc_desc.json"
 TEXT_TEMPLATE_PATH="docs/pages/posts/text.template.html"
 TEXT_OUTPUT_PATH="docs/pages/posts/text.html"
 
@@ -45,6 +46,7 @@ text: pages public_doc
 	python bin/generate_text.py \
 		--html_root_dir $(HTML_ROOT_DIR) \
 		--doc_htmldir $(PUBLIC_DOC_HTMLDIR) \
+		--desc_input_path $(PUBLIC_DOC_DESC_PATH) \
 		--text_template_path $(TEXT_TEMPLATE_PATH) \
 		--text_output_path $(TEXT_OUTPUT_PATH)
 

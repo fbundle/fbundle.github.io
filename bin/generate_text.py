@@ -28,7 +28,7 @@ def generate_text_html(
         doc_htmldir: HtmlPath,
         text_template_path: str,
         text_output_path: str,
-        desc_input_path: Optional[str] = None,
+        desc_input_path: str = "",
 ):
     doc_dir = doc_htmldir.to_path()
     html_template = open(text_template_path).read()
@@ -48,7 +48,7 @@ def generate_text_html(
         description={},
     )
 
-    if desc_input_path is not None:
+    if len(desc_input_path) > 0 and os.path.exists(desc_input_path):
         try:
             desc = pydantic.BaseModel.model_validate_json(open(desc_input_path).read())
         except Exception as e:
@@ -91,7 +91,7 @@ if __name__ == "__main__":
     parser.add_argument("--doc_htmldir", type=str)
     parser.add_argument("--text_template_path", type=str)
     parser.add_argument("--text_output_path", type=str)
-    parser.add_argument("--desc_input_path", type=Optional[str], default=None)
+    parser.add_argument("--desc_input_path", type=str, default="")
     args = parser.parse_args()
 
     DOC_HTMLDIR = HtmlPath(
