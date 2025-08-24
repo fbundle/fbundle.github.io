@@ -23,6 +23,10 @@ class DocDescription(pydantic.BaseModel):
     model: str
 
 
+def filter_desc(summary: str) -> str:
+    parts = summary.split("</think>")
+    return parts[-1]
+
 def generate_text_html(
         doc_htmldir: HtmlPath,
         text_template_path: str,
@@ -51,7 +55,7 @@ def generate_text_html(
                 if len(line) == 0:
                     continue
                 desc = DocDescription.model_validate_json(line)
-                description_dict[desc.name] = desc.summary
+                description_dict[desc.name] = filter_desc(desc.summary)
                 model_dict[desc.name] = desc.model
         except Exception as e:
             print(f"DEBUG: failed to load {desc_input_path}: {e}")
