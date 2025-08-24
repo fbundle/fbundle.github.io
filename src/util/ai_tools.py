@@ -106,10 +106,12 @@ class DocDescriptionModel:
 
     def get_ai_doc_description(self, text_content: str) -> str:
         text_content = clean_text(text_content)
-        words = text_content.split()
-        if len(words) > 5000:
-            words = words[:5000]
-        text_content = " ".join(words)
+        chunk = False
+        if chunk: # don't need to chunk for mistral model
+            words = text_content.split()
+            if len(words) > 5000:
+                words = words[:5000]
+            text_content = " ".join(words)
 
         messages = [
             Message(role=ROLE_SYSTEM, content=self.prompt),
