@@ -46,22 +46,38 @@ def generate_public_doc_desc(
 
     def make_generate_desc(i: int):
         device_name = device_name_list[i]
-        model = DocDescriptionModel(
-            model_name=model_name,
-            device_name=device_name,
-        )
+        model_wrapper = {
+            "model": DocDescriptionModel(
+                model_name=model_name,
+                device_name=device_name,
+            ),
+        }
 
         def helper(name: str):
-            path = f"{doc_dir}/{name}"
-            text_content = get_pdf_text(path).strip()
-            summary = model.get_ai_doc_description(text_content=text_content)
+            try:
+                path = f"{doc_dir}/{name}"
+                text_content = get_pdf_text(path).strip()
+                summary = model_wrapper["model"].get_ai_doc_description(text_content=text_content)
 
-            desc = DocDescription(
-                name=name,
-                summary=summary,
-                model=model_name,
-            )
-            return desc
+                desc = DocDescription(
+                    name=name,
+                    summary=summary,
+                    model=model_name,
+                )
+                return desc
+            except Exception as e:
+                print(f"DEBUG: failed to generate description for {name}: {e}")
+                # reset model
+                model_wrapper["model"] = DocDescriptionModel(
+                    model_name=model_name,
+                    device_name=device_name,
+                )
+                return DocDescription(
+                    name=name,
+                    summary="",
+                    model=model_name,
+                )
+
 
         return helper
 
