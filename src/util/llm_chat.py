@@ -112,19 +112,19 @@ def export_conversation(conversation_path: str, message_list: list[Message], ove
             f.write(message.model_dump_json() + "\n")
 
 class Conversation:
-    def __init__(self, init_message_list: list[Message] | None = None, conversation_path: str | None = None):
+    def __init__(self, init_message_list: list[Message] | None = None, conversation_path: str = ""):
         if init_message_list is None:
             init_message_list = []
 
-        self.conversation_path: str | None = conversation_path
+        self.conversation_path: str = conversation_path
         self.message_list: list[Message] = init_message_list
 
-        if self.conversation_path is not None and os.path.exists(self.conversation_path):
+        if len(self.conversation_path) > 0 and os.path.exists(self.conversation_path):
             self.message_list.extend(load_conversation(self.conversation_path))
 
     def extend(self, *message_list: Message):
         self.message_list.extend(message_list)
-        if self.conversation_path is not None: # export new messages
+        if len(self.conversation_path) > 0: # export new messages
             export_conversation(self.conversation_path, list(message_list), overwrite=False)
 
 
@@ -219,8 +219,8 @@ def main():
     parser.add_argument("--list_model", help="list all models", default=False, action='store_true')
     parser.add_argument("--model", type=str, help="model name", default="deepseekr1_distill_qwen1p5b")
     parser.add_argument("--device", type=str, help="device", default="mps")
-    parser.add_argument("--conversation", type=Optional[str], help="conversation.json", default=None)
-    parser.add_argument("--cache", type=Optional[str], help="cache dir", default=None)
+    parser.add_argument("--conversation", type=str, help="conversation.json", default="")
+    parser.add_argument("--cache", type=str, help="cache dir", default="")
     args = parser.parse_args()
 
     def print_some(*args, **kwargs):
@@ -237,9 +237,9 @@ def main():
     model_name = args.model
     conversation_path = args.conversation
     device = torch.device(args.device)
-    cache_dir = args.cache
+    cache_dir = args.cache if len(args.cache) > 0 else None
 
-    model = model_factory[model_name](device,cache_dir)
+    model = model_factory[model_name](device, cache_dir)
     conversation = Conversation(conversation_path=conversation_path)
 
     while True:
