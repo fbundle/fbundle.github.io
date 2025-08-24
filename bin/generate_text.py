@@ -1,11 +1,9 @@
 #!/usr/bin/env python
-import os
-import sys
-from typing import Optional
+import sys; import os; sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 
 import pydantic
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import argparse
 import os
@@ -34,11 +32,10 @@ def generate_text_html(
     html_template = open(text_template_path).read()
 
     item_list = []
-    for name in sorted(os.listdir(doc_dir)):
+    for name in os.listdir(doc_dir):
         path = f"{doc_dir}/{name}"
         creation_date, modified_date = get_pdf_dates(path)
-        text_content = get_pdf_text(path).strip()
-        item = (name, text_content, creation_date, modified_date)
+        item = (name, creation_date, modified_date)
         item_list.append(item)
 
     item_list.sort(key=lambda x: x[2], reverse=True)  # sort by modified date
@@ -62,7 +59,7 @@ def generate_text_html(
     content = ""
     if len(desc.summary) > 0:
         content += f"AI summary: {desc.summary}<hr>"
-    for name, text_content, creation_date, modified_date in item_list:
+    for name, creation_date, modified_date in item_list:
         modified_date_str = datetime_to_str(modified_date)
 
         comment = ""

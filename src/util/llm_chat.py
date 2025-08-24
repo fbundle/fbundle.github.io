@@ -80,7 +80,7 @@ class TransformersModel(Model):
         text_streamer = TextIteratorStreamer(
             self.tokenizer,
             skip_prompt=True,  # skip the prompt, stream the output only
-            skip_special_tokens=True, # pass into tokenizer.decode, skip EOS for example
+            skip_special_tokens=True,  # pass into tokenizer.decode, skip EOS for example
         )
         thread = Thread(target=TransformersModel._generate, args=(self, message_list, text_streamer))
         thread.start()
@@ -90,6 +90,7 @@ class TransformersModel(Model):
             thread.join()
 
         return streamer()
+
 
 def load_conversation(conversation_path: str) -> list[Message]:
     message_list = []
@@ -101,6 +102,7 @@ def load_conversation(conversation_path: str) -> list[Message]:
         message_list.append(message)
     return message_list
 
+
 def export_conversation(conversation_path: str, message_list: list[Message], overwrite: bool = False):
     parent_path = os.path.dirname(conversation_path)
     if len(parent_path) > 0:
@@ -110,6 +112,7 @@ def export_conversation(conversation_path: str, message_list: list[Message], ove
     with open(conversation_path, mode=mode) as f:
         for message in message_list:
             f.write(message.model_dump_json() + "\n")
+
 
 class Conversation:
     def __init__(self, init_message_list: list[Message] | None = None, conversation_path: str = ""):
@@ -124,7 +127,7 @@ class Conversation:
 
     def extend(self, *message_list: Message):
         self.message_list.extend(message_list)
-        if len(self.conversation_path) > 0: # export new messages
+        if len(self.conversation_path) > 0:  # export new messages
             export_conversation(self.conversation_path, list(message_list), overwrite=False)
 
 
@@ -157,10 +160,11 @@ def parse_message(text: str) -> Message | None:
     )
 
 
-ModelConstructor = Callable[[torch.device, str], Model]
+ModelConstructor = Callable[[Optional[torch.device], Optional[str]], Model]
+
 
 def get_model_factory() -> dict[str, ModelConstructor]:
-    def openai_gpt_oss_20b(device: torch.device | None, cache_dir: str):
+    def openai_gpt_oss_20b(device: Optional[torch.device], cache_dir: Optional[str]):
         return TransformersModel(
             model_path="openai/gpt-oss-20b",
             device=device,
@@ -169,7 +173,7 @@ def get_model_factory() -> dict[str, ModelConstructor]:
             },
         )
 
-    def deepseekr1_distill_qwen1p5b(device: torch.device | None, cache_dir: str):
+    def deepseekr1_distill_qwen1p5b(device: Optional[torch.device], cache_dir: Optional[str]):
         return TransformersModel(
             model_path="deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B",
             device=device,
@@ -183,7 +187,7 @@ def get_model_factory() -> dict[str, ModelConstructor]:
             },
         )
 
-    def qwq_32b(device: torch.device | None, cache_dir: str):
+    def qwq_32b(device: Optional[torch.device], cache_dir: Optional[str]):
         return TransformersModel(
             model_path="Qwen/QwQ-32B",
             device=device,
@@ -192,7 +196,7 @@ def get_model_factory() -> dict[str, ModelConstructor]:
             },
         )
 
-    def qwen3_30b_a3b(device: torch.device | None, cache_dir: str):
+    def qwen3_30b_a3b(device: Optional[torch.device], cache_dir: Optional[str]):
         return TransformersModel(
             model_path="Qwen/Qwen3-30B-A3B",
             device=device,

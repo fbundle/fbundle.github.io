@@ -20,6 +20,12 @@ all: vitae pages text
 run:
 	go run bin/fileserver.go docs
 
+ai_desc: public_doc
+	# generate ai description
+	python bin/generate_desc.py \
+		--html_root_dir $(HTML_ROOT_DIR) \
+		--doc_htmldir $(PUBLIC_DOC_HTMLDIR) \
+		--desc_output_path $(PUBLIC_DOC_DESC_PATH)
 vitae:
 	# generate vitae
 	make4ht \

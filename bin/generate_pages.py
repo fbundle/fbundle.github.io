@@ -1,3 +1,7 @@
+#!/usr/bin/env python
+import sys; import os; sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+
 import argparse
 import os
 import pathlib

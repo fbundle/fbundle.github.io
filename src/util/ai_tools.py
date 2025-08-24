@@ -1,0 +1,117 @@
+#!/usr/bin/env python3
+import os
+import torch
+from .llm_chat import get_model_factory, Message, ROLE_SYSTEM, ROLE_USER
+
+
+def parse_response(response: str):
+    # Parse the response - for single document, we expect just the description
+    print("Parsing AI response...")
+
+    # Clean up the response and extract the description
+    response = response.strip()
+
+    # Remove any markdown formatting or extra text
+    if response.startswith("```"):
+        response = response[3:]
+    if response.endswith("```"):
+        response = response[:-3]
+
+    response = response.strip()
+
+    # Remove thinking process text (common patterns)
+    thinking_patterns = [
+        "Alright,",
+        "Let me",
+        "I need to",
+        "First,",
+        "So,",
+        "Putting it all together,",
+        "In conclusion,",
+        "<think>",
+        "</think>",
+        "Next,",
+        "I should",
+        "I'll",
+        "The user",
+        "This document",
+        "The document"
+    ]
+
+    # More aggressive pattern removal
+    for pattern in thinking_patterns:
+        if pattern in response:
+            # Find the start of thinking text and remove it
+            parts = response.split(pattern)
+            if len(parts) > 1:
+                # Keep only the last part (the actual description)
+                response = parts[-1].strip()
+                # Continue checking for more patterns
+                continue
+
+    # Additional cleanup: remove any remaining thinking text
+    lines = response.split('\n')
+    clean_lines = []
+    for line in lines:
+        line = line.strip()
+        # Skip lines that look like thinking process
+        if any(skip in line.lower() for skip in ['think', 'user', 'document', 'should', 'need to']):
+            continue
+        if line and len(line) > 10:  # Only keep substantial lines
+            clean_lines.append(line)
+
+    if clean_lines:
+        response = ' '.join(clean_lines)
+
+    return response
+
+class DocDescriptionModel:
+    def __init__(
+            self,
+            model_name: str = "gpt_oss_20b_transformers",
+    ):
+        device = torch.device("cpu" if not torch.cuda.is_available() else "cuda:0")
+
+        self.model = get_model_factory()[model_name](device, None)
+
+        prompt_file = os.path.join(os.path.dirname(__file__), "ai_single_doc_prompt.txt")
+        with open(prompt_file, 'r') as f:
+            self.prompt = f.read()
+
+    def get_ai_doc_description(self, text_content: str) -> str:
+        messages = [
+            Message(role=ROLE_SYSTEM, content=self.prompt),
+            Message(role=ROLE_USER, content=f"Please analyze this document:\n\n{text_content}")
+        ]
+
+        print(f"\n{'=' * 50}")
+        print("AI is generating document description...")
+        print(f"Document length: {len(text_content)} characters")
+        print(f"{'=' * 50}")
+
+        response = ""
+        for i, text in enumerate(self.model.chat(messages)):
+            if i >= 10000:
+                raise Exception("AI output limit exceeded - probably hallucinated")
+            print(text, end="", flush=True)
+            response += text
+        print()
+
+        print(f"{'=' * 50}")
+        print("AI generation completed!")
+        print(f"{'=' * 50}")
+
+
+        response = parse_response(response)
+
+        print("✓ Successfully generated document description")
+
+        # Display final result
+        print(f"\n{'=' * 50}")
+        print("🎉 SINGLE DOCUMENT DESCRIPTION COMPLETED!")
+        print(f"{'=' * 50}")
+        print(f"Description: {response}")
+        print(f"{'=' * 50}")
+
+        return response
+
