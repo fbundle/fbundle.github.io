@@ -100,12 +100,16 @@ class DocDescriptionModel:
     ):
         self.model = get_model_factory()[model_name](device_name, None)
 
-        prompt_file = os.path.join(os.path.dirname(__file__), "ai_single_doc_prompt.txt")
+        prompt_file = os.path.join(os.path.dirname(__file__), "doc_desc_prompt.txt")
         with open(prompt_file, 'r') as f:
             self.prompt = f.read()
 
     def get_ai_doc_description(self, text_content: str) -> str:
         text_content = clean_text(text_content)
+        words = text_content.split()
+        if len(words) > 5000:
+            words = words[:5000]
+        text_content = " ".join(words)
 
         messages = [
             Message(role=ROLE_SYSTEM, content=self.prompt),
