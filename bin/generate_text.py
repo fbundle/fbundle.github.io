@@ -49,7 +49,7 @@ def generate_text_html(
                 line = line.strip()
                 if len(line) == 0:
                     continue
-                desc = pydantic.BaseModel.model_validate_json(line)
+                desc = DocDescription.model_validate_json(line)
                 description_dict[desc.name] = desc.summary
         except Exception as e:
             print(f"DEBUG: failed to load {desc_input_path}: {e}")
@@ -61,7 +61,11 @@ def generate_text_html(
         comment = ""
         description = description_dict.get(name, "")
         if len(description) > 0:
-            comment = f'<small style="opacity: 0.6; color: #666; font-style: italic; filter: blur(0.3px);">(AI generated description: {description})</small>'
+            words = description.split()
+            if len(words) > 100:
+                words = words[-100:]
+            description = " ".join(words)
+            comment = f'<div style="opacity: 0.6; color: #666; font-style: italic; filter: blur(0.3px);"> (AI generated description: ... {description})</div>'
 
         content += f"""
         <li>
