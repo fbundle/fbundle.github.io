@@ -160,23 +160,23 @@ def parse_message(text: str) -> Message | None:
     )
 
 
-ModelConstructor = Callable[[Optional[torch.device], Optional[str]], Model]
+ModelConstructor = Callable[[Optional[str], Optional[str]], Model]
 
 
 def get_model_factory() -> dict[str, ModelConstructor]:
-    def openai_gpt_oss_20b(device: Optional[torch.device], cache_dir: Optional[str]):
+    def openai_gpt_oss_20b(device_name: Optional[str], cache_dir: Optional[str]):
         return TransformersModel(
             model_path="openai/gpt-oss-20b",
-            device=device,
+            device=torch.device(device_name),
             model_kwargs={
                 "cache_dir": cache_dir,
             },
         )
 
-    def deepseekr1_distill_qwen1p5b(device: Optional[torch.device], cache_dir: Optional[str]):
+    def deepseekr1_distill_qwen1p5b(device_name: Optional[str], cache_dir: Optional[str]):
         return TransformersModel(
             model_path="deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B",
-            device=device,
+            device=torch.device(device_name),
             model_kwargs={
                 "cache_dir": cache_dir,
             },
@@ -187,19 +187,19 @@ def get_model_factory() -> dict[str, ModelConstructor]:
             },
         )
 
-    def qwq_32b(device: Optional[torch.device], cache_dir: Optional[str]):
+    def qwq_32b(device_name: Optional[str], cache_dir: Optional[str]):
         return TransformersModel(
             model_path="Qwen/QwQ-32B",
-            device=device,
+            device=torch.device(device_name),
             model_kwargs={
                 "cache_dir": cache_dir,
             },
         )
 
-    def qwen3_30b_a3b(device: Optional[torch.device], cache_dir: Optional[str]):
+    def qwen3_30b_a3b(device_name: Optional[str], cache_dir: Optional[str]):
         return TransformersModel(
             model_path="Qwen/Qwen3-30B-A3B",
-            device=device,
+            device=torch.device(device_name),
             model_kwargs={
                 "cache_dir": cache_dir,
             },
@@ -240,10 +240,10 @@ def main():
 
     model_name = args.model
     conversation_path = args.conversation
-    device = torch.device(args.device)
+    device_name = args.device
     cache_dir = args.cache if len(args.cache) > 0 else None
 
-    model = model_factory[model_name](device, cache_dir)
+    model = model_factory[model_name](device_name, cache_dir)
     conversation = Conversation(conversation_path=conversation_path)
 
     while True:
