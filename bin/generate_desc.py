@@ -38,7 +38,7 @@ def generate_public_doc_desc(doc_htmldir: HtmlPath, desc_output_path: str, model
     )
 
     name_list = list(os.listdir(doc_dir))
-    unloaded_name_list = [name for (name, model_name) in name_list if (name, model_name) not in loaded]
+    unloaded_name_list = [name for name in name_list if (name, model_name) not in loaded]
 
     for name in tqdm(unloaded_name_list, desc="Generating descriptions", total=len(unloaded_name_list)):
 
