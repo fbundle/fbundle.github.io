@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import sys; import os;
+from typing import Set
 
 import pydantic
 from tqdm import tqdm
@@ -21,14 +22,14 @@ class DocDescription(pydantic.BaseModel):
 def generate_public_doc_desc(doc_htmldir: HtmlPath, desc_output_path: str, model: str = "deepseekr1_distill_qwen1p5b:cpu"):
     doc_dir = doc_htmldir.to_path()
 
-    loaded = set()
+    loaded: Set[tuple[str, str]] = set()
     if os.path.exists(desc_output_path):
         for line in open(desc_output_path):
             line = line.strip()
             if len(line) == 0:
                 continue
             desc = DocDescription.model_validate_json(line)
-            loaded.add(desc.name)
+            loaded.add((desc.name, desc.model))
 
     model_name, device_name = model.split(":")
     model = DocDescriptionModel(
@@ -37,7 +38,7 @@ def generate_public_doc_desc(doc_htmldir: HtmlPath, desc_output_path: str, model
     )
 
     name_list = list(os.listdir(doc_dir))
-    unloaded_name_list = [name for name in name_list if name not in loaded]
+    unloaded_name_list = [name for (name, model_name) in name_list if (name, model_name) not in loaded]
 
     for name in tqdm(unloaded_name_list, desc="Generating descriptions", total=len(unloaded_name_list)):
 
