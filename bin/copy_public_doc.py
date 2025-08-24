@@ -1,19 +1,13 @@
-import argparse
+#!/usr/bin/env python
 import os
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+import argparse
 import shutil
 
+from src.util.util import HtmlPath
 
-class HtmlPath:
-    def __init__(self, html_root_dir: str, htmlpath: str):
-        assert htmlpath.startswith("/"), "htmlpath must be absolute"
-        self.html_root_dir = html_root_dir
-        self.htmlpath = htmlpath
-
-    def to_path(self) -> str:
-        return self.html_root_dir + self.htmlpath
-
-    def __str__(self) -> str:
-        return self.htmlpath
 
 def copy_public_doc(input_dir: str, doc_htmldir: HtmlPath):
     output_dir = doc_htmldir.to_path()

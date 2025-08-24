@@ -1,100 +1,17 @@
 #!/usr/bin/env python
-import argparse
-import shutil
 import os
-import re
 import sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+import argparse
+import os
 from datetime import datetime
-from tqdm import tqdm
 
-import pymupdf
-
-model = None
-
-enable_ai = False
-
-if enable_ai:
-    try:
-        sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-        from src.ai_chat_completion.ai_tools import get_doc_description_model
-        model = get_doc_description_model()
-    except ImportError as e:
-        print(f"DEBUG: import ai_tools failed ({e})")
-    except Exception as e:
-        print(f"DEBUG: import ai_tools failed ({e})")
-
-
-class HtmlPath:
-    def __init__(self, html_root_dir: str, htmlpath: str):
-        assert htmlpath.startswith("/"), "htmlpath must be absolute"
-        self.html_root_dir = html_root_dir
-        self.htmlpath = htmlpath
-
-    def to_path(self) -> str:
-        return self.html_root_dir + self.htmlpath
-
-    def __str__(self) -> str:
-        return self.htmlpath
-
-def get_pdf_dates(pdf_path: str) -> tuple[datetime, datetime]:
-    def parse_pdf_date(date_str: str) -> datetime | None:
-        if not date_str:
-            return None
-        if date_str.startswith("D:"):
-            date_str = date_str[2:]  # Strip leading "D:" if present
-        date_str = re.sub(r"[+-].*", "", date_str)  # Remove the timezone part like +08'00'
-        dt = datetime.strptime(date_str[:14], "%Y%m%d%H%M%S")  # Parse the date
-        return dt
-
-    doc = pymupdf.Document(pdf_path)
-    creation_date = parse_pdf_date(doc.metadata.get("creationDate"))
-    modified_date = parse_pdf_date(doc.metadata.get("modDate"))
-    if creation_date is None:
-        creation_date = datetime.min
-    if modified_date is None:
-        modified_date = datetime.min
-
-    return creation_date, modified_date
-
+from src.util.pdf_util import get_pdf_dates, get_pdf_text
+from src.util.util import HtmlPath
 
 def datetime_to_str(dt: datetime) -> str:
     return dt.strftime("%d %b %Y")
-
-def get_pdf_text(pdf_path: str) -> str:
-    """
-    Extract text content from a PDF file.
-    
-    Args:
-        pdf_path (str): Path to the PDF file
-        
-    Returns:
-        str: Extracted text content from the PDF
-    """
-    try:
-        print(f"DEBUG: Extracting text from {pdf_path}")
-        doc = pymupdf.Document(pdf_path)
-        text_content = ""
-        
-        for page_num in range(len(doc)):
-            try:
-                page_text = doc[page_num].get_text()
-                text_content += page_text + " "
-            except Exception as e:
-                print(f"DEBUG: Error on page {page_num}: {e}")
-                continue
-        
-        doc.close()
-        
-        # Clean up text: remove extra whitespace and normalize
-        import re
-        text_content = re.sub(r'\s+', ' ', text_content).strip()
-        
-        print(f"DEBUG: Extracted {len(text_content)} characters from {pdf_path}")
-        return text_content
-        
-    except Exception as e:
-        print(f"Error extracting text from {pdf_path}: {e}")
-        return "" 
 
 def generate_text_html(
         doc_htmldir: HtmlPath,
@@ -115,21 +32,6 @@ def generate_text_html(
     item_list.sort(key=lambda x: x[2], reverse=True)  # sort by modified date
 
     description = {}
-    
-    if model is not None:
-        ai_desc_item_list = item_list
-
-        for name, text_content, creation_date, modified_date in tqdm(ai_desc_item_list, desc=f"Processing {len(item_list)} documents with AI..."):
-            print(f"DEBUG: Processing document: {name}")
-            try:
-                if text_content:  # Only process if we got actual text
-                    print(f"DEBUG: Calling AI for {name} with {len(text_content)} characters")
-                    description[name] = model.get_ai_doc_description(text_content)
-                    print(f"DEBUG: AI description for {name}: {description[name][:100]}...")
-                else:
-                    print(f"DEBUG: No text content extracted from {name}")
-            except Exception as e:
-                print(f"DEBUG: get_ai_doc_description failed for {name}: {e}")
     
     content = ""
     for name, text_content, creation_date, modified_date in item_list:
