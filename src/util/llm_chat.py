@@ -20,6 +20,8 @@ class Message(pydantic.BaseModel):
 
 
 class Model:
+    tokenizer: Any
+    model: Any
     def chat(self, message_list: list[Message]) -> Iterator[str]:
         raise NotImplemented
 

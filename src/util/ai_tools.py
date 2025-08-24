@@ -79,6 +79,8 @@ class DocDescriptionModel:
     ):
         self.model = get_model_factory()[model_name](device_name, None)
 
+        print(f"Using model in device: {self.model.model.device}")
+
         prompt_file = os.path.join(os.path.dirname(__file__), "doc_desc_prompt.txt")
         with open(prompt_file, 'r') as f:
             self.prompt = f.read()
