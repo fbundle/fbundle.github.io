@@ -87,7 +87,7 @@ class DocDescriptionModel:
 
     def get_ai_doc_description(self, text_content: str) -> str:
         text_content = clean_text(text_content)
-        chunk = True
+        chunk = False
         if chunk: # don't need to chunk for mistral model
             words = text_content.split()
             if len(words) > 1000:
