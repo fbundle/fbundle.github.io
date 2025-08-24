@@ -17,7 +17,7 @@ class DocDescription(pydantic.BaseModel):
     model: str
 
 
-def generate_public_doc_desc(doc_htmldir: HtmlPath, desc_output_path: str):
+def generate_public_doc_desc(doc_htmldir: HtmlPath, desc_output_path: str, model: str = "deepseekr1_distill_qwen1p5b:cpu"):
     doc_dir = doc_htmldir.to_path()
 
     loaded = set()
@@ -29,8 +29,7 @@ def generate_public_doc_desc(doc_htmldir: HtmlPath, desc_output_path: str):
             desc = DocDescription.model_validate_json(line)
             loaded.add(desc.name)
 
-    model_name = "deepseekr1_distill_qwen1p5b"
-    device_name = "mps"
+    model_name, device_name = model.split(":")
     model = DocDescriptionModel(
         model_name=model_name,
         device_name=device_name,
@@ -63,6 +62,7 @@ if __name__ == "__main__":
     parser.add_argument("--html_root_dir", type=str)
     parser.add_argument("--doc_htmldir", type=str)
     parser.add_argument("--desc_output_path", type=str)
+    parser.add_argument("--model", type=str, default="deepseekr1_distill_qwen1p5b:cpu")
     args = parser.parse_args()
 
 
@@ -74,4 +74,5 @@ if __name__ == "__main__":
     generate_public_doc_desc(
         doc_htmldir=DOC_HTMLDIR,
         desc_output_path=args.desc_output_path,
+        model=args.model,
     )
