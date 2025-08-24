@@ -14,6 +14,7 @@ from src.util.pdf_util import get_pdf_text
 from src.util.ai_tools import DocDescriptionModel
 
 import argparse
+import time
 
 class DocDescription(pydantic.BaseModel):
     name: str
@@ -70,6 +71,7 @@ def generate_public_doc_desc(
                 print(f"DEBUG: failed to generate description for {name}: {e}")
                 # reset model
                 del model_wrapper["model"]
+                time.sleep(10) # wait for resource to be released
                 model_wrapper["model"] = DocDescriptionModel(
                     model_name=model_name,
                     device_name=device_name,
