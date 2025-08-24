@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import sys; import os;
+import sys; import os;sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from typing import Set
 
 import pydantic
@@ -7,7 +7,7 @@ from tqdm import tqdm
 
 from src.util.pipe import ValueIter
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 
 from src.util.util import HtmlPath
 from src.util.pdf_util import get_pdf_text
@@ -38,8 +38,10 @@ def generate_public_doc_desc(
             desc = DocDescription.model_validate_json(line)
             loaded.add((desc.name, desc.model))
 
-    model_name = "openai_gpt_oss_20b"
-    device_name_list = ["cuda:0", "cuda:1", "cuda:2", "cuda:3", "cuda:4", "cuda:5", "cuda:6", "cuda:7"]
+    # model_name = "openai_gpt_oss_20b"
+    # device_name_list = ["cuda:0", "cuda:1", "cuda:2", "cuda:3", "cuda:4", "cuda:5", "cuda:6", "cuda:7"]
+    model_name = "deepseekr1_distill_qwen1p5b"
+    device_name_list = ["mps"]
 
     name_list = list(os.listdir(doc_dir))
     unloaded_name_list = [name for name in name_list if (name, model_name) not in loaded]
