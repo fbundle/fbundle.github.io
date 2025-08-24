@@ -309,5 +309,8 @@ TSWLatexianTemp*
 # *.pdf
 
 # user-defined
+.vscode/
+.idea/
 .DS_Store
-build
+
+tmp/

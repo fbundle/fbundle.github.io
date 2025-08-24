@@ -1,11 +1,5 @@
 #!/usr/bin/env bash
 
-set -xe
-
-python bin/generate_text.py
-bash bin/build_vitae.sh
-
-
 git add .
 git commit -m "auto_push"
 git push
