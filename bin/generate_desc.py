@@ -68,6 +68,7 @@ def generate_public_doc_desc(
             except Exception as e:
                 print(f"DEBUG: failed to generate description for {name}: {e}")
                 # reset model
+                del model_wrapper["model"]
                 model_wrapper["model"] = DocDescriptionModel(
                     model_name=model_name,
                     device_name=device_name,
