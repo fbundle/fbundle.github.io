@@ -1,72 +1,66 @@
-from typing import *
 import os
 import sys
 import time
-import torch
 from threading import Thread
-from dataclasses import dataclass, asdict
-import json
-import importlib
+from typing import *
+
+import pydantic
+import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer, TextIteratorStreamer
 
+ROLE_USER: str = "user"
+ROLE_SYSTEM: str = "system"
+ROLE_ASSISTANT: str = "assistant"
+ROLE_COMMAND_EXPORT: str = "export"
 
-def print_and_flush(*args, **kwargs):
-    print(*args, **kwargs, flush=True)
 
-ROLE_USER = "user"
-ROLE_SYSTEM = "system"
-ROLE_ASSISTANT = "assistant"
-
-@dataclass
-class Message:
+class Message(pydantic.BaseModel):
     role: str
     content: str
-    
-    def model_dump(self) -> dict:
-        """Convert to dictionary (compatibility with Pydantic API)"""
-        return asdict(self)
-    
-    def model_dump_json(self) -> str:
-        """Convert to JSON string (compatibility with Pydantic API)"""
-        return json.dumps(asdict(self))
-    
-    @classmethod
-    def model_validate_json(cls, json_str: str) -> 'Message':
-        """Create from JSON string (compatibility with Pydantic API)"""
-        data = json.loads(json_str)
-        return cls(**data)
+
 
 class Model:
     def chat(self, message_list: list[Message]) -> Iterator[str]:
         raise NotImplemented
 
+
 class TransformersModel(Model):
     def __init__(
-        self,
-        model_path: str,
-        dtype: torch.dtype,
-        device: torch.device,
-        tokenizer_kwargs: dict | None = None,
-        model_kwargs: dict | None = None,
-        generate_kwargs: dict | None = None,
+            self, model_path: str,
+            dtype: torch.dtype | None = None,
+            device: torch.device | None = None,
+            tokenizer_kwargs: dict | None = None,
+            model_kwargs: dict | None = None,
+            generate_kwargs: dict | None = None,
     ):
         super().__init__()
         self.dtype = dtype
         self.device = device
-        
+
         if tokenizer_kwargs is None:
             tokenizer_kwargs = {}
         if model_kwargs is None:
             model_kwargs = {}
-        self.tokenizer = AutoTokenizer.from_pretrained(model_path, **tokenizer_kwargs)
+        self.tokenizer = AutoTokenizer.from_pretrained(
+            pretrained_model_name_or_path=model_path,
+            **tokenizer_kwargs,
+        )
         self.model = AutoModelForCausalLM.from_pretrained(
             pretrained_model_name_or_path=model_path,
             **model_kwargs,
-        ).eval().to(self.dtype).to(self.device)
-        
+        ).eval()
+        self.model = self._move(self.model)
+
         self.generate_kwargs = {}
         if generate_kwargs is not None:
             self.generate_kwargs.update(generate_kwargs)
+
+    def _move(self, o: Any) -> Any:
+        if self.dtype is not None:
+            o = o.to(self.dtype)
+        if self.device is not None:
+            o = o.to(self.device)
+        return o
 
     def _generate(self, message_list: list[Message], text_streamer: TextIteratorStreamer):
         input_text = self.tokenizer.apply_chat_template(
@@ -74,7 +68,8 @@ class TransformersModel(Model):
             tokenize=False,
             add_generation_prompt=True,
         )
-        model_inputs = self.tokenizer(input_text, return_tensors="pt").to(self.dtype).to(self.device)
+        model_inputs = self.tokenizer(input_text, return_tensors="pt")
+        model_inputs = self._move(model_inputs)
         self.model.generate(
             **model_inputs,
             streamer=text_streamer,
@@ -82,47 +77,62 @@ class TransformersModel(Model):
         )
 
     def chat(self, message_list: list[Message]) -> Iterator[str]:
-        text_streamer = TextIteratorStreamer(self.tokenizer,
-            skip_prompt=True, # skip the prompt, stream the output only
+        text_streamer = TextIteratorStreamer(
+            self.tokenizer,
+            skip_prompt=True,  # skip the prompt, stream the output only
             skip_special_tokens=True, # pass into tokenizer.decode, skip EOS for example
         )
         thread = Thread(target=TransformersModel._generate, args=(self, message_list, text_streamer))
         thread.start()
+
         def streamer() -> Iterator[str]:
             yield from text_streamer
             thread.join()
-            
+
         return streamer()
 
+def load_conversation(conversation_path: str) -> list[Message]:
+    message_list = []
+    for line in open(conversation_path):
+        line = line.strip()
+        if len(line) == 0:
+            continue
+        message = Message.model_validate_json(line)
+        message_list.append(message)
+    return message_list
+
+def export_conversation(conversation_path: str, message_list: list[Message], overwrite: bool = False):
+    parent_path = os.path.dirname(conversation_path)
+    if len(parent_path) > 0:
+        os.makedirs(parent_path, exist_ok=True)
+    mode = "w" if overwrite else "a"
+
+    with open(conversation_path, mode=mode) as f:
+        for message in message_list:
+            f.write(message.model_dump_json() + "\n")
+
 class Conversation:
-    def __init__(self, conversation_path: str = ""):
-        self.conversation_path = conversation_path
-        self.message_list = []
-        if len(conversation_path) > 0:
-            if not os.path.exists(self.conversation_path):
-                parent_path = os.path.dirname(self.conversation_path)
-                if not os.path.exists(parent_path):
-                    os.makedirs(parent_path)
-            else:
-                for line in open(self.conversation_path):
-                    line = line.strip()
-                    if len(line) == 0:
-                        continue
-                    message = Message.model_validate_json(line)
-                    self.message_list.append(message)
-    
+    def __init__(self, init_message_list: list[Message] | None = None, conversation_path: str | None = None):
+        if init_message_list is None:
+            init_message_list = []
+
+        self.conversation_path: str | None = conversation_path
+        self.message_list: list[Message] = init_message_list
+
+        if self.conversation_path is not None and os.path.exists(self.conversation_path):
+            self.message_list.extend(load_conversation(self.conversation_path))
+
     def extend(self, *message_list: Message):
         self.message_list.extend(message_list)
-        if len(conversation_path) > 0:
-            with open(self.conversation_path, "a") as f:
-                for message in message_list:
-                    f.write(message.model_dump_json() + "\n")
+        if self.conversation_path is not None: # export new messages
+            export_conversation(self.conversation_path, list(message_list), overwrite=False)
 
-def parse_message(text: str) -> Message:
+
+def parse_message(text: str) -> Message | None:
     """
     prompt should be something like
-    (system prompt) /system you are an AI agent
-    (user prompt) hello, please help, what is an R module in math
+    (system prompt) - /system you are an AI agent
+    (user prompt)   - hello, please help me; what is an R module in math
     """
     text = text.strip()
     if len(text) == 0:
@@ -130,32 +140,38 @@ def parse_message(text: str) -> Message:
 
     prefix = text.split(maxsplit=1)[0].lower()
 
+    if prefix == "/export":
+        return Message(
+            role=ROLE_COMMAND_EXPORT,
+            content=text.lstrip("/export").strip(),
+        )
     if prefix == "/system":
         return Message(
             role=ROLE_SYSTEM,
             content=text.lstrip("/system")
         )
-    else:
-        return Message(
-            role=ROLE_USER,
-            content=text,
-        )
+    # otherwise
+    return Message(
+        role=ROLE_USER,
+        content=text,
+    )
 
-def get_model_factory() -> dict[str, Callable[[], Model]]:
-    def get_openai_gpt_oss_20b_transformers_model(device: torch.device | None, cache_dir: str):
+
+ModelConstructor = Callable[[torch.device, str], Model]
+
+def get_model_factory() -> dict[str, ModelConstructor]:
+    def openai_gpt_oss_20b(device: torch.device | None, cache_dir: str):
         return TransformersModel(
             model_path="openai/gpt-oss-20b",
-            dtype=torch.bfloat16,
             device=device,
             model_kwargs={
                 "cache_dir": cache_dir,
             },
         )
 
-    def get_deepseekr1_distill_qwen1p5b_transformers_model(device: torch.device | None, cache_dir: str):
+    def deepseekr1_distill_qwen1p5b(device: torch.device | None, cache_dir: str):
         return TransformersModel(
             model_path="deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B",
-            dtype=torch.bfloat16,
             device=device,
             model_kwargs={
                 "cache_dir": cache_dir,
@@ -167,106 +183,105 @@ def get_model_factory() -> dict[str, Callable[[], Model]]:
             },
         )
 
-    def get_qwq_32b_transformers_model(device: torch.device | None, cache_dir: str):
+    def qwq_32b(device: torch.device | None, cache_dir: str):
         return TransformersModel(
             model_path="Qwen/QwQ-32B",
-            dtype=torch.bfloat16,
             device=device,
             model_kwargs={
                 "cache_dir": cache_dir,
             },
         )
 
-    def get_qwen3_30b_a3b_transformers_model(device: torch.device | None, cache_dir: str):
+    def qwen3_30b_a3b(device: torch.device | None, cache_dir: str):
         return TransformersModel(
             model_path="Qwen/Qwen3-30B-A3B",
-            dtype=torch.bfloat16,
             device=device,
             model_kwargs={
                 "cache_dir": cache_dir,
             },
         )
 
-    return {
-        "deepseekr1_distill_qwen1p5b_transformers": get_deepseekr1_distill_qwen1p5b_transformers_model,
-        "qwq_32b_transformers": get_qwq_32b_transformers_model,
-        "gpt_oss_20b_transformers": get_openai_gpt_oss_20b_transformers_model,
-        "qwen3_30b_a3b_transformers": get_qwen3_30b_a3b_transformers_model,
-    }
+    return locals()
 
-def get_args():
+
+def main():
     import argparse
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(
+        prog="llm_chat.py",
+        epilog="""llm_chat.py - a simple chatbot that uses LLMs to generate responses to user prompts.
+        
+        /system <system_prompt> - set the system prompt
+        /export <path> - export the conversation to a file
+        <other_prompt> - send a message to the LLM
+        """,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
     parser.add_argument("--list_model", help="list all models", default=False, action='store_true')
-    parser.add_argument("--model", type=str, help="model name", default="deepseekr1_distill_qwen1p5b_transformers")
+    parser.add_argument("--model", type=str, help="model name", default="deepseekr1_distill_qwen1p5b")
     parser.add_argument("--device", type=str, help="device", default="mps")
-    parser.add_argument("--conversation", type=str, help="conversation.json", default="")
-    parser.add_argument("--cache", type=str, help="cache dir", default="")
+    parser.add_argument("--conversation", type=Optional[str], help="conversation.json", default=None)
+    parser.add_argument("--cache", type=Optional[str], help="cache dir", default=None)
     args = parser.parse_args()
-    return args
 
-if __name__ == "__main__":
-    args = get_args()
-    model_factory = get_model_factory()
+    def print_some(*args, **kwargs):
+        print(*args, **kwargs, end="", flush=True)
+
+    model_factory: dict[str, ModelConstructor] = get_model_factory()
 
     if args.list_model:
         print("list of models:")
         for model_name in model_factory.keys():
             print(f"\t{model_name}")
-        exit()
+        exit(0)
 
     model_name = args.model
-    device = torch.device(args.device)
     conversation_path = args.conversation
+    device = torch.device(args.device)
     cache_dir = args.cache
 
-    
-    if len(cache_dir) == 0:
-        cache_dir_list = [
-            "/Users/khanh/vault/downloads/model",
-            "/home/khanh/Downloads/model/",
-            "/home/khanh/ws/cache",
-        ]
-        for cd in cache_dir_list:
-            if os.path.exists(cd):
-                cache_dir = cd
-                break
-    
-    assert len(cache_dir) > 0
-
-    model = model_factory[model_name](device=device, cache_dir=cache_dir)
+    model = model_factory[model_name](device,cache_dir)
     conversation = Conversation(conversation_path=conversation_path)
 
     while True:
         message = parse_message(input("prompt: "))
         if message is not None:
+            if message.role == ROLE_COMMAND_EXPORT:
+                path = message.content
+                export_conversation(path, conversation.message_list, overwrite=True)
+                print(f"saved conversation to {path}")
+                continue
+
             conversation.extend(message)
         if conversation.message_list[-1].role == ROLE_SYSTEM:
             continue
 
-        print_and_flush(f"assistant: ", end="")
+        print_some(f"assistant: ")
+        response = ""
+        token_count = 0
+        t1 = time.perf_counter()
         try:
-            token_count = 0
-            t1 = time.perf_counter()
-
-            response = ""
             for text in model.chat(conversation.message_list):
-                print_and_flush(text, end="")
+                print_some(text)
+
                 response += text
                 token_count += 1
 
         except KeyboardInterrupt:
-            pass
+            ...
         finally:
-            conversation.extend(Message(
-                role=ROLE_ASSISTANT,
-                content=response,
-            ))
+            if token_count > 0:
+                conversation.extend(Message(
+                    role=ROLE_ASSISTANT,
+                    content=response,
+                ))
 
             dur = time.perf_counter() - t1
-            print(f"\ntotal_time: {int(round(dur))}s num_tokens: {token_count} token_per_sec: {token_count / dur}", file=sys.stderr)
-            pass
-        print_and_flush()
+            print(
+                f"\ntotal_time: {int(round(dur))}s num_tokens: {token_count} token_per_sec: {token_count / dur}",
+                file=sys.stderr,
+            )
+        print_some()
 
 
-    
+if __name__ == "__main__":
+    main()
