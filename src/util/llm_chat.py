@@ -204,6 +204,14 @@ def get_model_factory() -> dict[str, ModelConstructor]:
                 "cache_dir": cache_dir,
             },
         )
+    def mistral_small_3_1_24b_instruct_2503(device_name: Optional[str], cache_dir: Optional[str]):
+        return TransformersModel(
+            model_path="mistralai/Mistral-Small-3.1-24B-Instruct-2503",
+            device=torch.device(device_name),
+            model_kwargs={
+                "cache_dir": cache_dir,
+            },
+        )
 
     return locals()
 
