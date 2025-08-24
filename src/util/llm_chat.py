@@ -6,7 +6,7 @@ from typing import *
 
 import pydantic
 import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer, TextIteratorStreamer
+from transformers import AutoModelForCausalLM, AutoTokenizer, TextIteratorStreamer, Mistral3ForConditionalGeneration
 
 ROLE_USER: str = "user"
 ROLE_SYSTEM: str = "system"
@@ -26,41 +26,17 @@ class Model:
 
 class TransformersModel(Model):
     def __init__(
-            self, model_path: str,
-            dtype: torch.dtype | None = None,
-            device: torch.device | None = None,
-            tokenizer_kwargs: dict | None = None,
-            model_kwargs: dict | None = None,
+            self,
+            tokenizer: Any, model: Any,
             generate_kwargs: dict | None = None,
     ):
         super().__init__()
-        self.dtype = dtype
-        self.device = device
-
-        if tokenizer_kwargs is None:
-            tokenizer_kwargs = {}
-        if model_kwargs is None:
-            model_kwargs = {}
-        self.tokenizer = AutoTokenizer.from_pretrained(
-            pretrained_model_name_or_path=model_path,
-            **tokenizer_kwargs,
-        )
-        self.model = AutoModelForCausalLM.from_pretrained(
-            pretrained_model_name_or_path=model_path,
-            **model_kwargs,
-        ).eval()
-        self.model = self._move(self.model)
+        self.tokenizer = tokenizer
+        self.model = model.eval()
 
         self.generate_kwargs = {}
         if generate_kwargs is not None:
             self.generate_kwargs.update(generate_kwargs)
-
-    def _move(self, o: Any) -> Any:
-        if self.dtype is not None:
-            o = o.to(self.dtype)
-        if self.device is not None:
-            o = o.to(self.device)
-        return o
 
     def _generate(self, message_list: list[Message], text_streamer: TextIteratorStreamer):
         input_text = self.tokenizer.apply_chat_template(
@@ -68,8 +44,7 @@ class TransformersModel(Model):
             tokenize=False,
             add_generation_prompt=True,
         )
-        model_inputs = self.tokenizer(input_text, return_tensors="pt")
-        model_inputs = self._move(model_inputs)
+        model_inputs = self.tokenizer(input_text, return_tensors="pt").to(self.model.device).to(self.model.dtype)
         self.model.generate(
             **model_inputs,
             streamer=text_streamer,
@@ -165,21 +140,12 @@ ModelConstructor = Callable[[Optional[str], Optional[str]], Model]
 
 def get_model_factory() -> dict[str, ModelConstructor]:
     def openai_gpt_oss_20b(device_name: Optional[str], cache_dir: Optional[str]):
+        path = "openai/gpt-oss-20b"
+        tokenizer = AutoTokenizer.from_pretrained(path)
+        model = AutoModelForCausalLM.from_pretrained(path, cache_dir=cache_dir).to(device_name)
         return TransformersModel(
-            model_path="openai/gpt-oss-20b",
-            device=torch.device(device_name),
-            model_kwargs={
-                "cache_dir": cache_dir,
-            },
-        )
-
-    def deepseekr1_distill_qwen1p5b(device_name: Optional[str], cache_dir: Optional[str]):
-        return TransformersModel(
-            model_path="deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B",
-            device=torch.device(device_name),
-            model_kwargs={
-                "cache_dir": cache_dir,
-            },
+            tokenizer=tokenizer,
+            model=model,
             generate_kwargs={
                 "max_new_tokens": 131072,
                 "temperature": 0.6,
@@ -187,29 +153,47 @@ def get_model_factory() -> dict[str, ModelConstructor]:
             },
         )
 
-    def qwq_32b(device_name: Optional[str], cache_dir: Optional[str]):
+    def deepseekr1_distill_qwen1p5b(device_name: Optional[str], cache_dir: Optional[str]):
+        path = "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B"
+        tokenizer = AutoTokenizer.from_pretrained(path)
+        model = AutoModelForCausalLM.from_pretrained(path, cache_dir=cache_dir).to(device_name)
         return TransformersModel(
-            model_path="Qwen/QwQ-32B",
-            device=torch.device(device_name),
-            model_kwargs={
-                "cache_dir": cache_dir,
+            tokenizer=tokenizer,
+            model=model,
+            generate_kwargs={
+                "max_new_tokens": 131072,
+                "temperature": 0.6,
+                "top_p": 0.95,
             },
         )
 
+
+
     def qwen3_30b_a3b(device_name: Optional[str], cache_dir: Optional[str]):
+        path = "Qwen/Qwen3-30B-A3B"
+        tokenizer = AutoTokenizer.from_pretrained(path)
+        model = AutoModelForCausalLM.from_pretrained(path, cache_dir=cache_dir).to(device_name)
         return TransformersModel(
-            model_path="Qwen/Qwen3-30B-A3B",
-            device=torch.device(device_name),
-            model_kwargs={
-                "cache_dir": cache_dir,
+            tokenizer=tokenizer,
+            model=model,
+            generate_kwargs={
+                "max_new_tokens": 131072,
+                "temperature": 0.6,
+                "top_p": 0.95,
             },
         )
+
     def mistral_small_3_1_24b_instruct_2503(device_name: Optional[str], cache_dir: Optional[str]):
+        path = "mistralai/Mistral-Small-3.1-24B-Instruct-2503"
+        tokenizer = AutoTokenizer.from_pretrained(path)
+        model = Mistral3ForConditionalGeneration.from_pretrained(path, cache_dir=cache_dir).to(device_name)
         return TransformersModel(
-            model_path="mistralai/Mistral-Small-3.1-24B-Instruct-2503",
-            device=torch.device(device_name),
-            model_kwargs={
-                "cache_dir": cache_dir,
+            tokenizer=tokenizer,
+            model=model,
+            generate_kwargs={
+                "max_new_tokens": 131072,
+                "temperature": 0.6,
+                "top_p": 0.95,
             },
         )
 
