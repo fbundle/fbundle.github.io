@@ -52,9 +52,10 @@ def generate_public_doc_desc(
     unloaded_name_list = [name for name in name_list if (name, model_name) not in loaded]
 
     def make_generate_desc(i: int):
+        device_name = device_name_list[i]
         model = DocDescriptionModel(
             model_name=model_name,
-            device_name=device_name_list[i],
+            device_name=device_name,
         )
 
         def helper(name: str):
