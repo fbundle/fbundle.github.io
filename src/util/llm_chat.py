@@ -204,6 +204,17 @@ def get_model_factory() -> dict[str, ModelConstructor]:
             },
         )
 
+    def qwen3_30b_a3b_thinking_2507(device_name: Optional[str], cache_dir: Optional[str]):
+        path = "Qwen/Qwen3-30B-A3B-Thinking-2507"
+        tokenizer = AutoTokenizer.from_pretrained(path)
+        model = AutoModelForCausalLM.from_pretrained(path, cache_dir=cache_dir).to(device_name)
+        return TransformersModel(
+            tokenizer=tokenizer,
+            model=model,
+            generate_kwargs={
+                "max_new_tokens": 262144,
+            },
+        )
     def mistral_small_3_1_24b_instruct_2503(device_name: Optional[str], cache_dir: Optional[str]):
         path = "mistralai/Mistral-Small-3.1-24B-Instruct-2503"
         tokenizer = AutoTokenizer.from_pretrained(path)
