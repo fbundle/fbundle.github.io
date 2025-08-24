@@ -14,6 +14,7 @@ import argparse
 class DocDescription(pydantic.BaseModel):
     name: str
     summary: str
+    model: str
 
 
 def generate_public_doc_desc(doc_htmldir: HtmlPath, desc_output_path: str):
@@ -28,9 +29,11 @@ def generate_public_doc_desc(doc_htmldir: HtmlPath, desc_output_path: str):
             desc = DocDescription.model_validate_json(line)
             loaded.add(desc.name)
 
+    model_name = "deepseekr1_distill_qwen1p5b"
+    device_name = "mps"
     model = DocDescriptionModel(
-        model_name="deepseekr1_distill_qwen1p5b",
-        device_name="mps",
+        model_name=model_name,
+        device_name=device_name,
     )
 
     for name in os.listdir(doc_dir):
@@ -45,6 +48,7 @@ def generate_public_doc_desc(doc_htmldir: HtmlPath, desc_output_path: str):
         desc = DocDescription(
             name=name,
             summary=summary,
+            model=model_name,
         )
         parent_path = os.path.dirname(desc_output_path)
         if len(parent_path) > 0:

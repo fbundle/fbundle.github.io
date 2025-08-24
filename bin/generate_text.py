@@ -18,8 +18,9 @@ def datetime_to_str(dt: datetime) -> str:
 
 
 class DocDescription(pydantic.BaseModel):
+    name: str
     summary: str
-    description: dict[str, str]
+    model: str
 
 
 def generate_text_html(
@@ -40,30 +41,25 @@ def generate_text_html(
 
     item_list.sort(key=lambda x: x[2], reverse=True)  # sort by modified date
 
-    desc = DocDescription(
-        summary="",
-        description={},
-    )
+    description_dict: dict[str, str] = {}
 
     if len(desc_input_path) > 0 and os.path.exists(desc_input_path):
         try:
-            desc = pydantic.BaseModel.model_validate_json(open(desc_input_path).read())
+            for line in open(desc_input_path):
+                line = line.strip()
+                if len(line) == 0:
+                    continue
+                desc = pydantic.BaseModel.model_validate_json(line)
+                description_dict[desc.name] = desc.summary
         except Exception as e:
             print(f"DEBUG: failed to load {desc_input_path}: {e}")
-        finally:
-            desc = DocDescription(
-                summary="",
-                description={},
-            )
 
     content = ""
-    if len(desc.summary) > 0:
-        content += f"AI summary: {desc.summary}<hr>"
     for name, creation_date, modified_date in item_list:
         modified_date_str = datetime_to_str(modified_date)
 
         comment = ""
-        description = desc.description.get(name, "")
+        description = description_dict.get(name, "")
         if len(description) > 0:
             comment = f'<small style="opacity: 0.6; color: #666; font-style: italic; filter: blur(0.3px);">(AI generated description: {description})</small>'
 
