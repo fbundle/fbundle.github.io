@@ -99,7 +99,7 @@ class DocDescriptionModel:
 
         print(f"\n{'=' * 50}")
         print("AI is generating document description...")
-        print(f"Document length: {len(text_content)} characters")
+        print(f"Document length: {len(text_content.split())} words")
         print(f"{'=' * 50}")
 
         response = ""
