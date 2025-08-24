@@ -41,8 +41,7 @@ def generate_public_doc_desc(
 
     parts = model.split(":")
     if len(parts) == 1:
-        model_name = parts[0]
-        device_name_list = ["cpu"]
+        model_name, device_name_list = parts[0], ["cpu"]
     else:
         model_name, device_name_list = parts[0], parts[1].split(",")
         device_name_list = [f"cuda:{int(device_name)}" for device_name in device_name_list]
