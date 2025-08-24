@@ -31,46 +31,6 @@ def clean_text(doc: str) -> str:
     return doc
 
 
-def parse_response(response: str) -> str:
-    """
-    Clean AI-generated responses by removing markdown, thinking patterns,
-    and irrelevant lines, keeping only the main description.
-    """
-
-    print("Parsing AI response...")
-
-    # 1. Strip whitespace and remove code block markers
-    response = response.strip()
-    response = re.sub(r"^```[\w]*|```$", "", response, flags=re.MULTILINE).strip()
-
-    # 2. Define patterns that indicate AI thinking or meta text
-    thinking_patterns = [
-        r"(?i)^(alright,|let me|i need to|first,|so,|putting it all together,|in conclusion,|next,|i should|i'll)",
-        r"<think>|</think>",
-        r"the user|this document|the document"
-    ]
-
-    # Remove lines that match thinking patterns
-    lines = response.splitlines()
-    clean_lines = []
-    for line in lines:
-        line = line.strip()
-        # Skip lines that match thinking patterns
-        if any(re.search(pattern, line) for pattern in thinking_patterns):
-            continue
-        # Keep only substantial lines
-        if line and len(line) > 10:
-            clean_lines.append(line)
-
-    # 3. Join lines back into a single string
-    cleaned_response = ' '.join(clean_lines)
-
-    # 4. Optional: remove excessive whitespace
-    cleaned_response = re.sub(r'\s+', ' ', cleaned_response).strip()
-
-    return cleaned_response
-
-
 class DocDescriptionModel:
     def __init__(
             self,
@@ -117,7 +77,7 @@ class DocDescriptionModel:
         print(f"{'=' * 50}")
 
 
-        response = parse_response(response)
+        response = clean_text(response)
 
         print("✓ Successfully generated document description")
 
