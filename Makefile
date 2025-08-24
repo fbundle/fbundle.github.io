@@ -25,7 +25,8 @@ ai_desc: public_doc
 	python bin/generate_desc.py \
 		--html_root_dir $(HTML_ROOT_DIR) \
 		--doc_htmldir $(PUBLIC_DOC_HTMLDIR) \
-		--desc_output_path $(PUBLIC_DOC_DESC_PATH)
+		--desc_output_path $(PUBLIC_DOC_DESC_PATH) \
+		--model "openai_gpt_oss_20b:cuda"
 vitae:
 	# generate vitae
 	make4ht \
