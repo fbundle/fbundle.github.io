@@ -31,66 +31,45 @@ def clean_text(doc: str) -> str:
     return doc
 
 
-def parse_response(response: str):
-    # Parse the response - for single document, we expect just the description
+def parse_response(response: str) -> str:
+    """
+    Clean AI-generated responses by removing markdown, thinking patterns,
+    and irrelevant lines, keeping only the main description.
+    """
+
     print("Parsing AI response...")
 
-    # Clean up the response and extract the description
+    # 1. Strip whitespace and remove code block markers
     response = response.strip()
+    response = re.sub(r"^```[\w]*|```$", "", response, flags=re.MULTILINE).strip()
 
-    # Remove any markdown formatting or extra text
-    if response.startswith("```"):
-        response = response[3:]
-    if response.endswith("```"):
-        response = response[:-3]
-
-    response = response.strip()
-
-    # Remove thinking process text (common patterns)
+    # 2. Define patterns that indicate AI thinking or meta text
     thinking_patterns = [
-        "Alright,",
-        "Let me",
-        "I need to",
-        "First,",
-        "So,",
-        "Putting it all together,",
-        "In conclusion,",
-        "<think>",
-        "</think>",
-        "Next,",
-        "I should",
-        "I'll",
-        "The user",
-        "This document",
-        "The document"
+        r"(?i)^(alright,|let me|i need to|first,|so,|putting it all together,|in conclusion,|next,|i should|i'll)",
+        r"<think>|</think>",
+        r"the user|this document|the document"
     ]
 
-    # More aggressive pattern removal
-    for pattern in thinking_patterns:
-        if pattern in response:
-            # Find the start of thinking text and remove it
-            parts = response.split(pattern)
-            if len(parts) > 1:
-                # Keep only the last part (the actual description)
-                response = parts[-1].strip()
-                # Continue checking for more patterns
-                continue
-
-    # Additional cleanup: remove any remaining thinking text
-    lines = response.split('\n')
+    # Remove lines that match thinking patterns
+    lines = response.splitlines()
     clean_lines = []
     for line in lines:
         line = line.strip()
-        # Skip lines that look like thinking process
-        if any(skip in line.lower() for skip in ['think', 'user', 'document', 'should', 'need to']):
+        # Skip lines that match thinking patterns
+        if any(re.search(pattern, line) for pattern in thinking_patterns):
             continue
-        if line and len(line) > 10:  # Only keep substantial lines
+        # Keep only substantial lines
+        if line and len(line) > 10:
             clean_lines.append(line)
 
-    if clean_lines:
-        response = ' '.join(clean_lines)
+    # 3. Join lines back into a single string
+    cleaned_response = ' '.join(clean_lines)
 
-    return response
+    # 4. Optional: remove excessive whitespace
+    cleaned_response = re.sub(r'\s+', ' ', cleaned_response).strip()
+
+    return cleaned_response
+
 
 class DocDescriptionModel:
     def __init__(
