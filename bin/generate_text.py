@@ -49,7 +49,15 @@ def generate_text_html(
     )
 
     if desc_input_path is not None:
-        desc = pydantic.BaseModel.model_validate_json(open(desc_input_path).read())
+        try:
+            desc = pydantic.BaseModel.model_validate_json(open(desc_input_path).read())
+        except Exception as e:
+            print(f"DEBUG: failed to load {desc_input_path}: {e}")
+        finally:
+            desc = DocDescription(
+                summary="",
+                description={},
+            )
 
     content = ""
     if len(desc.summary) > 0:
