@@ -68,11 +68,10 @@ def parse_response(response: str):
 class DocDescriptionModel:
     def __init__(
             self,
-            model_name: str = "gpt_oss_20b_transformers",
+            model_name: str = "deepseekr1_distill_qwen1p5b",
+            device_name: str = "mps",
     ):
-        device = torch.device("cpu" if not torch.cuda.is_available() else "cuda:0")
-
-        self.model = get_model_factory()[model_name](device, None)
+        self.model = get_model_factory()[model_name](device_name, None)
 
         prompt_file = os.path.join(os.path.dirname(__file__), "ai_single_doc_prompt.txt")
         with open(prompt_file, 'r') as f:

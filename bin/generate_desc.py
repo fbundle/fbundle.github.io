@@ -30,6 +30,7 @@ def generate_public_doc_desc(doc_htmldir: HtmlPath, desc_output_path: str):
 
     model = DocDescriptionModel(
         model_name="deepseekr1_distill_qwen1p5b",
+        device_name="mps",
     )
 
     for name in os.listdir(doc_dir):
