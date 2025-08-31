@@ -94,11 +94,6 @@ body {
     transition: color var(--transition);  /* Smooth color transitions */
 }
 
-/* Hover effect for navigation links */
-.nav-menu li a:hover {
-    color: var(--text-light);      /* Bright white on hover */
-}
-
 /* ========================================
    DROPDOWN SYSTEM - Posts Submenu
    ======================================== */
@@ -124,13 +119,6 @@ body {
     border-radius: 4px;            /* Rounded corners */
 }
 
-/* Show dropdown on hover */
-.dropdown:hover .dropdown-menu {
-    opacity: 1;                    /* Fully visible */
-    visibility: visible;           /* Show the menu */
-    transform: translateY(0);      /* Move to final position */
-}
-
 /* Individual dropdown menu items */
 .dropdown-menu li a {
     padding: 12px 20px;           /* Comfortable padding */
@@ -153,25 +141,6 @@ body {
     max-width: 1200px;             /* Maximum content width */
     margin: 0 auto;                /* Center content horizontally */
     box-sizing: border-box;        /* Include padding in width calculation */
-}
-
-/* ========================================
-   RESPONSIVE CONTENT WIDTHS - Mobile-First Design
-   ======================================== */
-@media screen and (max-width: 1400px) {
-    .main-content { max-width: 1000px; }    /* Large screens */
-}
-@media screen and (max-width: 1200px) {
-    .main-content { max-width: 900px; }     /* Medium screens */
-}
-@media screen and (max-width: 992px) {
-    .main-content { max-width: 800px; }     /* Small screens */
-}
-@media screen and (max-width: 768px) {
-    .main-content { 
-        max-width: 100%;           /* Full width on mobile */
-        padding: 15px;             /* Reduced padding on mobile */
-    }
 }
 
 /* ========================================
@@ -215,11 +184,6 @@ body {
         overflow-y: auto;          /* Scrollable if content is long */
     }
     
-    /* Show mobile menu when active */
-    .nav-menu.active {
-        top: var(--navbar-height); /* Slide down to show */
-    }
-    
     /* Full-width mobile menu items */
     .nav-menu li {
         width: 100%;               /* Full width */
@@ -236,18 +200,10 @@ body {
     /* Mobile dropdown behavior */
     .dropdown-menu {
         position: static;          /* Stack vertically instead of overlay */
-        opacity: 1;                /* Always visible */
-        visibility: visible;       /* Always visible */
-        transform: none;           /* No transform animation */
         background-color: var(--secondary-color);  /* Darker background */
         box-shadow: none;          /* No shadow needed */
         width: 100%;               /* Full width */
         display: none;             /* Hidden by default */
-    }
-    
-    /* Show mobile dropdown when active */
-    .dropdown.active .dropdown-menu {
-        display: block;            /* Show the dropdown */
     }
     
     /* Show mobile menu toggle on mobile */
