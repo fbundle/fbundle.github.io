@@ -12,15 +12,15 @@
  * Result: The content of navbar.html and footer.html will be loaded and inserted
  * into these div elements before the page content is displayed.
  */
-async function includeHTML() {
+async function includeHTML(class_name = "include", href_attr = "href") {
     // Find all elements that need to include external HTML content
-    const elements = document.getElementsByClassName("include");
+    const elements = document.getElementsByClassName(class_name);
     const promises = [];
     
     // Create an array of fetch promises for all include requests
     for (let i = 0; i < elements.length; i++) {
         const element = elements[i];
-        const url = element.getAttribute("url");
+        const url = element.getAttribute(href_attr);
         promises.push(fetch(url));
     }
     
@@ -46,15 +46,15 @@ async function includeHTML() {
  * Result: The navbar item with id "home" will be highlighted with a special
  * background color, text color, and shadow to show it's the active page.
  */
-async function highlightTab() {
+async function highlightTab(highlight_id = "highlight", highlight_attr = "highlight_id") {
     // Look for the highlight element that specifies which tab should be active
-    const highlighter = document.getElementById("highlight");
+    const highlighter = document.getElementById(highlight_id);
     if (highlighter === null) {
         return; // No highlight element found, just continue
     }
     
     // Get the ID of the tab that should be highlighted
-    const elementId = highlighter.getAttribute("highlight_id");
+    const elementId = highlighter.getAttribute(highlight_attr);
     if (elementId === null) {
         return; // No highlight_id attribute, just continue
     }
