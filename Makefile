@@ -13,24 +13,14 @@ PUBLIC_DOC_HTMLDIR := /assets/public_doc
 PUBLIC_DOC_INPUT_PATH := /Users/khanh/mathdoc/public_doc
 PUBLIC_DOC_OUTPUT_DIR := $(dir $(HTML_ROOT_DIR)$(PUBLIC_DOC_HTMLDIR:%/=%))
 
-PUBLIC_DOC_DESC_PATH=data/public_doc_desc.json
-TEXT_TEMPLATE_PATH=docs/pages/posts/text.template.html
-TEXT_OUTPUT_PATH=docs/pages/posts/text.html
+PUBLIC_DOC_DESC_PATH := data/public_doc_desc.json
+TEXT_TEMPLATE_PATH := docs/pages/posts/text.template.html
+TEXT_OUTPUT_PATH := docs/pages/posts/text.html
 
-TS_INPUT_PATH=src/post-script.ts
-JS_OUTPUT_DIR=docs/js
+TS_INPUT_PATH := src/post-script.ts
+JS_OUTPUT_DIR := docs/js
 
 all: vitae pages text javascript
-
-run:
-	go run bin/fileserver.go docs
-
-ai_desc:
-	# generate ai description
-	python bin/generate_desc.py \
-		--html_root_dir $(HTML_ROOT_DIR) \
-		--doc_htmldir $(PUBLIC_DOC_HTMLDIR) \
-		--desc_output_path $(PUBLIC_DOC_DESC_PATH)
 
 vitae:
 	# generate vitae
