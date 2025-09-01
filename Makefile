@@ -47,7 +47,6 @@ text: pages public_doc
 	python bin/generate_text.py \
 		--html_root_dir $(HTML_ROOT_DIR) \
 		--doc_htmldir $(PUBLIC_DOC_HTMLDIR) \
-		--desc_input_path $(PUBLIC_DOC_DESC_PATH) \
 		--text_template_path $(TEXT_TEMPLATE_PATH) \
 		--text_output_path $(TEXT_OUTPUT_PATH)
 
