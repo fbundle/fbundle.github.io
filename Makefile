@@ -1,6 +1,6 @@
 
 TMP_DIR := tmp
-VITAE_INPUT_PATH := /Users/khanh/mathdoc/public_doc/uncategorized/vitae/main.tex
+VITAE_INPUT_PATH := /Users/khanh/mathdoc/vitae/main.tex
 VITAE_OUTPUT_DIR := docs/assets/vitae
 
 PAGES_INPUT_DIR := src/pages
