@@ -288,8 +288,7 @@ async function setupHoverEffects() {
  *
  * Execution Order:
  * 1. Load external HTML components (navbar, footer) - Must be first
- * 2. Highlight the active navigation tab - Must be after HTML is loaded
- * 3. Set up all interactive behaviors in parallel - Can run simultaneously
+ * 2. Set up all interactive behaviors and styling in parallel - Can run simultaneously
  *
  * Note: Setup functions run in parallel since they don't depend on each other,
  * improving initialization performance.
@@ -299,10 +298,9 @@ async function setupHoverEffects() {
 async function main() {
     // Step 1: Load external HTML components (must be first)
     await includeHTML();
-    // Step 2: Highlight active navigation tab (must be after HTML is loaded)
-    await highlightTab();
-    // Step 3: Set up all interactive behaviors in parallel
+    // Step 2: Set up all interactive behaviors and styling in parallel
     const setupPromises = [
+        highlightTab(), // Highlight active navigation tab
         setupDropdownBehavior(), // Configure dropdown interactions
         setupMobileMenu(), // Initialize mobile menu system
         setupResponsiveBehavior(), // Set up responsive content sizing
