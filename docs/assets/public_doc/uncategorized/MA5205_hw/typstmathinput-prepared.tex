@@ -1,0 +1,249 @@
+\catcode`\$\active\xdef${\csname _typstmathinput_handle_formula\endcsname}
+\ExplSyntaxOn
+\providecommand\typstmathinputtext{\text}
+\providecommand\typstmathinputenable[1]{
+	\catcode `#1 \active
+}
+\providecommand\typstmathinputdisable[1] {
+	\catcode `#1 = 3 \relax
+}
+\protected\gdef \_typstmathinput_handle_formula {
+	\_typstmathinput_handle_formula_a \empty
+}
+\protected\gdef \_typstmathinput_set_handle_formula_delimiter #1 {
+	\protected\long\gdef \_typstmathinput_handle_formula_a ##1 #1 {
+		\begingroup\expandafter\endgroup\csname _typstmathinput_prepared)\detokenize\expandafter{##1}\endcsname
+	}
+}
+\ExplSyntaxOff
+\csname _typstmathinput_set_handle_formula_delimiter\endcsname{$}\begingroup\long\def\\#1{\expandafter\gdef\csname _typstmathinput_prepared)\detokenize{#1}\endcsname}
+\\{
+(T f)(s)
+&= ∫_0^∞ f(ˆt s) s⁻¹ K(1, ˆt) ⋅ s dif ˆt \
+&= ∫_0^∞ f(ˆt s) K(1, ˆt) dif ˆt \
+⟹ ‖T f‖_p
+&= (∫_0^∞ (∫_0^∞ f(t s) K(1, t) dif t)^p dif s)^(1\/p) \
+&≤ ∫_0^∞ (∫_0^∞ f(t s)^p dif s)^(1\/p) K(1, t) dif t.
+}{\begin{align*}(Tf)(s)&=∫^{∞}_{0}f(ˆts)s^{−1}K(1,ˆt)⋅s\hspace{0.16666666666666666em}\mathrm{d}ˆt\\&=∫^{∞}_{0}f(ˆts)K(1,ˆt)\hspace{0.16666666666666666em}\mathrm{d}ˆt\\⟹‖Tf‖_{p}&=\Bigl(∫^{∞}_{0}\Bigl(∫^{∞}_{0}f(ts)K(1,t)\hspace{0.16666666666666666em}\mathrm{d}t\Bigr)^{p}\hspace{0.16666666666666666em}\mathrm{d}s\Bigr)^{1/p}\\&≤∫^{∞}_{0}\Bigl(∫^{∞}_{0}f(ts)^{p}\hspace{0.16666666666666666em}\mathrm{d}s\Bigr)^{1/p}K(1,t)\hspace{0.16666666666666666em}\mathrm{d}t.\end{align*}}
+\\{
+(T f)(s) 
+&= ∫_0^∞ f(t) K(s, t) dif t \
+&= ∫_0^∞ f(t) s⁻¹ K(1, t/s) dif t.
+}{\begin{align*}(Tf)(s)&=∫^{∞}_{0}f(t)K(s,t)\hspace{0.16666666666666666em}\mathrm{d}t\\&=∫^{∞}_{0}f(t)s^{−1}K\biggl(1,\frac{t}{s}\biggr)\hspace{0.16666666666666666em}\mathrm{d}t.\end{align*}}
+\\{
+(∫_0^∞ f(ˆs)^p t⁻¹ dif ˆs)^(1\/p) = t^(-1\/p) ‖f‖_p}{\((∫^{∞}_{0}f(ˆs)^{p}t^{−1}\hspace{0.16666666666666666em}\mathrm{d}ˆs)^{1/p}=t^{−1/p}‖f‖_{p}\)}
+\\{
+∫_2^∞ C α⁻¹ (∫_{|f|>α\/2} |f(xx)| dif xx) dif α  
+= C ∫_{|f|>1} |f(xx)| (∫_2^(2|f(xx)|) α⁻¹ dif α) dif xx 
+}{\[∫^{∞}_{2}Cα^{−1}\Bigl(∫_{\{\vert f\vert >α/2\}}\vert f(\mathbf{x})\vert \hspace{0.16666666666666666em}\mathrm{d}\mathbf{x}\Bigr)\hspace{0.16666666666666666em}\mathrm{d}α=C∫_{\{\vert f\vert >1\}}\vert f(\mathbf{x})\vert \Bigl(∫^{2\vert f(\mathbf{x})\vert }_{2}α^{−1}\hspace{0.16666666666666666em}\mathrm{d}α\Bigr)\hspace{0.16666666666666666em}\mathrm{d}\mathbf{x}\]}
+\\{
+∫_2^∞ ω(α) dif α 
+&≤ ∫_2^∞ C α⁻¹ (∫_{|f|>α\/2} |f(xx)| dif xx) dif α  \
+&= C ∫_{|f|>1} |f(xx)| (∫_2^(2|f(xx)|) α⁻¹ dif α) dif xx \
+&= C ∫_{|f|>1} |f(xx)| (log (2|f(xx)|) - log(2)) dif xx \
+&= C ∫_{|f|>1} |f(xx)| log    |f(xx)| dif xx \
+&= C ∫_{|f|>1} |f(xx)| log^+  |f(xx)| dif xx \
+&≤ C ∫_(ℝ^n) |f(xx)|    log^+ |f(xx)| dif xx.
+}{\begin{align*}∫^{∞}_{2}ω(α)\hspace{0.16666666666666666em}\mathrm{d}α&≤∫^{∞}_{2}Cα^{−1}\Bigl(∫_{\{\vert f\vert >α/2\}}\vert f(\mathbf{x})\vert \hspace{0.16666666666666666em}\mathrm{d}\mathbf{x}\Bigr)\hspace{0.16666666666666666em}\mathrm{d}α\\&=C∫_{\{\vert f\vert >1\}}\vert f(\mathbf{x})\vert \Bigl(∫^{2\vert f(\mathbf{x})\vert }_{2}α^{−1}\hspace{0.16666666666666666em}\mathrm{d}α\Bigr)\hspace{0.16666666666666666em}\mathrm{d}\mathbf{x}\\&=C∫_{\{\vert f\vert >1\}}\vert f(\mathbf{x})\vert (\operatorname{log}(2\vert f(\mathbf{x})\vert )−\operatorname{log}(2))\hspace{0.16666666666666666em}\mathrm{d}\mathbf{x}\\&=C∫_{\{\vert f\vert >1\}}\vert f(\mathbf{x})\vert \operatorname{log}\vert f(\mathbf{x})\vert \hspace{0.16666666666666666em}\mathrm{d}\mathbf{x}\\&=C∫_{\{\vert f\vert >1\}}\vert f(\mathbf{x})\vert \operatorname{log}^{+}\vert f(\mathbf{x})\vert \hspace{0.16666666666666666em}\mathrm{d}\mathbf{x}\\&≤C∫_{ℝ^{n}}\vert f(\mathbf{x})\vert \operatorname{log}^{+}\vert f(\mathbf{x})\vert \hspace{0.16666666666666666em}\mathrm{d}\mathbf{x}.\end{align*}}
+\\{
+∫_a^b φ dif f
+&= ∫_a^b φ dif (g+h) \
+&= ∫_a^b φ dif g +  ∫_a^b φ dif h \ 
+&= ∫_a^b φ g' dif x +  ∫_a^b φ dif h quad "(integration by parts)"\
+&= ∫_a^b φ (f-h)' dif x +  ∫_a^b φ dif h \
+&= ∫_a^b φ f' dif x +  ∫_a^b φ dif h. quad "("h'=0" almost everywhere)"
+}{\begin{align*}∫^{b}_{a}φ\hspace{0.16666666666666666em}\mathrm{d}f&=∫^{b}_{a}φ\hspace{0.16666666666666666em}\mathrm{d}(g+h)\\&=∫^{b}_{a}φ\hspace{0.16666666666666666em}\mathrm{d}g+∫^{b}_{a}φ\hspace{0.16666666666666666em}\mathrm{d}h\\&=∫^{b}_{a}φg'\hspace{0.16666666666666666em}\mathrm{d}x+∫^{b}_{a}φ\hspace{0.16666666666666666em}\mathrm{d}h\hspace{1em}\typstmathinputtext{(integration by parts)}\\&=∫^{b}_{a}φ(f−h)'\hspace{0.16666666666666666em}\mathrm{d}x+∫^{b}_{a}φ\hspace{0.16666666666666666em}\mathrm{d}h\\&=∫^{b}_{a}φf'\hspace{0.16666666666666666em}\mathrm{d}x+∫^{b}_{a}φ\hspace{0.16666666666666666em}\mathrm{d}h.\hspace{1em}(h'=0\typstmathinputtext{ almost everywhere)}\end{align*}}
+\\{ abs(‖f_k‖_p - ‖f‖_p) ≤ ‖f-f_k‖_p }{\[\vert ‖f_{k}‖_{p}−‖f‖_{p}\vert ≤‖f−f_{k}‖_{p}\]}
+\\{ ∫_(ℝ^n) ∫_ℝ g(xx, a) dif α dif xx
+&= ∫_(ℝ^n) ∫_ℝ χ_{2<α<2 |f(xx)|} ⋅ C α⁻¹ |f(xx)| dif xx dif α 
+\ &= ∫_{|f(xx)>1|} ∫_2^(2 |f(xx)|) C α⁻¹ |f(xx)| dif xx dif α. }{\begin{align*}∫_{ℝ^{n}}∫_{ℝ}g(\mathbf{x},a)\hspace{0.16666666666666666em}\mathrm{d}α\hspace{0.16666666666666666em}\mathrm{d}\mathbf{x}&=∫_{ℝ^{n}}∫_{ℝ}χ_{\{2<α<2\vert f(\mathbf{x})\vert \}}⋅Cα^{−1}\vert f(\mathbf{x})\vert \hspace{0.16666666666666666em}\mathrm{d}\mathbf{x}\hspace{0.16666666666666666em}\mathrm{d}α\\&=∫_{\{\vert f(\mathbf{x})>1\vert \}}∫^{2\vert f(\mathbf{x})\vert }_{2}Cα^{−1}\vert f(\mathbf{x})\vert \hspace{0.16666666666666666em}\mathrm{d}\mathbf{x}\hspace{0.16666666666666666em}\mathrm{d}α.\end{align*}}
+\\{ ∫_ℝ ∫_(ℝ^n) g(xx, a) dif xx dif α 
+&= ∫_ℝ ∫_(ℝ^n) χ_{2<α<2 |f(xx)|} ⋅ C α⁻¹ |f(xx)| dif xx dif α \
+&= ∫_2^∞ ∫_{|f|>α\/2}  C α⁻¹ |f(xx)| dif xx dif α, }{\begin{align*}∫_{ℝ}∫_{ℝ^{n}}g(\mathbf{x},a)\hspace{0.16666666666666666em}\mathrm{d}\mathbf{x}\hspace{0.16666666666666666em}\mathrm{d}α&=∫_{ℝ}∫_{ℝ^{n}}χ_{\{2<α<2\vert f(\mathbf{x})\vert \}}⋅Cα^{−1}\vert f(\mathbf{x})\vert \hspace{0.16666666666666666em}\mathrm{d}\mathbf{x}\hspace{0.16666666666666666em}\mathrm{d}α\\&=∫^{∞}_{2}∫_{\{\vert f\vert >α/2\}}Cα^{−1}\vert f(\mathbf{x})\vert \hspace{0.16666666666666666em}\mathrm{d}\mathbf{x}\hspace{0.16666666666666666em}\mathrm{d}α,\end{align*}}
+\\{ ∫_ℝ ∫_(ℝ^n) g(xx, a) dif xx dif α = ∫_(ℝ^n) ∫_ℝ g(xx, a) dif α dif xx. }{\[∫_{ℝ}∫_{ℝ^{n}}g(\mathbf{x},a)\hspace{0.16666666666666666em}\mathrm{d}\mathbf{x}\hspace{0.16666666666666666em}\mathrm{d}α=∫_{ℝ^{n}}∫_{ℝ}g(\mathbf{x},a)\hspace{0.16666666666666666em}\mathrm{d}α\hspace{0.16666666666666666em}\mathrm{d}\mathbf{x}.\]}
+\\{(dif ˆt)/(dif t) = 1/s}{\(\frac{\hspace{0.16666666666666666em}\mathrm{d}ˆt}{\hspace{0.16666666666666666em}\mathrm{d}t}=\frac{1}{s}\)}
+\\{(∫_0^∞ f(t s)^p dif s)^(1\/p)}{\((∫^{∞}_{0}f(ts)^{p}\hspace{0.16666666666666666em}\mathrm{d}s)^{1/p}\)}
+\\{0}{\(0\)}
+\\{0 ≤ ∫ |(f_k-f) g| ≤ ‖f_k-f‖_p ⋅‖g‖_p'}{\(0≤∫\vert (f_{k}−f)g\vert ≤‖f_{k}−f‖_{p}⋅‖g‖_{p'}\)}
+\\{0<p<1}{\(0<p<1\)}
+\\{1}{\(1\)}
+\\{1/p}{\(\frac{1}{p}\)}
+\\{2 f(0)}{\(2f(0)\)}
+\\{C}{\(C\)}
+\\{C ≥ 2}{\(C≥2\)}
+\\{C<2}{\(C<2\)}
+\\{C^∞}{\(C^{∞}\)}
+\\{C₀^∞(ℝ^n)}{\(C^{∞}_{0}(ℝ^{n})\)}
+\\{E}{\(E\)}
+\\{F}{\(F\)}
+\\{F=P-N}{\(F=P−N\)}
+\\{L^1}{\(L^{1}\)}
+\\{L^p}{\(L^{p}\)}
+\\{N}{\(N\)}
+\\{N_Γ₃[φ, F] = ∑ φ(ξ_i) (f(x_i)-f(x_(i-1)))⁻}{\(N_{Γ_{3}}[φ,F]=∑φ(ξ_{i})(f(x_{i})−f(x_{i−1}))^{−}\)}
+\\{P}{\(P\)}
+\\{P'}{\(P'\)}
+\\{P_Γ₃[φ, F] = ∑ φ(ξ_i) (f(x_i)-f(x_(i-1)))⁺}{\(P_{Γ_{3}}[φ,F]=∑φ(ξ_{i})(f(x_{i})−f(x_{i−1}))^{+}\)}
+\\{R_Γ₃[φ, F] = P_Γ₃[φ, F] - N_Γ₃[φ, F]}{\(R_{Γ_{3}}[φ,F]=P_{Γ_{3}}[φ,F]−N_{Γ_{3}}[φ,F]\)}
+\\{R_Γ₃[φ, F] = ∑ φ(ξ_i) (f(x_i)-f(x_(i-1)))}{\(R_{Γ_{3}}[φ,F]=∑φ(ξ_{i})(f(x_{i})−f(x_{i−1}))\)}
+\\{[0, ∞)}{\([0,∞)\)}
+\\{[0,+∞)}{\([0,+∞)\)}
+\\{[a, b]}{\([a,b]\)}
+\\{[l₁, r₁] × ⋯ ×[lₙ, rₙ] ⊆ ℝ^n}{\([l_{1},r_{1}]×⋯×[l_{n},r_{n}]⊆ℝ^{n}\)}
+\\{a}{\(a\)}
+\\{a<b}{\(a<b\)}
+\\{a=r/2, b=r}{\(a=\frac{r}{2},b=r\)}
+\\{abs( ‖f_k‖_p^p - ‖f‖_p^p ) ≤ ‖f-f_k‖_p^p}{\(\vert ‖f_{k}‖^{p}_{p}−‖f‖^{p}_{p}\vert ≤‖f−f_{k}‖^{p}_{p}\)}
+\\{b}{\(b\)}
+\\{b-a>0}{\(b−a>0\)}
+\\{boldzero}{\(\mathbf{0}\)}
+\\{d ≤ 0}{\(d≤0\)}
+\\{d ≥ -1}{\(d≥−1\)}
+\\{d ≥ 1}{\(d≥1\)}
+\\{f}{\(f\)}
+\\{f ∈ L^p}{\(f∈L^{p}\)}
+\\{f'(x) x³-f(x) ⋅ 3n x² + 2f(x)}{\(f'(x)x^{3}−f(x)⋅3nx^{2}+2f(x)\)}
+\\{f(0) ≠ 0}{\(f(0)≠0\)}
+\\{f(x)}{\(f(x)\)}
+\\{f(x)=1}{\(f(x)=1\)}
+\\{f(xx)}{\(f(\mathbf{x})\)}
+\\{f(xx) = f(x₁, …, xₙ) = ∏_(i=1)^n g_(lᵢ, rᵢ)(xᵢ)}{\(f(\mathbf{x})=f(x_{1},…,x_{n})=∏^{n}_{i=1}g_{l_{i},r_{i}}(x_{i})\)}
+\\{f(xx)=1}{\(f(\mathbf{x})=1\)}
+\\{f(xx)=k(|xx|)}{\(f(\mathbf{x})=k(\vert \mathbf{x}\vert )\)}
+\\{f, f_k ∈ L^p}{\(f,f_{k}∈L^{p}\)}
+\\{f, f_k, g}{\(f,f_{k},g\)}
+\\{f-f_k = χ_((-∞,-k])}{\(f−f_{k}=χ_{(−∞,−k]}\)}
+\\{f^*}{\(f^{∗}\)}
+\\{f_k = χ_((-k,+∞))}{\(f_{k}=χ_{(−k,+∞)}\)}
+\\{f_k → f}{\(f_{k}→f\)}
+\\{f≥ 0}{\(f≥0\)}
+\\{g}{\(g\)}
+\\{g ∈ L^p'}{\(g∈L^{p'}\)}
+\\{g ≥ 0}{\(g≥0\)}
+\\{g(x)}{\(g(x)\)}
+\\{g(x) ≠ 0 ⟺ h(x-a) h(b-x) ≠ 0 ⟺ h(x-a) ≠ 0 ∧ h(b-x) ≠ 0 ⟺ x-a>0 ∧ b-x>0 ⟺ a<x<b}{\(g(x)≠0⟺h(x−a)h(b−x)≠0⟺h(x−a)≠0∧h(b−x)≠0⟺x−a>0∧b−x>0⟺a<x<b\)}
+\\{g(x)∈ C^∞}{\(g(x)∈C^{∞}\)}
+\\{g(xx, α) = χ_{2<α<2 |f(xx)|} ⋅ C α⁻¹ |f(xx)|}{\(g(\mathbf{x},α)=χ_{\{2<α<2\vert f(\mathbf{x})\vert \}}⋅Cα^{−1}\vert f(\mathbf{x})\vert \)}
+\\{g: ℝ^n × ℝ → ℝ}{\(g:ℝ^{n}×ℝ→ℝ\)}
+\\{g_(a, b)(x)}{\(g_{a,b}(x)\)}
+\\{h}{\(h\)}
+\\{h(x) ≠ 0 ⟺ x>0}{\(h(x)≠0⟺x>0\)}
+\\{h=f-g}{\(h=f−g\)}
+\\{h^((n))(0)=0}{\(h^{(n)}(0)=0\)}
+\\{h^((n))(x)}{\(h^{(n)}(x)\)}
+\\{h^((n))(x) = (
+f'(x) x³-f(x) ⋅ 3n x² + 2f(x)
+)/x^(3(n+1)) e^(-x⁻²)}{\(h^{(n)}(x)=\frac{f'(x)x^{3}−f(x)⋅3nx^{2}+2f(x)}{x^{3(n+1)}}e^{−x^{−2}}\)}
+\\{h^((n))(x)=f(x)/x^(3n) e^(-x⁻²)}{\(h^{(n)}(x)=\frac{f(x)}{x^{3n}}e^{−x^{−2}}\)}
+\\{h^((n-1))}{\(h^{(n−1)}\)}
+\\{h^((n-1))(0)=0}{\(h^{(n−1)}(0)=0\)}
+\\{h^((n-1))(x) = f(x)/x^(3n) e^(-x⁻²)}{\(h^{(n−1)}(x)=\frac{f(x)}{x^{3n}}e^{−x^{−2}}\)}
+\\{i}{\(i\)}
+\\{k}{\(k\)}
+\\{k →+∞}{\(k→+∞\)}
+\\{k ≥ 0}{\(k≥0\)}
+\\{k(x)=0 ⟺ h(b-a) ≤ h(x-a) ⟺ b-a ≤ x-a}{\(k(x)=0⟺h(b−a)≤h(x−a)⟺b−a≤x−a\)}
+\\{k(x)=1 ⟺ h(b-a)-h(x-a)=h(b-a) ⟺ h(x-a)=0 ⟺ x-a ≤ 0 ⟺ x ≤ a}{\(k(x)=1⟺h(b−a)−h(x−a)=h(b−a)⟺h(x−a)=0⟺x−a≤0⟺x≤a\)}
+\\{k(x)=h(h(b-a)-h(x-a))/h(h(b-a))}{\(k(x)=\frac{h(h(b−a)−h(x−a))}{h(h(b−a))}\)}
+\\{l_i<r_i}{\(l_{i}<r_{i}\)}
+\\{lim_(x → 0⁺) (-d x^(-d-1))/(-2 x⁻³ e^(x⁻²)) = lim_(x → 0⁺) d/2 ⋅ (x^(-(d-2)))/e^(x⁻²)}{\(\operatorname*{lim}_{x→0^{+}}\frac{−dx^{−d−1}}{−2x^{−3}e^{x^{−2}}}=\operatorname*{lim}_{x→0^{+}}\frac{d}{2}⋅\frac{x^{−(d−2)}}{e^{x^{−2}}}\)}
+\\{lim_(x → 0⁺) (h^((n-1))(x))/x = 0}{\(\operatorname*{lim}_{x→0^{+}}\frac{h^{(n−1)}(x)}{x}=0\)}
+\\{lim_(x → 0⁺) x^(-d) e^(-x⁻²) =0}{\(\operatorname*{lim}_{x→0^{+}}x^{−d}e^{−x^{−2}}=0\)}
+\\{lim_(x → 0⁺) x^(-d) e^(-x⁻²)=lim_(x → 0⁺) x^(-d)/e^(x⁻²)}{\(\operatorname*{lim}_{x→0^{+}}x^{−d}e^{−x^{−2}}=\operatorname*{lim}_{x→0^{+}}\frac{x^{−d}}{e^{x^{−2}}}\)}
+\\{lim_(x → 0⁺) x^(-d+2) e^(-x⁻²) =0}{\(\operatorname*{lim}_{x→0^{+}}x^{−d+2}e^{−x^{−2}}=0\)}
+\\{n}{\(n\)}
+\\{n ≥ 0}{\(n≥0\)}
+\\{n=0}{\(n=0\)}
+\\{n>0}{\(n>0\)}
+\\{overline((a, b))=[a, b]}{\(\overline{(a,b)}=[a,b]\)}
+\\{overline(B_r (boldzero))}{\(\overline{B_{r}(\mathbf{0})}\)}
+\\{p ≥ 1}{\(p≥1\)}
+\\{p=∞}{\(p=∞\)}
+\\{r>0}{\(r>0\)}
+\\{sup}{\(\operatorname*{sup}\)}
+\\{x}{\(x\)}
+\\{x → 0⁺}{\(x→0^{+}\)}
+\\{x ↦ x^p}{\(x↦x^{p}\)}
+\\{x ∈ ℝ}{\(x∈ℝ\)}
+\\{x ≠ 0}{\(x≠0\)}
+\\{x>0}{\(x>0\)}
+\\{xx}{\(\mathbf{x}\)}
+\\{xx ≠ boldzero}{\(\mathbf{x}≠\mathbf{0}\)}
+\\{{f(xx)≠ 0}={xx: |xx|<b}=B_b (xx)=B_r (xx)}{\(\{f(\mathbf{x})≠0\}=\{\mathbf{x}:\vert \mathbf{x}\vert <b\}=B_{b}(\mathbf{x})=B_{r}(\mathbf{x})\)}
+\\{{f_k}}{\(\{f_{k}\}\)}
+\\{{x: g(x) ≠ 0}}{\(\{x:g(x)≠0\}\)}
+\\{{xx: f(xx) ≠ 0}
+= {(x₁, …, x_n): g_(lᵢ, rᵢ)(xᵢ) ≠ 0 ∀i ∈{1, …, n}}
+= {(x₁, …, x_n): lᵢ<x_i< rᵢ ∀i ∈{1, …, n}}
+= (l₁, r₁)×(l₂, r₂) × ⋯ ×(lₙ, rₙ)}{\(\{\mathbf{x}:f(\mathbf{x})≠0\}=\{(x_{1},…,x_{n}):g_{l_{i},r_{i}}(x_{i})≠0∀i∈\{1,…,n\}\}=\{(x_{1},…,x_{n}):l_{i}<x_{i}<r_{i}∀i∈\{1,…,n\}\}=(l_{1},r_{1})×(l_{2},r_{2})×⋯×(l_{n},r_{n})\)}
+\\{{ξ_i},{ξ'_i}}{\(\{ξ_{i}\},\{ξ^{\prime }_{i}\}\)}
+\\{{φ_k}}{\(\{φ_{k}\}\)}
+\\{|P_Γ₃[φ, F] - P'_Γ₃[φ, F]| ≤ ε/2}{\(\vert P_{Γ_{3}}[φ,F]−P^{\prime }_{Γ_{3}}[φ,F]\vert ≤\frac{ε}{2}\)}
+\\{|P_Γ₃[φ, F] - P_Γ₄[φ, F]| ≤ ε/2 < ε}{\(\vert P_{Γ_{3}}[φ,F]−P_{Γ_{4}}[φ,F]\vert ≤\frac{ε}{2}<ε\)}
+\\{|R_Γ[φ, F]-R'_Γ[φ, F]|<ε/2}{\(\vert R_{Γ[φ,F]}−R^{\prime }_{Γ[φ,F]}\vert <\frac{ε}{2}\)}
+\\{|R_Γ₁[φ, P]-R_Γ₂[φ, P]|<ε}{\(\vert R_{Γ_{1}}[φ,P]−R_{Γ_{2}}[φ,P]\vert <ε\)}
+\\{|R_Γ₃[φ, F]-R_Γ₄[φ, F]|<ε/2}{\(\vert R_{Γ_{3}}[φ,F]−R_{Γ_{4}}[φ,F]\vert <\frac{ε}{2}\)}
+\\{|f-f_k| → 0}{\(\vert f−f_{k}\vert →0\)}
+\\{|f-f_k|^p ≤ (|f|+|f_k|)^p}{\(\vert f−f_{k}\vert ^{p}≤(\vert f\vert +\vert f_{k}\vert )^{p}\)}
+\\{|f_k|^p}{\(\vert f_{k}\vert ^{p}\)}
+\\{|f_k|≤ φ_k}{\(\vert f_{k}\vert ≤φ_{k}\)}
+\\{|f|^p}{\(\vert f\vert ^{p}\)}
+\\{|xx|≤ a=r/2}{\(\vert \mathbf{x}\vert ≤a=\frac{r}{2}\)}
+\\{|{xx ∈ ℝ^n: f^*(xx)>α}| ≤ C α⁻¹ ∫_{|f|>α\/2} |f(xx)| dif xx}{\(\vert \{\mathbf{x}∈ℝ^{n}:f^{∗}(\mathbf{x})>α\}\vert ≤Cα^{−1}∫_{\{\vert f\vert >α/2\}}\vert f(\mathbf{x})\vert \hspace{0.16666666666666666em}\mathrm{d}\mathbf{x}\)}
+\\{|⋅|}{\(\vert ⋅\vert \)}
+\\{ˆs = t s}{\(ˆs=ts\)}
+\\{ˆt = t/s}{\(ˆt=\frac{t}{s}\)}
+\\{Γ}{\(Γ\)}
+\\{Γ₁, Γ₂}{\(Γ_{1},Γ_{2}\)}
+\\{Γ₃}{\(Γ_{3}\)}
+\\{Γ₃, Γ₄}{\(Γ_{3},Γ_{4}\)}
+\\{Γ₄}{\(Γ_{4}\)}
+\\{Γ₄=Γ₃=Γ}{\(Γ_{4}=Γ_{3}=Γ\)}
+\\{Γ₅}{\(Γ_{5}\)}
+\\{α ∈(2, ∞)}{\(α∈(2,∞)\)}
+\\{ε>0}{\(ε>0\)}
+\\{ξ}{\(ξ\)}
+\\{ξ_i}{\(ξ_{i}\)}
+\\{φ = 2^p ⋅ 2 ⋅ |f|^p}{\(φ=2^{p}⋅2⋅\vert f\vert ^{p}\)}
+\\{φ ∈ L(E)}{\(φ∈L(E)\)}
+\\{φ_k}{\(φ_{k}\)}
+\\{φ_k = 2^p (|f|^p+|f_k|^p)}{\(φ_{k}=2^{p}(\vert f\vert ^{p}+\vert f_{k}\vert ^{p})\)}
+\\{φ_k → φ}{\(φ_{k}→φ\)}
+\\{ω(α) ≤ |{xx ∈ ℝ^n: f^*(xx)>α}|}{\(ω(α)≤\vert \{\mathbf{x}∈ℝ^{n}:f^{∗}(\mathbf{x})>α\}\vert \)}
+\\{ω(α) ≤ |{xx ∈ ℝ^n: f^*(xx)>α}| ≤ C α⁻¹ ∫_{|f|>α\/2} |f(xx)| dif xx}{\(ω(α)≤\vert \{\mathbf{x}∈ℝ^{n}:f^{∗}(\mathbf{x})>α\}\vert ≤Cα^{−1}∫_{\{\vert f\vert >α/2\}}\vert f(\mathbf{x})\vert \hspace{0.16666666666666666em}\mathrm{d}\mathbf{x}\)}
+\\{ω(α)=|{xx ∈ E: f^*(xx)>α}|}{\(ω(α)=\vert \{\mathbf{x}∈E:f^{∗}(\mathbf{x})>α\}\vert \)}
+\\{‖T f‖_p ≤ 
+∫_0^∞ t^(-1\/p) K(1, t) ⋅ ‖f‖^p dif t = γ ‖f‖^p}{\(‖Tf‖_{p}≤∫^{∞}_{0}t^{−1/p}K(1,t)⋅‖f‖^{p}\hspace{0.16666666666666666em}\mathrm{d}t=γ‖f‖^{p}\)}
+\\{‖f-f_k‖_p^p→ 0}{\(‖f−f_{k}‖^{p}_{p}→0\)}
+\\{‖f-f_k‖_p→ 0}{\(‖f−f_{k}‖_{p}→0\)}
+\\{‖f-f_k‖_∞ → 0}{\(‖f−f_{k}‖_{∞}→0\)}
+\\{‖f_k-f‖_p → 0}{\(‖f_{k}−f‖_{p}→0\)}
+\\{‖f_k-f‖_p ⋅ ‖g‖_p' → 0}{\(‖f_{k}−f‖_{p}⋅‖g‖_{p'}→0\)}
+\\{‖f_k‖_p → ‖f‖_p}{\(‖f_{k}‖_{p}→‖f‖_{p}\)}
+\\{‖f_k‖_p →‖f‖_p}{\(‖f_{k}‖_{p}→‖f‖_{p}\)}
+\\{‖f_k‖_p^p → ‖f‖_p^p}{\(‖f_{k}‖^{p}_{p}→‖f‖^{p}_{p}\)}
+\\{‖f_k‖_p^p →‖f‖_p^p ⟺ ∫ |f_k|^p → ∫ |f|^p}{\(‖f_{k}‖^{p}_{p}→‖f‖^{p}_{p}⟺∫\vert f_{k}\vert ^{p}→∫\vert f\vert ^{p}\)}
+\\{‖f_k‖_∞ =‖f‖_∞ = 1}{\(‖f_{k}‖_{∞}=‖f‖_{∞}=1\)}
+\\{→ +∞}{\(→+∞\)}
+\\{→ 0}{\(→0\)}
+\\{∑ |sup φ(ξ_i) - inf φ(ξ_i)| ⋅ (f(x_i)-f(x_(i-1)))⁺ ≤ ε/2}{\(∑\vert \operatorname*{sup}φ(ξ_{i})−\operatorname*{inf}φ(ξ_{i})\vert ⋅(f(x_{i})−f(x_{i−1}))^{+}≤\frac{ε}{2}\)}
+\\{∑ |sup φ(ξ_i) - inf φ(ξ_i)| ⋅ |f(x_i)-f(x_(i-1))| ≤ ε/2}{\(∑\vert \operatorname*{sup}φ(ξ_{i})−\operatorname*{inf}φ(ξ_{i})\vert ⋅\vert f(x_{i})−f(x_{i−1})\vert ≤\frac{ε}{2}\)}
+\\{∫ (f_k-f) g → 0 ⟺ ∫ f_k g - ∫ f g → 0 ⟺ ∫ f_k g → ∫ f g}{\(∫(f_{k}−f)g→0⟺∫f_{k}g−∫fg→0⟺∫f_{k}g→∫fg\)}
+\\{∫ f g}{\(∫fg\)}
+\\{∫ f_k g}{\(∫f_{k}g\)}
+\\{∫ |(f_k-f) g|→ 0}{\(∫\vert (f_{k}−f)g\vert →0\)}
+\\{∫ |f g|<∞}{\(∫\vert fg\vert <∞\)}
+\\{∫ |f-f_k|^p →0}{\(∫\vert f−f_{k}\vert ^{p}→0\)}
+\\{∫ φ dif F}{\(∫φ\hspace{0.16666666666666666em}\mathrm{d}F\)}
+\\{∫ φ dif P}{\(∫φ\hspace{0.16666666666666666em}\mathrm{d}P\)}
+\\{∫ φ_k → 2^p (|f|^p+|f|^p)}{\(∫φ_{k}→2^{p}(\vert f\vert ^{p}+\vert f\vert ^{p})\)}
+\\{∫_0^2 ω(α) dif α ≤ ∫_0^2 |E| dif α = 2 |E|}{\(∫^{2}_{0}ω(α)\hspace{0.16666666666666666em}\mathrm{d}α≤∫^{2}_{0}\vert E\vert \hspace{0.16666666666666666em}\mathrm{d}α=2\vert E\vert \)}
+\\{∫_E f^* dif xx = ∫_0^∞ ω(α) dif α = ∫_0^2 ω(α) dif α + ∫_2^∞ ω(α) dif α}{\(∫_{E}f^{∗}\hspace{0.16666666666666666em}\mathrm{d}\mathbf{x}=∫^{∞}_{0}ω(α)\hspace{0.16666666666666666em}\mathrm{d}α=∫^{2}_{0}ω(α)\hspace{0.16666666666666666em}\mathrm{d}α+∫^{∞}_{2}ω(α)\hspace{0.16666666666666666em}\mathrm{d}α\)}
+\\{∫_E f^*dif xx ≤ 2|E| + C ∫_(ℝ^n) |f|log⁺|f|dif xx ≤ C(|E|+∫_(ℝ^n) |f|log⁺|f|dif xx)}{\(∫_{E}f^{∗}\hspace{0.16666666666666666em}\mathrm{d}\mathbf{x}≤2\vert E\vert +C∫_{ℝ^{n}}\vert f\vert \operatorname{log}^{+}\vert f\vert \hspace{0.16666666666666666em}\mathrm{d}\mathbf{x}≤C(\vert E\vert +∫_{ℝ^{n}}\vert f\vert \operatorname{log}^{+}\vert f\vert \hspace{0.16666666666666666em}\mathrm{d}\mathbf{x})\)}
+\\{∫_E |f_k-f|→ 0}{\(∫_{E}\vert f_{k}−f\vert →0\)}
+\\{∫_E φ_k → ∫_E φ}{\(∫_{E}φ_{k}→∫_{E}φ\)}
+\\{∫_a^b φ dif g}{\(∫^{b}_{a}φ\hspace{0.16666666666666666em}\mathrm{d}g\)}
+\\{∫_a^b φ dif h}{\(∫^{b}_{a}φ\hspace{0.16666666666666666em}\mathrm{d}h\)}
+\\{≤ (2 max(|f|,|f_k|))^p = 2^p max(|f|^p,|f_k|^p) ≤ 2^p (|f|^p+|f_k|^p)}{\(≤(2\operatorname*{max}(\vert f\vert ,\vert f_{k}\vert ))^{p}=2^{p}\operatorname*{max}(\vert f\vert ^{p},\vert f_{k}\vert ^{p})≤2^{p}(\vert f\vert ^{p}+\vert f_{k}\vert ^{p})\)}
+\\{⟺ b≤x}{\(⟺b≤x\)}
+\endgroup

@@ -1,0 +1,457 @@
+\section{PROBLEM 1}
+
+\begin{problem}
+	Let $n \in \N$ and let $R > 0$ be a fixed positive number. Let
+	$$
+		S^n(R) = \set*{(x^1, ..., x^{n+1}) \in \R^n: \sum_{k=1}^{n+1} (x^k)^2 = R^2}
+	$$
+	be the $n$-sphere in $\R^{n+1}$ centered at the origin and of radius $R$. Let $g_{S^n(R)}$ be the canonical Riemannian metric on $S^n(R)$ induced from the Euclidean metric $g_{\R^{n+1}}$ in $\R^{n+1}$, i.e. $g_{S^n(R)} = g_{\R^{n+1}} \vert_{S^n(R)}$. Similarly, consider the puncture Euclidean space $\R^{n+1} \setminus \set{0}$ and let $g_{\R^n \setminus \set{0}}$ be the Riemannian metric on $\R^n \setminus \set{0}$ induced from the Euclidean metric $g_{\R^{n+1}}$ on $\R^{n+1}$, i.e. $g_{\R^n \setminus \set{0}} = g_{\R^{n+1}} \vert_{\R^n \setminus \set{0}}$. Here with some abuse of notation, $0$ also denotes the origin of $\R^{n+1}$
+	
+	Consider the two maps $\mu: \R^{n+1} \setminus \set{0} \to (0, +\infty)$ and $\phi: \R^{n+1} \setminus \set{0} \to S^n(R)$ given as follows: For $x = (x^1, ..., x^{n+1}) \in \R^{n+1} \setminus \set{0}$
+	\begin{align*}
+		\mu(x) &= \sqrt{(x^1)^2 + ... + (x^{n+1})^2}\\
+		\phi(x) &= \tuple*{\frac{R x^1}{\mu(x)}, ..., \frac{R x^{n+1}}{\mu(x)}}
+	\end{align*}
+	
+	\begin{enumerate}[label=(\alph*)]
+		\item Show that the map $\phi: \R^{n+1} \setminus \set{0} \to S^n(R)$ is not a Riemannian submersion with respect to the metric $g_{\R^{n+1} \setminus \set{0}}$ on $\R^{n+1} \setminus \set{0}$ and the metric $g_{S^n(R)}$ on $S^n(R)$
+		
+		\item Does there exist a Riemannian metric $g$ on $\R^{n+1} \setminus \set{0}$ so that the map $\phi: \R^{n+1} \setminus \set{0} \to S^n(R)$ is a Riemannian submersion with respect to the metric $g$ on $\R^{n+1} \setminus \set{0}$ and the metric $g_{S^n(R)}$ on $S^n(R)$
+	\end{enumerate}
+\end{problem}
+
+\subsection{a}
+
+Write $\phi(x) = (\phi_1(x), ..., \phi_n(x)) \in S^n(R)$ for every $x \in \R^{n+1} \setminus \set{0}$, each $\phi_i: \R^{n+1} \setminus \set{0} \to \R$ is defined by
+$$
+	\phi_i(x) = \frac{ R x^i}{\norm{x}} = R x^i ((x^1)^2 + ... + (x^{n+1})^2)^{- 1/2}
+$$
+
+For any $x \in \R^{n+1} \setminus \set{0}$, $\phi$ maps $x$ into $y \in S^n(R)$. With respect to the canonical basis of $T_x \R^n$, $d\phi_x$ is a matrix in $\R^{n \times n}$ (index $i$ for rows, index $j$ for columns)
+$$
+	d \phi_x = \begin{bmatrix}
+		\frac{\partial \phi_i}{\partial x^j} \vert_x
+	\end{bmatrix}_{1 \leq i, j \leq n} \in \R^{n \times n}
+$$
+
+Let $x = (x^1, ..., x^n)$, then for every $1 \leq i, j \leq n$ and $i \neq j$
+\begin{align*}
+	\frac{\partial \phi_i}{\partial x^j} \vert_x &= R x^i (-1/2) ((x^1)^2 + ... + (x^{n+1})^2)^{- 3/2} 2x^j = - \frac{R}{\norm{x}^3} x^i x^j \\
+	\frac{\partial \phi_i}{\partial x^i} \vert_x &= \frac{R}{\norm{x}} - \frac{R}{\norm{x}^3} (x^i)^2 = \frac{R}{\norm{x}^3} (\norm{x}^2 - (x^i)^2)
+\end{align*}
+
+Then
+$$
+	d \phi_x = \frac{R}{\norm{x}^3} \begin{bmatrix}
+		\norm{x}^2 - (x^1)^2 & -x^1 x^2 & ... & -x^1 x^n \\
+		-x^2 x^1 & \norm{x}^2 - (x^2)^2 & ... & -x^2 x^n \\
+		... & ... & ... & ... \\
+		-x^n x^1 & -x^n x^2 & ... & \norm{x}^2 - (x^n)^2
+	\end{bmatrix} \in \R^{n \times n}
+$$
+
+Let $x = (x^1, 0, ..., 0) \in \R^{n+1} \setminus \set{0}$ for some $x^1 > 0$, then $\norm{x} = x^1$, consider the tangent vector $v = (0, 1, 0, ..., 0) \in T_p (\R^{n+1} \setminus \set{0}) \subseteq T_p \R^n$, then
+$$
+	g_{\R^{n+1} \setminus \set{0}} (v, v) = g_{\R^{n+1}} (v, v) = 1
+$$
+
+Let $w = d\phi_x (v) \in T_y S^n(R) \subseteq T_y \R^n$, with respect to the canonical basis of $T_x \R^n$,
+
+\begin{align*}
+	w 
+	&= \frac{R}{\norm{x}^3} \begin{bmatrix}
+		\norm{x}^2 - (x^1)^2 & -x^1 x^2 & ... & -x^1 x^n \\
+		-x^2 x^1 & \norm{x}^2 - (x^2)^2 & ... & -x^2 x^n \\
+		... & ... & ... & ... \\
+		-x^n x^1 & -x^n x^2 & ... & \norm{x}^2 - (x^n)^2
+	\end{bmatrix} \begin{bmatrix}
+		0 \\ 1 \\ ... \\ 0
+	\end{bmatrix} \\
+	&=  \frac{R}{\norm{x}^3} \begin{bmatrix}
+		- x^1 x^2 \\ \norm{x}^2 - (x^2)^2 \\ ... \\ - x^n x^2
+	\end{bmatrix} \\
+	&= \frac{R}{\norm{x}^3} \begin{bmatrix}
+		0 \\ \norm{x}^2 \\ ... \\ 0
+	\end{bmatrix} = \begin{bmatrix}
+	0 \\ R / \norm{x} \\ ... \\ 0
+	\end{bmatrix} \in T_q S^n(R)
+\end{align*}
+
+Then
+$$
+	g_{S^n(R)}(w, w) = g_{\R^n}(w, w) = \tuple*{\frac{R}{\norm{x}}}^2
+$$
+
+Pick $x^1 = R / 2$, then $\norm{x} = R / 2$, then $g_{S^n(R)}(w, w) = 4 \neq g_{\R^{n+1} \setminus \set{0}} (v, v)$. Hence, $\phi$ is not a Riemannian submersion
+
+\subsection{b} 
+
+For any $v_1, v_2 \in T_x(\R^{n+1} \setminus \set{0})$, let $d\phi_x$ maps $v_1, v_2$ into $w_1, w_2 \in T_y(S^n(R))$ respectively. We want to pick $g$ so that
+$$
+	g(v_1, v_2) = g_{S^n(R)}(w_1, w_2)
+$$
+
+Let $I = (0, +\infty) \subseteq \R$ with the usual metric $dr^2$ induced from Euclidean space, consider the product metric $dr^2 + g_{S^n(R)}$ in the product space $I \times S^n(R)$
+\begin{center}
+	\begin{tikzcd}
+		\R^{n+1} \setminus \set{0} \arrow[r, "\psi"] \arrow[rr, "\phi", bend left] & I \times S^n(R) \arrow[r, two heads] & S^n(R)
+	\end{tikzcd}
+\end{center}
+
+There is a canonical Riemannian submersion $I \times S^n(R) \to S^n(R)$ mapping $(i, s) \mapsto s$. Define the diffeomorphism
+\begin{align*}
+	\psi: \R^{n+1} \setminus \set{0} &\to I \times S^n(R) \\
+			x &\mapsto \tuple*{\norm{x}, R \frac{x}{\norm{x}}}
+\end{align*}
+
+We write $\psi = (\chi, \phi)$ where $\chi: \R^{n+1} \setminus \set{0} \to I$ and $\phi: \R^{n+1} \setminus \set{0} \to S^n(R)$, then $\phi$ is precisely the function defined in the previous part. 
+
+Let $g$ be the unique pullback metric on $\R^{n+1} \setminus \set{0}$ from $dr^2 + g_{S^n(R)}$ on $I \times S^n(R)$, then $\phi$ is a Riemannian submersion with respect to $g$ and $g_{S^n(R)}$. In particular, in polar coordinate $(r, s_n)$ of $\R^{n+1}$,
+\begin{align*}
+	g &= dr^2 + r^2 d s_n \\
+	g_{S^n(R)} &= R^2 d s_n
+\end{align*}
+
+\section{PROBLEM 2}
+
+\begin{problem}
+	Let $(M, g)$ be a Riemannian manifold and let $f, h: M \to \R$ be smooth functions on $M$. Let $X$ be a smooth vector field on $M$. Let $\phi: \R \to \R$ be a smooth function on $R$. Prove the following identities on $M$
+	\begin{enumerate}[label=(\roman*)]
+		\item $\Div (f \cdot X) = D_X f + f \cdot \Div X$
+		\item $\Delta (f \cdot h) = h \cdot \Delta f + f \cdot \Delta h + 2g (\nabla f, \nabla h)$
+		\item $\Hess (f \cdot h) = h \cdot \Hess f + f \cdot \Hess h + df \otimes dh + dh \otimes df$
+		\item $\Hess (\phi \circ f) = (\phi'' \circ f) \cdot df \otimes df + (\phi' \circ f) \cdot \Hess f$
+		\item $\Delta(\phi \circ f) = (\phi' \circ f) \cdot \Delta f + (\phi'' \circ f) \cdot \abs{df}^2$
+	\end{enumerate}
+	
+	where $\cdot$ denotes the point-wise multiplication, $\circ$ denotes function composition, $|df|$ denotes the point-wise norm with respect to $g$
+\end{problem}
+
+\subsection{i}
+
+We use the definition $\Div X = - \nabla^* \theta_X = \sum g(\nabla_{E_i} X, E_i)$ for some orthonormal frame $E_i$ in proposition 2.2.7. We have
+\begin{align*}
+	&\Div(f \cdot X) \\
+	&= \sum g(\nabla_{E_i} (f \cdot X), E_i) \\
+	&= \sum g((\nabla_{E_i} f) \cdot X + f \cdot \nabla_{E_i} X , E_i) &\text{(prop 2)}\\
+	&= \sum (\nabla_{E_i} f) \cdot g(X, E_i)  + f \cdot g(\nabla_{E_i} X , E_i) &\text{(bilinearity of $g$)}\\
+	&= \tuple*{\sum (\nabla_{E_i} f) \cdot g(X, E_i)}  + f \cdot \Div X &\text{(definition)}\\
+	&= \nabla_{\sum g(X, E_i) \cdot E_i} f   + f \cdot \Div X &\text{(prop 1)}\\
+	&= \nabla_X f   + f \cdot \Div X \\
+	&= D_X f   + f \cdot \Div X
+\end{align*}
+
+\subsection{ii}
+
+We use the definition $\Delta f = - \nabla^* \nabla f = \sum (\nabla_{E_i} \nabla f) (E_i)$ for some orthonormal frame $E_i$. Consider $f$ and $h$ as $(0, 0)$-tensors, for any vector field $X$
+$$
+	\nabla_X(f \cdot h) = (\nabla_X f) \otimes h + f \otimes \nabla_X h = h \cdot \nabla_X f +  f \cdot \nabla_X h
+$$
+
+Then, as $(0, 1)$-tensors, we have $\nabla (f \cdot h) = h \cdot \nabla f + f \cdot \nabla h$, then
+\begin{align*}
+	&\Delta (f \cdot h) \\
+	&= \sum \nabla_{E_i} \nabla (f \cdot h)(E_i) &\text{(definition)}\\
+	&= \sum \nabla_{E_i} (h \cdot \nabla f + f \cdot \nabla h)(E_i) \\
+	&= \sum \nabla_{E_i} (h \cdot \nabla f)(E_i) + \sum \nabla_{E_i}(f \cdot \nabla h)(E_i) &\text{(prop 2)}\\
+	&= 2 \sum \nabla_{E_i} h \cdot \nabla_{E_i} f + h \cdot \sum \nabla_{E_i} \nabla f (E_i) + f \cdot \sum \nabla_{E_i} \nabla h (E_i) &\text{(prop 2)}\\
+	&= 2 \tuple*{\sum \nabla_{E_i} h \cdot \nabla_{E_i} f} + h \cdot \Delta f + f \cdot \Delta h &\text{(definition)}\\
+\end{align*}
+
+Finally, $\nabla_{E_i} h, \nabla_{E_i} f$ are directional derivative, then $\nabla_{E_i} h = g(E_i, \nabla f)$ and $\nabla_{E_i} f = g(E_i, \nabla h)$, hence
+
+$$
+	\sum \nabla_{E_i} h \cdot \nabla_{E_i} f = \sum g(E_i, \nabla f) g(E_i, \nabla h) = g(\nabla f, \nabla h)
+$$
+
+We obtain
+$$
+	\Delta (f \cdot h) = 2 g(\nabla f, \nabla h) + h \cdot \Delta f + f \cdot \Delta h
+$$
+
+
+\subsection{iii}
+
+We use the definition $\Hess f(X, Y) = \nabla^2_{X, Y} f = \nabla_X \nabla_Y f - \nabla_{\nabla_X Y} f$, then
+$$
+	\Hess (f \cdot h)(X, Y) = \nabla_X \nabla_Y (f \cdot h) -  \nabla_{\nabla_X Y} (f \cdot h)
+$$
+
+We have 
+\begin{align*}
+	& \nabla_X \nabla_Y (f \cdot h)\\
+	&= \nabla_X (f \cdot \nabla_Y h + h \cdot \nabla_Y f) \\
+	&= \nabla_X (f \cdot \nabla_Y h) + \nabla_X(h \cdot \nabla_Y f) \\
+	&=  f \cdot \nabla_X \nabla_Y h + \nabla_X f \cdot \nabla_Y h + h \cdot \nabla_X \nabla_Y f + \nabla_X h \cdot \nabla_Y f \\
+\end{align*}
+
+We also have $\nabla_{\nabla_X Y} (f \cdot h) =  f \cdot \nabla_{\nabla_X Y} h + h \cdot \nabla_{\nabla_X Y} f$, then
+
+$$
+	\Hess (f \cdot h)(X, Y) = f \cdot \Hess h(X, Y) + h \cdot \Hess(X, Y) +  \nabla_X f \cdot \nabla_Y h + \nabla_X h \cdot \nabla_Y f
+$$
+
+$\nabla_X f \cdot \nabla_Y h$ is precisely $(df \otimes dh)(X, Y)$ since by definition
+$$
+	(df \otimes dh)(X, Y) = df(X) \cdot dh(Y) = \nabla_X f \cdot \nabla_Y h
+$$
+
+Similarly, $ \nabla_X h \cdot \nabla_Y f = (dh \otimes df)(X, Y)$, we obtain
+
+$$
+	\Hess (f \cdot h) = h \cdot \Hess f + f \cdot \Hess h  + df \otimes dh + dh \otimes df
+$$
+
+\subsection{iv}
+
+By proposition 2.2.6
+$$
+	\Hess f(X, Y) = g(\nabla_X \nabla f, Y) = (\nabla_X df)(Y)
+$$
+
+Chain rule for $\phi \circ f$, for any $p \in M$, $d(\phi \circ f)_p = d \phi_{f(p)} df_p$, we can rewrite it as product of functions $TM \to \R$
+$$
+	d(\phi \circ f) = (\phi' \circ f) \cdot df
+$$
+
+Similarly,
+$$
+	d(\phi' \circ f) = (\phi'' \circ f) \cdot df
+$$
+
+Then
+\begin{align*}
+	&\Hess (\phi \circ f)(X, Y) \\
+	&= (\nabla_X d(\phi \circ f))(Y) \\
+	&= (\nabla_X ((\phi' \circ f) \cdot df) )(Y) \\
+	&= ((\phi' \circ f) \cdot \nabla_X df + (\nabla_X (\phi' \circ f)) \cdot df)(Y) \\
+	&= (\phi' \circ f) \cdot (\nabla_X df) (Y) + (\nabla_X (\phi' \circ f)) \cdot df (Y) \\
+	&= (\phi' \circ f) \cdot \Hess f(X, Y) + (\nabla_X (\phi' \circ f)) \cdot df (Y) \\
+	&= (\phi' \circ f) \cdot \Hess f(X, Y) + d(\phi' \circ f)(X) \cdot df (Y) &\text{(directional derivative)}\\
+	&= (\phi' \circ f) \cdot \Hess f(X, Y) + (\phi'' \circ f) \cdot df(X) \cdot df (Y) &\text{(chain rule)}\\
+	&= (\phi' \circ f) \cdot \Hess f(X, Y) + ((\phi'' \circ f) \cdot df \otimes df)(X, Y) &\text{(definition)}\\
+\end{align*}
+
+Hence,
+$$
+	\Hess (\phi \circ f) = (\phi' \circ f) \cdot \Hess f + (\phi'' \circ f) \cdot df \otimes df
+$$
+
+\subsection{v}
+
+We use the definition $\Delta f = -\nabla^* \nabla f = \sum_i \nabla^2_{E_i, E_i} f = \sum_i \Hess f(E_i, E_i)$ for some orthonormal frame $E_i$, we have
+
+\begin{align*}
+	&\Delta f \\
+	&= \sum_i \Hess (\phi \circ f)(E_i, E_i) \\
+	&= \sum_i (\phi' \circ f) \cdot \Hess f(E_i, E_i) + (\phi'' \circ f) \cdot df(E_i)^2 \\
+	&= (\phi' \circ f) \Delta f + (\phi'' \circ f) \cdot \sum_{i} df(E_i)^2 \\
+	&= (\phi' \circ f) \Delta f + (\phi'' \circ f) \cdot |df| \\
+\end{align*}
+
+\section{PROBLEM 3}
+
+\begin{problem}
+	Let $(M, g)$ be a Riemannian manifold. Let $S$ be a smooth (1, 1)-tensor field on $M$, and let $X$ be a smooth vector field on $M$. Let $\nabla$ denote the Riemannian connection on $M$
+	\begin{enumerate}[label=(\alph*)]
+		\item Prove that
+		$$
+			\tr (\nabla_X S) = \nabla_X \tr S
+		$$
+		Here $\tr S$ denotes the trace of the $(1, 1)$-tensor $S$.
+		\item Consider the $(0, 2)$-tensor $T$ given by
+		$$
+			T(Y, Z) = g(S(Y), Z)
+		$$
+		
+		for any smooth vector fields $Y$ and $Z$ on $M$. Prove that
+		$$
+			(\nabla_X T)(Y, Z) = g((\nabla_X S)(Y), Z)
+		$$
+		
+		for any smooth vector fields $Y$ and $Z$ on $M$
+	\end{enumerate}
+\end{problem}
+
+\subsection{a}
+
+For any $(1, 1)$-tensor $S = S^i_j E_i \otimes \sigma^j$, $\tr S$ is defined by
+$$
+	\tr S = S^i_i
+$$
+
+If $S = Y \otimes \omega$ for some vector field $Y = Y^i E_i \in TM$ and covector field $\omega = \omega_j \sigma^j \in T^* M$, then
+$$
+	\tr S = \tr(Y^i \sigma_j E_i \otimes \sigma^j) = Y^i \omega_i = \omega(Y)
+$$
+
+Any $(1, 1)$-tensor can be written as a sum of $\set{Y \otimes \omega}$, so we just need to prove for the case of basic tensor
+
+\begin{align*}
+	&\tr \nabla_X (Y \otimes \omega) \\
+	&= \tr(\nabla_X Y \otimes \omega + Y \otimes \nabla \omega) &\text{(general product rule)} \\
+	&= \tr(\nabla_X Y \otimes \omega) + \tr(Y \otimes \nabla_X \omega) \\
+	&= \omega(\nabla_X Y) + (\nabla_X \omega)(Y) \\
+	&= \nabla_X (\omega(Y)) &\text{(page 57, def of $\nabla_X T$)} \\
+	&= \nabla_X \tr (Y \otimes \omega)
+\end{align*}
+
+\subsection{b}
+
+\begin{align*}
+	&(\nabla_X T)(Y, Z) \\
+	&= \nabla_X (T(Y, Z)) - T(\nabla_X Y, Z) - T(Y, \nabla_X Z) &\text{(page 57, def of $\nabla_X T$)} \\
+	&= \nabla_X g(S(Y), Z) - g(S(\nabla_X Y), Z) - g(S(Y), \nabla_X Z) &\text{(premise)}\\
+	&= g(\nabla_X S(Y), Z) + g(S(Y), \nabla_X Z) - g(S(\nabla_X Y), Z) - g(S(Y), \nabla_X Z) &\text{(prop 4)}\\
+	&= g(\nabla_X S(Y), Z) - g(S(\nabla_X Y), Z) \\
+	&= g(\nabla_X S(Y) - S(\nabla_X Y), Z) \\
+	&= g((\nabla_X S)(Y), Z) &\text{(page 57, def of $\nabla_X T$)} \\
+\end{align*}
+
+
+\section{PROBLEM 4}
+
+\begin{definition}[totally geodesic, normal vector]
+	The hypersurface $H$ is said to be \textit{totally geodesic} if its second fundamental form $II: TH \times TH \to \R$ vanishes. For a point $p \in H$, a vector $v \in T_p M$ is said to be normal vector to $H$ if $v \perp T_p H$
+\end{definition}
+
+\begin{problem}
+	\_
+	\begin{enumerate}[label=(\alph*)]
+		\item Let $V$ be a vector space and let $\inner{,}$ be an inner product on $V$. Let $B: V \times V \to \R$ be a symmetric bilinear form on $V$ such that
+		$$
+			B(v, w) = 0 \text{ for all $v, w \in V$ satisfying $\inner{v, w} = 0$}
+		$$
+		Show that $B$ is a multiple of the inner product, that is, there exists a constant $c$ such that 
+		$$
+			B(v, w) = c \cdot \inner{v, w}
+		$$
+		
+		\item Let $(M, g)$ be a Riemmannian manifold, and fix a point $p \in M$. Show that there exists a constant $k$ such that $\sec(\pi) = k$ for all planes $\pi \subseteq T_p M$ if and only if $R(v, w)z = 0$ for all mutually orthogonal $v, w, z \in T_p M$
+		
+		\item Let $(M, g)$ be a Riemmannian manifold of dimension $n \geq 3$. Suppose that for any point $p \in M$ and any tangent vector $v \in T_p M$, $v$ is a normal vector to a totally geodesic hypersurface $H$ of $M$ containing $p$. Show that $(M, g)$ has constant sectional curvature
+	\end{enumerate}
+\end{problem}
+
+
+\subsection{a}
+
+(assume $V$ is a Hilbert space) For any nonzero $v \in V$, $B(-, v)$ is a linear, by Riesz representation theorem, there exists a nonzero $\bar{v} \in V$ so that
+$$
+	B(u, v) = \inner{u, \bar{v}}
+$$
+for every $u \in V$. We can write $\bar{v} = \bar{v}^\perp + c v$ for some $\bar{v}^\perp \in (\Span{v})^\perp$ and $c \in \R$. For any nonzero $u \in V$, we have
+$$
+	\inner{u, \bar{v}} = \inner{u, \bar{v}^\perp} + c \inner{u, v}
+$$
+
+Let $u = \bar{v}^\perp$, then 
+$$
+	\inner{u, v} = 0 \implies \inner{u, \bar{v}} = 0 \implies \inner{\bar{v}^\perp, \bar{v}^\perp} = 0 \implies \bar{v}^\perp = 0
+$$
+
+So
+$$
+	B(u, v) = c \inner{u, v}
+$$
+ 
+\subsection{b}
+
+\begin{lemma}[proposition 3.1.3 - Riemann, 1954]
+	The following properties are equivalent
+	\begin{enumerate}
+		\item $\sec \pi = k$ for all $2$-planes in $T_p M$
+		\item $R(v_1, v_2)v_3 = -k (v_1 \wedge v_2) (v_3)$
+	\end{enumerate}
+	where $k$ is a constant
+\end{lemma}
+
+($\implies$) If $\sec \pi = k$ for all planes $\pi \subseteq T_p M$, let $v, w, z$ mutually orthogonal, then 
+
+\begin{align*}
+	&R(v, w)z \\
+	&= -k (v \wedge w) (z) \\
+	&= -k (g(v, z) w - g(w, z) v) \\
+	&= 0
+\end{align*}
+
+($\impliedby$) Consider curvature tensor as a symmetric bilinear map
+\begin{align*}
+	R: \wedge^2 TM \times \wedge^2 TM &\to \R \\
+		(x \wedge y, v \wedge w) &\mapsto R(x \wedge y, v \wedge w) = R(x, y, w, v) = g(R(x, y)w, v)
+\end{align*}
+
+
+Sectional curvature is defined by
+$$
+	\sec(\Span \set{v, w}) = \frac{g(R(w, v) v, w)}{g(v \wedge w, v \wedge w)} = \frac{R(w \wedge v, w \wedge v)}{g(w \wedge v, w \wedge v)}
+$$
+
+From now, $R$ and $g$ are restricted to the tangent space $T_p M$. It suffices to show that if $g(\tilde{v}, \tilde{w}) = 0$ for some vectors $\tilde{v}, \tilde{w} \in \wedge^2 T_pM$, then $R(\tilde{v}, \tilde{w}) = 0$.
+
+Suppose $\tilde{v}, \tilde{w} \in \wedge^2 T_pM$ so that $g(\tilde{v}, \tilde{w}) = 0$, each vector in $\wedge^2 T_p M$ corresponds to a $2$-plane in $T_p M$, let $\tilde{v} = v_1 \wedge v_2$ for some orthogonal vectors $v_1, v_2 \in T_p M$. Similarly, let $\tilde{w} = w_1 \wedge w_2$ for some vectors $w_1, w_2 \in T_p M$ (not neccessarily orthogonal). $g(\tilde{v}, \tilde{w}) = 0$ implies
+$$
+	g(\tilde{v}, \tilde{w}) = g(v_1 \wedge v_2, w_1 \wedge w_2) = \det \begin{bmatrix}
+		g(v_1, w_1) & g(v_1, w_2) \\
+		g(v_2, w_1) & g(v_2, w_2)
+	\end{bmatrix} = 0
+$$
+
+We want to pick a nonzero vector $w = a w_1 + b w_2 \in \Span \set{w_1, w_2}$ so that $g(v_1, w) = g(v_2, w) = 0$. This is possible since $a, b$ satisfies the following system of equations
+$$
+	\begin{bmatrix}
+		g(v_1, w_1) & g(v_1, w_2) \\
+		g(v_2, w_1) & g(v_2, w_2)
+	\end{bmatrix} \begin{bmatrix}
+		a \\ b
+	\end{bmatrix} = \begin{bmatrix}
+		g(v_1, w) \\ g(v_2, w)
+	\end{bmatrix} = \begin{bmatrix}
+		0 \\ 0
+	\end{bmatrix}
+$$
+
+and the nullspace of $\begin{bmatrix}
+	g(v_1, w_1) & g(v_1, w_2) \\
+	g(v_2, w_1) & g(v_2, w_2)
+\end{bmatrix}$ is non-trivial. That is, there exists a vector in $\Span \set{w_1, w_2}$ that is orthogonal to both $v_1$ and $v_2$, let that vector be $w_1'$ and pick another vector $w_2' \in \Span \set{w_1, w_2}$ so that $w_1' \wedge w_2' = w_1 \wedge w_2 = \tilde{w}$. Now
+$$
+	R(\tilde{v}, \tilde{w}) = R(v_1 \wedge v_2, w_2' \wedge w_1') = g(R(v_1, v_2) w_1', w_2')
+$$
+
+Since $v_1, v_2, w_1'$ are mutually orthogonal, $R(\tilde{v}, \tilde{w}) = 0$. From part 1, we have 
+$$
+	R = k g
+$$
+
+for some constant $k$ as symmetric bilinear forms $\wedge^2 T_p M \times \wedge^2 T_p M \to \R$. Hence
+$$
+	\sec(\Span \set{v, w}) = \frac{g(R(w, v) v, w)}{g(v \wedge w, v \wedge w)} = \frac{R(w \wedge v, w \wedge v)}{g(w \wedge v, w \wedge v)} = k
+$$
+
+\subsection{c}
+
+Let nonzero $v, w, z \in T_p M$ be mutually orthogonal. Let $z$ be normal to totally geodesic hypersurface $H$, its second fundamental form is identically zero, then by theorem 3.2.5
+$$
+	g(R(V, W)Y, Z) = 0
+$$
+
+for some tangent vector field $V, W, Y \in TH$ and normal vector field $Z$. Pick $V, W, Z$ so that $V(p) = v, W(p) = w, Z(p) = z$ and let $y = W(p)$, then
+$$
+	g(R(v, w)y, z) = 0
+$$
+
+Note that, the choice of $Y$ was arbitrary. We have
+$$
+	g(R(v, w)z, y) = - g(R(v, w)y, z) = 0
+$$
+
+for every vector $y \in T_p H$, so $R(v, w)z$ must be parallel to $z$. However, $g(R(v, w)z, z) = 0$ due to symmetry of curvature tensor. So $R(v, w)z = 0$. From part 2, $(M, g)$ has constant sectional curvature.
+
+
+
+
+
+
+
+

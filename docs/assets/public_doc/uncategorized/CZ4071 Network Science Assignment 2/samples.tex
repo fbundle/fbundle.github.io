@@ -1,0 +1,43 @@
+\newpage
+\chapter{Samples}
+NOT TO BE INCLUDED IN REPORT!
+
+Refer to this chapter for examples of figures and stuff
+
+\section{Chapters and sections}
+The order of sectioning from biggest to smallest is as such: chapter > section > subsection > subsubsection. To use simply add a backslash, for example, \textbackslash section.
+
+\section{Figures}
+\label{sample_figures}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.8, ]{assets/ntu_logo.png}
+    \caption{Sample figure} 
+    \label{fig:samp_fig}
+\end{figure}
+
+\subsection{Explanation and referencing}
+As seen in figure \ref{fig:samp_fig} in section \ref{sample_figures}, this is the way to reference figures and sections. Include label to be able to reference. \textbf{If the figure does not appear exactly at the place specified, it is normal. Need to adjust figure settings such as [h!]}. Also, press \textbf{ctrl b} to \textbf{bold text}.
+
+\section{Tables}
+
+\begin{table}[!htbp]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+Eddy Lim Qing Yang & U1620115B & eddy0006@e.ntu.edu.sg \\ \hline
+Shawn & & @e.ntu.edu.sg \\ \hline
+Leung Cheuk Yui & & cleung002@e.ntu.edu.sg \\ \hline
+Joshua & & @e.ntu.edu.sg \\ \hline
+& & @e.ntu.edu.sg \\ \hline
+& & @e.ntu.edu.sg \\ \hline
+& & @e.ntu.edu.sg \\ \hline
+& & @e.ntu.edu.sg \\ \hline
+\end{tabular}
+\end{table}
+\label{tbl:sample_table}
+
+Table \ref{tbl:sample_table} is a sample table. Do not try to fill in the table using the latex format manually. It is more efficient to use a table generator such as in: https://www.tablesgenerator.com/.
+
+\section{Citations}
+To cite, simply use \textbackslash cite\{<articleName>\} like \cite{gunther2010neuralnet}. A bibliography list will be automatically generated.

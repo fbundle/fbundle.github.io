@@ -1,0 +1,506 @@
+\chapter{RING AND IDEAL}
+
+\section{RING HOMOMORPHISM, IDEALS, QUOTIENT RING}
+
+\subsection{RING AND RING HOMOMORPHISM}
+
+\begin{definition}[associative ring, commutative (unital) ring]
+	An associative ring $R$ is an additive abelian group $(R, +)$ equipped with a multiplication $\times: R \times R \to R$ such that
+	\begin{enumerate}
+		\item the multiplication is associative, that is
+		$$
+			(ab) c = a (bc)
+		$$
+		for all $a, b, c \in R$
+		
+		\item the distributive laws hold in $R$, that is
+		$$
+			(a + b) c = ac + bc \text{ and } c (a + b) = ca + cb
+		$$
+		
+		for all $a, b, c \in R$
+	\end{enumerate}
+	
+	If the multiplication is commutative, that is, $ab = ba$ for all $a, b \in R$ and there is an element $1 \in R$ such that 
+	$$
+		1a = a1 = a
+	$$ 
+	for all $a \in R$, then $(R, +, \times, 1)$ is called a commutative (unital) ring. The element $1$ is called multiplicative identity or unity.
+\end{definition}
+
+\begin{remark}
+	From now on, whenever we mention ring, that will mean \textit{commutative (unital) ring}
+\end{remark}
+
+\begin{definition}[ring homomorphism]
+	A map $f: A \to B$ of a ring $A$ into a ring $B$ is called a ring homomorphism if
+	\begin{enumerate}
+		\item $f: A \to B$ is a group homomorphism of the additive groups
+		
+		\item $f(xy) = f(x) f(y)$ for all $x, y \in A$
+		
+		\item $f(1_A) = 1_B$
+	\end{enumerate}
+\end{definition}
+
+\subsection{IDEAL AND QUOTIENT RING}
+
+\begin{definition}[subring]
+	A subring $S$ of a ring $R$ is a subset if $R$ that is also a ring
+\end{definition}
+
+\begin{definition}[ideal]
+	A ideal $I$ of a ring $R$ is an additive subgroup of $R$ that is stable under multiplication by ring elements, that is for each $r \in R$, the multiplication map by $r$ is
+	\begin{align*}
+		r : R \times I &\to I \\
+			(r, i) &\mapsto ri
+	\end{align*}
+	
+	(\note{note that, ideal is not a subring})
+\end{definition}
+
+\begin{definition}[quotient ring]
+	Given an ideal $I$ of a ring $R$, the quotient group $R / I$ inherits a naturally defined multiplication from $R$ which makes it into a ring, namely, the quotient ring. The multiplication in $R / I$ is as follows:
+	\begin{align*}
+		\times: R / I \times R / I &\to R / I \\
+		(x + I, y + I) &\mapsto xy + I
+	\end{align*}
+	for all $x, y \in R$. Moreover, the natural projection 
+	\begin{align*}
+		\phi: R &\twoheadrightarrow R / I \\
+				x &\mapsto x + I
+	\end{align*}
+	is a surjective ring homomorphism. We also write $x + I = \bar{x} = [x] = \phi(x)$
+\end{definition}
+
+\begin{theorem}[the first isomorphism theorem for rings]
+	Let $f: A \to B$ be a ring homomorphism, then $\ker f$ is an ideal of $A$, $\im f$ is a subring of $B$, and $f: A \to B$ factors through $A / \ker f$ by the natural projection $\phi: A \twoheadrightarrow A / \ker f$ by a ring isomorphism $A / \ker f \xrightarrow{\sim} \im f$
+	\begin{center}
+		\begin{tikzcd}
+			A \arrow[r, "f"] \arrow[d, "\phi"', two heads] & \im f \subseteq B \\
+			A / \ker f \arrow[ru, "\sim"']                &      
+		\end{tikzcd}
+	\end{center}
+\end{theorem}
+
+\begin{proof}
+	\note{TODO}
+\end{proof}
+
+\begin{theorem}[the forth isomorphism theorem for rings]
+	Let $I$ be an ideal of $R$, there is a one-to-one correspondence between the set of ideals in $A$ containing $I$ and the set of ideals in $A / I$ given by the map $\phi: A \twoheadrightarrow A / I$
+	$$
+		\bar{J} = \phi(J)
+	$$
+	
+	Moreover, consider the partial order by inclusions of ideals, the correspondence is also order preserving, that is, given ideals $J, K$ containing $I$ in $R$, then $J \subseteq K \iff \bar{J} \subseteq \bar{K}$
+	\begin{center}
+		\begin{tikzcd}
+			I \arrow[r, hook] \arrow[d, dashed] & J \arrow[r, hook] \arrow[d, dashed] & K \arrow[d, dashed] \arrow[r, hook] & R \arrow[d, dashed] \\
+			\set{0} \arrow[r, hook]             & \overline{J} \arrow[r, hook]        & \overline{K} \arrow[r, hook]        & R / I              
+		\end{tikzcd}
+	\end{center}
+\end{theorem}
+
+\begin{proof}
+	\note{TODO}
+\end{proof}
+
+\begin{remark}[the second and third isomorphism theorems for rings]
+	Let $R$ be a ring
+	\begin{enumerate}
+		\item (the second isomorphism theorem) Let $S$ be a subring and $I$ be an ideal of $R$, then
+		$$
+			\frac{S + I}{I} \cong \frac{S}{S \cap I}
+		$$
+	
+		\item (the third isomorphism theorem) Let $I, J$ be ideals of $R$ with $I \subseteq J$, then
+		$$
+			\frac{R/I}{J/I} = \frac{R}{J}
+		$$
+	\end{enumerate}
+\end{remark}
+
+\begin{remark}[existence of ideal]
+	Given any ring $R$, there always exist at least two ideals
+	\begin{enumerate}
+		\item the zero ideal: $(0) = \set{0}$
+		\item the whole ring $R = (1) = (u)$ for any unit $u$
+	\end{enumerate}
+\end{remark}
+
+\section{PRIME IDEAL AND MAXIMAL IDEAL}
+
+\begin{definition}[zero divisor, unit]
+	A zero divisor $x$ in ring $R$ is an element that divides $0$, that is, there is $y \in R$ such that $xy = 0$. A unit $x$ in ring $R$ is an element that divides $1$, that is, there is $y \in R$ such that $xy = 1$. The set of units forms the multiplicative group $R^\times$
+\end{definition}
+
+
+\subsection{PRIME IDEAL AND DOMAIN}
+
+\begin{definition}[domain]
+	A ring $R$ is a domain if $xy = 0$ implies $x = 0$ or $y = 0$ for all $x, y \in R$
+\end{definition}
+
+\begin{definition}[prime ideal]
+	A non-zero proper ideal $\mf{p}$ of ring $R$ is prime if $xy \in \mf{p}$ implies $x \in \mf{p}$ or $y \in \mf{p}$ for all $x, y \in R$
+\end{definition}
+
+\begin{proposition}
+	An ideal $\mf{p}$ of $R$ is prime if and only if $R / \mf{p}$ is a domain
+\end{proposition}
+
+\begin{proof}
+	An ideal $\mf{p}$ of $R$ is prime $\iff$ $xy \in \mf{p}$ implies $x \in \mf{p}$ or $y \in \mf{p}$ $\iff$ $\overline{xy} = \bar{x} \bar{y} \in \mf{p}$ implies $\bar{x} \in \mf{p}$ or $\bar{y} \in \mf{p}$ $\iff$ $R / \mf{p}$ is a domain
+\end{proof}
+
+\subsection{MAXIMAL IDEAL AND FIELD, LOCAL RING}
+
+\begin{definition}[field]
+	Let $R$ be a ring with $1 \neq 0$, then the following are equivalent
+	\begin{enumerate}
+		\item every non-zero element in $R$ is a unit
+		\item the only ideals in $R$ are $(0)$ and $R$
+		\item every map $R \to S$ into a non-trivial ring $S$ is injective.
+	\end{enumerate}
+	
+	The ring $R$ satisfying one the those conditions is called field
+\end{definition}
+
+\begin{longproof}
+	($1 \implies 2$) Let $A$ be a nonzero ideal of $R$, then there exists a nonzero $x \in A$. Since $R$ is a field, $x$ is an unit. Then, $R = (x) \subseteq A$, hence $A = R$
+	
+	($2 \implies 3$) If $\phi: R \to S$ is a ring homomorphism, then $\ker \phi$ is an ideal in $R$. Since $S$ is non-trivial, $\ker \phi = (0) = \set{0}$, that is, $\phi$ is injective.
+	
+	($3 \implies 1$) Let $x \in R$ that is not a unit, hence $(x) \neq R$. Then, $R / (x)$ is not trivial. The natural projection $\phi: R \to R / (x)$ is injective by the premise, hence $(x) = \ker \phi = \set{0}$. Then, $x = 0$
+\end{longproof}
+
+\begin{definition}[maximal ideal]
+	A proper ideal $\mf{m}$ of $R$ is maximal if there is no proper ideal $\mf{a}$ such that
+	$$
+		\mf{m} \subsetneq \mf{a} \subsetneq R
+	$$
+\end{definition}
+
+\begin{proposition}
+	An ideal $\mf{m}$ of $R$ is maximal if and only if $A / \mf{m}$ is a field
+\end{proposition}
+
+\begin{proof}
+	prove by the characterization of field and order-preservation of fourth isomorphism theorem
+\end{proof}
+
+\begin{remark}
+	every field is a domain implies every maximal ideal is prime.
+\end{remark}
+
+\begin{proposition}
+	Every proper ideal is contained in a maximal ideal \note{(Zorn lemma)}
+\end{proposition}
+
+\begin{definition}[local ring, residue field]
+	A ring $A$ is local if it has exactly one maximal ideal $\mf{m}$. The field $k = A / \mf{m}$ is called residue field. We usually denote $(A, \mf{m}, k)$
+\end{definition}
+
+\begin{proposition}
+	Propositions on local rings
+	\begin{enumerate}
+		\item Let $A$ be a ring and $\mf{m}$ be a proper ideal  of $A$ such that every $x \in A - \mf{m}$ is a unit. Then, $(A, \mf{m})$ is a local ring.
+		
+		\item Let $A$ be a ring and $\mf{m}$ be a maximal ideal of $A$ such that every element of $1 + \mf{m} = \set{1 + x: x \in \mf{m}}$ is a unit in $A$. Then, $A$ is a local
+	\end{enumerate}
+\end{proposition}
+
+\begin{longproof}
+	(1) Any other maximal ideal contains a unit, hence it is the whole ring. Then, $A$ is local
+	
+	(2) Let $x \in A - \mf{m}$, since $\mf{m}$ is maximal, then the ideal $(x, \mf{m}) = A$. Hence, $1 = rx + m$ for some $r \in R$, $m \in \mf{m}$, then $xy = 1 - m \in 1 + \mf{m}$, $x$ is a unit. From $1$, $A$ is a local ring. 
+\end{longproof}
+
+\section{RADICAL}
+
+\subsection{RADICAL}
+
+\begin{definition}[radical]
+	Given any ideal $I$ of ring $R$, then the radical of $I$, denoted by $\sqrt{I}$, is defined by
+	$$
+		\sqrt{I} = r(I) = \set{x \in R: x^n \in I \text{ for some } n \geq 1}
+	$$
+\end{definition}
+
+\begin{proposition}
+	Given any ideal $I$ of ring $R$, the radical $\sqrt{I}$ of $I$ is an ideal
+\end{proposition}
+
+\begin{longproof}
+	($\sqrt{I}$ is a group) $0 \in \sqrt{I}$. If $x \in \sqrt{I}$, then $x^n \in I$ for some $n > 0$, then $(-x)^n = (-1)^n x^n \in I$, hence $-x \in \sqrt{I}$. If $x, y \in \sqrt{I}$, then $x^n, y^m \in I$ for some $n, m > 0$, then $(x + y)^{n +m - 1} = \sum_{k = 0}^{n+m-1} {n + m - 1 \choose k} x^k y^{n + m - 1 - k} \in I$ since each $x^k y^{n + m - 1 - k} \in I$ for all $0 \leq k \leq n+m-1$, that is, $x + y \in \sqrt{I}$
+	
+	($\sqrt{I}$ is stable under multiplication by ring elements) If $x \in \sqrt{I}$, then $x^n \in I$ for some $n > 0$. If $r \in R$, then $(rx)^n = r^n x^n \in I$, hence $rx \in \sqrt{I}$
+\end{longproof}
+
+\begin{proposition}
+	Given any ideal $I$ of ring $R$ and $\phi: R \twoheadrightarrow R / I$, then
+	$$
+		\sqrt{I} = \phi^{-1}(\eta_{R/I})
+	$$
+	
+	where $\eta_{R/I}$ is the nilradical of $R/I$, that is, the radical of the zero ideal of $R/I$ 
+\end{proposition}
+
+\begin{remark}
+	Let $I, J$ be ideals of $R$ and $\mf{p}$ be prime ideal of $R$, then
+	\begin{align*}
+		&\sqrt{\sqrt{I}} = \sqrt{I} \\
+		&\sqrt{IJ} = \sqrt{I \cap J} = \sqrt{I} \cap \sqrt{J} \\
+		&\sqrt{I} = R \iff I = R \\
+		&\sqrt{I + J} = \sqrt{\sqrt{I} + \sqrt{J}} \\
+		&\sqrt{\mf{p}^n} = \mf{p} &\text{(for every $n \geq 1$)}
+	\end{align*}
+\end{remark}
+
+\begin{proposition}
+	Given any ideal $I$ of ring $R$, then
+	$$
+		\sqrt{I} = \bigcap_{\mf{p} \text{ prime and } I \subseteq \mf{p}} \mf{p}
+	$$
+\end{proposition}
+
+\begin{longproof}
+	($\subseteq$) For any prime ideal $\mf{p}$ such that $I \subseteq \mf{p}$, if $x \in \sqrt{I}$, then $x^n \in I \subseteq \mf{p}$ for some $n > 0$. Since $\mf{p}$ is prime, $x \in \mf{p}$
+	
+	($\supseteq$) Let $x \in \sqrt{I}$, then $x^n \in I$ for some $n > 0$. Suppose there is a prime ideal $\mf{p}$ such that $I \subseteq \mf{p}$ and $x \notin \mf{p}$. This is a contradiction since $x^n \in \mf{p}$ implies $x \in \mf{p}$.
+\end{longproof}
+
+\subsection{NILRADICAL}
+
+\begin{definition}[nilpotent, nilradical]
+	A element $x$ of a ring $R$ is called nilpotent if $x^n = 0$ for some $n > 0$. The nilradical of a ring $R$ is the collection of nilpotent elements, denoted by $\eta_R = \sqrt{(0)}$
+\end{definition}
+
+\begin{remark}
+	Given a ring $R$, $R / \eta_R$ has no nonzero nilpotent element.
+\end{remark}
+
+\begin{proof}
+	Let $x \in R$ such that $\bar{x}^n = 0$, then $\overline{x^n} = \bar{x}^n = 0$, that is, $x^n \in \eta_R$, hence, $x^{nm} = (x^n)^m = 0$ for some $m > 0$, that is, $x$ is nilpotent
+\end{proof}
+
+\begin{corollary}
+	The nilradical $\eta_R$ of $R$ is the intersection of all prime ideals of $R$
+\end{corollary}
+
+\subsection{JACOBSON RADICAL}
+
+\begin{definition}[Jacobson radical]
+	Given a ring $R$, the Jacobson radical is
+	$$
+		J(R) = \bigcap_{\mf{m} \text{ maximal}} \mf{m}
+	$$
+\end{definition}
+
+\begin{proposition}
+	Given a ring $R$, $x \in J(R)$ if and only if $1 - xy$ is a unit in $R$ for all $y \in R$
+\end{proposition}
+
+\begin{longproof}
+	($\implies$) Let $x \in J(R)$, suppose $1 - xy$ is not a unit, then $1 - xy$ belongs to some maximal ideal $\mf{m}$. Since $x \in \mf{m}$ and $1 \notin \mf{m}$, this is a contradiction
+	
+	($\impliedby$) Let $1 - xy$ be a unit in $R$ for all $y \in R$ and there is a maximal ideal $\mf{m}$ such that $x \notin \mf{m}$. Since $\mf{m}$ is maximal, $(\mf{m}, x) = R$, then $1 = m + rx$ for some $m \in \mf{m}$ and $r \in R$. Hence, $m = 1 - rx$ is a unit, this is a contradiction.
+\end{longproof}
+
+\section{OPERATION ON IDEAL}
+
+\subsection{IDEAL GENERATED BY SET}
+\begin{definition}[principal ideal, ideal generated by a set]
+	Let $A$ be a subset of ring $R$, then the ideal generated by $A$ is the smallest ideal containing $A$, denoted by $(A)$. This is well defined since the intersection of arbitrary number of ideals is an ideal. An explitcit construction of $(A)$ is as follows:
+	$$
+		(A) = RA = \set{r_1 a_1 + ... + r_n a_n: r_1, ..., r_n \in R, a_1, ..., a_n \in A, n \geq 0}
+	$$
+	
+	A principal ideal is an ideal generated by one element. In particular, the principal ideal generated by $x \in R$ is
+	$$
+		(x) = \set{rx: r \in R}
+	$$
+\end{definition}
+
+\subsection{OPERATION ON IDEAL}
+
+\begin{definition}[sum, product, intersection, union]
+	Let $I, J$ be ideals of ring $R$, define the following ideals
+	\begin{enumerate}
+		\item sum of ideals
+		$$
+			I + J = \set{i + j: i \in I, j \in J}
+		$$
+		
+		\note{arbitrary sum of ideals is defined by $\sum_{i \in I} \mf{a}_i = \set{a_{j_1} + ... + a_{j_n}: j_1, ..., j_n \in I, n \in \Z_{\geq 0}}$}
+		
+		\item product of ideals
+		$$
+			IJ = \set{i_1 j_1 + i_2 j_2 + ... + i_n j_n: i_\bullet \in I, j_\bullet \in J}
+		$$
+		
+		\item intersection of ideals
+		$$
+			I \cap J
+		$$
+	\end{enumerate}
+\end{definition}
+
+\begin{remark}
+	Let $I, J, K$ be ideals, then we have the following
+	\begin{enumerate}
+		\item $I(J + K) = IJ + IK$
+		
+		\item $IJ \subseteq I \cap J \subseteq I \subseteq I + J$
+		
+		\item $(I + J)(I \cap J) \subseteq IJ$
+		
+		\item the smallest ideal containing $I$ and $J$ is $I + J$
+	\end{enumerate}
+\end{remark}
+
+\begin{definition}[coprime]
+	Two ideals $I, J$ in $R$ are called coprime (or comaximal) if $I + J = R$
+\end{definition}
+
+\begin{proposition}[chinese remainder theorem, CRT]
+	Let $I$ and $J$ be ideals of ring $R$, define the homomorphism
+	\begin{align*}
+		\phi: R &\to R / I \times R / J \\
+		r &\mapsto (r + I, r + J)
+	\end{align*}
+	
+	Then
+	\begin{enumerate}
+		\item $\ker \phi = I \cap J$
+		\item $I + J = R$ implies $I \cap J = IJ$
+		\item $I + J = R$ if and only if $\phi$ is surjective. Hence, \footnote{the statement is also true for the case of $n$ ideals and ideals being pairwise coprime}
+		$$
+			R / IJ \cong R / I \cap J \cong R / I \times R / J
+		$$
+		\item $I \cap J = (0)$ if and only if $\phi$ is injective
+	\end{enumerate}
+\end{proposition}
+
+\begin{longproof}
+	($\ker \phi = I \cap J$) the elements in $R$ that are sent to $(0, 0)$ in $R / I \times R / J$ are exactly those in both $I$ and $J$
+	
+	($I + J = R$ implies $I \cap J = IJ$) If $I + J = R$, then $I \cap J = R(I \cap J) \subseteq IJ$. Since $IJ \subseteq I \cap J$, then $I \cap J = IJ$
+	
+	($I + J = R$ if and only if $\phi$ is surjective) If $I + J = R$, then $1 = i + j$ for some $i \in I$ and $j \in J$, we have
+	\begin{align*}
+		\phi(i) = \phi(1 - j) = (0, 1) \\
+		\phi(j) = \phi(1 - i) = (1, 0)
+	\end{align*}
+	
+	Hence, for any $(\bar{x}, \bar{y}) \in R / I \times R / J$ with $x, y \in R$, then $\phi(jx + iy) = (\bar{x}, \bar{y})$. That is, the map $\phi$ is surjective. By the first isomorphism theorem, we have the isomorphism as required. In the contrary, if $\phi$ is surjective, there exists $x \in R$ such that $\phi(x) = (1, 0)$, that is, $1 - x \in I$ and $x \in J$. Therefore, $1 \in I + J$, that is, $I + J = R$
+	
+	($I \cap J = (0)$ if and only if $\phi$ is injective) this is true since $\ker \phi = I \cap J$
+\end{longproof}
+
+\begin{remark}
+	In general, union of ideals is not an ideal.
+\end{remark}
+
+\begin{proposition}
+	Let $A$ and $B$ be ideals and $I$ be an ideal contained in $A \cup B$, then $I \subseteq A$ or $I \subseteq B$. Let $\mf{p}_1, \mf{p}_2, ..., \mf{p}_n$ be prime ideals and $I$ be an ideal contained in $\bigcup_{i=1}^n \mf{p}_i$, then $I \subseteq \mf{p}_i$ for some $i$
+\end{proposition}
+
+\begin{longproof}
+	(the case of two ideals) If $I \nsubseteq A$, then there exists $a \in I - A$. If $I \nsubseteq B$, then there exists $b \in I - B$. Consider the element $a + b \in I$, $a + b \notin A$ and $a + b \notin B$, contradiction
+	
+	(the case of $n$ prime ideals) We will prove by induction. The statement when $n = 1$ is true. If $n > 1$ and suppose the statement is true for all $1,2, ..., n-1$. For each $i$, let $x_i \in I$ such that $x_i \in \mf{p}_i - \bigcup_{j \neq i} \mf{p}_j$. If this is not possible, then the statement falls back into one of the cases $1,2, ..., n-1$. Consider the element $y \in I$
+	$$
+		y = \sum_{i=1}^n x_1 x_2 ... x_{i-1} x_{i+1} ... x_n
+	$$
+	For each $i$, the term $x_1 x_2 ... x_{i-1} x_{i+1} ... x_n \notin \mf{p}_i$ since $\mf{p}_i$ is prime and all other terms belong to $\mf{p}_i$. Therefore, $y \notin \mf{p}_i$. That is a contradiction.
+\end{longproof}
+
+\begin{proposition}
+	Let $A_1, A_2, ..., A_n$ be ideals  and $\mf{p}$ be a prime ideal containing $\bigcap_{i=1}^n A_i \neq \emptyset$, then $\mf{p}  \supseteq A_i$ for some $i$. Moreover, if $\mf{p} = \bigcap_{i=1}^n A_i$, then $\mf{p}  = A_i$ for some $i$
+\end{proposition}
+
+\begin{proof}
+	Suppose $\mf{p} \nsupseteq A_i$ for all $i$, then for each $i$ there exists $x_i \in A_i - \mf{p}$. Hence, $\prod x_i \in \bigcap A_i$ but $\prod x_i \notin \mf{p}$ since $\mf{p}$ is prime, contradiction. Moreover, if $\mf{p} = \bigcap A_i$, then $\mf{p} \subseteq A_i$ for all $i$. Hence, $\mf{p} = A_i$ for some $i$
+\end{proof}
+
+\begin{definition}[ideal quotient, annihilator]
+	If $A, B$ are ideals in a ring $R$, their ideal quotient is
+	$$
+		(A : B) = \set{x \in R: xB \subseteq A}
+	$$
+	
+	In particular, $(0, B)$ is called the annihilator of $B$, denoted by $\ann_R(B)$
+	$$
+		\ann_R(B) = (0, B) = \set{x \in R: xB = 0}
+	$$
+\end{definition}
+
+\section{EXTENSION AND CONTRACTION}
+
+Let $f: A \to B$ be a ring homomorphism, if $\mf{a}$ is an ideal of $A$, then the image $f(\mf{a})$ is generally not an ideal in $B$. Let $f: \Z \to \R$ be the natural inclusion and $\mf{a} = (2)$, then $\mf{a}$ is an ideal in $\Z$ but not an ideal in $\R$. On the other hand, if $\mf{b}$ is an ideal in $B$, then the preimage $f^{-1}(\mf{b})$ is always an ideal in $A$
+
+\begin{definition}[extension, contraction]
+	Let $f: A \to B$ be a ring homomorphism.
+	\begin{enumerate}
+		\item Let $\mf{a}$ be an ideal in $A$, the ideal generated by the image $f(\mf{a})$ is called extension of $\mf{a}$ under $f$ denoted by
+		$$
+			\mf{a}^e = f(\mf{a}) B = \set{ab: a \in f(\mf{a}), b \in B }
+		$$
+		
+		\item Let $\mf{b}$ be an ideal in $B$, the preimage $f^{-1}(\mf{b})$ is called contraction of $\mf{b}$ under $f$, denoted by
+		$$
+			\mf{b}^c = f^{-1}(\mf{b}) = \mf{b} \cap A
+		$$
+	\end{enumerate}
+\end{definition}
+
+\begin{proposition}
+	Let $f: A \to B$ be a ring homomorphism, contraction by $f$ maps  primes into primes
+\end{proposition}
+
+\begin{proof}
+	\note{TODO}
+\end{proof}
+
+\begin{proposition}
+	Let $f: A \to B$ be a ring homomorphism, $\mf{a} \subseteq A$, $\mf{b} \subseteq B$ be ideals
+	\begin{enumerate}
+		\item $\mf{a} \subseteq \mf{a}^{ec}$ and $\mf{b}^{ce} \subseteq \mf{b}$
+		\item $\mf{a}^{ece} = \mf{a}^e$ and $\mf{b}^{cec} = \mf{b}^e$
+		\item \note{TODO - proposition 1.17}
+	\end{enumerate}
+\end{proposition}
+
+\begin{longproof}
+	\note{TODO}
+\end{longproof}
+
+\section{SPECTRUM OF RING}
+
+\begin{definition}[spectrum of ring, Zariski topology]
+	Let $R$ be a ring and the spectrum of $R$ be defined by
+	$$
+		\Spec R = \set{\mf{p} \text{ prime in } R}
+	$$
+
+	Moreover, $\Spec R$ admits a topology generated by the collection of closed sets
+	$$
+		\set{V(I): I \text{ ideal in } R}
+	$$
+	
+	where $V(I)$ is the set of prime ideals containing $I$. The topology is called Zariski topology. Under Zariski topology, given any ring homomorphism $f: A \to B$, contraction under $f$ defines a continuous map
+	\begin{align*}
+		f^*: \Spec B &\to \Spec A \\
+				\mf{p} &\mapsto f^{-1}(\mf{p})
+	\end{align*}
+\end{definition}
+
+\begin{remark}
+	Using this language, the radical of an ideal $I$ of ring $R$ is
+	$$
+		\sqrt{I} = \bigcap_{\mf{p} \in V(I)} \mf{p}
+	$$
+\end{remark}
+

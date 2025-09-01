@@ -1,0 +1,53 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\input{header}
+
+\title{
+    Some theorems we might missed in Real Analysis
+}
+\author{Khanh Nguyen}
+\date{August 2023}
+
+\begin{document}
+
+\maketitle
+
+\begin{definition}[left limit and right limit]
+    Let $f: [a, b] \to \R$ and $x_0 \in [a, b]$. Let $\epsilon > 0$, the left/right limit is defined as
+    $$
+        f(x_0^-) = \lim_{\epsilon \to 0} \sup f((x_0 - \epsilon, x_0)) = \lim_{\epsilon \to 0} \inf f((x_0 - \epsilon, x_0))
+    $$
+    $$
+        f(x_0^+) = \lim_{\epsilon \to 0} \sup f((x_0, x_0 + \epsilon)) = \lim_{\epsilon \to 0} \inf f((x_0, x_0 + \epsilon))
+    $$
+    If $f$ is monotonically increasing
+    $$
+        f(x_0^-) = \sup f([a, x_0))
+    $$
+    $$
+        f(x_0^+) = \inf f((x_0, b])
+    $$
+\end{definition}
+
+\begin{definition}[removable discontinuity]
+    $f(x^-) = f(x^+) \neq f(x)$
+\end{definition}
+
+\begin{definition}[jump discontinuity]
+    $f(x^-) \neq f(x^+)$
+\end{definition}
+
+\begin{theorem}
+    Let $f: [a, b] \to \R$ be a monotonically increasing function. Then, $f$ has at most countable number of discontinuities. Furthermore, they are all jump discontinuities.
+\end{theorem}
+
+\begin{theorem}[Heine–Cantor theorem]
+    A continuous function $f: A \to B$ on a compact metric space into a metric space is uniformly continuous, i.e. given any $\epsilon > 0$, there exists a $\delta > 0$ such that for every open ball $B = \Ball(a, \delta)$, $f(B)$ has diameter less than $\epsilon$
+\end{theorem}
+
+
+
+
+
+\end{document}

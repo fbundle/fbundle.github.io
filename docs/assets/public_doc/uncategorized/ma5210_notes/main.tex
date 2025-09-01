@@ -1,0 +1,41 @@
+\documentclass{report}
+% \input{header}
+
+\usepackage{../../latex_styles/plain_sty}
+\usepackage{../../latex_styles/symbol_def}
+
+
+% start with chapter 0
+\setcounter{chapter}{-1}
+\renewcommand{\theequation}{\thechapter.\arabic{equation}}
+
+\title{
+differentiable\_manifolds \\
+\large 
+\emph{
+this is my notes for ma5210 differential manifolds \\
+taught by National University of Singapore Professor Loke Hung Yean in AY2024-2025
+}
+}
+\author{Khanh Nguyen}
+\date{August 2024}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\include{chapter0}
+
+\include{chapter1}
+
+\include{chapter2}
+
+\include{chapter3}
+
+\include{chapter4}
+
+\include{chapter5}
+
+\end{document}

@@ -1,0 +1,228 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\input{header}
+
+\title{
+    MA4271 Homework 3
+}
+\author{Nguyen Ngoc Khanh - A0275047B}
+\date{October 2023}
+
+\begin{document}
+
+\maketitle
+
+\section{Problem}
+
+\begin{problem}
+    Prove that the absolute value of the torsion $\tau$ at a point of an asymptotic curve whose curvature is nowhere zero is given by
+    \[
+        |\tau| = \sqrt{-K}
+    \]
+    where $K$ is the Gaussian curvature of the surface at the given point.
+\end{problem}
+
+Let $\alpha(s)$ be an asymptotic curve on surface $S$ whose curvature is nowhere zero. The normal curvature of $\alpha(s)$ is 
+\[
+    \langle N, \kappa n \rangle = 0
+\]
+
+where $N$ denotes the unit normal vector of surface, $n$ denotes the unit normal vector of $\alpha(s)$, $\kappa$ denotes the curvature of $\alpha$. As $\kappa \neq 0$, $n$ exists everywhere. Torsion of $\alpha$ is defined as $b'(s) = \tau(s) n(s)$. Restrict $N$ on $\alpha$, as $N(s)$ is orthogonal to $n(s)$ and $\alpha'(s) \in T_{\alpha(s)} S$, we have
+
+\[
+    N(s) = \lambda (n(s) \times \alpha'(s)) = \lambda b(s) 
+\]
+where $\lambda$ is either $+1$ or $-1$. Then 
+\[
+    \tau(s) = ||b'(s)|| = ||N'(s)||
+\]
+
+We can write $N'(s)$ in term of Gauss map (differential of $N$ along the direction of tangent vector)
+
+\begin{align*}
+    N'(s)
+    &= dN_{\alpha(s)} (\alpha'(s)) \\
+    &= dN_{\alpha(s)} (e_1 \cos \theta + e_2 \sin \theta) &\text{(let $\alpha'(s) = e_1 \cos \theta + e_2 \sin \theta$)} \\
+    &= e_1 k_1 \cos \theta + e_2 k_2 \sin \theta &\text{(eigen direction)} \\
+\end{align*}
+
+Then $||N'(s)||^2 = k_1^2 (\cos \theta)^2 + k_2^2 (\sin \theta)^2$. On the other hand, by Euler formula, $0 = k_1 (\cos \theta)^2 + k_2 (\sin \theta)^2$, Then
+
+\begin{align*}
+    ||N'(s)||^2
+    &= k_1 k_1 (\cos \theta)^2 + k_2 k_2 (\sin \theta)^2 \\
+    &= k_1 (- k_2 (\sin \theta)^2) + k_2 (-k_1 (\cos \theta)^2) \\
+    &= - k_1 k_2 = -K
+\end{align*}
+Then
+\[
+    \tau(s) = ||N'(s)|| = \sqrt{-K}
+\]
+
+
+\begin{problem}
+    Suppose that $S_1$ and $S_2$ intersect along a regular curve $C$ and make an angle $\theta(p), p \in C$. Assume that $C$ is a line of curvature of $S_1$. Prove that $\theta(p)$ is constant if and only if $C$ is a line of curvature of $S_2$
+\end{problem}
+
+($\impliedby$)
+$C = \alpha(s)$ is the line of curvature of both $S_1$ and $S_2$, by Oline Rodrigues, 
+
+\begin{align*}
+    N_1'(s) &= \lambda_1(s) \alpha'(s) \\
+    N_2'(s) &= \lambda_2(s) \alpha'(s)
+\end{align*}
+
+where $N_1(s), N_2(s)$ is the restriction of unit normal vectors of $S_1, S_2$ on $C$, $-\lambda_1(s), -\lambda_2(s)$ are the corresponding principle curvatures
+
+As $\alpha'(s)$ is orthogonal to $N_1(s)$ and $N_2(s)$
+\begin{align*}
+    \langle N_1'(s), N_2(s) \rangle &= \lambda_1(s) \langle \alpha'(s), N_2(s)\rangle = 0 \\
+    \langle N_2'(s), N_1(s) \rangle &= \lambda_2(s) \langle \alpha'(s), N_1(s)\rangle = 0
+\end{align*}
+
+Then
+\[
+    \frac{d}{ds} \langle N_1(s), N_2(s) \rangle = \langle N_1'(s), N_2(s) \rangle + \langle N_2'(s), N_1(s) \rangle = 0
+\]
+
+Then $\theta = \langle N_1, N_2 \rangle$ is constant along $C$
+
+($\implies$) $C = \alpha(s)$ is the line of curvature of $S_1$, and $\theta = \langle N_1, N_2 \rangle$ is constant along $C$, similarly by Oline Rodrigues
+
+\[
+    N_1'(s) = \lambda_1(s) \alpha'(s)
+\]
+
+Then
+\[
+    \langle N_1'(s), N_2(s) \rangle = \lambda_1(s) \langle \alpha'(s), N_2(s)\rangle = 0
+\]
+
+Then 
+\[
+    \langle N_2'(s), N_1(s) \rangle = \frac{d}{ds} \langle N_1(s), N_2(s) \rangle - \langle N_1'(s), N_2(s) \rangle = 0
+\]
+
+As $N_2(s)$ is a unit vector, then $N_2'(s)$ is orthogonal to $N_2(s)$. Since both $\alpha'(s)$ and $N_2'(s)$ are orthogonal two both $N_1(s)$ and $N_2(s)$, then they are parallel, i.e. $N_2'(s) = \lambda(s) \alpha'(s)$. By Oline Rodrigues, $C$ is the line of curvature of $S_2$
+
+
+
+\begin{problem}
+    Let $\lambda_1, ..., \lambda_m$ be the normal curvatures at $p \in S$ along directions making angles $0, 2\pi/m, ..., (m-1)2\pi/m$ with a principle direction. Prove that
+    \[
+        \lambda_1 + ... + \lambda_m = mH
+    \]
+    where $H$ is the mean curvature at $p$
+\end{problem}
+
+Denote $\theta_i = 2\pi \frac{i-1}{m}$, by Euler formula,
+
+\begin{align*}
+    \sum_{i=1}^m \lambda_i
+    &= \sum_{i=1}^m [ k_1 (\cos \theta_i)^2 + k_2 (\sin \theta_i )^2 ] \\
+\end{align*}
+
+where $k_1, k_2$ are the principle curvatures \footnote{$k_1$ is either maximum or minimum principle curvature}. If we rotate the $n$ directions by $\frac{\pi}{2}$, we have
+
+\begin{align*}
+    \sum_{i=1}^m \lambda_i'
+    &= \sum_{i=1}^m [ k_1 (\cos (\theta_i + \pi/2) )^2 + k_2 (\sin (\theta_i + \pi/2) )^2 ] \\
+    &= \sum_{i=1}^m [ k_1 (\sin \theta_i )^2 + k_2 (-\cos \theta_i)^2 ] &\text{($\cos (\theta + \pi/2) = \sin \theta, \sin (\theta + \pi/2) = -\cos \theta,$)}\\
+\end{align*}
+
+where $\lambda_1', ..., \lambda_m'$ are the corresponding normal curvatures after rotation. Then 
+\[
+    \left(\sum_{i=1}^m \lambda_i +  \sum_{i=1}^m \lambda_i'\right) = m (k_1 + k_2) = 2mH
+\]
+
+and
+\[
+    \left(\sum_{i=1}^m \lambda_i -  \sum_{i=1}^m \lambda_i'\right) = \sum_{i=1}^m (k_1 - k_2) [(\cos \theta_i)^2 - (\sin \theta_i)^2] = (k_1 - k_2) \sum_{i=1}^m \cos (2 \theta_i)
+\]
+
+Note that
+\[
+    \sum_{i=1}^m \cos (2 \theta_i) = \sum_{i=1}^m \real[e^{\mathbf{i} 2\theta_i}] = \real\left[\sum_{i=1}^m e^{\mathbf{i} 2\theta_i} \right] = \real[0] = 0
+\]
+
+where $\mathbf{i}$ denotes the imaginary unit. Hence,
+\[
+   \lambda_i = \frac{1}{2}  \left(\sum_{i=1}^m \lambda_i +  \sum_{i=1}^m \lambda_i'\right) = mH
+\]
+
+
+
+
+\begin{problem}
+    Show that a surface which is compact has an elliptic point.
+\end{problem}
+
+Let $C$ be a compact regular surface. Pick $c \in \R^3$. For any $x \in C$, the map $\phi(x) = ||x - c||$ is continuous, then it admits a maximum value, namely $r = \max_{x \in C} ||x - c||$. Let $p \in C \cap \Sphere_r(c)$ on the intersection of $C$ and the sphere of radius $r$ centered at $c$.
+
+Let $N$ be any plane containing $p$ that intersects $C$ at more than 1 point \footnote{normal section guarantees the existence of $N$}, then $N$ intersects $\Sphere_r(c)$ at more than 1 point \footnote{because $N$ intersects $C \subseteq \overline{\Ball_r(c)}$ at more than 1 point}, then $N \cap \Sphere_r(c)$ is a sphere of radius $0 < r_N \leq r$, then the curvature of $N \cap C$ is bounded below by a positive number, i.e. $\kappa_N \geq \frac{1}{r_N} \geq \frac{1}{r}$. Therefore, any principle curvature of $C$ at $p$ is bounded below by a positive number, then it must be an elliptic point or hyperbolic point.
+
+ Furthermore, $C$ is contained in one of the half space separated by $T_p \Sphere_r(c)$, then $C$ cannot be a hyperbolic point.
+
+
+
+
+
+\begin{problem}
+    Obtain the asymptotic curves of the one-sheeted hyperboloid $x^2 + y^2 - z^2 = 1$
+\end{problem}
+
+In the parameterization
+\[
+    x(u, v) = \left( \frac{\cos (u+v)}{\cos (u-v)}, \frac{\sin(u+v)}{\cos(u-v)}, \tan(u-v) \right)
+\]
+
+Claim: asymptotic curves are the coordinate curves
+
+Let $a = \cos(u+v), b = \sin(u+v), c = \cos(u-v), d = \sin(u-v)$, then we have
+\begin{itemize}
+    \item $a^2 + b^2 = 1, c^2 + d^2 = 1$
+    \item $ac - bd = \cos (2u), ac + bd = \cos (2v)$
+    \item $ad + bc = \sin (2u), ad - bc = -\sin  (2v)$
+    \item $a_u = -b, a_v = -b$
+    \item $b_u = a, b_v = a$
+    \item $c_u = -d, c_v = d$
+    \item $d_u = c, d_v = -c$
+\end{itemize}
+
+Calculation
+
+\begin{align*}
+    x &= \left(\frac{a}{c}, \frac{b}{c}, \frac{d}{c} \right) \\
+    x_u &= \left(\frac{ad - bc}{c^2}, \frac{ac + bd}{c^2} , \frac{1}{c^2}\right) \\
+    x_v &= \left(\frac{-ad -bc}{c^2}, \frac{ac - bd}{c^2}, \frac{-1}{c^2} \right) \\
+    N &= x_u \times x_v = \left( \frac{-2a}{c^3}, \frac{2b}{c^3} , \frac{2d}{c^3}\right) \\
+    N_u &= \left(\frac{2bc - 6ad}{c^4}, \frac{2ac + 6bd}{c^4}, \frac{2 + 4d^2}{c^4} \right) \\
+    N_v &= \left(\frac{2bc + 6ad}{c^4}, \frac{2ac - 6bd}{c^4}, \frac{-2 - 4d^2}{c^4} \right)
+\end{align*}
+
+Second fundamental form
+
+\begin{align*}
+    e = - \langle N_u, x_u \rangle = 0 \\
+    f = - \langle N_u, x_v \rangle > 0 \\ 
+    g = - \langle N_v, x_v \rangle = 0
+\end{align*}
+
+Then the asymptotic curves are the coordinate curves w.r.t the parameterization
+
+
+
+
+
+\section{Appendix}
+
+
+
+
+
+
+
+
+
+\end{document}

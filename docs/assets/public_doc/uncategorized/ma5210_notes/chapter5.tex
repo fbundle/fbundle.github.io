@@ -1,0 +1,620 @@
+\chapter{Differential Geometry}
+
+\section{Connection, Connection Matrix, Curvature Matrix}
+
+\begin{definition}[connection]
+	Let $E \to X$ be a complex vector bundle over a real smooth manifold $X$, a connection $D$ is a $\C$-linear map
+	$$
+		D: \E(X, E) \to \E^1(X, E)
+	$$
+	
+	such that for any $U \subseteq X$, $\phi \in \E(U)$ and $\xi \in \E(U, E)$, then $D$ satisfy
+	$$
+		D(\phi \xi) = d \phi \cdot \xi + \phi D \xi
+	$$
+	
+	Moreover, we also define connection for arbitrary forms, that is $D: \E^p(X, E) \to \E^{p+1}(X, E)$ such that for $\phi \cdot \xi \in \E^p(U) \otimes_{\E(U)} \E(U, E) \cong \E^p(U, E)$
+	$$
+		D(\phi \cdot \xi) = d\phi \cdot \xi + (-1)^p \phi \wedge D\xi
+	$$
+\end{definition}
+
+\begin{comment}
+
+
+\begin{definition}[connection]
+	Let $E \to X$ be a complex vector bundle over a real smooth manifold $X$, a connection $D$ on $E \to X$ is a $\C$-linear map
+	$$
+		D: \E^p(X, E) \to \E^{p+1}(X, E)
+	$$
+	
+	such that for any $U \subseteq X$, $\phi \in \E^p(U)$ and $\xi \in \E(U, E)$, $D$ satisfies
+	$$
+		D(\phi \cdot  \xi) = d\phi \cdot \xi + (-1)^p \phi \wedge D \xi
+	$$
+	
+	\note{
+		when $p=0$, we have a shorter form 
+		$$
+			D(\phi  \xi) = d\phi \cdot \xi+ \phi D \xi
+		$$
+	}
+	
+	where $\cdot$ and $\wedge$ are defined by
+	\begin{center}
+\begin{tikzcd}
+	{\E^p(U) \times \E(U, E)} \arrow[r] \arrow[rr, "\cdot", dashed, bend left]             & {\E^p(U) \otimes \E(U, E)} \arrow[r, "\tau_U"]                      & {\E^p(U, E)}                                                \\
+	{\E^p(U) \times (\E^q(U) \otimes \E(U, E))} \arrow[r, "t"]                    & {(\E^p(U) \wedge \E^q(U)) \otimes \E(U, E)} \arrow[r, "1"] & {\E^{p+q}(U) \otimes \E(U, E)} \arrow[d, "\tau_U"] \\
+	{\E^p(U) \times \E^q(U, E)} \arrow[u, "1 \times \tau_U"] \arrow[rr, "\wedge"', dashed] &                                                                                       & {\E^{p+q}(U, E)}                                           
+\end{tikzcd}
+	\end{center}
+	
+	And the map $t: A \times (B \otimes C) \to (A \wedge B) \otimes C$ where $A = \E^p(U), B = \E^q(U)$ and $C = \E(U, E)$ is defined by
+	\begin{center}
+\begin{tikzcd}
+	A \times (B \otimes C) \arrow[ddd] \arrow[rrr, "t", dashed] &                                                                  &                                      & (A \wedge B) \otimes C            \\
+	& {(a, b \otimes c)} \arrow[r, dashed, maps to] \arrow[d, maps to] & (a \wedge b) \otimes c               &                                   \\
+	& {(a, b, c)} \arrow[r, maps to]                                   & {(a \wedge b, c)} \arrow[u, maps to] &                                   \\
+	A \times B \times C \arrow[rrr]                             &                                                                  &                                      & (A \wedge B) \times C \arrow[uuu]
+\end{tikzcd}
+	\end{center}
+
+\textbf{Question}
+
+$\wedge: \E^p(U) \times  \E^q(U) \to  \E^p(U) \wedge  \E^q(U) = \E^{p+q}(U)$ is defined by the following
+
+$$
+	(f \wedge g)(x) = f(x) \wedge g(x)
+$$
+
+for $f \in \E^p(U), g \in \E^q(U)$ and $x \in U$
+
+\begin{enumerate}
+	\item In the definition of wedge product by universal property, $A \wedge B$ is defined if $A = B$ since we need the skew-symmetric property. Why do we use the same symbol here? and is there an axiomatic defintion for that case?
+	
+	\item Is the definition of $\wedge: \E^p \times \E^q(U, E)$ above correct ($t$ is probably bilinear)? if yes, how to prove the map $t: A \times (B \otimes C) \to (A \wedge B) \otimes C$ is well-defined. In many books, I only find the definition of connection for the case $p=0$.
+\end{enumerate}
+
+	\note{Note: in many books, connection is usually defined by the first order $p=1$, that is, $D: \E(X, E) \to \E^1(X, E)$. Indeed, the degree-$p$ connection can be defined from the the degree-$0$ version will be shown in the subsequent parts}
+\end{definition}
+\end{comment}
+
+\begin{remark}[local representation of connection, connection matrix]
+	Let $f = e = (e_1, e_2, ..., e_r) \in M_r[\E(U, E)]$ be a frame over $U \subseteq X$. Let $\xi \in \E(U, E)$ with $\xi(f) \in M_r[\E(U)]$ so that $\xi = e \cdot \xi(f) = \sum_{\sigma=1}^r \xi(f)^\sigma e_\sigma$ and $\phi \in \E^p(U)$. Then
+	\begin{align*}
+		D \xi
+		&= \sum_{\sigma=1}^r D (\xi^\sigma(f) e_\sigma)\\
+		&= \sum_{\sigma=1}^r d \xi^\sigma(f) \cdot e_\sigma + \xi^\sigma(f) D e_\sigma
+	\end{align*}
+	
+	As $D e_\sigma \in \E^1(U, E) \cong \E^1(U) \otimes_{E(U)} \E(U, E)$, we can write
+	$$
+		De_\sigma = \sum_{\rho=1}^r \theta(f)_{\rho \sigma} \cdot e_\rho
+	$$
+	
+	Or in matrix form
+	$$
+		D e = e \cdot \theta(f)
+	$$
+	
+	The matrix of $1$-forms $\theta(f) \in M_{r \times r}[\E^1(U)]$ is called connection matrix. Then, $D$ can be described locally by its connection matrix
+	$$
+		D \xi = e \cdot (d + \theta(f)) \xi(f)
+	$$
+\end{remark}
+
+\begin{definition}[curvature matrix]
+	Let $E \to X$ be a vector bundle of rank $r$ with connection $D$, let $f$ be a frame over $U \subseteq X$, define the curvature matrix $\Theta(f) \in M_{r \times r}[\E^2(U)]$ (matrix of $2$-forms) by 
+	$$
+		\Theta(f) = d \theta(f) + \theta(f) \wedge \theta(f)
+	$$
+\end{definition}
+
+\begin{lemma}
+	Let $g \in M_{r \times r}[\E(U)]$ be a change of frame $h = fg$ where $f = (f_1, f_2, ..., f_r) \in M_r[\E(U, E)]$ and $h = (h_1, h_2, ..., h_r) \in M_r[\E(U, E)]$, then
+	\begin{enumerate}
+		\item $dg + \theta(f) g = g \theta(h) \in M_{r \times r}[\E^1(U)]$
+		\item $\Theta(h) = g^{-1} \Theta(f) g \in M_{r \times r}[\E^2(U)]$
+	\end{enumerate}
+	\begin{longproof}
+		\begin{enumerate}
+			\item $dg + \theta(f) g = g \theta(h)$
+				
+				We will show that
+				$$
+					f \cdot [(dg) + \theta(f) g] = f \cdot (dg) + (Df) g = Dh = h \cdot \theta(h) = f \cdot [g \theta(h)] \in M_r[\E^1(U, E)]
+				$$
+				
+				Indeed
+				\begin{align*}
+					Dh_\sigma
+					&= D \tuple*{\sum_{\rho=1}^r f_\rho g_{\rho \sigma}} \\
+					&= \sum_{\rho=1}^r D(g_{\rho \sigma} f_\rho) \\
+					&= \sum_{\rho=1}^r dg_{\rho \sigma} \cdot f_\rho +\sum_{\rho=1}^r g_{\rho \sigma} D f_\rho \\
+				\end{align*}
+			
+				$f \cdot [(dg) + \theta(f) g] = f \cdot [g \theta(h)]$ implies $dg + \theta(f) g = g \theta(h)$ (\note{TODO check - may be it is true if we interpret these are operators})
+
+			\item $\Theta(h) = g^{-1} \Theta(f) g$
+			
+			Taking exterior derivative on both sides of $dg + \theta(f) g = g \theta(h)$ 
+			$$
+				d \theta(f) g - \theta(f) \wedge dg = dg \wedge \theta(h) + g d\theta(h)
+			$$
+			
+			Then,
+			\begin{align*}
+				g \Theta(h)
+				&= g d\theta(h) + g \theta(h) \wedge \theta(h) \\
+				&= [d \theta(f) g - \theta(f) \wedge dg - dg \wedge \theta(h)] + (dg + \theta(f) g) \wedge \theta(h) \\
+				&= d \theta(f) g - \theta(f) \wedge dg - dg \wedge \theta(h) + dg  \wedge \theta(h) + \theta(f) g \wedge \theta(h) \\
+				&= d \theta(f) g - \theta(f) \wedge dg + \theta(f) g \wedge \theta(h) \\
+				&= d \theta(f) g - \theta(f) \wedge dg + \theta(f) \wedge g \theta(h) \\
+				&= d \theta(f) g - \theta(f) \wedge dg + \theta(f) \wedge (dg + \theta(f) g) \\
+				&= d \theta(f) g - \theta(f) \wedge dg + \theta(f) \wedge dg + \theta(f) \wedge \theta(f) g \\
+				&= d \theta(f) g + \theta(f) \wedge \theta(f) g \\
+				&= (d \theta(f) + \theta(f) \wedge \theta(f))g \\
+				&= \Theta(f) g
+			\end{align*}
+		\end{enumerate}
+	\end{longproof}
+\end{lemma}
+
+\begin{lemma}
+	(\note{note, notation overuse here - equality of operators})
+	$$
+		[d + \theta(f)]^2 = \Theta(f)
+	$$
+	\begin{proof}
+		Let $\xi \in \E(U, E)$, then $\xi = \sum_{\rho=1}^r \xi^\rho(f) f_\rho$ where each $\xi^\rho(f) \in \E(U)$. Let $\xi(f) = (\xi^1(f), \xi^2(f), ..., \xi^r(f)) \in M_r[\E(U)]$		
+		\begin{align*}
+			(d + \theta)^2 \xi(f)
+			&= (d + \theta)(d + \theta) \xi(f) \\
+			&= (d + \theta)(d \xi(f) + \theta \xi(f)) \\
+			&= d (d \xi(f)) + d (\theta \xi(f)) + \theta \wedge d \xi(f) + \theta \wedge \theta \xi(f) \\
+			&= d (\theta \xi(f)) + \theta \wedge d \xi(f) + \theta \wedge \theta \xi(f) \\
+			&= d \theta \xi(f) - \theta \wedge d \xi(f) + \theta \wedge d \xi(f) + \theta \wedge \theta \xi(f) \\
+			&= d \theta \xi(f) + \theta \wedge \theta \xi(f) \\
+			&= \Theta \xi(f)
+		\end{align*}
+	\end{proof}
+\end{lemma}
+
+\section{Curvature}
+
+\begin{remark}[build up to curvature]
+	Let $E \to X$ be a complex vector bundle over a real smooth manifold $X$. Let $\set{U_\alpha}_{\alpha \in A}$ be an open cover of $X$, let $f_\alpha = (e^\alpha_1, e^\alpha_2, ..., e^\alpha_r)$ be a frame of $E$ on $U_\alpha$. Suppose on every $U_\alpha$, we have an $r \times r$ matrix of $p$-forms
+	$$
+		\chi(f_\alpha) \in M_{r \times r}[\E^p(U_\alpha)]
+	$$
+	
+	Let $U = U_\alpha$ with frame $f = f_\alpha$, with trivialization $E\vert_U \cong U \times \C^r$, we have an isomorphism
+	$$
+		M_r[\E(U)] \cong \E(U, E\vert_U) = \E(U, E)
+	$$
+	
+	Given a frame $f$, each element $\phi(f) \in M_{r \times r}[\E(U)]$ defines a map
+	\begin{align*}
+		\phi(f): M_r[\E(U)] &\to M_r[\E(U)] \\
+				\xi(f) &\mapsto \phi(f) \xi(f)
+	\end{align*}
+	
+	 that is a map in $\Hom(\E(U, E), \E(U, E)) \cong \E(U, \Hom(E, E))$. Hence, we have an inclusion
+	$$
+		M_{r \times r}[\E(U)] \hookrightarrow \E(U, \Hom(E, E))
+	$$
+	
+	(\note{this is actually an isomorphism}) Therefore, 
+	$$
+		M_{r \times r}[\E^p(U)] \cong \E^p(U) \otimes_{\E(U)} M_{r \times r}[\E(U)] \hookrightarrow \E^p(U) \otimes_{\E(U)} \E(U, \Hom(E, E)) \cong \E^p(U, \Hom(E, E))
+	$$
+	
+	Hence, each matrix $\chi(f_\alpha) \in M_{r \times r}[\E^p(U_\alpha)]$ corresponds to an element
+	$$
+		\chi_\alpha \in \E^p(U_\alpha, \Hom(E, E))
+	$$
+\end{remark}
+
+\begin{lemma}[condition to extend $\chi_\alpha(f_\alpha)$ globally]
+	Suppose $V = U_\alpha \cap U_\beta \neq \emptyset$, we have two frames of $E$ over $V$, namely $f_\alpha, f_\beta \in M_r[\E(V, E)]$, so that, $f_\beta = f_\alpha g$ for some change of frame $g \in M_{r \times r}[\E(V)]$. Then, the restrictions
+	$$
+		r^{U_\alpha}_V \chi_\alpha = r^{U_\beta}_V \chi_\beta \in \E^p(V, \Hom(E, E))
+	$$
+	
+	if and only if $\chi_\beta(f_\beta) = g^{-1} \chi_\alpha(f_\alpha) g$
+	\begin{proof}
+		Let $\xi \in \E(V, E)$ be a section with $\xi(f_\alpha) \in M_r[\E(V)]$, then we have
+		\begin{align*}
+			(r^{U_\alpha}_V \chi_\alpha) (\xi) &= f_\alpha \cdot \chi_\alpha(f_\alpha) \xi(f_\alpha) \\
+			(r^{U_\beta}_V \chi_\beta) (\xi) &= f_\beta \cdot \chi_\beta(f_\beta) \xi(f_\beta)
+		\end{align*}
+		
+		Then, $(r^{U_\alpha}_V \chi_\alpha) (\xi) = (r^{U_\beta}_V \chi_\beta) (\xi)$ if and only if
+		\begin{align*}
+			f_\beta \cdot \chi_\beta(f_\beta) \xi(f_\beta)
+			&= f_\alpha \cdot \chi_\alpha(f_\alpha) \xi(f_\alpha) \\
+			&= f_\beta g^{-1} \cdot \chi_\alpha(f_\alpha) g \xi(f_\beta) \\
+			&= f_\beta \cdot (g^{-1} \chi_\alpha(f_\alpha) g) \xi(f_\beta) \\
+		\end{align*}
+		
+		That is, $\chi_\beta(f_\beta) = g^{-1} \chi_\alpha(f_\alpha) g$. The converse direction is the same.
+	\end{proof}
+\end{lemma}
+
+\begin{definition}[curvature]
+	Let $E \to X$ be a complex smooth vector bundle on a real smooth manifold $X$, let $D: \E(X, E) \to \E^1(X, E)$ be a connection on $E$, then the curvature matrix of $D$ induces a global $2$-form, namely the curvature of connection $D$ on $E$
+	$$
+		\Theta \in \E^2(X, \Hom(E, E))
+	$$
+	
+	Let $\xi \in \E(U, E)$ be a local section with $\xi(f) \in M_r[\E(U)]$ and frame $f = (e_1, e_2, ..., e_r) \in M_r[\E(U, E)]$, then
+	$$
+		\Theta \xi = e \cdot \Theta(f) \xi(f) = e \cdot (d \theta(f) + \theta(f) \wedge \theta(f)) \xi(f) = e \cdot (d + \theta(f))^2 \xi(f)
+	$$
+	
+	From the definition, we have
+	$$
+		D^2 = \Theta: \E(X, E) \to \E^2(X, E)
+	$$
+\end{definition}
+
+\section{The Bianchi identity}
+
+\begin{definition}[Lie algebra, Lie bracket]
+	Let $A$ be a complex vector space and $[\cdot,\cdot]: A \times A \to A$ be a $\C$-bilinear form on $A$. $A$ is called Lie algebra if the following holds:
+	\begin{align*}
+		&[x, y] + [y, x] = 0\\
+		&[x, [y, z]] + [y, [z, x]] + [z, [x, y]] = 0
+	\end{align*}
+	
+	The bilinear form is called Lie bracket
+	
+\end{definition}
+
+\begin{definition}[Lie bracket on $\E^*(X, \Hom(E, E))$]
+	Define
+	$$
+	\E^*(X, \Hom(E, E)) = \oplus_{p = 0}^\infty \E^p(X, \Hom(E, E))
+	$$
+	
+	Let $\chi \in \E^p(X, \Hom(E, E))$, let $f$ be a frame over $U \subseteq X$, then $\chi$ as a local representation
+	$$
+		\chi(f) \in M_{r \times r}[\E^p(U)]
+	$$
+	
+	Let $\psi \in \E^p(X, \Hom(E, E))$ with its local representation $\psi(f) \in M_{r \times r}[\E^p(U)]$, define
+	$$
+		[\chi(f), \psi(f)] = \chi(f) \wedge \psi(f) - (-1)^{pq} \psi(f) \wedge \chi(f) \in M_{r \times r}[\E^{p+q}(U)]
+	$$
+	
+	Then, the corresponding element in $\E^{p+q}(U, \Hom(E, E))$ is denoted by
+	$$
+		[\chi, \psi]_f \in \E^{p+q}(U, \Hom(E, E))
+	$$
+	
+	\note{In the case of $\E^*(X) = \bigoplus_{p=0}^\infty \E^p(X)$, the wedge product makes this structure to be a graded-commutative $\E(X)$-algebra. Here, the Lie bracket makes $\E^*(X,  \Hom(E, E))$ to be a grade-commutative $\E(X)$-algebra}
+	
+	
+\end{definition}
+
+\begin{proposition}
+	$[\chi, \psi]_f$ is independent of the choice of frame
+	\begin{proof}
+		Let $f = (f_1, f_2, ..., f_r) \in M_r[\E(U, E)]$ and  $h = fg = (h_1, h_2, ..., h_r) \in M_r[\E(U, E)]$ where $g \in M_{r \times r}[\E(U)]$ is the change of frame. Then
+		\begin{align*}
+			\chi(h) &= g^{-1} \chi(f) g = g^{-1} \wedge \chi(f) \wedge g \\
+			\psi(h) &= g^{-1} \psi(f) g = g^{-1} \wedge \psi(f) \wedge g
+		\end{align*}
+		Then,
+		\begin{align*}
+			[\chi(h), \psi(h)]
+			&= [g^{-1} \chi(f) g, g^{-1} \psi(f) g] \\
+			&= g^{-1} \chi(f) \wedge  \psi(f) g - (-1)^{pq} g^{-1} \psi(f)  \wedge \chi(f) g \\
+			&= g^{-1} [\chi(f), \psi(f)] g
+		\end{align*}
+		
+		Hence, $[\chi, \psi]_h = [\chi, \psi]_f$
+	\end{proof}
+\end{proposition}
+
+\begin{proposition}[Bianchi identity]
+	Let $E \to X$ be a complex smooth bundle over a real smooth manifold $X$ with a connection $D$. Let $\theta(f)$ and $\Theta(f)$ be the connection matrix and curvature matrix with respective to a frame $f$ over $U$, then
+	$$
+		d \Theta(f) = [\Theta(f), \theta(f)]
+	$$
+	
+	\begin{proof}
+		\begin{align*}
+			[\Theta, \theta]
+			&= \Theta \wedge \theta - (-1)^{2 \times 1} \theta \wedge \Theta \\
+			&=  \Theta \wedge \theta - \theta \wedge \Theta \\
+			&=  (d\theta + \theta \wedge \theta) \wedge \theta - \theta \wedge (d\theta + \theta \wedge \theta) \\
+			&= d\theta \wedge \theta - \theta \wedge d\theta \\
+			&= d\theta \wedge \theta + (-1)^1 \theta \wedge d\theta \\
+			&= d^2 \theta + d (\theta \wedge \theta) \\
+			&= d (d\theta + \theta \wedge \theta) \\
+			&= d \Theta
+		\end{align*}
+	\end{proof}
+\end{proposition}
+
+\section{Hermitian Metrics on Vector Bundles}
+
+\begin{definition}[symmetric Hermitian form, Hermitian symmetric matrix]
+	Let $V$ be a complex vector space (\note{or more generally, a commutative ring with a complex structure like $\E^p(U) = \E(U, \wedge^p T^*(X)_\C)$}). A symmetric Hermitian form $\inner{\cdot, \cdot}$ on $V$ is a map
+	$$
+	\inner{\cdot, \cdot}: V \times V \to V
+	$$
+	
+	that satisfies the following
+	\begin{align*}
+		\inner{\alpha u + \beta v, w} &= \alpha \inner{u, w} + \beta \inner{v, w} \\
+		\inner{u, v} &= \overline{\inner{v, u}}
+	\end{align*}
+	
+	for all $u, v, w \in V$ and $\alpha, \beta \in \C$. Given a basis, the matrix of a symmetric Hermitian form is called Hermitian symmetric matrix.
+\end{definition}
+
+\begin{definition}[Hermitian inner product, positive definite Hermitian symmetric matrix]
+	A symmetric Hermitian form is called Hermitian inner product if $\inner{u, u} \geq 0$ for all $u \in V$ and $\inner{u, u} = 0$ if and only if $u = 0$. Given a basis, the matrix of a Hermitian inner product is called positive definite Hermitian symmetric matrix.
+\end{definition}
+
+\begin{definition}[Hermitian metric, Hermitian vector bundle]
+	Let $E \to X$ be an complex smooth bundle over a real smooth manifold $X$, if we have a Hermitian inner product $h_x: \inner{\cdot, \cdot}_x$ on each fiber $E_x$, $h$ is called Hermitian metric on $E$ if for any open set $U \subseteq X$ and $\xi, \eta \in \E(U, E)$, the function
+	\begin{align*}
+		\inner{\xi, \eta}:  U &\to \C \\
+		x &\mapsto \inner{\xi(x), \eta(x)}_x
+	\end{align*}
+	
+	is a smooth function on $U$. An smooth bundle equipped with a Hermitian metric is called Hermitian vector bundle.
+	
+	\note{One can define higher order Hermitian form by the following:}
+	Let $f \cdot \xi \in \E^p(U) \otimes \E(U, E) \cong \E^p(U, E)$, $g \cdot \eta \in \E^q(U) \otimes \E(U, E) \cong \E^p(U, E)$, then
+	$$
+		\inner{f \cdot \xi, g \cdot \eta} = (f \wedge \overline{g}) \inner{\xi, \eta}
+	$$
+\end{definition}
+
+\begin{definition}[local represention of Hermitian metric]
+	Given a frame $f = \tuple{e_1, e_2, ..., e_r} \in M_r[\E(U, E)]$ on $U \subseteq X$, given two sections $\xi, \eta$ with $\xi = \sum_{i=1}^r \xi^i(f) e_i$ and $\eta = \sum_{i=1}^r \eta^i(f) e_i$ where $\xi^i(f), \eta^i(f) \in \E(U)$. Then,
+	\begin{align*}
+		\inner{\xi, \eta} 
+		&= \inner*{\sum_{i=1}^r \xi^i(f) e_i, \sum_{i=1}^r \eta^i(f) e_i} \\
+		&= \sum_{i=1}^r \sum_{j=1}^r \overline{\eta^j(f)} \inner{e_j, e_i} \xi^i(f) \\
+		&= \overline{\eta(f)}^T h(f) \xi(f) &\text{(matrix form)}
+	\end{align*}
+	
+	where $\xi(f), \eta(f) \in M_r[\E(U)]$, $h(f) \in M_{r \times r}[\E(U)]$ and each entry $h(f)_{ij} = \inner{e_j, e_i}$. Note that, $h(f)(x)$ is a positive definite Hermitian symmetric matrix for every $x \in U$. On the other hand, a complex smooth map from $U$ to the set of positive definite Hermitian symmetric matrices together with a frame $f$ defines a Hermitian metric on $U$
+\end{definition}
+
+
+\begin{theorem}
+	Every vector bundle admits a Hermitian metric
+	\begin{proof}
+		\note{Sketch Proof: (1) Pick a locally finite covering of $X$ where each open set has a local trivialization (2) in each local trivialization, define the canonical frame (3) take the positive definite Hermitian symmetric matrix to be identity on each local trivialization, (4) use partition of unity to construct a global Hermitian metric}
+	\end{proof}
+\end{theorem}
+
+\begin{proposition}
+	If $f \in M_r[E(U, E)]$ is a frame and $g \in M_{r \times r}[E(U)]$ is a change of frames, then the Hermitian matrix corresponding to the Hermitian metric with respect to the frame $fg$ is
+	$$
+	h(fg) = \overline{g}^T h(f) g
+	$$
+	\begin{proof}
+		\begin{align*}
+			h(fg)_{ij}
+			&= \inner{(fg)_j, (fg)_i} \\
+			&= \inner*{\sum_{k=1}^r f_k g_{kj}, \sum_{l=1}^r f_l g_{li}} \\
+			&= \sum_{k=1}^r \sum_{l=1}^r \inner{f_k g_{kj}, f_l g_{li}} \\
+			&= \sum_{k=1}^r \sum_{l=1}^r (\overline{g}^T)_{il} \inner{f_k, f_l} g_{kj} \\
+			&= \sum_{k=1}^r \sum_{l=1}^r (\overline{g}^T)_{il} h(f)_{lk} g_{kj} \\
+		\end{align*}
+	\end{proof}
+\end{proposition}
+
+\section{Connections on Hermitian Vector Bundles}
+
+\begin{definition}[connection compatible with Hermitian metric]
+	A connection $D$ on $E \to X$ is called compatible with a Hermitian metric $h$ on $E$ if
+	$$
+		d \inner{\xi, \eta} = \inner{D\xi, \eta} + \inner{\xi, D \eta}
+	$$
+	
+	for all $\xi, \eta \in \E(X, E)$
+\end{definition}
+
+\begin{remark}[local representation of connection compatible with Hermitian metric]
+	Let $E \to X$ be a complex smooth vector bundle over a real manifold $X$. Let $(D, h)$ be a connection $D$ that is compatible with Hermitian metric $h$. Let $f = e = (e_1, e_2, ..., e_r) \in M_r[\E(U, E)]$ be a frame on $U \subseteq X$. That give a Hermitian matrix $h(f) \in M_{r \times r}[\E(U)]$ and a connection matrix $\theta(f) \in M_{r \times r}[\E^1(U)]$, we have
+	\begin{align*}
+		d h_{\rho \sigma}
+		&= d \inner{e_\sigma, e_\rho} \\
+		&= \inner{D e_\sigma , e_\rho} + \inner{e_\sigma, D e_\rho} \\
+		&= \inner*{\sum_{\tau=1}^r \theta_{\tau \sigma} e_\tau , e_\rho} + \inner*{e_\sigma, \sum_{\mu=1}^r \theta_{\mu \rho} e_\mu} \\
+		&= \sum_{\tau=1}^r \theta_{\tau \sigma} h_{\rho \tau} + \sum_{\mu=1}^r \overline{\theta_{\mu \rho}} h_{\mu \sigma} \\
+		&= (h\theta)_{\rho \sigma} + (^t\overline{\theta} h)_{\rho \sigma}
+	\end{align*}
+	
+	That is, (note that, conjugate transpose also denoted by $^t \overline{A} = A^\dagger$)
+	$$
+		d \theta = h \theta + ^t \overline{\theta} h
+	$$
+	
+	\note{TODO check sufficient}
+\end{remark}
+
+\begin{proposition}
+	Let $E \to X$ be a Hermitian vector bundle with Hermitian metric $h$, then there exists a connection $D$ compatible with $h$
+	\begin{proof}
+		Given a Hermitian metric $h$, by Gram-Schmidt process, we have a frame $f = e = (e_1, e_2, ..., e_r) \in M_r[\E(U, E)]$ so that
+		$$
+			\set{e_1(x), e_2(x), ..., e_r(x)} \subseteq E_x
+		$$
+		
+		is a orthonormal set for all $x \in U$. That is, $h(f)$ is the identity matrix. Hence, $D$ is compatible with $h$ locally on $U$ is equivalent to
+		$$
+			0 = \theta + ^t\overline{\theta}
+		$$
+		
+		Setting $\theta = 0$ yields a compatible connection. In that case, for any section $\xi \in \E(U, E)$, we have
+		$$
+			D \xi = e \cdot d \xi(f)
+		$$
+		
+		with $\xi = \sum_{\rho=1}^r \xi(f)^\rho e_\rho = e \cdot \xi(f)$. Let $\set{U_\alpha}_{\alpha \in A}$ be an open cover for $X$. Using the construction above, we have a connection $D_\alpha$ that is compatible with $h$ on $U_\alpha$. Let $\set{\phi_\alpha: U_\alpha \to \R}$ be a partition of unity for $\set{U_\alpha}$, let
+		$$
+			D = \sum_{\alpha \in A} \phi_\alpha D_\alpha
+		$$
+		
+		$D$ is compatible with $h$ globally. Let $\xi, \eta \in \E(X, E)$,
+		\begin{align*}
+			\inner{D \xi, \eta} + \inner{\xi, D \eta}
+			&= \inner*{\tuple*{\sum_{\alpha \in A} \phi_\alpha D_\alpha} \xi, \eta} + \inner*{\xi, \tuple*{\sum_{\alpha \in A} \phi_\alpha D_\alpha} \eta} \\
+			&= \sum_{\alpha \in A} \phi_\alpha (\inner{D_\alpha \xi\vert_{U_\alpha}, \eta\vert_{U_\alpha}} + \inner{\xi\vert_{U_\alpha}, D_\alpha \eta\vert_{U_\alpha}}) \\
+			&= \sum_{\alpha \in A} \phi_\alpha d \inner{\xi\vert_{U_\alpha}, \eta\vert_{U_\alpha}} \\
+			&= d \inner{\xi, \eta}
+		\end{align*}
+	\end{proof}
+\end{proposition}
+
+\section{Canonical Connections on Hermitian Holomorphic Vector Bundles}
+
+\begin{definition}[Hermitian holomorphic vector bundle]
+	Let $E \to X$ be a holomorphic vector bundle.  $X$ is a holomorphic manifold that is also a real smooth manifold, then $E \to X$ admits a Hermitian metric $h$. $E \to X$ is called a Hermitian holomorphic vector bundle
+\end{definition}
+
+\begin{remark}[decomposition of connection on vector bundle]
+	Let $E \to X$ be a comlex smooth vector bundle over an almost complex manifold $X$. Note that, since there is an almost complex structure on the cotangent space $T^*(X)_\C$, then $T^*(X)_\C = T^{1,0}(X)_\C \oplus T^{0,1}(X)_\C$, we have the decomposition
+	$$
+		\E^1(X, E) = \E^{1,0}(X, E) \oplus \E^{0,1}(X, E)
+	$$
+	
+	where $ \E^{1,0}(X, E) =  \E(X, T^{1,0}(X)_\C \otimes E)$ and $ \E^{0,1}(X, E) =  \E(X, T^{0,1}(X)_\C \otimes E)$. Let $D: \E(X, E) \to \E^1(X, E) = \E(X, T^*(X)_\C \otimes E)$ be a connection, composing $D$ with the projections, we have
+	\begin{align*}
+		D' &: \E(X, E) \to \E^{1,0}(X, E) \\
+		D'' &: \E(X, E) \to \E^{0,1}(X, E) \\
+		D &= D' + D''
+	\end{align*}
+\end{remark}
+
+\begin{theorem}[canonical connection]
+	If $h$ is a Hermitian metric on a holomorphic vector bundle $E \to X$, then $h$ induces a connection $D(h)$ on $E$ that is compatible with $h$ and moreover for any open set $W \subseteq X$, if $\xi \in \mathcal{O}(W, E)$ is a homomorphic section of $E$, then $D'' \xi = 0$. $D$ is called the canonical connection.
+	\begin{proof}
+		Let $D$ be a connection on $E$, let $f = e = (e_1, e_2, ..., e_r) \in M_{r}[\mathcal{O}(U, E)]$ be a holomorphic frame on $U \subseteq X$. Let $\theta(f) = \theta(f)^{1,0} +  \theta(f)^{0, 1}$ where $\theta(f)^{1,0} \in M_{r \times r}[\E^{1, 0}(U)]$, $\theta(f)^{0,1} \in M_{r \times r}[\E^{0,1}(U)]$. Since, $X$ is holomorphic, hence integrable, then $d = \partial + \overline{\partial}$ where $\partial: \E^{p, q}(U) \to \E^{p+1, q}(U)$ and  $\overline{\partial}: \E^{p, q}(U) \to \E^{p, q+1}(U)$
+		
+		 For $\xi \in \mathcal{O}(U, E) \subseteq \E(U, E)$, $\xi = \sum_{\rho=1}^r \xi(f)^\rho e_\rho$ and $\xi(f) = (\xi(f)^1, \xi(f)^2, ..., \xi(f)^r) \in M_r[\mathcal{O}(U)] \subseteq M_r[\E(U)]$, we have
+		\begin{align*}
+			D \xi(f)
+			&= (d + \theta(f)) \xi(f) \\
+			&= (\partial + \overline{\partial} + \theta(f)^{1,0} +  \theta(f)^{0, 1}) \xi(f) \\
+			&= (\partial + \theta(f)^{1,0}) \xi(f) + (\overline{\partial} + \theta(f)^{0, 1}) \xi(f)
+		\end{align*}
+		
+		Then, 
+		\begin{align*}
+			D' \xi(f) &= (\partial + \theta(f)^{1,0}) \xi(f) \\
+			D'' \xi(f) &= (\overline{\partial} + \theta(f)^{0, 1}) \xi(f) = \theta(f)^{0, 1} \xi(f)
+		\end{align*}
+		
+		Note that, $\overline{\partial} \xi(f) = 0$ since entries of $\xi(f)$ are holomorphic functions. (\note{recall an exercise on defining $\partial, \overline{\partial}$ in $\C^n$}) 
+		
+		Since $D$ is compatible, then
+		$$
+			\partial h + \overline{\partial} h = dh = h\theta + ^t\overline{\theta} h
+		$$
+		
+		To make $D'' = 0$, $\theta = \theta^{1, 0} \in M_{r \times r}[\E^{1, 0}(U)] \subseteq M_{r \times r}[\E^1(U)]$ is a matrix of $(1, 0)$-forms, then $^t\overline{\theta} \in M_{r \times r}[\E^{0, 1}(U)] \subseteq M_{r \times r}[\E^1(U)]$ is a matrix of $(0, 1)$-forms
+		Hence,
+		$$
+			\partial h = h \theta \text{ and } \overline{\partial h} = ^t\overline{\theta} h
+		$$
+		
+		This gives $\theta = h^{-1} \partial h$.
+		\note{TODO - complete the proof with the following lemma}
+	\end{proof}
+\end{theorem}
+
+\begin{lemma}
+	Let $D_\alpha, D_\beta$ be connections on $U_\alpha, U_\beta$, let $V = U_\alpha \cap U_\beta \neq \emptyset$, then 
+	$$
+		r^{U_\alpha}_V D_\alpha = r^{U_\beta}_V D_\beta
+	$$
+	
+	Then, there exists a connection $D$ on $U_\alpha \cup U_\beta$
+\end{lemma}
+
+\begin{proposition}
+	Let $D$ be a canonical connection of a holomorphic bundle $E \to X$ Hermitian metric $h$, let $\theta(f)$ and $\Theta(f)$ be the connection matrix and curvature matrix for frame $f$. Then
+	\begin{enumerate}
+		\item $\theta(f)$ is of type $(1, 0)$ and $\partial \theta(f) = - \theta(f) \wedge \theta(f)$
+		\item $\Theta(f) = \overline{\partial} \theta(f)$ is of type $(1, 1)$ 
+		\item $\overline{\partial} \Theta(f) = 0$ and $\partial \Theta(f) = [\Theta(f), \theta(f)]$ 
+	\end{enumerate}
+\begin{longproof}
+	\begin{enumerate}
+		\item $\theta(f)$ is of type $(1, 0)$ and $\partial \theta(f) = - \theta(f) \wedge \theta(f)$
+		
+		Note that, $0 = \partial(h h^{-1}) = (\partial h) h^{-1} + h \partial(h^{-1})$, then $ \partial(h^{-1}) = - h^{-1} (\partial h) h^{-1}$
+		
+		\begin{align*}
+			\partial \theta(f)
+			&= \partial(h^{-1} \partial h) \\
+			&= \partial(h^{-1}) \wedge \partial h + h^{-1} \partial^2 h \\
+			&= - h^{-1} (\partial h) h^{-1} \wedge \partial h \\
+			&= - h^{-1} (\partial h) \wedge h^{-1}  \partial h \\
+			&= - \theta \wedge \theta
+		\end{align*}
+		
+		\item $\Theta(f) = \overline{\partial} \theta(f)$ is of type $(1, 1)$ 
+		
+		$$
+			\Theta = d\theta + \theta \wedge \theta = d \theta - \partial \theta = \overline{\partial} \theta
+		$$
+
+		\item $\overline{\partial} \Theta(f) = 0$ and $\partial \Theta(f) = [\Theta(f), \theta(f)]$ 
+		
+		$$
+			\overline{\partial} \Theta = \overline{\partial}^2 \theta = 0
+		$$
+		
+		Then, $\partial \Theta(f) = [\Theta(f), \theta(f)]$ is followed from Bianchi identity.
+	\end{enumerate}
+\end{longproof}
+\end{proposition}
+
+\section{de Rham Cohomology, Bolbeault Cohomology}
+
+We have the exact sequence of sheaves
+
+\begin{center}
+	\begin{tikzcd}
+		0 \arrow[r, "d"] & \E^0 \arrow[r, "d"]    & \E^1 \arrow[r, "d"]    & \E^2 \arrow[r, "d"]    & ... \\
+		0 \arrow[r, "d"] & \E^0(E) \arrow[r, "d"] & \E^1(E) \arrow[r, "d"] & \E^2(E) \arrow[r, "d"] & ...
+	\end{tikzcd}
+\end{center}
+
+\begin{definition}[de Rham cohomology]
+	\begin{align*}
+		H^j(X) &= \frac{\ker (d: \E^j(X) \to \E^{j+1}(X))}{\im (d: \E^{j-1}(X) \to \E^j(X))} \\
+		H^j(X, E) &= \frac{\ker (d: \E^j(X, E) \to \E^{j+1}(X, E))}{\im (d: \E^{j-1}(X, E) \to \E^j(X, E))}
+	\end{align*}
+\end{definition}
+
+We have other exact sequences of sheaves
+
+\begin{center}
+	\begin{tikzcd}
+		0 \arrow[r, "\overline{\partial}"] & {\E^{p, 0}} \arrow[r, "\overline{\partial}"]    & {\E^{p, 1}} \arrow[r, "\overline{\partial}"]    & {\E^{p, 2}} \arrow[r, "\overline{\partial}"]    & ... \\
+		0 \arrow[r, "\overline{\partial}"] & {\E^{p, 0}(E)} \arrow[r, "\overline{\partial}"] & {\E^{p, 1}(E)} \arrow[r, "\overline{\partial}"] & {\E^{p, 2}(E)} \arrow[r, "\overline{\partial}"] & ... \\
+		0 \arrow[r, "\partial"]            & {\E^{0, p}} \arrow[r, "\partial"]               & {\E^{1, p}} \arrow[r, "\partial"]               & {\E^{2, p}} \arrow[r, "\partial"]               & ... \\
+		0 \arrow[r, "\partial"]            & {\E^{0, p}(E)} \arrow[r, "\partial"]            & {\E^{1, p}(E)} \arrow[r, "\partial"]            & {\E^{2, p}(E)} \arrow[r, "\partial"]            & ...
+	\end{tikzcd}
+\end{center}
+
+\begin{definition}[Dolbeault cohomology]
+	\begin{align*}
+		H^{p, q}(X) &= \frac{\ker(\overline{\partial}: \E^{p, q}(X) \to \E^{p, q+1}(X))}{\im (\overline{\partial}: \E^{p, q-1}(X) \to \E^{p, q}(X))} \\
+		H^{p, q}(X, E) &= \frac{\ker(\overline{\partial}: \E^{p, q}(X, E) \to \E^{p, q+1}(X, E))}{\im (\overline{\partial}: \E^{p, q-1}(X, E) \to \E^{p, q}(X, E))}
+	\end{align*}
+\end{definition}
+
+

@@ -1,0 +1,30 @@
+\documentclass{report}
+
+
+\usepackage{../../latex_styles/color_template}
+\usepackage{../../latex_styles/symbol_def}
+
+% start with chapter 0
+\setcounter{chapter}{-1}
+\renewcommand{\theequation}{\thechapter.\arabic{equation}}
+
+\title{
+	MA5216 Differential Geometry \\
+	\large \textit{
+		this is a continuation of MA5210 Differential Manifolds - the course is about Riemannian Manifolds
+		The course is taught by Professor Wing Keung To in AY2024-2025
+	}
+}
+\author{Nguyen Ngoc Khanh}
+
+\begin{document}
+	
+\maketitle
+
+\tableofcontents
+
+\include{0_prelimimaries}
+\include{1_riemannian_manifold}
+\include{2_derivative}
+	
+\end{document}

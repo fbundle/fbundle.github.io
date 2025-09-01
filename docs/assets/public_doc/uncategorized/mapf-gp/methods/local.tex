@@ -1,0 +1,65 @@
+\subsection{Local Search}
+
+The authors \cite{vandermeulen2019balanced} introduced two local search operations: $transfer$ and $swap$. $transfer$ is the operation that moves a node from one partition to another partition. $swap$ is the operation that exchanges two nodes from a pair of partitions.
+
+\begin{algorithm}[H]
+\caption{Local Search}
+\label{algo:localsearch}
+\textbf{Input:}:
+
+    Initial $K$ partitions
+    
+    Strategy $\in$ \{ first, best \} 
+    
+    Objective function
+
+\textbf{Output:}:
+
+    Final $K$ partitions
+    
+\textbf{Procedure:}:
+
+While true:
+
+    \hspace{1cm} var candidate\_set = []
+
+    \hspace{1cm} For operation in all possible operations:
+    
+        \hspace{2cm} Calculate the gain of the operation
+            
+        \hspace{2cm} If the gain is positive:
+            
+            \hspace{3cm} Push the operation and gain to candidate set
+                
+            \hspace{3cm} If Strategy is first:
+                
+                \hspace{4cm} break
+                
+    \hspace{1cm} If candidate\_set is empty:
+    
+        \hspace{2cm} break
+    
+    \hspace{1cm} Pick the best candidate, update the current $K$ partitions
+    
+return current $K$ partitions
+
+\end{algorithm}
+
+The algorithm \ref{algo:localsearch} is capable to use with the two proposed operations to approximately find our solution. 
+
+
+\subsubsection{test4}
+
+Strategy: first
+
+\[
+O_4 = O_0 = max\{C_a^{(k)}\}_{k=1}^{K}
+\]
+
+\subsubsection{test8}
+
+Strategy: first
+
+\[
+O_8 = \sum_{k=1}^{K} C_a^{(k)}
+\]

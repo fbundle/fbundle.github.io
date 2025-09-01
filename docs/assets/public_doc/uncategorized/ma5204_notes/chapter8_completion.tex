@@ -1,0 +1,521 @@
+\chapter{COMPLETION}
+
+Reference book: \textit{Matsumura - Commutative Ring Theory}
+
+\section{LINEAR TOPOLOGY AND COMPLETION}
+
+
+\begin{definition}[topological abelian group, linear topology]
+	An abelian group $M$ is a topological abelian group if $M$ is endowed with a topology so that the addition $M \times M \to M$ and inverse $M \to M$ are continuous. The topology on $M$ is called linear topology
+\end{definition}
+
+\begin{remark}[fundamental system of open neighbourhoods of $0$]
+	For any element $a \in M$, addition by $a$ is a homeomorphism $M \to M$. Hence, $U$ is a neighbourhood of $0$ if and only if $a + U$ is a neighbourhood of $a$, that is the collection of neighbours around $0$ generates the whole topology. We will restrict ourselves to the special kind of topologies occuring in commutative algebra, namely, assume that $0 \in G$ has a fundamental system of open neighbourhoods consisting of subgroups of $M$.
+\end{remark}
+
+\begin{definition}[linear topology on module and ring]
+	Let $M$ be an $A$-module, given a collection $\mc{M} = \set{M_\lambda}_{\lambda \in \Lambda}$ of submodules of $M$. $\mc{M}$ generates a linear topology on $M$ with basis
+	$$
+		\set{x + M_\lambda: x \in M, \lambda \in \Lambda}
+	$$
+	
+	Under this topology, addition and $A$-action by any element $a \in A$ are continuous
+	\begin{align*}
+		M \times M &\xrightarrow{+} M		&a: M &\xrightarrow{\times} M \\
+		(x, y) &\mapsto x + y						 &x &\mapsto ax
+	\end{align*}
+	
+	$M$ is said to be linearly topologized by $\mc{M}$. When $M = A$, then ring multiplication is also continuous, $M$ is said to be a topological ring.
+\end{definition}
+
+
+\begin{definition}[separated module]
+	The separated module associated with $M$ is defined by
+	$$
+		M^{sep} = M / \bigcap_{\mu \in \Lambda} M_\mu
+	$$
+	
+	The separated module $M^{sep}$ inherits the quotient topology under the map $M \to M^{sep}$, then it is Hausdorff. If $M = M^{sep}$ or equivalently $\bigcap_{\mu \in \Lambda} M_\mu = 0$, then $M$ is called separated (or Hausdorff)
+\end{definition}
+
+\begin{remark}[quotient space $M / M_\lambda$ has discrete topology]
+	$M_\lambda$ is both open and closed, the quotient space $M / M_\lambda$ inherits the discrete topology.
+\end{remark}
+
+\begin{remark}[directed set]
+	In this chapter, we will assume that the collection $\mc{M} = \set{M_\lambda}_{\lambda \in \Lambda}$ is a directed set. That is, $\mc{M}$ is a partially ordered set by inclusion and given any two submodules $M_\lambda, M_\mu \in \mc{M}$, there exists a submodule $M_\nu \in \mc{M}$ that is contained with both $M_\lambda$ and $M_\mu$. With $\Lambda$ being a directed set, one can define the inverse limit $\hat{M} = \varprojlim_{\lambda \in \Lambda} M / M_\lambda$.
+\end{remark}
+
+\begin{definition}[completion, complete]
+	Let $\hat{M} = \varprojlim_{\lambda \in \Lambda} M / M_\lambda$ be the completion of $M$. For any $\nu \geq \mu$ (that is, $M_\nu \subseteq M_\mu$), there is a canonical map
+	\begin{align*}
+		\phi_{\mu \nu}: M / M_\nu &\twoheadrightarrow M / M_\mu \\
+								x + M_\nu &\mapsto x + M_\mu
+	\end{align*}
+	
+	with the property that $\phi_{\lambda \mu} \phi_{\mu \nu} = \phi_{\lambda \nu}$ for all $\lambda \leq \mu \leq \nu$. The limit exists and can be characterized as a submodule of $\prod_{\lambda \in \Lambda} M / M_\lambda$
+	$$
+		\hat{M} = \set*{(x_\lambda)_{\lambda \in \Lambda} \in \prod_{\lambda \in \Lambda} M / M_\lambda:  \forall \mu \leq \nu, \phi_{\mu \nu}(x_\nu) = x_\mu} \subseteq \prod_{\lambda \in \Lambda} M / M_\lambda
+	$$
+
+	The completion $\hat{M}$ inherits the subspace topology from $\prod_{\lambda \in \Lambda} M / M_\lambda$. $M$ is said to be complete if $\hat{M} = M$
+\end{definition}
+
+\begin{remark}[completion]
+	In category theory words, $\hat{M}$ together with $\set*{p_\nu: \hat{M} \to M / M_\nu  \text{ defined by } (x_\lambda)_{\lambda \in \Lambda} \mapsto x_\nu}_{\nu \in \Lambda}$ is the limit of the diagram consists of maps $\set{\phi_{\mu \nu}}$
+	
+	\begin{center}
+		\begin{tikzcd}
+			& N \arrow[ldd] \arrow[rdd] \arrow[d, dashed]                            &           \\
+			& \hat{M} \arrow[ld, "p_\nu", two heads] \arrow[rd, "p_\mu"', two heads] &           \\
+			M / M_\nu \arrow[rr, "\phi_{\mu \nu}"', two heads] &                                                                        & M / M_\mu
+		\end{tikzcd}
+	\end{center}
+	
+	In other words,  any module $N$ together with maps $\set{N \to M / M_\nu}_{\nu \in \Lambda}$ factor uniquely through $\hat{M}$.
+\end{remark}
+
+\begin{remark}
+	The projection map $M \twoheadrightarrow M / M_\lambda$ factors through $\hat{M}$ by the map $\psi: M \to \hat{M}$. Each $M \to M / M_\lambda$ is surjective, then each $p_\lambda$ is also surjective.
+	
+	\begin{center}
+		\begin{tikzcd}
+			M \arrow[r, "\psi"] \arrow[rd, two heads] & \hat{M} \arrow[d, "p_\lambda", two heads] \\
+			& M / M_\lambda                            
+		\end{tikzcd}
+	\end{center}
+	
+	We also have $\ker \psi = \bigcap_{\lambda \in \Lambda} M_\lambda = \ker (M \to M^{sep})$ and $\im \psi$ is dense in $\hat{M}$
+\end{remark}
+
+\begin{proof}
+	\note{TODO - if have time}
+\end{proof}
+
+\begin{proposition}
+	Given $M$ topologized by $\set{M_\lambda}_{\lambda \in \Lambda}$
+	\begin{enumerate}
+		\item $\hat{M}$ is linearly topologized by the collection of submodules $\set{\ker p_\lambda}_{\lambda \in \Lambda}$
+		\item $\ker p_\lambda$ is the closure of $\psi(M_\lambda)$ in $\hat{M}$
+		\item $\hat{M}$ is complete in the sense that $\hat{\hat{M}} \cong \hat{M}$ where $\hat{\hat{M}}$ is the completion of $\hat{M}$ over the collection of submodules $\set{\ker p_\lambda}_{\lambda \in \Lambda}$ (in Bourbaki terms, complete and separated)
+	\end{enumerate}
+\end{proposition}
+
+\begin{longproof}
+	
+	\begin{itemize}
+	\item ($\hat{M}$ is linearly topologized by the collection of submodules $\set{\ker p_\lambda}_{\lambda \in \Lambda}$)
+	
+	We will show that the linear topology generated by $\set{\ker p_\lambda}_{\lambda \in \Lambda}$ on $\hat{M}$ is precisely the (linear) subspace topology on $\hat{M}$ by $\hat{M} \hookrightarrow \prod_{\lambda \in \Lambda} M / M_\lambda$. Let $U_I \subseteq \hat{M}$ for some finite subset $I \subseteq \Lambda$ be any basic open set around $0$, then $U_I$ is of the form
+	$$
+		U_I = \hat{M} \cap \tuple*{\prod_{\mu \in I} \set{0} \times \prod_{\lambda \in \Lambda - I} M / M_\lambda}
+	$$
+	
+	Observe that if $\nu \geq \mu$ (that is $M_\nu \subseteq M_\mu$) for all $\mu \in I$, then $\ker p_\nu \subseteq U_I$ due to the commutativity of the diagram below
+	
+	\begin{center}
+		\begin{tikzcd}
+			& \hat{M} \arrow[d, hook] \arrow[ldd, "p_\nu"'] \arrow[rdd, "p_\mu"]                    &           \\
+			& \prod_{\lambda \in \Lambda} M / M_\lambda \arrow[ld, two heads] \arrow[rd, two heads] &           \\
+			M / M_\nu \arrow[rr, "\phi_{\mu \nu}"'] &                                                                                       & M / M_\mu
+		\end{tikzcd}
+	\end{center}
+	
+	Hence, the topology generated by $\set{\ker p_\lambda}_{\lambda \in \Lambda}$ is finer than the subspace topology on $\hat{M}$. On the other hand, $U_I \subseteq \ker p_\mu$ for any $\mu \in I$. Hence, $\hat{M}$ is linearly topologized by $\set{\ker p_\lambda}_{\lambda \in \Lambda}$
+		
+	\item ($\ker p_\lambda \subseteq \overline{\psi(M_\lambda)}$)
+	
+	For any $x = (x_\tau)_{\tau \in \Lambda} \in \ker p_\lambda$, $x_\lambda = 0$. Since $\hat{M}$ is linearly topologized by $\set{\ker p_\nu}_{\nu \in \Lambda}$, then we need to show that $x + \ker p_\nu$ intersects $\psi(M_\lambda)$ for all $\nu \in \Lambda$. Since $\Lambda$ is directed, let $\mu \geq \nu$ and $\mu \geq \lambda$, then
+	
+	\begin{center}
+		\begin{tikzcd}
+			M \arrow[rr, "\psi"] \arrow[rrd, two heads] &           & \hat{M} \arrow[d, "p_\mu"] \arrow[rd, "p_\lambda"] \arrow[ld, "p_\nu"']    &               \\
+			& M / M_\nu & M / M_\mu \arrow[r, "\phi_{\lambda \mu}"'] \arrow[l, "\phi_{\nu \lambda}"] & M / M_\lambda
+		\end{tikzcd}
+	\end{center}
+	
+	$p_\mu$ sends $x + \ker p_\mu$ into $\set{x_\mu}$, let $y_\mu \in M$ be the lift of $x_\mu$ under the quotient map $M \twoheadrightarrow M / M_\mu$. Then $\psi(y_\mu) - x \in \ker p_\mu$. Hence, $\psi(y_\mu) \in x + \ker p_\mu$. Because $\ker p_\mu \subseteq \ker p_\lambda$ and $x \in \ker p_\lambda$, then $\psi(y_\mu) \in \ker p_\lambda$, that is, $y_\mu$ is sent to $0 \in M / M_\lambda$, hence $y_\mu \in M_\lambda$. So, $y_\mu \in (x + \ker p_\mu) \cap \psi(M_\lambda)$. Because $\ker p_\mu \subseteq \ker p_\nu$, so $y_\mu \in (x + \ker p_\nu) \cap \psi(M_\lambda)$
+ 		
+	\item ($\ker p_\lambda = \overline{\psi(M_\lambda)}$)
+	
+	$\ker p_\lambda$ is the preimage of the closed set $\set{0} \subseteq M / M_\lambda$, hence $\ker p_\lambda$ is closed. $\psi(M_\lambda) \subseteq \ker p_\lambda \subseteq \overline{\psi(M_\lambda)}$ implies $\ker p_\lambda = \overline{\psi(M_\lambda)}$
+	
+	\item (completeness of completion)
+	
+	Note that, the surjectivity of $p_\lambda$ gives that
+	$$
+		\frac{\hat{M}}{\ker p_\lambda} \cong M / M_\lambda
+	$$
+	
+	Thus, the completion $\hat{\hat{M}}$ of $\hat{M}$ linearly topologized by $\set{\ker p_\lambda}_{\lambda \in \Lambda}$ is
+	$$
+		\hat{\hat{M}} = \lim \frac{\hat{M}}{\ker p_\lambda} = \lim \frac{M}{M_\lambda} = \hat{M}
+	$$
+
+	\end{itemize}
+\end{longproof}
+
+\begin{remark}[cofinal directed sets]
+	Different set of submodules can generate the same topology on $M$. In fact, $\set{M_\lambda}_{\lambda \in \Lambda}$ and $\set{M_\xi}_{\xi \in \Xi}$ generate the same topology if and only if for all $\lambda \in \Lambda$, there exists $\xi \in \Xi$ so that $M_\lambda \supseteq M_\xi$ and for all $\xi \in \Xi$, there exists $\lambda \in \Lambda$ so that $M_\xi \supseteq M_\lambda$ ($\Lambda$ and $\Xi$ are said to be cofinal)
+\end{remark}
+
+\begin{proposition}
+	Given $M$ topologized by $\set{M_\lambda}_{\lambda \in \Lambda}$, let $N$ be a submodule of $M$, observe that the closure of $N$ in $M$ is
+	$$
+		\bar{N} = \bigcap_{\lambda \in \Lambda} N + M_\lambda
+	$$
+\end{proposition}
+
+\begin{proof}
+	$$
+		x \in \bar{N} \iff (x + M_\lambda) \cap N \neq \emptyset \text{ for every } \lambda \in \Lambda \iff x \in \bigcap_{\lambda \in \Lambda} N + M_\lambda
+	$$
+\end{proof}
+
+\begin{proposition}
+	Given $M$ topologized by $\set{M_\lambda}_{\lambda \in \Lambda}$, let $N$ be a submodule of $M$, let
+	$$
+		M'_\lambda = \im(M_\lambda \hookrightarrow M \twoheadrightarrow M / N) = M_\lambda / N
+	$$
+	then the quotient topology on $M / N$ is the linear topology induced by $\set{M'_\lambda}_{\lambda \in \Lambda}$
+\end{proposition}
+
+\begin{proof}
+	For any subset $U \subseteq M$
+	\begin{enumerate}
+		\item $U \subseteq M / N$ is open in $M / N$ with the quotient topology
+		\item $U$ is open in $M$
+		\item for every $x \in U$, there exists $\lambda \in \Lambda$, $x + M_\lambda \subseteq U$
+		\item for every $y \in U \subseteq M / N$, there exists $\lambda \in \Lambda$, $y + M'_\lambda \subseteq U \subseteq M / N$
+		\item $U$ is open in $M / N$ with the linear topology
+	\end{enumerate}
+	
+	$1 \iff 2 \iff 3 \iff 4 \iff 5$
+\end{proof}
+
+\begin{remark}
+	Some remarks
+	\begin{enumerate}
+		\item $M / N$ is separated $\iff$ $N \subseteq M$ is a closed set
+		\item subspace topology on $N$ is the linear topology generated by $\set{N \cap M_\lambda}_{\lambda \in \Lambda}$
+		\item the sequence 
+		
+		$$
+			0 \to \frac{N}{N \cap M_\lambda} \to \frac{M}{M_\lambda} \to \frac{M / N}{\ker p_\lambda} = \frac{M}{N + M_\lambda} \to 0
+		$$
+		
+		is exact and compatible with $\lambda$
+		
+		\item the sequence
+		$$
+			0 \to \hat{N} \to \hat{M} \to \widehat{M / N} \to 0
+		$$
+		
+		is exact
+	\end{enumerate}
+\end{remark}
+
+\section{$I$-ADIC COMPLETION}
+
+the ring of $10$-adic integers is defined as a set of formal sums
+$$
+	\Z_{10} = \set*{\pm \sum_{i=0}^\infty a_i 10^i: a_i \in \set{0, 1, 2,3,4,5,6,7,8, 9}}
+$$
+
+where there is a natural inclusion $\Z \hookrightarrow \Z_{10}$ by writing a natural number in base 10. One also write an element of $\Z_{10}$ by $...a_3 a_2 a_1 a_0$. $I$-adic completition is a generalization of $10$-adic integers
+
+\begin{definition}[$I$-adic topology, $I$-adic completion, $I$-adically complete]
+	Let $M$ be an $A$-module and $I$ be an ideal of $A$, then the direct set $\set{M, IM, I^2 M, ...}$ linearly topologizes $M$. The linear topology on $M$ is called $I$-adic topology. The completion $\hat{M} = \varprojlim_{n} M / I^n M$ is called $I$-adic completion. If $\hat{M} = M$ then $M$ is called $I$-adically complete.
+\end{definition}
+
+\begin{remark}[$I$-adic completion functor]
+	Let an $A$-module $M$ be equipped with the $I$-adic toplogy, then $\hat{M}$ is naturally a $\hat{A}$-module. More generally, $I$-adic completion is a functor from $A$-module into $\hat{A}$-module.
+\end{remark}
+
+\begin{remark}[Cauchy sequence]
+	A sequence $x_1, x_2, ... \in M$ is called Cauchy if for any $r \geq 0$, there exists $N \geq 0$ so that for every $m, n \geq N$
+	$$
+		x_m - x_n \in I^r M
+	$$
+	Informally, elements of the sequence become arbitrary "close" to each other as the sequence progresses where the notion of closeness is defined by the $I$-adic topology.  Endow $\Z$ with the $10$-adic topology, then the sequence 
+	$$
+		1, 11, 111, 1111, ...
+	$$
+	
+	does not converge in $\Z$ but converges into $\sum_{i=0}^\infty 10^i \in \Z_{10}$
+\end{remark}
+
+
+\begin{remark}[$p$-adic integers]
+	Why completion? get more units and ring becomes simpler. Let $A = \Z$, $I = (p)$ for some integer $p$ ($p$ is often prime), then
+	$$
+	\Z_p = \hat{A} = \set*{(a_n)_{n \geq 1} \in \prod_{n \geq 1} \Z / (p^n): a_n \mod p^m = a_m \text{ for all } m \leq n}
+	$$
+	
+	$1 + p$ is not a unit in $\Z$ but a unit in $\Z_p$. Let $a = (a_n)_{n \geq 1} \in \Z_p$ so that
+	$$
+	a_n = 1 - p + p^2 - ... \pm p^{n-1}
+	$$
+	then $(1 + p)a = 1$ in $\Z_p$. $\Z_p$ is called $p$-adic integers
+\end{remark}
+
+
+
+\begin{proposition}
+	If $\Lambda = \Z_{\geq 1}$, then the map $\hat{M} \to \widehat{M / N}$ is surjective, that is
+	$$
+		\hat{M} / \hat{N} \cong \widehat{M / N}
+	$$
+\end{proposition}
+
+\begin{proof}
+	\note{TODO - approximation argument}	
+\end{proof}
+
+\section{MORE $I$-ADIC COMPLETION}
+
+\begin{proposition}
+	Let $I$ be an ideal in a ring $A$ and $M$ be an $A$-module
+	\begin{enumerate}
+		\item If $A$ is $I$-adically complete, then $I \subseteq J(A)$ is in the Jacobson radical
+		\item If $M$ is $I$-adically complete, then multiplication by $1 + a$ is an isomorphism on $M$
+	\end{enumerate}
+\end{proposition}
+
+\begin{longproof}
+	(1) for $a \in I$, $(1 + a)(1 - a + a^2 - a^3 + ...) = 1$. Note that $1, 1-a, 1-a+a^2, ...$ is a Cauchy sequence
+	
+	(2) $M = \hat{M}$ is an $\hat{A}$-module, for $a \in I$, $1 + a \in \hat{A}$ is a unit in $\hat{A}$. Hence, multiplication by $1 + a$ in $M$ is an automorphism
+\end{longproof}
+
+\begin{definition}[complete local ring]
+	If $(A, \mf{m})$ is a local ring such that $A$ is $\mf{m}$-adically complete, then $A$ is called complete local ring
+\end{definition}
+
+\begin{remark}
+	Some examples of complete local ring
+	$$
+		\Z_p, k[[x]], k[[x_1, ..., x_n]]
+	$$
+	for some field $k$
+\end{remark}
+
+\begin{remark}
+	For any local ring $(A, \mf{m})$, then $(\hat{A}, \mf{m} \hat{A})$ is a complete local ring
+\end{remark}
+
+\begin{theorem}[Hensel lemma]
+	Suppose $(A, \mf{m}, k)$ is a complete local ring. Let $F \in A[X]$ be a monic polynomial. Suppose that there is a factorization $\bar{F} = gh$ in $k[X]$ for some coprime monic polynomials $g, h \in k[X]$. Then there exist lifts $\tilde{g}, \tilde{h} \in A[X]$ so that $F = \tilde{g} \tilde{h}$
+\end{theorem}
+
+
+\begin{proof}
+	\note{TODO - approximation argument}	
+\end{proof}
+
+\begin{remark}
+	Let $A = \Z_5$, $f = x^2 + 1$, then $k = \F_5$ and $\bar{f} = x^2 + 1 = x^2 - 4 = (x+2)(x-2) \in \F_5[x]$, by Hensel lemma, $f = l_1 l_2$ in $\Z_5[x]$, that is $\sqrt{-1} \in \Z_5$
+\end{remark}
+
+\begin{theorem}
+	Let $M$ be an $A$-module and $I$ be an ideal of $A$, assume $A$ is $I$-adically complete and $M$ is $I$-adically separated, that is $\bigcap_{n \geq 1} I^n M = \set{0}$. If $\bar{w}_1, \bar{w}_2, ..., \bar{w}_n \in M / IM$ generate $M / IM$ as an $A/I$-module, then any lifts $w_1, w_2, ..., w_n \in M$ generate $M$ as an $A$-module.
+\end{theorem}
+
+\begin{proof}
+	Pick $w_1, ..., w_n$, since $\set{\bar{w}_1, ..., \bar{w}_n}$ generates $M / IM$ as an $A/I$-module, then
+	$$
+		M = \sum A w_i + IM
+	$$
+	
+	Then,
+	$$
+		IM = I \tuple*{\sum A w_i + IM} = \sum I A w_i + I^2 M
+	$$
+	
+	Keep iterating, for any $r \geq 1$, we have
+	$$
+		 I^r M = \sum_{i=1}^n I^r A w_i + I^{r+1} M
+	$$
+	
+	Now, fix any $\xi \in M$, we can write
+	\begin{align*}
+		\xi &= \sum a_i w_i + \xi_1 &\text{(for some $\xi_1 \in IM$ and for some $a_i \in A$)}\\
+		\xi_1 &= \sum a_{i 1} w_i + \xi_2 &\text{(for some $\xi_2 \in I^2 M$ and for some $a_{i 1} \in I A$)}\\
+		\xi_2 &= \sum a_{i 2} w_i + \xi_3 &\text{(for some $\xi_3 \in I^3 M$ and for some $a_{i 2} \in I^2 A$)}\\
+		&...
+	\end{align*}
+	
+	Then, for any $n \geq 1$,
+	$$
+		\xi = \sum (a_i + a_{i1} + ... + a_{in}) w_i + \xi_{n+1}
+	$$
+	Since $A$ is $I$-adically complete, let $b_i = a_i + a_{i 1} + a_{i 2} + ... \in A$. Then, 
+	$$
+		\xi - \sum b_i w_i \in \bigcap_{n \geq 1} I^n M = \set{0}
+	$$
+\end{proof}
+
+\begin{remark}
+	Let $M$ be equipped with a linear topology by $\set{M_\lambda}_{\lambda \in \Lambda}$, if $N \subseteq M$ is a submodule, the subspace topology on $N$ is not the linear topology by $\set{M_\lambda \cap N}_{\lambda \in \Lambda}$
+	
+	Even in $I$-adic topology. Given ideal $I \subseteq A$ and an submodule $N \subseteq M$, the $I$-adic topology on $N$ might not be the subspace topology on $N$ relative to the $I$-adic topology on $M$
+	
+	Let $A = \Z$, $I = (p)$ for some prime $p$. $N = \Z$, $M = \Q$, then 
+	$$
+		I^n M = \Q, I^n N = p^n \Z
+	$$
+\end{remark}
+
+
+\begin{theorem}[Artin-Rees lemma]
+	Let $A$ be a Noetherian ring and ideal $I$ in $A$, let $M$ be a finitely generated $A$-module and $N$ be a submodule of $M$, then there exists $c > 0$ such that for all $n \geq c$
+	$$
+		I^n M \cap N = I^{n-c} (I^c M \cap N)
+	$$
+\end{theorem}
+
+\begin{longproof}
+	($\supseteq$) obvious
+	
+	($\subseteq$) $A$ is Notherian, let $I = (a_1, ..., a_r)$ and $M = \sum A w_i$. Any element in $I^n M$ can be written as
+	$$
+		\sum_{1 \leq i \leq s} f_i(\vec{a}) w_i
+	$$
+	
+	where $\vec{a} = (a_1, ..., a_r) \in A^r$, $f_i \in B = A[X_1, ..., X_r]$ is a homogeneous polynomial (all terms have the same degree) of degree $n$. For each $n \geq 1$, let $J_n$ be the set of $s$-tuple of homogeneous polynomials of degree $n$ in $B$ so that $\sum_{1 \leq i \leq s} f_i(\vec{a}) w_i \in N$
+	$$
+		J_n = \set*{(f_1, ..., f_s) \in B^s: f_i \text{ is homogeneous of degree $n$ and } \sum_{1 \leq i \leq s} f_i(\vec{a}) w_i \in N} \subseteq B^s
+	$$
+	
+	Then, $B^s$ is an $A$-module and  $J_n$ is a submodule of $B^s$. Let ring $C$ be the $B$-module generated by $\bigcup_{n \geq 1} J_n \subseteq B^s$. $A$ being Noetherian implies $B$ being Noetherian implies $C$ being Noetherian. Write
+	$$
+		C = \sum_{1 \leq j \leq t} B v_j
+	$$
+	
+	where $v_j \in B^s$ is a $B$-linear combination of elements in $\set{J_n}_{n \geq 1}$. Without loss of generality, assume each $v_j$ lies in one of $\set{J_n}_{n \geq 1}$, then
+	$$
+		v_j = (v_{j 1}, ..., v_{j s}) \in J_{d_j}
+	$$
+	for some $d_j \geq 1$. Note that, each $v_{ji} \in B$ is a homogeneous polynomial of degree $d_j$ . Let $c = \max \set{d_j}_{1 \leq j \leq t}$. Now, for any $\eta = \sum_{1 \leq i \leq s} f_i(\vec{a}) w_i \in I^n M \cap N$ with $(f_1, ..., f_s) \in J_n \subseteq C$. Since  $C = \sum_{1 \leq j \leq t} B v_j$, then
+	$$
+		(f_1, ..., f_s) = \sum_{1 \leq j \leq t} p_j(x) v_j
+	$$
+	for some $p_j(x) \in B = A[x_1, ..., x_r]$. Since $v_j = (v_{j 1}, ..., v_{j s}) \in J_{d_j}$, each $v_{j i} \in B = A[x_1, ..., x_r]$ is a homogeneous polynomial of degree $d_j$. Each $f_i \in B = A[x_1, ..., x_r]$ is a homogeneous polynomial of degree $n$. Hence, we can choose $p_j(x)$ so that each $p_j(x)$ is a homogeneous polynomial of degree $n - d_j$, then
+	\begin{align*}
+		\eta
+		&= \sum_{1 \leq i \leq s} f_i(\vec{a}) w_i \\
+		&= \sum_{1 \leq i \leq s} w_i \sum_{1 \leq j \leq t} p_j(\vec{a}) v_{ji}(\vec{a}) \\
+		&= \sum_{1 \leq j \leq t} p_j(\vec{a}) \sum_{1 \leq i \leq s} v_{ji}(\vec{a}) w_i \in I^n M \cap N
+	\end{align*}
+	
+	Note that, $\sum_{1 \leq i \leq s} v_{ji}(\vec{a}) w_i \in N$ by definition of $J_{d_j}$ and $\sum_{1 \leq i \leq s} v_{ji}(\vec{a}) w_i \in I^{d_j} M$, moreover, $p_j(\vec{a}) \in I^{n - d_j} = I^{n-c} I^{c - d_j}$. Hence, 
+	$$
+		p_j(\vec{a}) \sum_{1 \leq i \leq s} v_{ji}(\vec{a}) w_i \in I^{n-c} I^{c - d_j} (I^{d_j} M \cap N) \subseteq I^{n-c} (I^c M \cap N)
+	$$
+	
+	so $\eta \in I^{n-c} (I^c M \cap N)$ \note{this proof is disgustingly genius \detokenize{>_<} }
+\end{longproof}
+
+
+\begin{corollary}
+	Let $A$ be a Noetherian ring and ideal $I$ in $A$, let $M$ be a $A$-module
+	\begin{enumerate}
+		\item If $M$ is finitely generated, then for any short exact sequence $0 \to N \to M \to Q \to 0$, the induced sequence $0 \to \hat{N} \to \hat{M} \to \hat{Q} \to 0$ is exact
+		\item If $M$ is finitely presented, then the natural map $M \otimes_A \hat{A} \to \hat{M}$ is an isomorphism
+	\end{enumerate}
+\end{corollary}
+
+\begin{proposition}
+	An $A$-module $M$ is flat if and only if for every ideal $I \subseteq A$, the natural map $I \otimes_A M \to M$ is injective
+\end{proposition}
+
+\begin{proof}
+	\note{TODO - black box - will be proved after homological algebra}	
+\end{proof}
+
+\begin{theorem}
+	Let $A$ be a Noetherian ring and ideal $I$ in $A$, then $I$-adic completion $\hat{A}$ is a flat $A$-module
+\end{theorem}
+
+\begin{proof}
+	the composition is injective for any ideal $I \subseteq A$
+	$$
+		\hat{I} \xrightarrow{\sim} I \otimes_A A \to \hat{A}
+	$$
+\end{proof}
+
+\begin{theorem}
+	Let $A$ be a Noetherian ring and ideal $I$ in $A$, let $M$ be a finitely generated $A$-module and $N$ be a submodule of $M$. If $M$ is equipped with $I$-adic topology,  the $I$-adic topology on $N$ coincides with the subspace topology of $N \hookrightarrow M$ where 
+\end{theorem}
+
+\begin{proof}
+	\note{TODO}
+\end{proof}
+
+\begin{theorem}
+	Let $A$ be a Noetherian ring, $I$ be an ideal of $A$, and $M$ be a finitely generated $A$-module, then
+	$$
+		M \otimes_A \hat{A} \cong \hat{M}
+	$$
+	
+	Hence, if $A$ is $I$-adically complete, so is $M$
+\end{theorem}
+
+\begin{theorem}[Krull]
+	Let $A$ be a Noetherian ring, $I$ be an ideal of $A$, and $M$ be a finitely generated $A$-module, let $N = \bigcap_{n \geq 1} I^n M$. Then, there exists $a \in A$ so that $a = 1 \mod I$ and $a N = 0$
+\end{theorem}
+
+\begin{proof}
+	By Nakayama, it is enough to show that $N = IN$. By Artin-Rees, $N = I^n M \cap N \subseteq IN$ for sufficiently large $n$. Hence, $N = IN$
+\end{proof}
+
+\begin{theorem}[Krull intersection theorem]
+	The theorem consists of two parts
+	\begin{enumerate}
+		\item Let $A$ be a Noetherian ring and $I$ be an ideal of $A$ with $I \subseteq J(A)$, then for any finitely generated $A$-module $M$, the $I$-adic topology is separated and any submodule is a closed set.
+		
+		\item If $A$ is a Noetherian domain and $I \subsetneq A$ is a proper ideal, then 
+		$$
+			\bigcap_{n \geq 1} I^n = 0
+		$$
+	\end{enumerate}
+\end{theorem}
+
+\begin{longproof}
+	(1) using the notation in Krull theorem, there exists $a \in A$ so that $a = 1 + x$ for some $x \in J(A)$, so $a$ is a unit in $A$. Since, $aN = 0$, then $N = 0$, hence $M$ is separated. If $L \subseteq M$ is a submodule, $M / L$ is also $I$-adically separated, hence $L$ is closed in $M$
+		
+	(2) using the notation in Krull theorem, let $M = A$. $1 \notin I$, so $a \neq 0$, so $a$ is not a zero-divisor, hence $aN = 0$ implies $N = 0$
+\end{longproof}
+
+\begin{remark}
+	In particular, if $(A, \mf{m}, k)$ is a Noetherian local ring, then $\mf{m}$-adic topology on $A$ is separated, that is, $\bigcap_{n \geq 1} \mf{m}^n = (0)$
+\end{remark}
+
+\begin{remark}[Matsumura CRT p63 - some results from local Noetherian ring]
+	Let $(A, \mf{m})$ be a local Noetherian ring, then
+	\begin{enumerate}
+		\item $\bigcap_{n \geq 1} \mf{m}^n = \ker (\psi: A \to \hat{A}) = 0$
+		
+		\item For $M$ a finitely generated $A$-module and $N \subseteq M$ a submodule
+		$$
+		\bigcap_{n \geq 1} (N + \mf{m}^n M) = N
+		$$
+		
+		\item The completion $\hat{A}$ of $A$ is faithfully flat over $A$; hence $A \subseteq \hat{A}$ and $I \hat{A} \cap A = I$ for any ideal $I$ of $A$
+		
+		\item $\hat{A}$ is again a Noetherian local ring, with maximal ideal $\mf{m} A$ and it has the same residue class field as $A$; moreover, $\hat{A} / \mf{m}^n \hat{A} = A / \mf{m}^n$ for all $n \geq 1$
+		
+		\item If $A$ is a complete local ring, the for any ideal $I \neq A$, $A / I$ is afgain a complete local ring.
+	\end{enumerate}
+	
+\end{remark}
+
+
+
+\begin{theorem}[Cohen structure theorem]
+	Let $(A, \mf{m})$ be any complete local ring, then 
+	$$
+		A \cong \frac{R[[x_1, x_2, ..., x_n]]}{I}
+	$$
+	where $n$ can be given explicitly and $R$ is either a field (dimension $0$) or discrete valuation ring (dimension $1$)
+\end{theorem} 

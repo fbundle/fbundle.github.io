@@ -1,0 +1,88 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\input{header}
+
+\title{sheaf\_iso}
+\author{Khanh Nguyen}
+\date{November 2024}
+
+\begin{document}
+
+\begin{lemma}
+    Let $E \to X$ and $F \to X$ be vector bundles over $X$. Then there is a sheaf isomorphism
+    $$
+        \tau: \mathcal{E}(E) \otimes_\mathcal{E} \mathcal{E}(F) \to \mathcal{E}(E \otimes F)
+    $$
+
+    where $\mathcal{E}(E)$ and $\mathcal{E}(F)$ are sheaves induced from sections of vector bundles.
+\begin{proof}
+    For every $x \in X$, pick $U \subseteq X$ containing $x$ small enough such that $E\vert_U \to U$ and $F\vert_U \to U$ are trivial bundles. Let 
+    $$
+        \Tau(-) = \mathcal{E}(E)(-) \otimes_{\mathcal{E}(-)} \mathcal{E}(F)(-)
+    $$
+
+    be the tensor product of presheaves. We will construct the map $t$ and show that the diagram below commutes
+    \begin{center}
+\begin{tikzcd}
+\Tau(U) \arrow[d, "r^U_V"] \arrow[r, "t"] & \mathcal{E}(E \otimes F)(U) \arrow[d, "r^U_V"] \\
+\Tau(V) \arrow[r, "t"]                    & \mathcal{E}(E \otimes F)(V)                   
+\end{tikzcd}
+    \end{center}
+
+    Let $e = \set{e_1, e_2, ..., e_m}$ and $f = \set{f_1, f_2, ..., f_n}$ be frames of $E$ and $F$ on $U$. Then, every element $\xi \in \Tau(U)$ can be written as
+    $$
+        \xi = \sum_{i=1}^m \sum_{j=1}^n \xi_{ij} (e_i \otimes_{\mathcal{E}(U)} f_j)
+    $$
+
+    where $\xi_{ij} \in \mathcal{E}(U)$. And every element $\eta \in \mathcal{E}(E \otimes F)(U)$ can be written as
+    $$
+        \eta(x) = \sum_{i=1}^m \sum_{j=1}^n \eta_{ij}(x) (e_i(x) \otimes f_i(x))
+    $$
+
+    where $\eta_{ij} \in \mathcal{E}(U)$. Hence, there exists a natural isomorphism of sheaves from $\Tau\vert_U = \Tau^{sh}\vert_U$ to $\mathcal{E}(E \otimes F)\vert_U$ defined on $U \subseteq X$.
+
+\begin{lemma}
+    If $\mathcal{F}$ and $\mathcal{G}$ be two sheaves on $X$ and there exists an open cover $\set{U_i}_{i \in I}$ for $X$ such that $\tau_i: \mathcal{F}\vert_{U_i} \to \mathcal{G}\vert_{U_i}$ is an isomorphism of sheaves for all $i \in I$, then there exists an isomorphism of sheaves $\tau: \mathcal{F} \to \mathcal{G}$
+\begin{proof}
+    Let $V$ be open, without loss of generality, we can assume that there exists an open cover $\set{U_i}_{i \in I}$ for $V$ such that for each $U_i \in \set{U_i}_{i \in I}$, $\tau_i: \mathcal{F}\vert_{U_i} \to \mathcal{G}\vert_{U_i}$ is an isomorphism of sheaves. Let $U \in \set{U_i}$,
+    \begin{center}
+\begin{tikzcd}
+\mathcal{F}(V) \arrow[r, "r^V_U"] \arrow[d, "\tau_V"', dashed] & \mathcal{F}(U) \arrow[d, "\tau_U"] \\
+\mathcal{G}(V) \arrow[r, "r^V_U"]                              & \mathcal{G}(U)                    
+\end{tikzcd}
+    \end{center}
+
+    Let $f \in \mathcal{F}(U)$, define
+    $$
+        g_U = \tau_U r^V_U f
+    $$
+
+    For any $U_i, U_j \in \set{U_i}_{i \in I}$ with $U_i \cap U_j \neq \emptyset$, the diagram below commutes
+    \begin{center}
+\begin{tikzcd}
+\mathcal{F}(V) \arrow[rr, "r^V_{U_i}"] \arrow[rd, "r^V_{U_j}"] \arrow[ddd, "\tau_V"', dashed] &                                                                                 & \mathcal{F}(U_i) \arrow[rd, "r^{U_i}_{U_i \cap U_j}"] \arrow[ddd, "\tau_{U_i}"] &                                                              \\
+                                                                                              & \mathcal{F}(U_j) \arrow[ddd, "\tau_{U_j}"] \arrow[rr, "r^{U_j}_{U_i \cap U_j}"] &                                                                                 & \mathcal{F}(U_i \cap U_j) \arrow[ddd, "\tau_{U_i \cap U_j}"] \\
+                                                                                              &                                                                                 &                                                                                 &                                                              \\
+\mathcal{G}(V) \arrow[rd] \arrow[rr]                                                          &                                                                                 & \mathcal{G}(U_i) \arrow[rd, "r^{U_i}_{U_i \cap U_j}"]                           &                                                              \\
+                                                                                              & \mathcal{G}(U_j) \arrow[rr, "r^{U_j}_{U_i \cap U_j}"]                           &                                                                                 & \mathcal{G}(U_i \cap U_j)                                   
+\end{tikzcd}
+    \end{center}
+
+    Hence, by commutativity, we have
+    $$
+        r^{U_i}_{U_i \cap U_j} g_{U_i} = r^{U_j}_{U_i \cap U_j} g_{U_j} 
+    $$
+
+    By definition of sheaf, there exists a unique map $\tau_V: \mathcal{F}(V) \to \mathcal{G}(V)$ that makes the diagram commutes. Similarly, we can construct a unique map $\tau_V^{-1}: \mathcal{G}(V) \to \mathcal{F}(V)$. It can be verified that $\tau$ defines a natural isomorphism between two functors $\mathcal{F}$ and $\mathcal{G}$
+\end{proof}
+\end{lemma}
+
+    Back to the proof, use the lemma, we can construct a natural isomorphism
+    $$
+        \tau: \mathcal{E}(E) \otimes_\mathcal{E} \mathcal{E}(F) \to \mathcal{E}(E \otimes F)
+    $$ 
+\end{proof}
+\end{lemma}
+
+\end{document}

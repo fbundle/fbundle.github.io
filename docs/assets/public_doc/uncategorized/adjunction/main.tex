@@ -1,0 +1,589 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\input{header}
+
+\title{adjunction}
+\author{Khanh Nguyen}
+\date{July 2024}
+
+\begin{document}
+
+\maketitle
+
+\section{Adjunction}
+
+\begin{definition}[adjunction]
+    Let $C, D$ be categories, an \textit{adjunction} between $C$ and $D$ is a pair of functors $L: C \to D$, $R: D \to C$ together with an isomorphism
+    $$
+        \phi_{X, Y}: D(LX, Y) \xrightarrow{\cong} C(X, RY)
+    $$
+    for each object $X$ in $C$ and object $Y$ in $D$ that is natural in both components \footnote{by being natural in $X$, for each $Y$, $\phi_{-, Y}: D(L-, Y) \to C(-, RY)$ is a natural transformation of functors $C^{op} \to \Set$, by being natural in $Y$, for each $X$, $\phi_{X, -}: D(LX, -) \to C(X, R-)$ is a natural transformation of functors $D \to \Set$}. $L$ is called \textit{left adjoint} and $R$ is called \textit{right adjoint}. We write 
+    $$
+        L: C \rightleftarrows D: R
+    $$
+\end{definition}
+
+\begin{example}[product-hom adjunction]
+    Let $C: \Set \to \Set$ and $D: \Set \to \Set$ be defined as follows:
+    \begin{align*}
+        L &:= X \times - : \Set \to \Set \\
+        D &:= \Set(X, -) : \Set \to \Set
+    \end{align*}
+    Then, $L, R$ is an adjunction with isomorphism
+    $$
+        \Set(LZ, Y) = \Set(X \times Z, Y) \cong \Set(Z, \Set(X, Y)) = \Set(Z, RY)
+    $$
+\end{example}
+
+\section{Unit and Counit of an Adjunction}
+
+\begin{definition}[unit, counit]
+    Let $L: C \rightleftarrows D: R$ be an adjunction with the isomorphism
+    $$
+        \phi_{X, Y}: D(LX, Y) \xrightarrow{\cong} C(X, RY)
+    $$
+    Let $Y = LX$, we have
+    $$
+        \phi_{X, LX}: D(LX, LX) \xrightarrow{\cong} C(X, RLX)
+    $$
+
+    Under this isomorphism, define $\eta_X: X \to RLX$ by the image of identity map $\id_{LX}: LX \to LX$ in $D(LX, LX)$ under $\phi_{X, LX}$, that is $\eta_X = \phi_{X, LX} \id_{LX}$. For each object $X$ in $C$, there is map $\eta_X$ and these maps assemble a natural isomorphism of functors $C \to C$
+    $$
+        \eta: \id_C \to RL
+    $$
+    $\eta$ is called unit of the adjunction. Similarly, there is a natural isomorphism of functors $D \to D$
+    $$
+        \eps: LR \to \id_D
+    $$
+    $\eps$ is called counit of the adjunction.
+\end{definition}
+
+\begin{longproof}
+    \note{todo}
+\end{longproof}
+
+
+\begin{example}[lifting property of unit]
+    Let $f: X \to RY$ where $X$ is an object in $C$ and $Y$ is an object in $D$. By adjunction, $f: X \to RY$ is lifted into a map $g: RLX \to RY$
+
+    \begin{center}
+\begin{tikzcd}
+RLX \arrow[rd, "g = R\hat{f}", dashed] &    & LX \arrow[rd, "\hat{f}", dashed] &   \\
+X \arrow[r, "f"'] \arrow[u, "\eta_X"]  & RY &                                  & Y
+\end{tikzcd}
+    \end{center}
+
+    The map $g$ can be explicitly defined by
+
+    $$
+        g = R \hat{f}
+    $$
+
+    where $\hat{f}: LX \to Y$ is the corresponding map to $f: X \to RY$ in the adjunction isomorphism
+\end{example}
+
+\begin{longproof}
+
+The diagram below commutes because $\phi_{X, -}: D(LX, -) \to C(X, R-)$ is a natural transformation
+
+\begin{center}
+\begin{tikzcd}
+LX \arrow[ddd, "\hat{f}"'] & {D(LX, LX)} \arrow[rrr, "{\phi_{X, LX}}"] \arrow[ddd, "{D(LX, -) \hat{f}}"'] &                                                &                           & {C(X, RLX)} \arrow[ddd, "{C(X, R-)\hat{f}}"] \\
+                           &                                                                              & \id_{LX} \arrow[r, maps to] \arrow[d, maps to] & \eta_X \arrow[d, maps to] &                                              \\
+                           &                                                                              & \hat{f} \arrow[r, maps to]                     & f                         &                                              \\
+Y                          & {D(LX, Y)} \arrow[rrr, "{\phi_{X, Y}}"']                                     &                                                &                           & {C(X, RY)}                                  
+\end{tikzcd}
+\end{center}
+
+where the maps $D(LX, -) \hat{f}: D(LX, LX) \to D(LX, Y)$ and $C(X, R-)\hat{f}: C(X, RLX) \to C(X, RY)$ are defined by
+
+\begin{align*}
+    (D(LX, -) \hat{f})(h) &= \hat{f} h \\
+    (C(X, R-) \hat{f})(h) &= (R \hat{f}) h
+\end{align*}
+
+By commutativity,
+
+$$
+    f = (R \hat{f}) \eta_X
+$$
+
+Then, define $g: RLX \to RY$ by
+
+$$
+    g = R \hat{f}
+$$
+
+\end{longproof}
+
+\begin{example}[unit, counit of product-hom adjunction]
+    Let $L: \Set \rightleftarrows \Set: R$ be the product-hom adjunction, that is
+    $$
+        L = X \times -: \Set \to \Set \text{ and } R = \Set(X, -): \Set \to \Set
+    $$
+    The counit of this adjunction is the evaluation map $\eval: X \times \Set(X, Y) \to Y$ defined by $\eval(x, f) = f(x)$. The unit of this adjunction is the map $Z \to \Set(X, X \times Z)$ defined by $z \mapsto (-, z)$ where $(-, z): X \to X \times Z$ is the function $x \mapsto (x, z)$
+\end{example}
+
+\begin{definition}[adjunction]
+    An adjunction between categories $C$ and $D$ is a pair of functors $L: C \to D$ and $R: D \to C$ together with natural transformations $\eta: \id_C \to RL$ and $\eps: LR \to \id_D$ such that for all objects $X \in C$ and $Y \in D$ the following diagrams commute
+    \begin{center}
+\begin{tikzcd}
+                                                  & LRLX \arrow[rd, "\eps_{LX}"] &    &                                                    & RLRY \arrow[rd, "R\eps_Y"] &    \\
+LX \arrow[rr, "\id_{LX}"'] \arrow[ru, "L \eta_X"] &                              & LX & RY \arrow[rr, "\id_{RY}"'] \arrow[ru, "\eta_{RY}"] &                            & RY
+\end{tikzcd}
+    \end{center}
+\end{definition}
+
+\note{digest this}
+
+\section{Free-Forgetful Adjunction in Algebra}
+
+\begin{example}[free group]
+    Let $U: \Grp \to \Set$ be the forgetful functor. A free group of a set $S$ is a group $FS$ and an injective map $\eta: S \to UFS$ satisfying the property that for any group $G$ and map $f: S \to UG$, there exists a unique map $\hat{f}: FS \to G$ such that $f = (U\hat{f}) \eta$
+    \begin{center}
+\begin{tikzcd}
+UFS \arrow[rd, "U\hat{f}", dashed]  &    & FS \arrow[rd, "\hat{f}", dashed] &   \\
+S \arrow[u, "\eta"] \arrow[r, "f"'] & UG &                                  & G
+\end{tikzcd}
+    \end{center}
+
+    The free functor and forgetful functor form an adjoint pair $F: \Set \rightleftarrows \Grp: U$ providing the isomorphism
+
+    $$
+        \Set(S, UG) \cong \Grp(FS, G)
+    $$
+
+    The unit of this adjunction is the inclusion $\eta: S \to UFS$
+    
+\end{example}
+
+\section{The Forgetful Functor $U: \Top \to \Set$ and Its Adjoint}
+
+\begin{example}[left adjoint and right adjoint of the forgetful functor]
+
+Let $D: \Set \to \Top$ and $I: \Set \to \Top$ put the discrete topology and the indiscrete topology on any set. Then, $D$ is the left adjoint and $I$ is the right adjoint of the forgetful functor $U: \Top \to Set$.
+
+\begin{align*}
+    \Top(DX, Y) &\cong \Set(X, UY) \\
+    \Set(UX, Y) &\cong \Top(X, IY)
+\end{align*}
+    
+\end{example}
+
+\begin{theorem}
+    If $L: C \to D$ has a right adjoint, then $L$ is cocontinuous. If $R: D \to C$ has a left adjoint, then $R$ is continuous.
+\end{theorem}
+
+\begin{proof}
+    \note{todo}
+\end{proof}
+
+\begin{corollary}
+    Right adjoints preserve products.
+\end{corollary}
+
+\begin{remark}
+    That explains why the construction of products, coproducts, subspaces, quotients, equalizers, coequalizers, pullbacks, and pushouts in $\Top$ must have, as an underlying set, the corresponding construction in $\Set$. That is, if a construction exists in $\Top$, then the forgetful functor $U: \Top \to \Set$ preserves it.
+\end{remark}
+
+\section{Adjoint Functor Theorem}
+
+\begin{definition}[solution set condition]
+    A functor $R: D \to C$ satisfies the solution set condition if for every object $X$ in $C$, there exists a set of objects $\mathcal{Y} = \set{Y_i}$ in $D$ and a set of morphisms
+    $$
+        \mathcal{S} = \set{f_i: X \to RY_i: Y_i \in \mathcal{Y}}
+    $$
+
+    so that for any $f: X \to RY$, there exists $Y_i$ and a morphism $g: Y_i \to Y$ in $D$ such that the diagram below commutes
+
+    \begin{center}
+\begin{tikzcd}
+                                     & RY_i \arrow[rd, "Rg", dashed] &    & Y_i \arrow[rd, "g", dashed] &   \\
+X \arrow[rr, "f"'] \arrow[ru, "f_i"] &                               & RY &                             & Y
+\end{tikzcd}
+    \end{center}
+\end{definition}
+
+\begin{theorem}[adjoint functor theorem]
+    Suppose $D$ is complete and $R: D \to C$ is a continuous functor satisfying the solution set condition, then $R$ has a left adjoint.
+\end{theorem}
+
+\section{Compactifications}
+
+\begin{definition}[compactification]
+    A compactification of a topological space is an embedding of that space as a dense subspace of a compact Hausdorff space.
+\end{definition}
+
+\subsection{The One-Point Compactification}
+
+\begin{definition}[one-point compactification]
+    A compactification obtained by adding a single point is called one-point compactification
+\end{definition}
+
+\begin{proposition}
+    A space $X$ has a one-point compactification if and only if $X$ is locally compact, Hausdorff, and $X$ is not compact. If a space has one-point compactification, then the compactification is unique.
+\end{proposition}
+
+\begin{longproof}
+
+    Let $X \hookrightarrow X^* = X \cup \set{p}$ be a compactification.
+    
+    (one-point compactification implies Hausdorff)
+
+    Every subspace of a Hausdorff space is Hausdorff
+    
+    (one-point compactification implies locally compact)
+
+    For any $x \in X$, as $X^*$ is Hausdorff, $x$ and $p$ are separated by two open sets $U_x \ni x$ and $U_p \ni p$. $X^* \setminus U_p$ is a closed set in a compact space, then $X^* \setminus U_p$ is compact. Hence, $X$ is locally compact.  
+
+    (one-point compactification implies not compact)
+
+    If $X$ is a compact subset of a Hausdorff space $X^*$, then $X$ is closed, so that $X$ cannot be dense in $X^*$. Therefore, $X$ must not be compact.
+
+    (locally compact, Hausdorff, and not compact imply one-point compactification)
+
+    Given any locally compact, Hausdorff, and not compact space $X$, construct a new space by adding a point $p$ and open neighbourhoods of $p$ to be the complements of all compact subsets in $X$
+
+    (uniqueness of one-point compactification)
+
+    In $X^*$, the open neighbourhoods of $p$ are precisely complements of compact subsets of $X$. Therefore, if there is another topology on $X^*$ making it a compactification of $X$, the topology cannot be denser or coarser. Hence, uniqueness.
+    
+\end{longproof}
+
+\begin{theorem}
+    Suppose $X$ is locally compact, Hausdorff, and not compact and let $i: X \to X^*$ be the one-point compactification of $X$. If $e: X \to Y$ is any other compactification of $X$, then there exists a quotient map $q: Y \to X^*$ such that the diagram below commutes
+    \begin{center}
+\begin{tikzcd}
+                                  & Y \arrow[d, "q", dashed] \\
+X \arrow[ru, "e"] \arrow[r, "i"'] & X^*                     
+\end{tikzcd}
+    \end{center}
+\end{theorem}
+
+\begin{longproof}
+    Let $X^* = X \cup \set{*}$ and $q: Y \to X^*$ as a set map is defined by
+    $$
+        q y = \begin{cases}
+            e^{-1} y &\text{$y \in eX$}\\
+            * &\text{$y \in Y \setminus eX$}
+        \end{cases}
+    $$
+
+    For any open set not containing $p$ in $X^*$, its preimage under $q$ is open due to homeomorphism. For any open set containing $p$, the preimage of its complement is closed due to homeomorphism.
+\end{longproof}
+
+\subsection{The Stone-Čech Compactification}
+
+\begin{definition}[Stone-Čech compactification]
+    Let $CH$ be the category where objects are compact Hausdorff spaces and morphisms are continuous functions. Let $U: CH \to \Top$ be the inclusion functor. Then, $U$ has a left adjoint $\beta: \Top \to CH$ called Stone-Čech compactification.
+\end{definition}
+
+\begin{remark}
+    For every topological space $X$ and compact Hausdorff space $Y$, we have
+    $$
+        CH(\beta X, Y) \cong \Top(X, UY) = \Top(X, Y)
+    $$
+    That is equivalent to the universal lifting property as follows: Let $\beta X$ be the Stone-Čech compactification of a topological space $X$. For every map $f: X \to Y$ where $Y$ is a compact Hausdorff space, then there is a lift $\hat{f}: \beta X \to Y$ such that the diagram below commutes
+    \begin{center}
+\begin{tikzcd}
+X \arrow[r, "f"] \arrow[d, "\eta"']        & UY &                                       & Y \\
+U \beta X \arrow[ru, "U \hat{f}"', dashed] &    & \beta X \arrow[ru, "\hat{f}", dashed] &  
+\end{tikzcd}
+    \end{center}
+
+    where $\hat{f}$ is the adjoint of $f$ and $\eta$ is the unit of adjunction. In the case when $X$ is locally compact, Hausdorff, the unit $\eta: X \to \beta X$ is a compactification of $X$
+\end{remark}
+
+\note{todo: some other remarks on ultrafilters, monad, etc}
+
+\section{The Exponential Topology}
+
+\begin{definition}[splitting, conjoining]
+    Let $X, Y$ be topological spaces. Given the product-hom adjunction on $X, Y$ as sets.
+    $$
+        \Set(X \times Z, Y) \cong \Set(Z, \Set(X, Y))
+    $$
+    
+    A topology on $\Top(X, Y)$ is
+    \begin{itemize}
+        \item splitting: if the continuity of $g: Z \times X \to Y$ implies the continuity of $\hat{g}: Z \to \Top(X, Y)$
+
+        \item conjoining: if the continuity of $\hat{g}: Z \to \Top(X, Y)$ implies the continuity of $g: Z \times X \to Y$
+
+        \item exponential: if it is both splitting and conjoining
+    \end{itemize}
+\end{definition}
+
+\begin{lemma}
+    A topology on $\Top(X, Y)$ is conjoining if and only if the evaluation map $\eval: X \times \Top(X, Y) \to Y$ is continuous
+\end{lemma}
+
+\begin{longproof}
+
+    (evaluation map is continuous implies conjoining)
+    
+    Suppose $\Top(X, Y)$ has a topology such that the evaluation map is continuous, let $\hat{g}: Z \to \Top(X, Y)$ be a continuous map, the composition $\eval (\id \times \hat{g})$ is precisely $g: X \times Z \to Y$ the adjoint of $\hat{g}$
+    \begin{center}
+\begin{tikzcd}
+X \times Z \arrow[r, "\id \times \hat{g}"] \arrow[rr, "g"', bend right] & {X \times \Top(X, Y)} \arrow[r, "\eval"] & Y
+\end{tikzcd}
+    \end{center}
+
+    The continuity of $\hat{g}$ implies the continuity of $g$
+    
+    (conjoining implies evaluation map is continuous)
+
+    Suppose $\Top(X, Y)$ is equipped with a conjoining topology. Let $Z = \Top(X, Y)$, since the adjoint of evaluation map $\widehat{\eval}: \Top(X, Y) \to \Top(X, Y)$ is the identity which is continuous, conjoining implies $\eval$ is continuous.
+\end{longproof}
+
+\begin{lemma}
+    Every splitting topology on $\Top(X, Y)$ is coarser than every conjoining topology
+\end{lemma}
+
+\begin{proof}
+    Let $\Tau_1, \Tau_2$ be topologies on $\Top(X, Y)$ and $\Tau_1$ splitting, $\Tau_2$ conjoining. As $\Tau_2$ is conjoining, the evaluation map $\eval: X \times (\Top(X, Y), \Tau_2) \to Y$ is continuous. As $\Tau_1$ is splitting, the adjoint of $\eval: X \times (\Top(X, Y), \Tau_2) \to Y$ is continuous, that is, the identity map $\widehat{\eval}: (\Top(X, Y), \Tau_2) \to (\Top(X, Y), \Tau_1)$ is continuous. Then, $\Tau_1 \subseteq \Tau_2$
+\end{proof}
+
+\begin{theorem}
+    If there exists an exponential topology on $\Top(X, Y)$, it is unique.
+\end{theorem}
+
+\subsection{The Compact-Open Topology}
+
+\begin{definition}[compact-open topology]
+    Let $X, Y$ be topological spaces. For each compact set $K \subseteq X$ and each open set $U \subseteq Y$, define
+    $$
+        S(K, U) = \set{f \in \Top(X, Y): fK \subseteq U}
+    $$
+    The collection $\set{S(K, U)}$ forms a subbasis for a topology on $\Top(X, Y)$ called the compact-open topology.
+\end{definition}
+
+\begin{definition}[finite-open topology]
+    Let $X, Y$ be topological spaces. For each finite set $F \subseteq X$ and each open set $U \subseteq Y$, define
+    $$
+        S(F, U) = \set{f \in \Top(X, Y): fF \subseteq U}
+    $$
+    The collection $\set{S(F, U)}$ forms a subbasis for a topology on $\Top(X, Y)$ called the finite-open topology or product topology.
+\end{definition}
+
+\begin{remark}
+    A sequence of functions $\set{f_n: [0, 1] \to [0, 1]}_{n \in \N}$ converges to a function $f: [0, 1] \to [0, 1]$
+    \begin{itemize}
+        \item in finite-open topology if and only if it converges pointwise.
+        \item in compact-open topology if and only if it converges uniformly.
+    \end{itemize}
+\end{remark}
+
+\begin{definition}[metric topology on $\Top(X, Y)$]
+    Let $X$ be compact, and $Y$ be a metric space. Then, $\Top(X, Y)$ is a metric space via metric
+    $$
+        d(f, g) = \sup_{x \in X} d(fx, gx)
+    $$
+    for $f, g \in \Top(X, Y)$. 
+\end{definition}
+
+\begin{theorem}
+    Let $X$ be compact and $Y$ be a metric space. The compact-open topology on $\Top(X, Y)$ coincides with the metric topology.
+\end{theorem}
+
+\begin{longproof}
+
+    (metric topology $\subseteq$ compact-open topology)
+
+    Given an open ball $\Ball(f, \eps)$, we will find an open set $O$ in the compact-open topology such that $f \in O \subseteq \Ball(f, \eps)$. Since $X$ is compact, $fX$ is compact. The collection $\set*{\Ball\tuple*{fx, \frac{\eps}{3}}}_{x \in X}$ is an open cover of $fX \subseteq Y$, it has a finite subcover
+    
+    $$
+        \set*{\Ball\tuple*{fx_1, \frac{\eps}{3}},    \Ball\tuple*{fx_2, \frac{\eps}{3}}, ..., \Ball\tuple*{fx_n, \frac{\eps}{3}}}
+    $$
+
+    Define compact subsets $\set{K_1, K_2, ..., K_n}$ of $X$ and open sets $\set{U_1, U_2, ..., U_n}$ of $Y$ by
+    
+    $$
+        K_i = \overline{f^{-1} \Ball \tuple*{fx_i, \frac{\eps}{3}}} \text{ and } U_i = \Ball\tuple*{fx_i, \frac{\eps}{2}}
+    $$
+
+    For any set $A$, $f \overline{A} \subseteq \overline{f A}$, then for each $i = 1, 2, .., n$
+    
+    $$
+        f K_i \subseteq \overline{\Ball \tuple*{fx_i, \frac{\eps}{3}}} \subset U_i
+    $$
+
+    Let $O = \bigcap_{i=1}^n S(K_i, U_i)$ be an open set in the compact-open topology, then $f \in O$. Moreover, let any $g \in O$, because $\set{K_1, K_2, ..., K_n}$ covers $X$, for any $x \in X$, there exists $K_i$ such that $x \in K_i$, then $fx, gx \in U_i$, hence
+
+    $$
+        d(fx, gx) \leq d(fx, fx_i) + d(fx_i, gx) \leq \eps
+    $$
+
+    That is, $O \subseteq \Ball(f, \eps)$
+
+    (compact-open topology $\subseteq$ metric topology)
+
+    Given a subbasic open set $S(K, U)$ in compact-open topology where $K$ is compact in $X$ and $U$ is open in $Y$, for every $f \in S(K, U)$, we will find an open ball $\Ball(f, \eps) \subseteq S(K, U)$. The open set $U$ contains the compact set $fK$, then there exists $\eps > 0$ such that $U$ contains every open ball centered in $fK$ with radius $\eps$. For every $g \in \Ball(f, \eps)$, for every $x \in X$, $d(fx, gx) < \eps$, that is, $gx \in \Ball(fx, \eps) \subseteq U$. Hence, $gK \subseteq gX \subseteq U$
+
+\end{longproof}
+
+\begin{lemma}[tube lemma]
+    Given a product space $X \times Y$, let $A \subseteq X$, $B \subseteq Y$ be compact subsets. If $A \times B$ is contained in an open set $O \subseteq X \times Y$, then there exist open sets $U_A \subseteq X$, $U_B \subseteq Y$ such that
+    $$
+        A \times B \subseteq U_A \times U_B \subseteq O
+    $$
+\end{lemma}
+
+\begin{theorem}
+    For any spaces $X, Y$, the compact-open topology on $\Top(X, Y )$ is splitting.
+\end{theorem}
+
+\begin{proof}
+    Let $Z$ be any space, suppose $g: X \times Z \to Y$ is continuous. We will prove that the adjoint $\hat{g}: Z \to \Top(X, Y)$ is continuous where $\Top(X, Y)$ is equipped with the compact-open topology. Consider a subbasic open set $S(K, U)$ in compact-open topology where $K$ is compact in $X$ and $U$ is open in $Y$. We will show that $\hat{g}^{-1} S(K, U) = \set{z \in Z: g(K, z) \subseteq U}$ is open in $Z$. For any $z \in \hat{g}^{-1} S(K, U)$, then we have $g(K, z) \subseteq U$. Since $g$ is continuous by the premise, $g^{-1} U = \set{(x, z) \in X \times Z: g(x, z) \subseteq U}$ is open in $X \times Z$ and contains $K \times \set{z}$. By tube lemma, there exists open sets $U_X \subseteq X$, $U_Z \subseteq Z$ such that
+    $$
+        K \times \set{z} \subseteq U_X \times U_Z \subseteq g^{-1} U
+    $$
+
+    Then, $z \in U_Z \subseteq \hat{g}^{-1} S(K, U)$.    
+\end{proof}
+
+\begin{remark}
+    Some notes about compact and locally compact
+    \begin{itemize}
+        \item closed subsets of a compact space are compact.
+        \item compact subsets of a Hausdorff space are closed.
+        \item a space $X$ is locally compact if for every $x \in X$, there exists an open set $U$ and a compact set $K$ such that $x \in U \subseteq K$
+        \item let $X$ be locally compact and Hausdorff, $S$ be an open set in $X$, and $x \in S$. then, there exists an open set $U$ such that $x \in U \subseteq \overline{U} \subseteq S$ and $\overline{U}$ is compact.
+    \end{itemize}
+\end{remark}
+
+\begin{proof}
+    (proof of the last statement)
+
+    Let $X$ be locally compact and Hausdorff, $S$ be an open set in $X$ and $x \in S$. As $X$ is locally compact and Hausdorff, let $x \in T \subseteq \overline{T} \subseteq X$ such that $T$ is open and $\overline{T}$ is compact. Let $U = S \cap T$
+    \begin{itemize}
+        \item If $U = \overline{U}$, $\overline{U}$ is closed subset of a compact set $\overline{T}$, hence compact. We have
+
+        $$
+            x \in U \subseteq \overline{U} \subseteq S
+        $$
+
+        \item If $U \subset \overline{U}$. For each $y \in \overline{U} \setminus U$, by Hausdorff, let $V_y, W_y$ be open sets separating $y$ and $x$. As $\overline{U} \setminus U$ is compact, let $\set{V_{y_i}}_{i=1}^n$ be the finite open cover of $\overline{U} \setminus U$. Let $A = \bigcap_{i=1}^n W_{y_i}$, then $y \in A$, $A$ open and does not intersect $\overline{U} \setminus U$. Let $B = \bigcap_{i=1}^n \overline{W_{y_i}}$, then $y \in A \subseteq B$, $B$ closed and does not intersect $\overline{U} \setminus U$.  We have, $B \cap \overline{U}$ is closed, contained in $U \subseteq \overline{T}$, then compact. Moreover, $W \cap \overline{U}$ is contained in $U \subseteq S$. We have, 
+        $$
+            x \in A \cap U \subseteq int(B) \cap U \subseteq B \cap U \subseteq B \cap \overline{U} \subseteq S
+        $$
+    \end{itemize}
+\end{proof}
+
+\begin{theorem}
+    If $X$ is locally compact and Hausdorff and $Y$ is any space, the compact-open topology on $\Top(X, Y)$ is conjoining.
+\end{theorem}
+
+\begin{proof}
+    Let $\Top(X, Y)$ be equipped with the compact-open topology, we will show that the evaluation map $\eval: X \times \Top(X, Y) \to Y$ is continuous. Let $(x, f) \in X \times \Top(X, Y)$ and $U \subseteq Y$ be an open set containing $\eval(x, f) = fx$. As $f$ is continuous, $f^{-1} U$ is an open set in $X$ containing $x$. As $X$ is locally compact and Hausdorff, there exists an open set $V \subseteq X$ such that $K := \overline{V}$ is compact and $x \in V \subseteq K \subseteq f^{-1} U$. Hence, $fx \in fK \subseteq U$. Then, $V \times S(K, U)$ is an open set in $X \times \Top(X, Y)$ with $(x, f) \in V \times S(K, U)$. Furthermore, for any $(x_1, f_1) \in V \times S(K, U)$, $f_1 x_1 \in U$, that is, $\eval(V \times S(K, U)) \subseteq U$
+\end{proof}
+
+\begin{lemma}
+    If $f: X \to Y$ is a quotient map and $Z$ is locally compact and Hausdorff then $f \times \id_Z: X \times Z \to Y \times Z$ is a quotient map.
+\end{lemma}
+
+\begin{proof}
+    Let $f: X \to Y$ be a quotient map, we will show that the product $Y \to Z$ has the quotient topology inherited from the map $f \times \id_Z$. Let $(Y \times Z)_q$ denote the topological space $Y \times Z$ equipped with the quotient topology inherited from the map of sets $f \times \id_Z: X \times Y \to Z \times Y$ and let $\pi: X \times Y \to (Y \times Z)_q$ be the corresponding quotient map in $\Top$. Let $Y \times Z$ denote the topological space $Y \times Z$ equipped with the product topology.
+
+    Since $\pi$ is a quotient map, by characterization of quotient map, the continuity of $f \times \id_Z$ implies the continuity of $\id: (Y \to Z)_q \to Y \times Z$.
+    \begin{center}
+\begin{tikzcd}
+X \times Z \arrow[d, "\pi"'] \arrow[rd, "f \times \id_Z"] &            \\
+(Y \times Z)_q \arrow[r, "\id"']                          & Y \times Z
+\end{tikzcd}
+    \end{center}
+
+    Now, we will show the continuity of $\id: Y \times Z \to (Y \times Z)_q$. As $Z$ is locally compact Hausdorff space, the compact-open topology on $\Top(Z, (Y \times Z)_q)$ is conjoining, we will show the continuity of the adjoint $\widehat{\id}: Y \to \Top(Z, (Y \times Z)_q)$.
+    \begin{center}
+\begin{tikzcd}
+X \arrow[d, "f"'] \arrow[rd, dashed] &                           \\
+Y \arrow[r, "\widehat{\id}"']        & {\Top(Z, (Y \times Z)_q)}
+\end{tikzcd}
+    \end{center}
+
+    The composition $\widehat{\id} f$ is continuous as it is the adjoint of $\pi: X \times Y \to (Y \times Z)_q$. Hence, by characterization of quotient map, $\hat{\id}$ is continuous
+\end{proof}
+
+\begin{theorem}
+    If $X_1 \to Y_1$ and $X_2 \to Y_2$ are quotient maps and $X_2, Y_1$ are locally compact and Hausdorff then $X_1 \times X_2 \to Y_1 \times Y_2$ is a quotient map
+\end{theorem}
+
+\begin{proof}
+    The two maps below are quotient maps
+    \begin{align*}
+        f_1 \times \id_{X_2}&: X_1 \times X_2 \to Y_1 \to X_2 \\
+        \id_{Y_1} \times f_2&: Y_1 \times X_2 \to Y_1 \times Y_2
+    \end{align*}
+    Hence, their composition.
+\end{proof}
+
+\subsection{The Theorems of Ascoli and Arzela}
+
+\note{I don't really understand this part}
+
+\begin{theorem}
+    If $X$ is any space and $Y$ is Hausdorff then a subset $A \subseteq \Top(X, Y)$ has compact closure in the product topology if and only if for each $x \in X$, the set $A_x = \set{fx \in Y: f \in A}$ has compact closure in $Y$
+\end{theorem}
+
+\begin{proof}
+    \note{todo}
+\end{proof}
+
+\begin{definition}[equicontinuous]
+    Let $X$ be a topological space and $(Y, d)$ be a metric space. A family $A \subseteq \Top(X, Y)$ is called equicontinuous at $x \in X$ if and only for every $\eps > 0$, there exists an open neighbourhood $U$ of $x$ so that for every $u \in U$ and for every $f \in A, d(fx, fu) < \eps$. If $\mathcal{F}$ is equicontinuous for every $x \in X$, the family $A$ is simply called equicontinuous.
+\end{definition}
+
+\begin{lemma}
+    Let $X$ be a topological space and $(Y, d)$ be a metric space. If $A \subseteq \Top(X, Y)$ is an equicontinuous family, then the subspace topology on $A$ of $\Top(X, Y)$ with the compact-open topology is the same as the subspace topology on $A$ of $\Top(X, Y)$ with the finite-open topology.
+\end{lemma}
+
+\begin{lemma}
+    If $A \subseteq \Top(X, Y)$ is equicontinuous then the closure of $A$ in $\Top$ using the finite-open topology is also equicontinuous.
+\end{lemma}
+
+\begin{theorem}[Ascoli theorem]
+    Let $X$ be a locally compact Hausdorff and let $(Y, d)$ be a metric space. A family $\mathcal{F} \subseteq \Top(X, Y)$ has compact closure if and only if $\mathcal{F}$ is equicontinuous and for every $x \in X$, the set $\mathcal{F}_x := \set{fx: f \in \mathcal{F}}$ has compact closure.
+\end{theorem}
+
+\begin{theorem}[Arzela theorem]
+    Let $X$ be compact, $(Y, d)$ be a metric space and $\set{f_n}$ be a sequence of functions in $\Top(X, Y)$. If $\set{f_n}$ is equicontinuous and if for each $x \in X$ the set $\set{f_n x}$ is bounded then $\set{f_n}$ has a subsequence that converges uniformly.
+\end{theorem}
+
+\subsection{Enrich the Product-Hom Adjunction in $\Top$}
+
+\begin{definition}
+    Denote the set $\Top(X, Y)$ with exponential topology by $Y^X$ provided it exists.
+\end{definition}
+
+\begin{theorem}
+    If $X, Z$ are locally compact Hausdorff then for any space $Y$, the isomorphism of sets $\Top(Z \times X, Y) \to \Top(Z, \Top(X, Y))$ is a homomorphism of spaces under compact-open topology.
+\end{theorem}
+
+\begin{longproof}
+    (the map $(Y^Z)^X \to Y^{Z \times X}$ is continuous)
+
+    As $X$ is locally compact Hausdorff, the compact-open topology on $\Top(X, Y^Z)$ is conjoining, then the evaluation map $X \times (Y^Z)^X \to Y^Z$ is continuous. As $Z$ is locally compact Hausdorff, the compact-open topology on $\Top(Z, Y)$ is conjoining, then the evaluation map $Z \times Y^Z \to Y$ is continuous. Hence, the composition is continuous
+    $$
+        (Z \times X) \times (Y^Z)^X \to Z \times Y^Z \to Y
+    $$
+
+    As the compact-open topology on $\Top(Z \times X, Y)$ is splitting, the adjunct $(Y^Z)^X \to \Top(Z \times X, Y)$ is continuous.
+
+    the map $Y^{Z \times X} \to (Y^Z)^X$ is continuous)
+
+    As $Z \times X$ is locally compact Hausdorff, then the compact-open topology on $\Top(Z \times X, Y)$ is conjoining, the evaluation map is continuous
+    $$
+        Z \times (X \times Y^{Z \times X}) \to Y
+    $$
+
+    As the compact-open topology on $\Top(Z, Y)$ is splitting, then the adjoint $X \times Y^{Z \times X} \to Y^Z$ is continuous. As the compact-open topology on $\Top(X, Y^Z)$ is splitting, then the adjoint $Y^{Z \times X} \to (Y^Z)^X$ is continuous.
+\end{longproof}
+
+
+
+\subsection{Compactly Generated Weakly Hausdorff Spaces}
+
+\note{todo}
+
+\end{document}

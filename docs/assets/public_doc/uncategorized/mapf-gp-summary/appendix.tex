@@ -1,0 +1,236 @@
+\chapter{Appendix}
+
+\section{Reduction}
+
+For an easier proof, consider these decision versions where triangle inequality satisfied.
+
+\begin{problem}[Full Problem Decision]
+Given a directed graph $G = (V, E)$ with corresponding cost function on each edge $c: E \to \mathbf{R_+}$ and a set of points of interest (POIs) $P \subseteq V$. Find $K$ tours that visit $V_P$ and the maximum tour cost does not exceed $L$ satisfy a set of predefined constraints.
+\label{prob:full_decision}
+\end{problem}
+
+\begin{problem}[Partial Problem Decision]
+Given a directed graph $G_P = (V_P, E_P)$ with corresponding cost function on each edge $c_P: E_P \to \mathbf{R_+}$. Find $K$ tours that visit $V_P$ and the maximum tour cost does not exceed $L$.
+\label{prob:partial_decision}
+\end{problem}
+
+The problem \ref{prob:full_decision}* (without any constraint) is equivalent to \ref{prob:partial_decision}.
+
+\begin{theorem}[Reduction] Problem \ref{prob:full_decision}* (without any constraint) and problem \ref{prob:partial_decision} can be reduced from each other.
+\label{theo:reduction}
+\end{theorem}
+
+\begin{reduction}[problem \ref{prob:full_decision}* $\to$ problem \ref{prob:partial_decision}] Given a directed graph $G = (V, E)$ and a set of points of interest $V_P \subseteq V$. Let $G_P = (V_P, E_P)$ be a directed graph such that each edge $(v_i, v_j) \in E_P$ is the shortest path in $G$.
+\label{reduc:reduction}
+\end{reduction}
+
+\section{Proof of Reduction}
+
+\subsection{problem \ref{prob:partial_decision} $\to$ problem \ref{prob:full_decision}*}
+$V_P \to V$: nodes of problem \ref{prob:partial_decision} become nodes of problem \ref{prob:full_decision}*\\
+$V_P \to V_P$: nodes of problem \ref{prob:partial_decision} become POIs of problem \ref{prob:full_decision}*\\
+$E_P \to E$: edges of problem \ref{prob:partial_decision} become edges of problem \ref{prob:full_decision}*\\
+$L \to L$: remains $L$\\
+
+If $S_1$ is the solution problem \ref{prob:full_decision}*, $S_1$ is also a valid assignment for problem \ref{prob:partial_decision} ($|S_1| \geq |S_2|$).
+
+The claim is correct due to this procedure: let any $B$ appears more than once in $S_1$, $A \to B \to C$ becomes $A \to C$.
+
+If $S_2$ is the solution of problem \ref{prob:partial_decision}, $S_2$ is also a valid assignment for problem \ref{prob:full_decision}* ($|S_2| \geq |S_1|$).
+
+Hence, problem \ref{prob:full_decision}* is at least as hard as problem \ref{prob:partial_decision}
+
+\subsection{problem \ref{prob:full_decision}* $\to$ problem \ref{prob:partial_decision}}
+
+$V_P \to V_P$: POIs of problem \ref{prob:full_decision}* become nodes of problem \ref{prob:partial_decision}\\
+*: shortest paths of problem \ref{prob:full_decision}* become edges of problem \ref{prob:partial_decision}\\
+$L \to L$: remains $L$\\
+
+If $S_2$ is the solution of problem \ref{prob:partial_decision}, $S_2$ is also a valid assignment for problem \ref{prob:full_decision}* ($|S_2| \geq |S_1|$)
+
+If $S_1$ is the solution of problem \ref{prob:full_decision}*, $S_1$is also a valid assignment for problem \ref{prob:partial_decision}
+
+The claim is correct by:
+
+If there is no node appears more than once, trivial.
+
+Otherwise, let any $B$ appears more than once in $S_1$, $|A \to B \to C| \geq |A \to C|$. If the inequality occurs, replacing $|A \to B \to C|$ by $|A \to C|$ yields a shorter solution that conflicts with $S_1$ is the solution of problem \ref{prob:full_decision}*. The equality occurs, we replace $|A \to B \to C|$ by $|A \to C|$ until there is no more node appear more than once.
+
+Hence, problem \ref{prob:partial_decision} is at least as hard as problem \ref{prob:full_decision}*
+
+\section{Proof of Theorem \ref{theo:f1_approximation}}
+
+Consider the problem of minimizing a function $f: D \to \mathbb{R}$
+
+In many scenarios, it is hard to find an optimal, or it is even also hard to compute the value of $f$.
+The method below was inspired from the work of Isaac Vandermeulen, Roderich Groß, Andreas Kolling~\cite{vandermeulen2019balanced}.
+
+For a domain $X \subseteq D$ of the minimization problem,  let $f_1: X \to \mathbb{R}$ be the proxy function such that
+\[
+    (1): f(x) = c(f_1(x)) + v(x) \text{ } \forall x \in x
+\]
+
+Where $c$ is a monotonically increasing function and $v: X \to \mathbb{R}$ is function on $X$.
+
+Let $x^*$ and $x^*_1$ be the optimal values for $f$ and $f_1$ in the domain $X \subseteq D$.
+Let $t_{\max} = \max_{x \in X} v(x)$ and $t_{\min} = \min_{x \in X} v(x)$ be the maximum value and minimum value of $v$ over the domain $X$.  \footnote{Here, we used the maximum value and minimum value for $v$ since in the original work \cite{vandermeulen2019balanced}, the authors did not make it clear why $x^*$ and $x^*_1$ are independent from $v$ and further more, their proof does not make a clear statement on the feasibility of the method to any problem but rather most problems.}
+
+Consider 3 inequalities:
+\begin{gather*}
+    (A): f(x^*_1) \leq f(x^*) + t_{\max} - t_{\min}\\
+    (B): f(x^*_1) \leq c(f_1(x^*_1)) + t_{\max}\\
+    (C): f(x^*) \geq c(f_1(x^*)) + t_{\min}\\
+\end{gather*}
+
+We have $f(x^*) \leq f(x^*_1)$ and $f_1(x^*_1) \leq f_1(x^*)$.
+Since $c$ is a monotonically increasing function, so that $c(f_1(x^*_1)) \leq c(f_1(x^*))$.
+
+
+By definition of $t_{\max}$, $(B)$ holds,
+\[
+    f(x^*_1) \leq c(f_1(x^*_1)) + t_{\max} \leq c(f_1(x^*)) + t_{\max}
+\]
+
+By definition of $t_{\min}$, $(C)$ holds,
+\[
+    f(x^*) \geq c(f_1(x^*)) + t_{\min} = (c(f_1(x^*)) + t_{\max}) - (t_{\max} - t_{\min})
+\]
+
+Hence,
+\[
+    (A): f(x^*_1) \leq f(x^*) + (t_{\max} - t_{\min})
+\]
+
+By choosing an appropriate proxy function $f_1$, we can approximate the solution of $f$.
+
+In the derivation, we have set $t_{\max}$ and $t_{\min}$ be the maximum and minimum value of $v$ in the domain of $X$.
+However, the bound can be even better if we have some methods to approximate the maximum and minimum value of $v$ in a subset of $X$ that contains both $x^*$ and $x^*_1$
+
+\section{Analysis on constant $\beta$}
+
+Let $\alpha = 0$, $\beta > 0$, consider a graph that all edges have unit length. Objective function is
+
+\[
+O_7 = \sum_{k=1}^{K} \frac{x^{(k)T} (A - \alpha D) x^{(k)}}{x^{(k)T} x^{(k)} + \beta |V|}
+=
+\sum_{k=1}^{K} \frac{\sum_{i \in V_k} \sum_{j \in V_k} A_{ij}}{|V_k| + \beta |V|}
+= 
+\sum_{k=1}^{K} \frac{|V_k|(|V_k| - 1)}{|V_k| + \beta |V|}
+\]
+
+Subject to the constraint
+
+\[
+\sum_{k=1}^{K} |V_k| = |V| \text{ and } |V_k| > 0 \text{ } \forall k
+\]
+
+Let $x_k = \frac{|V_k|}{|V|}$ be a real variable, we have the problem of minimizing
+
+\[
+f(x) = \sum_{k=1}^{K} \frac{x_k (x_k-1)}{x_k+\beta |V|}
+\]
+
+Subject to 
+
+\[
+c_0(x) = \sum_{k=1}^{K} x - 1 = 0 \text{ and } c_k(x) = -x_k \leq 0 \text{ } \forall k
+\]
+
+We have:
+
+\[
+\frac{\partial f}{\partial x_k} = |V|(1 - \frac{\beta (\beta + 1/|V|)}{(x_k + \beta)^2})
+\]
+
+
+$\frac{\partial f}{\partial x_k}$ has this property if $\beta > 0$:
+
+\[
+\text{(1): } \text{$\frac{\partial f}{\partial x_k}$ is a monotonically increasing function for all $x_k \geq 0$}
+\]
+
+Theorem \ref{theo:unique} deduces the unique minimum of $O_7$ at $|V_k| = |V|/K$
+
+\section{Theorem \ref{theo:unique}}
+
+Given the program:
+
+\[
+\textbf{Minimize: } f(x)
+\textbf{ subject to: } c_0(x) = \sum_{i=1}^{n} x_i = 1 \text{ and } c_i(x) = -x_i \leq 0 \text{ } \forall i
+\]
+
+
+Such that $\frac{\partial f}{\partial x_i}$ has this property:
+
+\[
+\text{(1): } \text{$\frac{\partial f}{\partial x_i}$ is a monotonically increasing function for all $x_i \geq 0$}
+\]
+
+\[
+\frac{\partial f}{\partial x_i}(x_1) < \frac{\partial f}{\partial x_i}(x_2) \text{ } \forall \text{ } 0 \leq x_1 < x_2
+\]
+
+\begin{theorem}[Unique solution]
+\label{theo:unique}
+Program has unique solution at $x_i = \frac{1}{n}$ $\forall i$
+\end{theorem}
+
+Lagrangian function is
+
+\[
+L(x, \mu, \lambda) = f(x) + \sum_{i=1}^{n} \mu_i c_i(x) + \lambda c_0(x)
+\]
+
+If $x*$ is a minimum, KKT conditions:
+
+\[
+\textbf{Stationary: } \frac{\partial L}{\partial x}(x*) = 0_n
+\]
+\[
+\textbf{Primal feasibility: } c_0(x*) = 0 \text{ and } c_i(x*) \leq 0 \text{ } \forall i
+\]
+\[
+\textbf{Dual feasibility: } \mu_i \geq 0 \text{ } \forall i
+\]
+\[
+\textbf{Complementary slackness: } \mu_i c_i(x*) = 0 \text{ } \forall i
+\]
+
+We have:
+
+\[
+\frac{\partial L}{\partial x_k} = \frac{\partial f}{\partial x_k} - \mu_k + \lambda
+\]
+
+Consider 2 cases:
+
+\textbf{Case 1:} all $x_i > 0$, due to complementary slackness, all $\mu_i = 0$. So that, all $\frac{\partial f}{\partial x_i}$ must be equal. (1) deduces that the unique solution satisfying KKT conditions is $x_i = \frac{1}{n}$
+
+\textbf{Case 2:} some $x_i = 0$, let $x_{i1} = 0$
+
+\[
+\frac{\partial f}{\partial x_i}(x_{i1}) - \mu_{i1} + \lambda = 0
+\]
+
+\[
+\lambda = \mu_{i1} - \frac{\partial f}{\partial x_i}(0)
+\]
+
+Since dual feasibility, $\mu_{i1} \geq 0$, So
+
+\[
+\lambda \geq - \frac{\partial f}{\partial x_i}(0)
+\]
+
+There is at least one $x_i > 0$, let $x_{i2} > 0$, due to complementary slackness, $\mu_{i2} = 0$, So
+
+\[
+\frac{\partial f}{\partial x_i}(x_{i2}) + \lambda = 0
+\]
+
+\[
+\frac{\partial f}{\partial x_i}(x_{i2}) = - \lambda \leq \frac{\partial f}{\partial x_i}(0)
+\]
+
+(1) deduces contradiction.

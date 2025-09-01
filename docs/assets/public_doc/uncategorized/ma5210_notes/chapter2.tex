@@ -1,0 +1,1129 @@
+\chapter{Vector Bundles}
+
+\section{Vector Bundles}
+
+\begin{definition}[Wells - vector bundle]
+	Let $E, X$ be Hausdorff spaces and $K$ be either $\R$ or $\C$. A continuous surjective map $\pi: E \to X$ is called a $K$-vector bundle of rank $r$ if the following satisfy
+	\begin{enumerate}
+		\item for every $p \in X$, the fiber $E_p = \pi^{-1} p$ is a vector space of dimension $r$ over $K$
+		
+		\item there is an open cover $\mathcal{U}$ of $X$ such that for every $U \in U$, there is a homeomorphism $h: \pi^{-1} U \to U \times K^r$ such that for every $p \in U$, $h(E_p) = \set{p} \times K^r$ and the composition $h^p$ is a $K$-vector space isomorphism where $\set{p} \times K^r \to K^r$ is the canonical isomorphism.
+		\begin{center}
+			\begin{tikzcd}
+				\pi^{-1} U \arrow[d, "\pi", two heads] \arrow[r, "h"] & U \times K^r \arrow[ld, dashed] & \pi^{-1} U \arrow[r, "h"]                                                 & U \times K^r                                          &     \\
+				U                                                     &                                 & E_q \arrow[r, "h"] \arrow[rr, "h^q"', dashed, bend right] \arrow[u, hook] & \set{q} \times K^r \arrow[r, "\cong"] \arrow[u, hook] & K^r
+			\end{tikzcd}
+		\end{center}
+		
+	\end{enumerate}
+	
+	The pair $(U, h)$ is called local trivialization. The space $E$ is called total space and the space $X$ is called base space. 
+\end{definition}
+
+\begin{definition}[transition function of vector bundle]
+	Let $\pi: E \to X$ be a $K$-vector bundle of rank $r$. Let $(U_\alpha, h_\alpha)$ and $(U_\beta, h_\beta)$ be two local trivializations such that $U_\alpha \cap U_\beta \neq \emptyset$, then the restrictions below are also homeomorphism
+	\begin{align*}
+		h_\alpha: \pi^{-1}(U_\alpha \cap U_\beta) &\to (U_\alpha \cap U_\beta) \times K^r \\
+		h_\beta: \pi^{-1}(U_\alpha \cap U_\beta) &\to (U_\alpha \cap U_\beta) \times K^r
+	\end{align*}
+	
+	then, we have an homeomorphism $h_\beta h^{-1}_\alpha: (U_\alpha \cap U_\beta) \times K^r \to (U_\alpha \cap U_\beta) \times K^r$. For each $q \in U_\alpha \cap U_\beta$, the composition $g_{\beta \alpha}(q) = h^q_\beta (h^q_\alpha)^{-1}$ is a $K$-vector space isomorphism
+	\begin{center}
+		\begin{tikzcd}
+			& (U_\alpha \cap U_\beta) \times K^r \arrow[rr, "h_\beta h_\alpha^{-1}", dashed, bend left] & \pi^{-1}(U_\alpha \cap U_\beta) \arrow[r, "h_\beta"] \arrow[l, "h_\alpha"'] & (U_\alpha \cap U_\beta) \times K^r                    &     \\
+			K^r \arrow[rrrr, "g_{\beta \alpha}(q)"', dashed, bend right] & \set{q} \times K^r \arrow[u, hook] \arrow[l, "\cong"']                                    & E_q \arrow[u, hook] \arrow[l, "h_\alpha"'] \arrow[r, "h_\beta"]             & \set{q} \times K^r \arrow[u, hook] \arrow[r, "\cong"] & K^r
+		\end{tikzcd}
+	\end{center}
+	
+	We can also write $g_{\alpha\beta}: U_\alpha \cap U_\beta \to GL(K^r)$. The function $g_{\alpha\beta}$ is called transition function of the $K$-vector bundle $\pi: E \to X$
+\end{definition}
+
+\begin{proposition}
+	Given $K$-vector bundle, on $U_\alpha \cap U_\beta \cap U_\gamma$, $g_{\alpha\beta} g_{\beta\gamma} g_{\gamma\alpha} = I$
+	\begin{proof}
+		For any $q \in U_\alpha \cap U_\beta \cap U_\gamma$,
+		$$
+		g_{\alpha\beta}(q) g_{\beta\gamma}(q) g_{\gamma\alpha}(q) = h_\alpha^q (h_\beta^{q})^{-1} h_\beta^q (h_\gamma^q)^{-1} h_\gamma^q (h_\alpha^q)^{-1} = I
+		$$
+	\end{proof}
+\end{proposition}
+
+\begin{proposition}
+	If $X$ is a manifold, then $\pi: E \to X$ makes $E$ being a manifold.
+	\begin{longproof}
+		\begin{enumerate}
+			\item Constructing new atlas on $X$
+			
+			For each $x \in X$, let $\phi_x: V_x \to V_x' \subseteq K^n$ be a chart containing $x$, let $h_x: \pi^{-1} W_x \to W_x \times K^r$ be a local trivialization containing $x$. Let $U_x = V_x \cap W_x$ be open in $V_x$, then the restriction $\phi_x: U_x \to f_x(U_x) \subseteq K^n$ is a chart compatible with the atlas of $X$, the restriction $h_x: \pi^{-1} U_x \to U_x \times K^r$ is a local trivialization of $\pi: E \to X$.
+			
+			\item Atlas on $X$ induces an atlas on $E$.
+			
+			$U_x$ is open and $\pi: E \to X$ is continuous, so $\set{\pi^{-1} U_x}_{x \in X}$ is an open cover of $E$. $U_x$ is open and $\phi_x: U_x \to U_x'$ is an open map, so $U_x'$ is open. Then, the composition 
+			$$
+			(\phi_x \times 1) h_x: \pi^{-1} U_x \to U_x \times K^r \to U_x' \times K^r \subseteq \R^{n+r}
+			$$
+			
+			is a homeomorphism. That makes an atlas on $E$
+			
+			\item Construct a countable basis on $X$ so that each basic open set is contained in one chart.
+			\begin{lemma}
+				If $X$ is a second-countable space with an open cover $\set{U_i}_{i \in I}$, then there exists a countable basis $\set{V_N}_{N \in \N}$ so that each $V_N$ is a subset of one of $U_i$.
+			\end{lemma}
+			
+			Let $O \subseteq X$ be any open set, then $O = \bigcup_{i \in I} O \cap U_i$. Each $O \cap U_i \subseteq U_i$ is open, so it can be written as a union of sets in $\set{V_N}_{N \in \N}$ where each set is contained in $U_i$. Therefore, $O$ can be written as a union of sets in $\set{V_N}_{N \in \N}$ where each set is contained in one of $U_i$
+			
+			\item $E$ is Hausdorff and second-countable
+			
+			$E$ is Hausdorff by the premise. Let $\set{W_M}_{M \in \N}$ be a countable basis of $K^r$, $\set{V_N}_{N \in \N}$ be a countable basis of $X$ so that each $V_N$ is contained in one of $U_x$. We will show that $\set{h^{-1}_{x(N)} (V_N \times W_M)}_{(N, M) \in \N \times \N}$ where $x: \N \to X$ is a map that assigns each $V_N$ to one $U_x$
+			
+			Let $O \subseteq E$ be an open set, write
+			$$
+			O = \bigcup_{x \in X} O \cap \pi^{-1} U_x
+			$$
+			
+			Each $O \cap \pi^{-1} U_x$ is homeomorphic to an open set in $U_x \times K^r$ and that open set can be written as a union of sets in $\set{V_N \times W_M}_{(N, M) \in \N \times \N}$. Therefore, $O \cap \pi^{-1} U_x$ can be written as a union of sets in $\set{h^{-1}_{x(N)} (V_N \times W_M)}_{(N, M) \in \N \times \N}$.
+			
+			\item If $X$ is a manifold, then $\pi: E \to X$ makes $E$ being a manifold
+			
+			We have proved that $E$ is Hausdorff, second-countable and constructed an atlas on $E$
+			
+			\item Some words on transition function
+			
+			Let $U_x \cap U_y \neq \emptyset$, then the manifold transition function $t_{xy}: (U_x' \cap U_y') \times K^r \to (U_x' \cap U_y') \times K^r$ is defined by
+			$$
+			t_{xy} = (\phi_y \times 1) h_y h_x^{-1} (\phi_x \times 1)^{-1}
+			$$
+			
+			\begin{center}
+				\begin{tikzcd}
+					U_x \times K^r                                                  & \pi^{-1} U_x \arrow[l, "h_x"]                                           &                                                                                             & \pi^{-1}U_y \arrow[r, "h_y"]                                            & U_y \times K^r              \\
+					(U_x' \cap U_y') \times K^r \arrow[rrrr, "t_{xy}"', bend right] & (U_x \cap U_y) \times K^r \arrow[lu, hook] \arrow[l, "\phi_x \times 1"] & \pi^{-1}(U_x \cap U_y) \arrow[l, "h_x"'] \arrow[r, "h_y"] \arrow[lu, hook] \arrow[ru, hook] & (U_x \cap U_y) \times K^r \arrow[ru, hook] \arrow[r, "\phi_y \times 1"] & (U_x' \cap U_y') \times K^r
+				\end{tikzcd}
+			\end{center}
+			
+		\end{enumerate}
+	\end{longproof}
+\end{proposition}
+
+
+\begin{definition}[$\Str$-bundle]
+	A $K$-vector bundle $\pi: E \to X$ of rank $r$ is called $\Str$-bundle if $E$ and $X$ are $\Str$-manifold, $\pi$ is an $\Str$-morphism, and local trivializations are $\Str$-isomorphisms. Note that, local trivializations are $\Str$-isomorphisms if and only if transition functions $g_{ji}: U_i \cap U_j \to GL(K^r)$ are $\Str$-morphisms.
+\end{definition}
+
+\begin{remark}[constructing vector bundle from transition function $g_{\alpha\beta}$]
+	Given a collection of open sets $\set{U_i}_{i \in I}$ on an $\Str$-manifold $X$ and for each $U_i \cap U_j \neq \emptyset$, there is an $\Str$-function
+	$$
+	g_{ij}: U_i \cap U_j \to GL(K^r)
+	$$
+	
+	so that $g_{ii} = I_r$ for all $i \in I$ and if $U_i \cap U_j \cap U_k \neq \emptyset$, then $g_{ij} g_{jk} g_{ki} = I_r$. Then, there exists a $\Str$-bundle $\pi: E \to X$ having transition function $g_{ij}$ on $U_i \cap U_j$. Moreover, if two vector bundle $\pi_E: E \to X$ and $\pi_F: F \to X$ have the same transition functions, then they are $\Str$-bundle isomorphic.
+	
+	\begin{longproof}
+		\begin{enumerate}
+			
+			\item Make $\set{U_i}_{i \in I}$ an atlas
+			
+			For each $x \in X$, let $\set{V_x, \phi_x}$ be a chart and $U_x \subseteq \set{U_i}_{i \in I}$ containing $x$. Then, let $W_x = V_x \cap U_x$.  We have an atlas $\set{W_x, \phi_x}_{x \in X}$ such that there is a transition function $g_{yx}: U_x \cap U_y \to GL(K^r)$. From now, we assume that there is a chart $\phi_i: U_i \to U_i' \subseteq K^n$ for each $i \in I$
+			
+			\item Construction of $E$
+			
+			
+			Let
+			$$
+			\Tilde{E} = \coprod_{i \in I} (U_i \times K^r)
+			$$
+			
+			be the disjoint union of product of $U_i$ and $K^r$. Define an equivalence on $\Tilde{E}$ as follows: for $(x, v) \in U_\beta \times K^r$ and $(y, w) \in U_\alpha \times K^r$, $(x, v) \sim (y, w)$ if and only $y = x$ and $w = g_{\beta \alpha} v$. Let $E = \Tilde{E} / \sim$ be the set of equivalence classes. Define the quotient topology on $E$ from the surjection $p: \Tilde{E} \twoheadrightarrow E$ that sends $(x, v) \mapsto [x, v]$. Define the surjection $\pi: E \to X$ by $\pi([x, v]) = x$.
+			\begin{center}
+				\begin{tikzcd}
+					\Tilde{E} \arrow[r, "p"', two heads] \arrow[rr, "\pi p", two heads, bend left] & E \arrow[r, "\pi"', two heads] & X
+				\end{tikzcd}
+			\end{center}
+			
+			We will show that, $\pi: E \to X$ is indeed a $\Str$-bundle.
+			
+			\item Construct an atlas and local trivializations on $E$
+			
+			As $\pi p: \Tilde{E} \to X$ is continuous, for any $i \in I$, $U_i$ is open in $X$ implies $p^{-1} \pi^{-1} U_i$ is open in $\Tilde{E}$, so $\pi^{-1} U_i$ is open in $E$. Therefore, $\set{\pi^{-1} U_i}_{i \in I}$ is a open cover of $E$. Furthermore,
+			$$
+			p^{-1} \pi^{-1} U_i = (U_i \times K^r) \amalg \tuple*{\coprod_{j \in I: j \neq i, U_j \cap U_i \neq \emptyset} ((U_j \cap U_i) \times K^r) }
+			$$
+			
+			Since each $g_{ii} = I$, every distinct pair $(x^{(1)}, v_i^{(1)}), (x^{(2)}, v_i^{(2)}) \in U_i \times K^r$ are not equivalent. Since $g_{ij}$ is invertible for each $j \neq i$, every point $(x, v_j) \in (U_j \cap U_i) \times K^r$ is equivalent to one point in $U_i \times K^r$, namely $(x, g_{ij}(x) v_j)$. Then, there exists a bijection $h_i: \pi^{-1} U_i \to U_i \times K^r$.
+			\begin{center}
+				\begin{tikzcd}
+					p^{-1} \pi^{-1} U_i \arrow[r, "p"', two heads] \arrow[rr, "h_i p", bend left] & \pi^{-1} U_i \arrow[r, "h_i"'] \arrow[d, "\pi", two heads] & U_i \times K^r \\
+					& U_i                                                        &               
+				\end{tikzcd}
+			\end{center}
+			
+			and the composition $h_i p: p^{-1} \pi^{-1} U_i \to U_i \times K^r$ is the projection into $U_i \times K^r$. Moreover, the bijection is homeomorphism. $h_i$ is continuous because for each open set in $U \times O \in U_i \times K^r$ where $O$ is open in $K^r$ and $U$ is open in $U_i$, then
+			$$
+			p^{-1} h_i^{-1} (U \times O) = \coprod_{j \in I: U_j \cap U_i \neq \emptyset} (U \times g_{ij} O)
+			$$
+			
+			is open. Therefore, $h_i^{-1} (U \times O)$ is open. $h_i$ is open map because for each open set $O \subseteq \pi^{-1} U_i$, $p^{-1} O$ is open so $h_i O = (h_i p) (p^{-1} O)$ is also open due to projection from coproduct topology.
+			
+			$h_i$ is a local trivializations and $(\phi_i \times 1) h_i: \pi^{-1} U_i \to U_i' \times K^r \subseteq K^n \times K^r$ is a chart.
+			\item $\pi^{-1} x$ is a vector space for all $x \in X$
+			
+			Using the same argument, we have the homeomorphism $\pi^{-1} x \cong \set{x} \times K^r$ for $x \in X$ and the map $h^x: \pi^{-1} x \to K^r$ is the canonical projection map. Take the vector space structure of $\pi^{-1}x$ to be induced from $K^r$, i.e. $h^x = I$
+			
+			\item $E$ is Hausdorff
+			
+			Let $[x_1, v_1], [x_2, v_2] \in E$
+			
+			If $[x_1, v_1], [x_2, v_2]$ belong to the same $\pi^{-1} U_i$, $\pi^{-1} U_i \cong U_i \times K^r$ is a Hausdorff space, there exists open sets separating $[x_1, v_1], [x_2, v_2]$. 
+			
+			If $x_1 \neq x_2$, let $x_1 \in A_1 \subseteq U_1, x_2 \in A_2 \subseteq U_2$,  so that $A_1 \cap A_2 = \emptyset$. This is possible since $X$ is Hausdorff. Then $p(A_1 \times K^r)$ and $p(A_2 \times K^r)$ are disjoint in $E$ since every $a \in A_1, b \in A_2$ are different.
+			
+			\item $\pi: X \to E$ is a vector bundle
+			
+			From the above, $\pi: X \to E$ is a vector bundle.
+			
+			\item $E$ is a manifold
+			
+			Because $\pi: X \to E$ is a vector bundle and $X$ is a manifold.
+			
+			\item $E$ is $\Str$-manifold
+			
+			From the above, the manifold transition function on $E$ is $t_{ij}: (U_i' \cap U_j') \times K^r \to (U_i' \cap U_j') \times K^r$
+			$$
+			t_{ij} = (\phi_j \times 1) h_j h_i^{-1} (\phi_i \times 1)^{-1}
+			$$
+			
+			So that
+			\begin{align*}
+				t_{ij}: (U_i' \cap U_j') \times K^r &\to (U_i' \cap U_j') \times K^r \\
+				(u, v) &\mapsto (\phi_j \phi_i^{-1} u, (g_{ji} \phi_i^{-1} u)(v))
+			\end{align*}
+			
+			We will prove that $(u, v) \mapsto (g_{ji} \phi_i^{-1} u)(v)$ is an $\Str$-function $(U_i' \cap U_j') \times K^r \to K^r$. Note that $g_{ji} \phi_i^{-1}: U_i' \cap U_j' \to GL(K^r)$ is an $\Str$-function as it is a composition of $\Str$-functions.
+			
+			\begin{lemma}
+				$g_{ji}: U_i \cap U_j \to GL(K^r)$ is an $\Str$-function if and only if $h_i, h_i$ are $\Str$-isomorphisms.
+				\begin{proof}
+					Let $f_{m n}: K^{r \times r} \to K$ be defined by taking the $(m, n)$ entry of a matrix in $K^{r \times r}$. Consider the function $f_{mn} g_{ji} \phi_i^{-1}: U_i' \cap U_j' \to K$. Since $GL(K^r)$ is an open set in $K^{r \times r}$, then $f_{m n}$ is an $\Str$-function.
+					\begin{enumerate}
+						\item $g_{ji}: U_i \cap U_j \to GL(K^r)$ is an $\Str$-function implies $h_i, h_i$ are $\Str$-isomorphisms.
+						
+						If $g_{ji}: U_i \cap U_j \to GL(K^r)$ is an $\Str$-function, then $f_{mn} g_{ji} \phi_i^{-1}: U_i' \cap U_j' \to K$ is an $\Str$-function for each $(m, n) \in [r] \times [r]$. Let $u \in U_i' \cap U_j' \subseteq K^n$, then view $GL(K^r)$ as a collection of matrices, each entry of the $r \times r$ matrix $g_{ji} \phi_i^{-1} u$ is a $\Str$-function of $u$. Let $v \in K^r$, then view $K^r$ as a collection of vectors, each entry of the $r$-dimensional vector $(g_{ji} \phi_i^{-1} u)(v)$ is an $\Str$-function of $(u, v)$. Then, $t_{ij}: (U_i' \cap U_j') \times K^r \to (U_i' \cap U_j') \times K^r$ is an $\Str$-function. Hence, $h_j h_i^{-1}$ is an $\Str$-morphism. From the other direction, $h_i h_j^{-1}$ is also an $\Str$-morphism. As the map is homeomorphism, $h_j h_i^{-1}$ and $h_i h_j^{-1}$ are $\Str$-isomorphism. One can show that each $h_i$ and $h_j$ are $\Str$-isomorphism.
+						
+						\item $g_{ji}: U_i \cap U_j \to GL(K^r)$ is an $\Str$-function is implied by $h_i, h_i$ are $\Str$-isomorphisms.
+						
+						\note{TODO}
+					\end{enumerate}
+					
+					
+				\end{proof}
+			\end{lemma}
+			
+			\item $\pi: E \to X$ is an $\Str$-morphism
+			
+			Let $f: U \to K$ be an $\Str$-function on an open set $U \subseteq X$. Suppose $U \subseteq U_i$, then $f \pi: \pi^{-1} U \to K$ is defined by
+			$$
+			f \pi (x, v) = f(x)
+			$$
+			
+			This is an $\Str$-function. Extend to the case where $U$ intersects with multiple $U_i \subseteq X$.
+			
+			\item $(\phi_i \times 1) h_i: \pi^{-1} U_i \to U_i' \times K^r \subseteq K^n \times K^r$ is $\Str$-isomorphism.
+			
+			Because it is a composition of two $\Str$-isomorphisms.
+			
+			\item $\pi_E: E \to X$, $\pi_F: F \to X$ are $\Str$-bundle isomorphic.
+			
+			Let $U \subseteq X$ be an open set. Suppose $U \subseteq U_i \cap U_j$, then we have the following commutative diagram
+			\begin{center}
+				\begin{tikzcd}
+					& \pi_E^{-1} U \arrow[ld, "h_i^E"'] \arrow[rd, "h_j^E"] \arrow[dd, dashed] &              \\
+					U \times K^r \arrow[rr, dashed] &                                                                          & U \times K^r \\
+					& \pi_F^{-1} U \arrow[lu, "h_i^F"] \arrow[ru, "h_j^F"']                    &             
+				\end{tikzcd}    
+			\end{center}
+			
+			where the diagonal map $U \times K^r \to U \times K^r$ is defined by
+			$$
+			(u, v) \mapsto (u, g_{ji}(u)(v))
+			$$
+			
+			Let $f: \pi_E^{-1} U \to \pi_F^{-1} U$ be defined by $f = (h_i^F)^{-1} h_i^E$. From the commutativity, we can extend $f: \pi_E^{-1} U \to \pi_F^{-1} U$ into $f: E \to F$. \note{TODO - check}
+			
+		\end{enumerate}
+	\end{longproof}
+\end{remark}
+
+\begin{definition}[trivial bundle]
+	Let $M$ be an $\Str$-manifold then $\pi: M \times K^r \to M$ defined by $\pi(m, x) = m$ is an $\Str$-bundle called trivial bundle.
+\end{definition}
+
+\section{Tangent Spaces}
+
+\begin{definition}[direct limit or injective limit (restricted context)]
+	Let $M$ be a topological space. For every open set $U \subseteq M$, let $\mathcal{F}(U)$ be some collection of $K$-valued functions on $U$. Let $p \in M$, define the equivalence as follows: two functions $f: U \to K$, $g: V \to K$ where $U, V$ are two open neighbourhoods $p$ are equivalent if there exists an open set $W \subseteq U \cap V$ being an open neighbourhood of $p$ such that the restrictions on $W$ agree. We write $f \sim g$. Form the disjoint union
+	$$
+	P = \coprod_{U \subseteq M: U \text{open}, p \in U} \mathcal{F}(U)
+	$$
+	The direct limit of $\mathcal{F}$ at $p$ is the equivalence class
+	$$
+	P / \sim = \coprod_{U \subseteq M: U \text{open}, p \in U} \mathcal{F}(U) / \sim
+	$$
+	and denoted by $\varinjlim_{U \subseteq M: U \text{open}, p \in U} \mathcal{F}(U)$
+	
+	\note{direct limit under the partial order of open set containment}
+\end{definition}
+
+\begin{remark}[filter and direct limit]
+	In a partial ordered set $(P, \leq)$, a filter $\mathcal{F}$ is a subset with the following properties
+	\begin{enumerate}
+		\item $\mathcal{F}$ is non-empty
+		\item if $A \in \mathcal{F}$ and $B \in \mathcal{F}$, then there exists $C \in \mathcal{F}$ such that $C \leq A$ and $C \leq B$
+		\item if $A \in \mathcal{F}$ and $D \in P$ such that $A \leq D$, then $D \in \mathcal{F}$
+	\end{enumerate}
+	Define $\leq$ in $P$ as follows: $f \leq g$ if and only if domain of $f$ is a subset of domain of $g$ and $f$ and $g$ agree on the domain of $f$. Then, given any $f$, the collection of functions that is equivalent to $f$ forms a filter. Moreover, it is a proper filter and an ultrafilter. Therefore, we can identify the collection of direct limits of $\mathcal{F}$ by the collection of corresponding ultrafilters.
+\end{remark}
+
+\begin{proposition}[algebra structure of direct limit]
+	If $\mathcal{F}(U)$ forms a $K$-algebra for every open set $U \subseteq M$ with scalar multiplication, vector addition, vector multiplication defined by 
+	\begin{align*}
+		(a f)(x) &= a f(x) \\
+		(f + g)(x) &= f(x) + g(x) \\
+		(f g)(x) &= f(x) g(x)
+	\end{align*}
+	
+	Then, $\varinjlim_{U \subseteq M: U \text{open}, p \in U} \mathcal{F}(U)$ forms a $K$-algebra with scalar multiplication, vector addition, vector multiplication defined by
+	\begin{align*}
+		a [f] &= [a f] \\
+		[f] + [g] &= [f + g] \\
+		[f] [g] &= [fg]
+	\end{align*}
+	
+	For any open set $U \subseteq M$, the map $phi: \mathcal{F}(U) \to \varinjlim_{U \subseteq M: U \text{open}, p \in U} \mathcal{F}(U)$ defined by
+	$$
+	f \mapsto [f]
+	$$
+	
+	is a $K$-algebra homomorphism
+\end{proposition}
+
+\begin{definition}[direct limit of smooth functions, germs of differentiable functions]
+	Let $M$ be a smooth manifold, $p \in M$, and $U$ be an open neighbourhood of $p$. Let $\E_M(U)$ be the space of smooth functions on $U$. Define
+	$$
+	\E_{M, p} = \varinjlim_{U \subseteq M: U \text{open}, p \in U} \E(U)
+	$$
+	The set $\E_{M, p}$ is an $\R$-algebra and is called the algebra of germs of differentiable functions. In other words, each germ in $\E_{M, p}$ is a collection of functions where each function defined on an open neighbourhood of $p$ and any two functions agree on some open neighbourhood of $p$
+\end{definition}
+
+\note{what is the dimension of $\E_{M, p}$}
+
+\begin{proposition}
+	Some propositions
+	\begin{enumerate}
+		\item Given an open neighbourhood $U_i$ of $p$, $\E_{M, p}$ gives an algebra homomorphism
+		$$
+		\phi_i: \E_M(U_i) \to \E_{M, p}
+		$$
+		
+		\item Let $f \in \E_{M, p}$ be a germ, then there exists an open neighbourhood $U_1$ of $p$ and a function $f_1 \in \E_M(U_1)$ such that $f = \phi(f_1)$
+		
+		\item Let $U_1, U_2 \subseteq U$ be two open neighbourhoods of $p$, we have two maps $\phi_1, \phi_2$. Let $f_1 \in \E_M(U_1)$ and $f_2 \in \E_M(U_2)$, suppose $f = \phi_1(f_1) = \phi_2(f_2)$, show that there exists $U_3 \subseteq U_1 \cap U_2$ being an open neighbourhood of $p$ such that $f_1 \vert_{U_3} = f_2 \vert_{U_3}$
+		
+		\item Let $f \in \E_{M, p}$. Define $f(p) = f_1(p) \in \R$ for some $f_1 \in \E_M(U_1)$ such that $\phi_1(f_1) = f$. Show that $f(p)$ is independent of the choice of $f_1$      
+	\end{enumerate}
+	\begin{proof}
+		$f(p)$ is independent of the choice of $f_1$: Let $f_2 \in \E_M(U_2)$ such that $\phi_2(f_2) = f$. As $\phi_1(f_1) = \phi_2(f_2)$, then $f_1$ and $f_2$ belong to the same equivalence class, then there exists $U \subseteq U_1 \cap U_2$ such that $p \in U$ and $f_1|_U = f_2|_U$, then $f_1(p) = f_2(p)$
+	\end{proof}
+\end{proposition}
+
+\begin{definition}[derivation, tangent space]
+	A derivation of the $\R$-algebra $\E_{M, p}$ is a linear map $D: \E_{M, p} \to \R$ satisfying Leibniz's law:
+	$$
+	D(fg) = D(f) g(p) + f(p) D(g)
+	$$
+	for all $f, g \in \E_{M, p}$. The tangent space at $p \in M$ is the vector space of all derivations of $\E_{M, p}$, denoted by $T_p(M)$ which is a subspace of the vector space of all linear maps $\E_{M, p} \to \R$
+\end{definition}
+
+\begin{proposition}[tangent space on $\R^n$]
+	Let $\R^n$ be a manifold equipped with the usual chart. Let $p \in \R^n$, the tangent space $T_p(\R^n)$ is a $\R$-vector space of dimension $n$ spanned by
+	$$
+	\set*{\frac{\partial}{\partial x_1}\bigg\vert_p, \frac{\partial}{\partial x_2}\bigg\vert_p, ..., \frac{\partial}{\partial x_n}\bigg\vert_p}
+	$$
+	\begin{proof}
+		$\frac{\partial}{\partial x_i} \bigg\vert_p: \E_{\R^n, p} \to \R$ defined by
+		$$
+		\frac{\partial}{\partial x_i}[f] \bigg\vert_p = \frac{\partial f}{\partial x_i} \bigg\vert_p
+		$$
+		
+		for all $[f] \in \E_{\R^n, p}$ is a derivation of $\E_{\R^n, p}$. We will show that 
+		$$
+		\set*{\frac{\partial}{\partial x_1}\bigg\vert_p, \frac{\partial}{\partial x_2}\bigg\vert_p, ..., \frac{\partial}{\partial x_n}\bigg\vert_p}
+		$$
+		
+		is exactly the basis of $T_p(\R^n)$. Let $D \in T_p(\R^n)$, let $1: \R^n \to \R$ be the constant function $1$, then
+		
+		$$
+		D(1) = D(1 \cdot 1) = D(1) 1 + 1 D(1) = 2 D(1)
+		$$
+		
+		Then, $D(1) = 0$. Let $f \in \E_{M, p}$, by Taylor theorem,
+		
+		$$
+		f(x) = f(p) + \sum_{i=1}^n \tuple*{\frac{\partial f}{\partial x_i} \bigg\vert_p}(x_i - p_i) + \sum_{i, j \in [n]^2} g_{ij}(x_i - p_i)(x_j - p_j)
+		$$
+		
+		where $x_i - p_i$ is the germ of a function that maps $a = (a_1, a_2, ..., a_n) \in \R^n$ to $a_i - p_i \in \R$ and $g_{ij}$ is a germ of smooth function $\R^n \to \R$. Apply $D$ on both side
+		$$
+		Df = f(p) D(1) + \sum_{i=1}^n \tuple*{\frac{\partial f}{\partial x_i} \bigg\vert_p} D(x_i - p_i) + \sum_{i, j \in [n]^2} D(g_{ij}(x_i - p_i)(x_j - p_j))
+		$$
+		
+		We have
+		$$
+		D(g_{ij}(x_i - p_i)(x_j - p_j)) = D(g_{ij}(x_i - p_i))(x_j - p_j)(p) + (g_{ij}(x_i - p_i))(p)D((x_j - p_j))
+		$$
+		
+		As $(x_j - p_j)(p) = 0$ and $(g_{ij}(x_i - p_i))(p) = 0$, then $D(g_{ij}(x_i - p_i)(x_j - p_j)) = 0$. Therefore,
+		$$
+		Df = \sum_{i=1}^n \tuple*{\frac{\partial f}{\partial x_i} \bigg\vert_p} D(x_i - p_i)
+		$$
+		
+		As $D(x_i - p_i)$ is a constant, $D$ is a linear combination of $\set*{\frac{\partial}{\partial x_1}\bigg\vert_p, \frac{\partial}{\partial x_2}\bigg\vert_p, ..., \frac{\partial}{\partial x_n}\bigg\vert_p}$
+		
+	\end{proof}
+\end{proposition}
+
+\begin{remark}[tangent space on $\C^n$]
+	\note{TODO}
+\end{remark}
+
+
+
+
+\begin{definition}[Jacobian]
+	Suppose $f: M \to N$ is a smooth map between smooth manifolds. Let $p \in M$ and $q = f(p) \in N$. Let $U \subseteq M$ be an open neighbourhood of $p$ and $V \subseteq N$ be an open neighbourhood of $q$ such that $f(U) \subseteq V$. Given any $\phi \in \E_N(V)$, by definition of manifold homomorphism, $f$ induces a smooth map $\phi f i \in \E_M(U)$
+	\begin{center}
+		\begin{tikzcd}
+			U \arrow[r, "i", hook] \arrow[rrd, "\phi f i\in \E_M(U)"', dashed] & f^{-1}(V) \arrow[r, "f", two heads] & V \arrow[d, "\phi \in \E_N(V)"] \\
+			&                                     & \R                                      
+		\end{tikzcd}
+	\end{center}
+	
+	That is, $f$ induces a linear map $f^*: \E_N(V) \to \E_M(U)$ between spaces of smooth functions, that induces a linear map $f^*_p: \E_{N, q} \to \E_{M, p}$ between spaces of germs of smooth functions
+	\begin{center}
+		\begin{tikzcd}
+			\E_N(V) \arrow[r] \arrow[d, two heads] & \E_M(U) \arrow[d, two heads] \\
+			{\E_{N, q}} \arrow[r, "f^*_p", dashed] & {\E_{M, p}}                 
+		\end{tikzcd}
+	\end{center}
+	
+	We define the linear map $df_p: T_p(M) \to T_q(N)$ by $D \mapsto D f^*_p$ for all $D \in T_p(M)$
+	\begin{center}
+		\begin{tikzcd}
+			{\E_{N, q}} \arrow[r, "f^*_p"] \arrow[rd, "df_p D = D f^*_p"', dashed] & {\E_{M, p}} \arrow[d, "D"] \\
+			& \R                                 
+		\end{tikzcd}
+	\end{center}
+	
+	The linear map $df_p$ is called Jacobian of $f$ at $p$
+\end{definition}
+
+\begin{proposition}
+	$df_p: T_p(M) \to T_p(N)$ is well-defined and linear.
+\end{proposition}
+
+\begin{proposition}[reconcile with Jacobian in calculus]
+	If $M = \R^m, N = \R^n$ equipped with the usual manifold structure, let $f: M \to N$ be a smooth map, let $p \in M$ and $q = f(p) \in N$. Then the Jacobian can be written as a matrix $J \in \R^{n \times m}$
+	$$
+	J = \begin{bmatrix}
+		\frac{\partial f_1}{\partial x_1} & ... & \frac{\partial f_1}{\partial x_m} \\
+		... & ... & ... \\
+		\frac{\partial f_n}{\partial x_1} & ... & \frac{\partial f_n}{\partial x_m} \\
+	\end{bmatrix}
+	$$
+	\begin{proof}
+		We will show that $df_p \tuple*{\frac{\partial}{\partial x_i}\bigg\vert_p}$ can be written as a linear combination of basis of $T_q(N) = \set*{\frac{\partial}{\partial y_1}\bigg\vert_{q}, ..., \frac{\partial}{ \partial y_n}\bigg\vert_{q}}$ with coefficients $\set*{\frac{\partial f_1}{\partial x_i}\bigg\vert_p, ..., \frac{\partial f_n}{\partial x_i}\bigg\vert_p}$, that is, for every $\phi \in \E_N(V)$, $[\phi] \in \E_{N, p}$,
+		$$
+		df_p \tuple*{\frac{\partial}{\partial x_i}\bigg\vert_p} [\phi] = \sum_{j=1}^n \frac{\partial \phi}{\partial y_j} \bigg\vert_{q} \frac{\partial f_j}{\partial x_i} \bigg\vert_{p}
+		$$
+		
+		We have
+		\begin{align*}
+			df_p \tuple*{\frac{\partial}{\partial x_i}\bigg\vert_p} [\phi]
+			&= \frac{\partial}{\partial x_i}\bigg\vert_p f^*_p [\phi]  &\text{(definition of Jacobian)} \\
+			&= \frac{\partial}{\partial x_i}\bigg\vert_p [f^* \phi] &\text{(definition of $f^*_p: \E_{N, q} \to \E_{M, p}$)} \\
+			&= \frac{\partial}{\partial x_i}\bigg\vert_p [\phi f i] &\text{(definition of $f^*: \E_N(V) \to \E_M(U)$)} \\
+			&= \frac{\partial(\phi f i)}{\partial x_i}\bigg\vert_p &\text{(definition of $\frac{\partial}{\partial x_i}\bigg\vert_p$)}
+		\end{align*}
+		
+		Note that $fi = f|_U: U \subseteq \R^m \to \R^n$ and $\phi: V \subseteq \R^n \to \R$, by chain rule
+		\begin{align*}
+			df_p \tuple*{\frac{\partial}{\partial x_i}\bigg\vert_p} [\phi]
+			&= \frac{\partial(\phi f i)}{\partial x_i}\bigg\vert_p \\
+			&= \sum_{j=1}^n \frac{\partial \phi}{\partial y_j} \bigg\vert_{y = fi(p) = q} \frac{\partial fi}{\partial x_i} \bigg\vert_{x = p} \\
+			&= \sum_{j=1}^n \frac{\partial \phi}{\partial y_j} \bigg\vert_{q} \frac{\partial f}{\partial x_i} \bigg\vert_{p}
+		\end{align*}
+		
+	\end{proof}
+\end{proposition}
+
+\begin{remark}[basis of a tangent space on real smooth $M$]
+	Given a real smooth manifold $M$, let $\phi^{-1}: U' \to U$ where $U' \subseteq \R^n$ be a chart, the $\phi^{-1}$ is a smooth isomorphism between two manifolds. Let $\set*{\frac{\partial}{\partial x_1}\bigg\vert_{\phi(p)}, ..., \frac{\partial}{\partial x_n}\bigg\vert_{\phi(p)}}$ be a basis of $T_{\phi(p)}(\R^n)$ and $d {\phi^{-1}}_{\phi(p)}: T_{\phi(p)}(\R^n) \to T_p(M)$, then
+	$$
+	\set{D_1, D_2, ..., D_n} = \set*{d {\phi^{-1}}_{\phi(p)}\frac{\partial}{\partial x_1}\bigg\vert_{\phi(p)}, ..., d {\phi^{-1}}_{\phi(p)}\frac{\partial}{\partial x_n}\bigg\vert_{\phi(p)}}
+	$$
+	
+	is a basis of $T_p(M)$. 
+\end{remark}
+
+\begin{proposition}[chain rule]
+	Let $f: M \to N$, $g: N \to P$ be smooth maps between manifolds. Then
+	$$
+	d(gf)_p = dg_{f(p)} df_p
+	$$
+	\begin{proof}
+		\note{TODO}
+	\end{proof}
+\end{proposition}
+
+\section{Tangent Bundles}
+
+\begin{proposition}[dimension of tangent space]
+	Let $M$ be a smooth manifold of dimension $n$. Let $h: U \to U' \subseteq \R^n$ be a chart with $p \in U$. Then, $h$ is a smooth map between smooth manifolds where $\R^n$ is equipped with usual atlas, so there exists a linear map
+	$$
+	dh_p: T_p(M) \to T_{h(p)}(\R^n)
+	$$
+	Furthermore, as $h$ is a homeomorphism, all maps in the construction of $dh_p$ are isomorphisms, so $dh_p$ is an isomorphism, therefore
+	$$
+	\dim T_p(M) = \dim T_{h(p)}(\R^n) = n
+	$$
+\end{proposition}
+
+\begin{definition}[tangent bundle of an open set in $\R^n$ as a smooth manifold]
+	Let $M \subseteq \R^n$ be an open set equipped with the usual atlas. Let
+	$$
+	T(M) = \coprod_{p \in M} T_p(M)    
+	$$
+	Note that, $T_p(M) = \Span \set{\frac{\partial}{\partial x_1}\vert_p, ..., \frac{\partial}{\partial x_n}\vert_p}$. We equip a topology on $T(M)$ as follows: define the set function as follows:
+	\begin{align*}
+		\psi: T(M) &\to M \times \R^n \\
+		\tuple*{p, \tuple*{a_1 \frac{\partial}{\partial x_1}\bigg\vert_p, ..., a_1 \frac{\partial}{\partial x_n}\bigg\vert_p}} &\mapsto (p, (a_1, ..., a_n))
+	\end{align*}
+	where $M \times \R^n$ is equipped with the product topology. Then, equip $T(M)$ with a topology such that $U \subseteq T(M)$ is open if and only if $\psi(U) \subseteq M \times \R^n$ is open. The canonical projection $\pi: T(M) \to M$ is a vector bundle and called tangent bundle of $M$
+	
+	\note{note, in this case, $\psi$ is a set isomorphism so it is a homeomorphism, i.e. $T(M) \cong M \times \R^n$, the tangent bundle is a trivial bundle}
+\end{definition}
+
+\begin{definition}[tangent bundle of a smooth manifold]
+	Let $M$ be a smooth manifold. Let
+	$$
+	T(M) = \coprod_{p \in M} T_p(M)
+	$$
+	
+	and $\pi: T(M) \to M$ be the canonical projection. Let $\set{U_\alpha, \phi_\alpha}$ be an atlas of $M$ then let
+	$$
+	T(U_\alpha) = \pi^{-1} U_\alpha = \coprod_{p \in U_\alpha} T_p(M) \subseteq T(M)
+	$$
+	
+	The smooth homeomorphism $\phi_\alpha: U_\alpha \to U'_\alpha \subseteq K^n$ is a smooth map between manifolds induces an invertible linear map for any $p \in U_\alpha$, namely Jacobian
+	$$
+	d\phi_{\alpha, p}: T_p(M) \to T_{\phi_\alpha(p)} (\R^n)
+	$$
+	
+	That induces an isomorphism in sets
+	$$
+	h_\alpha: \tuple*{T(U_\alpha) = \coprod_{p \in U_\alpha} T_p(M)} \to \tuple*{T(U'_\alpha) = \coprod_{\phi_\alpha(p) \in U'_\alpha} T_{\phi_\alpha(p)} (\R^n)}
+	$$
+	
+	As $U'_\alpha \subseteq \R^n$, equip $T(U'_\alpha)$ with the topology of the tangent bundle $T(U'_\alpha) \to U'_\alpha$ so that $T(U'_\alpha) \cong U'_\alpha \times \R^n \cong U_\alpha \times \R^n$. Equip the a topology on $T(U_\alpha)$ such that $U \subseteq T(U_\alpha)$ is open if and only $h_\alpha(U) \subseteq T(U_\alpha')$ is open. We have the homeomorphism
+	$$
+	h_\alpha: T(U_\alpha) \to U_\alpha \times \R^n
+	$$
+	
+	Equip the topology on $T(M)$ induced from topologies on $T(U_\alpha)$ for all $\alpha$. Then, $T(M)$ is smooth manifold of dimension $2n$ with atlas $\set{(U_\alpha, h_\alpha)}$. The canonical projection $\pi: T(M) \to M$ is a vector bundle and is called tangent bundle.
+\end{definition}
+
+
+
+\begin{proposition}
+	$\pi: T(M) \to M$ is a smooth vector bundle.
+	\begin{proof}
+		\begin{enumerate}
+			\item $\pi: T(M) \to M$ is a bundle projection
+			
+			For each $U_\alpha$, there is a homeomorphism $h_\alpha: T(U_\alpha) \to U_\alpha \times \R^n$ and the composition $\pi h_\alpha^{-1}: U_\alpha \times \R^n \to U_\alpha$ is
+			$$
+			\pi h_\alpha^{-1}(x, v) = x
+			$$
+			
+			which is the canonical projection. Therefore, $\pi: T(M) \to M$ is a bundle projection
+			
+			\item $\pi: T(M) \to M$ is a vector bundle
+			
+			For each $x \in M$, $\pi^{-1} x = T_x(M)$ which is a real vector space of dimension $n$. By definition, the restriction of $h_\alpha: T(U_\alpha) \to U_\alpha \times \R^n$ on $\set{x}$ is the Jacobian $h_\alpha \vert_{T_x(M)} = d_\phi: T_x(M) \to T_{\phi_\alpha(x)}(\R^n)$ which is a invertible linear map. Therefore, any transition is a composition of two invertible linear map, hence a linear map, i.e. $g_{ji}: U_i \cap U_j \to GL(K^r)$
+			
+			\item vector bundle transition function is smooth
+			
+			The transition map $g_{ji}: U_i \cap U_j \to GL(K^r)$ is defined by
+			$$
+			p \mapsto (d\phi_{\beta, p})^{-1} d\phi_{\alpha, p} 
+			$$
+			
+			By chain rule, $(d\phi_{\beta, p})^{-1} d\phi_{\alpha, p} = d(\phi_\alpha \phi_\beta^{-1})_{\phi_\beta(p)}$ which is a map $T_{\phi_\beta(p)}(\R^n) \to T_{\phi_\alpha(p)}(\R^n)$, when viewed as a $n \times n$ matrix is a smooth function of $p$. $GL(K^r)$ is an open set in $\R^{n \times n}$, then $g_{ji}: U_i \cap U_j \to GL(K^r)$ is a smooth map.
+			
+			\item $T(M)$ is a smooth manifold.
+			
+			As proved above, $g_{ji}$ being smooth implies the manifold transition function on $T(M)$ being smooth.
+			
+			\item $\pi: T(M) \to M$ is a smooth map
+			
+			As proved above.
+			
+			\item $T(M)$ is a smooth vector bundle.
+			
+			All conditions have been checked
+			
+		\end{enumerate}
+	\end{proof}
+\end{proposition}
+
+\begin{definition}[tangent bundle of a holomorphic manifold]
+	\note{TODO}
+\end{definition}
+
+\section{Universal Bundles}
+
+\begin{definition}[canonical vector bundle on Grassmannian]
+	Let $G_{r,n}(K)$ be a Grassmannian
+	$$
+	G_{r,n}(K) = \set{V \text{ subspace of } K^n: \dim_{V} = r}
+	$$
+	
+	Let
+	$$
+	U_{r,n}(K) = \coprod_{V \in G_{r,n}(K)} V
+	$$
+	
+	be the disjoint union of all $r$-dimensional $K$-linear subspaces $V$ in $K^n$. There is a canonical projection
+	$$
+	\pi: U_{r,n}(K) \to  G_{r,n}(K)
+	$$
+	
+	given by $pi(v) = V$ if $v \in V \subseteq K^n$. For $p \in G_{r,n}$, $\pi^{-1} p$ is a subspace of dimension $r$ in $K^n$. Furthermore, to equip a topology on $U_{r, n}$, note that each $V$ is a subset of $K^n$, consider the inclusion map
+	$$
+	i: U_{r,n}(K) \hookrightarrow G_{r,n}(K) \times K^n
+	$$
+	
+	where $G \times K^n$ is equipped with the product topology. Let $U_{r,n}(K)$ inherit the subspace topology. That makes $\pi: U_{r,n}(K) \to  G_{r,n}(K)$ a vector bundle which is called canonical vector bundle (or tautological bundle) over $G_{r,n}(K)$. Moreover it is an algebraic vector bundle (both $\R$ and $\C$)
+	
+	\note{two youtube videos - every vector bundle on compact Hausdorff space is a pullback of a canonical bundle over $G_{r,n}$} \url{https://www.youtube.com/watch?v=_nhVEKRi640} \url{https://www.youtube.com/watch?v=Z9RQhf22Oc4}
+\end{definition}
+
+\begin{remark}[case $r=1$, $K=\R$]
+	The vector bundle is 
+	$$
+	\pi: U_{1,n}(\R) \to G_{1,n}(\R) = P^{n-1}(\R)
+	$$
+	
+	For each $\alpha \in \set{0, 1, ..., n-1}$, let
+	$$
+	U_\alpha = \set{V = [x_0, x_1, ..., x_{n-1}] \subseteq P^{n-1}(\R): x_\alpha \neq 0}
+	$$
+	
+	The preimage under $\pi: U_{1,n}(\R) \to G_{1,n}(\R)$ is
+	$$
+	\pi^{-1} U_\alpha = \set{(v, V): V \in U_\alpha, v \in V}
+	$$
+	
+	Define the local trivializations $h_\alpha: \pi^{-1} U_\alpha \to U_\alpha \times \R$ as follows: each $v \in V \subseteq \R^n$ can be written uniquely as 
+	$$
+	v = t \frac{1}{x_\alpha} (x_0, x_1, ..., x_\alpha, ..., x_{n-1}) \in \R^n
+	$$
+	
+	for $t \in \R$ where $V = [x_0, x_1, ..., x_\alpha, ..., x_{n-1}]$, then the map $v \mapsto t$ is well-defined. Define
+	$$
+	h_\alpha(v, V) = (V, t)
+	$$
+	
+	\begin{enumerate}
+		\item $\pi: U_{1,n}(\R) \to G_{1,n}(\R)$ is continuous
+		
+		Any open set $O \subseteq G_{1,n}(\R)$ have preimage under $\pi$ being
+		$$
+		\pi^{-1} O = \coprod_{V \in O} V
+		$$
+		
+		On the other hand, $O \times \R$ is open in $G_{1,n}(\R)$, then 
+		$$
+		\coprod_{V \in O} V = i^{-1}(O \times \R)
+		$$
+		
+		is open. Hence, $\pi$ is continuous
+		
+		\item $\pi: U_{1,n}(\R) \to G_{1,n}(\R)$ is surjective
+		
+		obvious
+		
+		\item $U_{1,n}(\R)$ is Hausdorff
+		
+		obvious
+		
+		\item $h_\alpha: \pi^{-1} U_\alpha \to U_\alpha \times \R$ is a homeomorphism.
+		
+		\note{TODO - somehow this was not discussed in Wells book - well, prof was right, don't take Wells too seriously}
+		
+		\item $\pi: U_{1,n}(\R) \to G_{1,n}(\R)$ is a bundle projection
+		
+		From above
+		
+		\item Transition function of vector bundle $g_{\beta \alpha}: U_\alpha \cap U_\beta \to GL(\R)$
+		
+		$$
+		g_{\beta \alpha}([x_0, ..., x_\alpha, ..., x_\beta, ..., x_{n-1}]) = \frac{x_\beta}{x_\alpha}
+		$$
+		
+		for every $[x_0, ..., x_\alpha, ..., x_\beta, ..., x_{n-1}] \in U_\alpha \cap U_\beta$, that is, $x_\alpha \neq 0, x_\beta \neq 0$. The transition is algebraic, that is smooth, then the vector bundle is smooth. \note{TODO - verify this by uniqueness of VB construction -  skip this for now}
+		
+	\end{enumerate}
+	
+	
+\end{remark}
+
+\section{Homomorphisms and Direct Sums}
+
+\begin{definition}[restriction of vector bundle]
+	Let $\pi: E \to X$ be an $\Str$-bundle and $U$ is an open set of $X$, then the restriction of $E$ to $U$, denoted by $E\vert_U = \pi^{-1}(U)$ induces an $\Str$-bundle $\pi \vert_{E\vert_U}: E\vert_U \to U$.
+	\begin{center}
+		\begin{tikzcd}
+			E\vert_U = \pi^{-1} U \arrow[d, "\pi"'] \arrow[r, hook] & E \arrow[d, "\pi", two heads] \\
+			U \arrow[r, hook]                                       & X                            
+		\end{tikzcd}
+	\end{center}
+\end{definition}
+
+\begin{definition}[homomorphism of $\Str$-bundles]
+	Let $\pi_E: E \to X$ and $\pi_F: F \to X$ be $\Str$-bundles over $X$. A homomorphism of $\Str$-bundles $f: E \to F$ is an $\Str$-morphism between total spaces which preserves fibers, i.e. $f$ commutes with $\pi_E, \pi_F$ and $K$-linear on each fiber.
+	\begin{center}
+		\begin{tikzcd}
+			&                                  & K^r \arrow[r, "linear"]                                              & K^r                                                   \\
+			E \arrow[d, "\pi_E"', two heads] \arrow[r, "f"] & F \arrow[ld, "\pi_F", two heads] & E_p \arrow[r, "f"] \arrow[d, "\pi_E"', two heads] \arrow[u, "\cong"] & F_p \arrow[ld, "\pi_F", two heads] \arrow[u, "\cong"] \\
+			X                                               &                                  & \set{p}                                                              &                                                      
+		\end{tikzcd}
+	\end{center}
+\end{definition}
+
+\begin{definition}[isomorphism of $\Str$-bundles]
+	A $\Str$-bundle homomorphism $f: E \to F$ is an $\Str$-bundle isomorphism if it is a $\Str$-isomorphism on total spaces and invertible $K$-linear map on each fiber. Two $\Str$-bundles are equivalent if there exists an $\Str$-bundle isomorphism between them.
+\end{definition}
+
+\begin{proposition}
+	Let $X$ be an $\Str$-manifold, $\Str$-bundle isomorphism defines an equivalence relation on the $\Str$-bundles over $X$
+	\begin{proof}
+		\note{trivial}
+	\end{proof}
+\end{proposition}
+
+\begin{definition}[direct sum of vector bundles]
+	Let $\pi_E: E \to X$ and $\pi_F: F \to X$ be two vector bundles, define
+	$$
+	E \oplus F = \coprod_{p \in X} (E_p \oplus F_p)
+	$$
+	
+	and the projection $\pi: E \oplus F \to X$ is given by $\pi(v) = p$ if $v \in E_p \oplus F_p$. For each $p \in X$, we can find a neighbourhood $U$ of $p$ and local trivializations
+	$$
+	h_E: E\vert_U \to U \times K^n \text{ and } h_F: F\vert_U \to U \times K^m
+	$$
+	
+	Define $h_{E \oplus F}: (E \oplus F) \vert_U \to U \times (K^n \oplus K^m)$ by
+	$$
+	h_{E \oplus F}(u \oplus v) = (p, h_E(u) \oplus h_F(v))
+	$$
+	
+	for $u \in E_p, v \in F_p$. For any $p \in U_\alpha \cap U_\beta$ where $U_\alpha, U_\beta$ have local trivializations, the direct product transition function is
+	\begin{align*}
+		g_{\beta \alpha}^{E \oplus F}: U_\alpha \cap U_\beta &\to GL(K^n \times K^m) \\
+		p &\mapsto g_{\beta \alpha}^{E}(p) \oplus g_{\beta \alpha}^{F}(p) \\
+		p &\mapsto \tuple*{u \oplus v \mapsto g_{\beta \alpha}^E(p)(u) \oplus g_{\beta \alpha}^F(p)(v)}
+	\end{align*}
+	
+	where $g_{\beta \alpha}^{E}$ and $g_{\beta \alpha}^{F}$ are transition functions of $\pi_E$ and $\pi_F$
+\end{definition}
+
+\begin{proposition}
+	Suppose that $X$ is an $\Str$-manifold and $E, F$ are $\Str$-bundles over $X$, then $E \oplus F$ is an $\Str$-bundle over $X$.
+	
+	\begin{proof}
+		The existence of transition functions implies the construction is a vector bundle. We just need to show that the transition functions are $\Str$-function. We have
+		$$
+		g_{\beta \alpha}^{E \oplus F}(p) = \begin{bmatrix}
+			g_{\beta \alpha}^E(p) & 0 \\
+			0 & g_{\beta \alpha}^F(p) \\
+		\end{bmatrix}
+		$$
+		
+		is a matrix of $\Str$-functions. Hence, $g_{\beta \alpha}$ is an $\Str$-function.
+	\end{proof}
+\end{proposition}
+
+
+
+\begin{proposition}
+	Let $E \to X$, $F \to X$ be vector bundles
+	\begin{enumerate}
+		\item $E \otimes F$, is also a vector bundle, and it is also $\Str$-bundle if $E, F$ are.
+		$$
+		E \otimes F = \coprod_{p \in X} (E_p \otimes F_p)
+		$$
+		\begin{align*}
+			h_{E \otimes F}: (E \otimes F)\vert_U &\to U \times (K^n \otimes K^m) \\
+			u \otimes v &\mapsto (p, h_E(u) \otimes h_F(v)) &\text{(for $u \in E_p, v \in F_p$)}\\
+			g_{\beta \alpha}^{E \otimes F}: U_\alpha \cap U_\beta &\to GL(K^n \otimes K^m) \\
+			p &\mapsto \tuple*{u \otimes v \mapsto g_{\beta \alpha}^E(p)(u) \otimes g_{\beta \alpha}^F(p)(v)} &\text{(for $u \in E_p, v \in F_p$)}
+		\end{align*}
+		
+		\item $\wedge^n E$, is also a vector bundle, and it is also $\Str$-bundle if $E, F$ are.
+		$$
+		\wedge^n E = \coprod_{p \in X} \wedge^n E_p
+		$$
+		\begin{align*}
+			h_{\wedge^n E}: \tuple*{\wedge^n E}\bigg\vert_U &\to U \times \wedge^n K^n \\
+			\wedge^n_{i=1} u_i &\mapsto \tuple*{p, \wedge^n_{i=1} h_E(u_i)} &\text{(for $\wedge^n_{i=1} u_i \in \wedge^n E_p$)}\\
+			g_{\beta \alpha}^{\wedge^n E}: U_\alpha \cap U_\beta &\to GL\tuple*{\wedge^n K^r} \\
+			p &\mapsto \tuple*{\wedge^n_{i=1} u_i \mapsto \wedge^n_{i=1} g_{\beta \alpha}^E(p)(u_i)} &\text{(for $\wedge^n_{i=1} u_i \in \wedge^n E_p$)}
+		\end{align*}
+		
+		\item $\Hom(E, F)$ is also a vector bundle, and it is also $\Str$-bundle if $E, F$ are.
+		$$
+		\Hom(E, F) = \coprod_{p \in X} \Hom(E_p, F_p)
+		$$
+		\begin{align*}
+			h_{\Hom(E, F)}: \Hom(E, F)\vert_U &\to U \times \Hom(K^n, K^m) \\
+			l &\mapsto (p, h_F l h_E^{-1}) &\text{(for $l \in \Hom(E_p, F_p)$)}\\
+			g_{\beta \alpha}^{E \otimes F}: U_\alpha \cap U_\beta &\to GL \Hom(K^n, K^m)\\
+			p &\mapsto \tuple*{l \mapsto g_{\beta \alpha}^F(p) l g_{\beta \alpha}^E(p)} &\text{(for $l \in \Hom(E_p, F_p)$)}
+		\end{align*}
+	\end{enumerate}
+	\begin{proof}
+		\note{TODO}
+	\end{proof}
+\end{proposition}
+
+\section{Exact Sequences}
+
+\begin{definition}[subbundle]
+	Let $\pi: E \to X$ be an $\Str$-bundle of rank $r$. An $\Str$-submanifold $F \subseteq E$ is called an $\Str$-subbundle of $E$ if
+	\begin{enumerate}
+		\item $F \cap E_x$ is a subspace of $E_x$ for all $x \in X$
+		\item $\pi\vert_F: F \to X$ has the structure of an $\Str$-bundle induced by the $\Str$-bundle structure of $E$. That is, given $U \subseteq X$, and $h: E\vert_U \to U \times K^r$ is a local trivialization, then the diagram below commutes
+		\begin{center}
+			\begin{tikzcd}
+				E\vert_U \arrow[r, "h"]                  & U \times K^r                            \\
+				F\vert_U \arrow[u, hook] \arrow[r, "h"'] & U \times K^s \arrow[u, "\id \times i"']
+			\end{tikzcd}
+		\end{center}
+		
+		where $i: K^s \to K^r$ is the canonical inclusion
+	\end{enumerate}
+\end{definition}
+
+\begin{definition}[kernel and image of vector bundle homomorphism]
+	Let $f: E \to F$ is a vector bundle homomorphism of $K$-vector bundles over a space $X$. Define
+	$$
+	\ker f = \coprod_{x \in X} \ker f_x \text{ and } \im f = \coprod_{x \in X} \im f_x
+	$$
+	
+	where $f_x = f\vert_{E_x}: E_x \to F_x$. Note that, $\ker f$ and $\im f$ might not be vector bundle.
+\end{definition}
+
+\begin{remark}
+	$\ker f$ and $\im f$ might not be vector bundle. e.g. given trivial bundle $\pi_E: E \to X$, $\pi_F: F \to X$ where $E = F = X \times \R^2, X = \R$. Let $f: E \to F$ be defined by $(x, v) \mapsto (x, xv)$. Then, $E_x \to F_x$ is $v \mapsto xv$, then $\im f|_x$ is $\R$ if $x \neq 0$ and $0$ if $x = 0$
+\end{remark}
+
+\begin{proposition}
+	Let $f: E \to F$ be an $\Str$-homomorphism of $\Str$-bundles over $X$, if $f$ has constant rank on $X$, then $\ker f$, $\im f$ are $\Str$-subbundles of $E$ and $F$ respectively.
+	\begin{proof}
+		\note{TODO - need read}
+	\end{proof}
+\end{proposition}
+
+\begin{proposition}
+	$f: E \to F$ is injective or surjective then $f$ has constant rank.
+\end{proposition}
+
+\section{Sections and Frames of Vector Bundles}
+
+\subsection{Sections}
+
+\begin{definition}[section]
+	A $\Str$-section of and $\Str$-bundle $\pi: E \to X$ is an $\Str$-morphism $s: X \to E$ such that $\pi s = 1$. Let $\Str(X, E) \subseteq \Str(X, E)$ denote the set of $\Str$-sections. More generally, for a open set $U \subseteq X$, $\Str(U, E)$ denotes the $\Str$-sections of $E\vert_U$
+\end{definition}
+
+\begin{remark}[section of trivial bundle]
+	For a trivial bundle $\pi: M \times K^r \to M$, $\Str(M, M \times K^r)$ can be identified as the collection of $\Str$-functions $M \to K^r$ on $M$
+\end{remark}
+
+\begin{remark}[zero section]
+	Let $\pi: E \to X$ be an $\Str$-bundle. Let $0: X \to E$ defined by $x \mapsto (x, 0)$. $0: X \to E$ is called the zero bundle and $0: X \to E$ is an $\Str$-isomorphism.
+\end{remark}
+
+\begin{proposition}
+	Let $pi_E: E \to X$ and $\pi_F: F \to X$ be two $\Str$-bundles, then $\pi_{\Hom(E, F)}: \Hom(E, F) \to X$ is also an $\Str$-bundle. Let $s \in \Str(X, \Hom(E, F))$, for any $x \in X$,
+	$$
+	s(x): E_x \to F_x
+	$$
+	
+	is a $K$-linear invertible map. Define $f: E \to F$ such that $f(v) = s(x) v$ for $v \in E_x$. Then $f$ is a $\Str$-bundle homomorphism.
+	\begin{proof}
+		\note{TODO}
+	\end{proof}
+\end{proposition}
+
+\begin{proposition}[constructing sections]
+	Let $E \to X$ be an $\Str$-bundle of rank $r$. Let $f_\alpha: U_\alpha \to K^r$ be $\Str$-morphism satisfying $f_\beta(u) = g_{\beta \alpha}(u) f_\alpha (u)$ for $u \in U_\alpha \cap U_\beta \neq 0$. We can construct an $\Str$-section $\phi$ as follows: Each $f_\alpha$ gives a section on $U_\alpha \times K^r \cong E\vert_{U_\alpha}$. These sections agree on overlapping regions.
+\end{proposition}
+
+\begin{remark}[sections on universal bundle]
+	\note{TODO - wtf}
+\end{remark}
+
+\begin{proposition}[space of sections is a module]
+	Sections $\Str(X, E)$ is a $K$-vector space, let $s, t \in \Str(X, E)$, $k \in K$,
+	\begin{align*}
+		(s + t)(x) &= s(x) + t(x) \\
+		(k s)(x) &= k s(x)
+	\end{align*}
+	Moreover, $\Str(X, E)$ is also a module over $\Str(X)$ which is the space of $K$-valued $\Str$-functions on $X$
+\end{proposition}
+
+\subsection{Frames}
+
+\begin{definition}[frame]
+	Let $E \to X$ be an $\Str$-bundle of rank $r$, let $U$ be an open subset on $X$. A frame for $E$ over $U$ is a set of $\Str$-sections
+	$$
+	s = \tuple{s_1, s_2, ..., s_r}
+	$$
+	
+	where $s_j \in \Str(U, E)$ such that $\tuple{s_1(x), s_2(x), ..., s_r(x)}$ is a basis for $E_x$ for every $x \in U$. Note that, section $\Str(U, E)$ is a $\Str(U)$-module and a frame is the basis, that is, $\Str(U, E)$ is a free $\Str(U)$-module
+\end{definition}
+
+\begin{remark}[matrix form of an $\Str$-section on frame]
+	Let $\eta \in \E(U, E)$ be an $\Str$-section on $U \subseteq X$ of vector bundle $E \to X$ and $f = \set{f_1, f_2, ..., f_r}$ be a frame on $U$. Then, we can write $\eta$ by
+	$$
+	\eta = \eta(f)_1 f_1 + \eta(f)_2 f_2 + ... + \eta(f)_r f_r
+	$$
+	
+	where each $\eta(f)_j \in \Str(U)$ is an $\Str$-function on $U$. Let 
+	$$
+	\eta(f) = \tuple{\eta(f)_1, \eta(f)_2, ..., \eta(f)_r} \in M_r[\Str(U)]
+	$$
+	
+	be a vector of dimension $r$ where each entry is an $\Str$-function on $U$. 
+\end{remark}
+
+\begin{proposition}
+	A local trivialization $h: E\vert_U \to U \times K^r$ induces a frame for $E$ over $U$
+	\begin{proof}
+		The local trivialization induces an isomorphism of sets
+		$$
+		\Tilde{h}: \Str(U, E\vert_U) \to \Str(U, U \times K^r)
+		$$
+		
+		Let $\tuple{e_1, e_2, ..., e_r}$ be a basis for $K^r$, then $s_i: X \to E$ is defined by
+		$$
+		s_i(x) = h^{-1}(x, e_i)
+		$$
+		
+		Then $\tuple{s_1, s_2, ..., s_r}$ is a frame for $E$ over $U$
+	\end{proof}
+\end{proposition}
+
+\begin{proposition}
+	\note{TODO - frame induces local trivialization}
+\end{proposition}
+
+\begin{definition}[change of frames]
+	Let $E \to X$ be an $\Str$-bundle over field $K$ and $U \subseteq X$ be an open set. Let $f, h$ be frames on $U$, that is,
+	\begin{align*}
+		f &= \tuple{f_1, f_2, ..., f_r} \\
+		h &= \tuple{h_1, h_2, ..., h_r} \\
+	\end{align*}
+	
+	where each $f_i, h_i$ is an $\Str$-section on $U$ and for each $x \in U$, $\tuple{f_1(x), f_2(x), ..., f_r(x)}$, $\tuple{h_1(x), h_2(x), ..., h_r(x)}$ are bases of the fiber $E_x$. Then, there exists a $\Str$-morphism
+	$$
+	g: U \to GL(K^r)
+	$$
+	
+	so that, for each $x \in U$, $g(x)$ is the change of basis from $f(x)$ to $h(x)$, $g$ is called the change of frames.
+\end{definition}
+
+\begin{remark}[matrix form of change of frames]
+	Let $g: U \to GL(K^r)$ be a change of frames from frame $f$ to frame $h$, if write frames $f, h$ as row vectors of $\Str$-sections, that is, $f = (f_1, f_2, ..., f_r)  \in M_{r}[\Str(U, E)]$, $h = (h_1, h_2, ..., h_r) \in M_{r}[\Str(U, E)]$ where $f_\sigma, h_\sigma \in \Str(U, E)$ and $g$ as a matrix of $\Str$-functions, that is, $g = [g_{\rho \sigma}]  \in M_{r \times r}[\Str(U)]$, then
+	$$
+		h = fg
+	$$
+\end{remark}
+
+\section{Real-Valued Differential Forms\\ $\E^p(U) = \E(U, \wedge^p T^*(M))$}
+
+\subsection{Real-Valued Differential Forms}
+
+\begin{definition}[cotangent bundle, exterior algebra bundles]
+	Consider the tangent bundle $T(M) \to M$ of a smooth manifold $M$
+	\begin{enumerate}
+		\item The cotangent bundle $T^*(M)$ is the vector bundle whose fiber at $x \in M$ is $T_x^*(M) = \Hom_\R(T_x(M), \R)$ which is a linear functional on $T_x(M)$ (\note{basis are $dx, dy, dz$ while in tangent bundle are $\partial/\partial x,  \partial/\partial y, \partial/\partial z$})
+		
+		\item The exterior algebra bundles $\wedge^n T(M)$ and $\wedge^n T^*(M)$ are the vector bundles whose fibers at $x \in M$ are $\wedge^n T_x(M)$ and $\wedge^n T_x^*(M)$ respectively. We also define
+		\begin{align*}
+			\wedge T(M) &= \bigoplus_{p=0}^n \wedge^p T(M) \\
+			\wedge T^*(M) &= \bigoplus_{p=0}^n \wedge^p T^*(M)
+		\end{align*}
+		
+		\item The exterior algebra bundles $Sym^n T(M)$ and $Sym^n T^*(M)$ are the vector bundles whose fibers at $x \in M$ are $Sym^n T_x(M)$ and $Sym^n T_x^*(M)$ respectively. Define
+		\begin{align*}
+			Sym T(M) &= \bigoplus_{p=0}^n Sym^p T(M) \\
+			Sym T^*(M) &= \bigoplus_{p=0}^n Sym^p T^*(M)
+		\end{align*}
+		
+	\end{enumerate}
+\end{definition}
+
+\begin{definition}[differential form]
+	Let $U \subseteq M$ be an open set of smooth manifold $M$, let
+	$$
+	\E^p(U) = \E\tuple*{U, \wedge^p T^*(M)}
+	$$
+	
+	A section $f \in \E^p(U)$ is called a smooth differential $p$-form on $U$
+\end{definition}
+
+\begin{definition}[a basis for $\E^p(U)$ for $U \subseteq \R^n$]
+	Let $x = (x_1, ..., x_n) \in U$, then a basis of $T_x(\R^n)$ is
+	$$
+	\set*{\frac{\partial}{\partial x_1}\bigg\vert_x, ..., \frac{\partial}{\partial x_n}\bigg\vert_x}
+	$$
+	
+	Let $dx_j\vert_x: T_x(\R^n) \to \R$ be the linear functional such that $\frac{\partial}{\partial x_j}\vert_x \mapsto 1$ and $\frac{\partial}{\partial x_k}\vert_x \mapsto 0$ for $k \neq j$. Then, a basis of $T_x^*(\R^n)$ is
+	$$
+	\set{dx_1\vert_x, ..., dx_n\vert_x}
+	$$
+	
+	Let $h: T^*(\R^n)\vert_U \to U \times \R^n$ be a local trivialization so that $h$ maps the basis $\set{dx_1\vert_x, ..., dx_n\vert_x}$ into the canonical basis of $\R^n$. Moreover, let $s \in \E(U, T^*(\R^n))$ be a section
+	
+	\begin{center}
+		\begin{tikzcd}
+			T^*(\R^n)\vert_U \arrow[r, "h"]            & U \times \R^n \\
+			U \arrow[u, "s"] \arrow[ru, "hs"', dashed] &              
+		\end{tikzcd}
+	\end{center}
+	
+	Then, $hs: U \to U \times \R^n$ applied on $x \in U$ is $	hs(x) = (x, (f_1(x), ..., f_n(x)))$	 where $f_i \in \E(U)$ are a real-valued smooth functions on $U$. Define $dx_j: U \to T^*(\R^n)\vert_U$ such that $x \mapsto dx_j\vert_x$, then $dx_j(x) = (0, ..., 0, 1, 0, ..., 0)$ ($1$ at the $j$-th coordinate). Therefore, $\E^1(U) = \E(U, T^*(\R^n))$ is an $\E(U)$-module with basis $\set{dx_1, ..., dx_n}$ with 
+	$$
+	s = f_1 dx_1 + ... + f_n dx_n
+	$$
+	
+	the scalar multiplication defined by
+	\begin{align*}
+		\E(U) \times \set{dx_1, ..., dx_n} &\to \E(U, T^*(\R^n)) \\
+		(f \cdot dx_j)(x) &\mapsto f(x) dx_j(x)
+	\end{align*}
+	
+	Similar, a basis of $\E(U)$-module $\E^p(U) = \E(U, \wedge^p T^*(\R^n))$ is \footnote{note that, $\sigma$ is an ordered subset of $[n]$}
+	$$
+	\set*{dx_\sigma: \sigma \subseteq [n], |\sigma| = p}
+	$$
+\end{definition}
+
+\subsection{Real-Valued Exterior Derivative}
+
+\begin{definition}[exterior derivative $d: \E^p(U) \to \E^{p+1}(U)$ for $U \subseteq \R^n$]
+	Define $d: \E^p(U) \to \E^{p+1}(U)$ for $U \subseteq \R^n$ as follows:
+	
+	\begin{enumerate}
+		\item $p = 0$, $f \in \E^0(U) = \E(U)$
+		
+		$$
+		df = \sum_{i=1}^n \frac{ \partial f}{ \partial x_i} dx_i
+		$$
+		
+		\item $p \geq 1$, $f \in \E^p(U) = \E\tuple*{U, \wedge^p T^*(\R^n)}$, then we can write $f$ as a $\E(U)$-linear combination $f = \sum_{\sigma \subseteq [n]: |\sigma|=p} f_\sigma dx_\sigma$ where each $f_\sigma \in \E(U)$, define
+		$$
+			df = \sum_{\sigma \subseteq [n]: |\sigma|=p} df_\sigma \wedge dx_\sigma = \sum_{\sigma \subseteq [n]: |\sigma|=p} \tuple*{\sum_{i=1}^n \frac{\partial f_\sigma}{\partial x_i} dx_i} \wedge dx_\sigma
+		$$
+		
+	\end{enumerate}
+\end{definition}
+
+\begin{definition}[exterior derivative $d: \E^p(M) \to \E^{p+1}(M)$]:
+	Let $h: U \to U' \subseteq \R^n$ be a chart, there exists a map $d: \E^p(U') \to \E^{p+1}(U')$. 	We have isomorphisms $\E^p(U) \cong \E^p(U')$ and $\E^{p+1}(U) \cong \E^{p+1}(U')$, define $d: \E^p(U) \to \E^{p+1}(U)$ so that the diagram below commutes
+	\begin{center}
+		\begin{tikzcd}
+			\E^p(U) \arrow[r, "d", dotted] \arrow[d, "\cong"'] & \E^{p+1}(U) \arrow[d, "\cong"'] \\
+			\E^p(U') \arrow[r, "d"]                            & \E^{p+1}(U')                   
+		\end{tikzcd}
+	\end{center}
+	
+	Let $M$ be a manifold with atlas $\set{h_i: U_i \to U_i' \subseteq \R^n}$. Then, $d: \E^p(M) \to \E^{p+1}(M)$ is the unique operator such that the diagram below commutes for every chart
+	
+	\begin{center}
+		\begin{tikzcd}
+			\E^p(M) \arrow[d, "r^M_U"', two heads] \arrow[r, "d", dashed] & \E^{p+1}(M) \arrow[d, "r^M_U", two heads] \\
+			\E^p(U) \arrow[r, "d"]                                        & \E^{p+1}(U)                              
+		\end{tikzcd}
+	\end{center}
+	
+	
+	\note{TODO} verify that, on the intersection $U_i \cap U_j$, the exterior derivatives agree, that is, let $d_i: \E^p(U_i) \to \E^{p+1}(U_i)$, $d_j: \E^p(U_j) \to \E^{p+1}(U_j)$, then $d_i\vert_{\E^p(U_i \cap U_j)} = d_j\vert_{\E^p(U_i \cap U_j)}$
+\end{definition}
+
+\begin{definition}[\note{axiomatic definition} of exterior derivative $d: \E^p(M) \to \E^{p+1}(M)$]
+	When $U \subseteq M = \R^n$, then $d: \E^p(U) \to \E^{p+1}(U)$ is defined to be the unique $\R$-linear map satisfies the following:
+	\begin{enumerate}
+		\item when $p=0$, $f \in \E^0(U) = \E(U)$, then
+		$$
+		df = \sum_{i=1}^n \frac{\partial f}{\partial x_i} dx_i
+		$$
+		
+		\item if $a \in \E^p(U)$ and $b \in \E^q(U)$, then
+		$$
+		d(a \wedge b) = da \wedge b + (-1)^{p} a \wedge db
+		$$
+		
+		\note{in $2$, let $a = 1 \in \E^0(U) = \E(U)$, then $d^2 = 0$ (Poincaré lemma)}
+	\end{enumerate}
+\end{definition}
+
+\section{Pullback of vector bundles}
+
+\begin{definition}[$\Str$-bundle morphism]
+	An $\Str$-bundle morphism between two $\Str$-bundles $\pi_E: E \to X$ and $\pi_F: F \to Y$ is an $\Str$-morphism $f: E \to F$ that takes fibers of $E$ into fibers of $F$ and if restricted to one fiber, the map is linearly invertible.
+\end{definition}
+
+\begin{remark}
+	As we can identify the base space with its zero section, therefore, an $\Str$-bundle morphism defines a map between base spaces factoring through their zero sections.
+\end{remark}
+
+\begin{proposition}[pullback]
+	Given an $\Str$-morphism $f: X \to Y$ and an $\Str$-bundle $\pi_F: F \to Y$, then there exists a bundle $\pi_E: E \to X$ so that the following diagram commutes
+	\begin{center}
+		\begin{tikzcd}
+			E \arrow[d, "\pi_E"', two heads, dashed] \arrow[r, "g", dashed] & F \arrow[d, "\pi_F", two heads] \\
+			X \arrow[r, "f"]                                                & Y                              
+		\end{tikzcd}
+		
+		Moreover, $E$ is unique upto $\Str$-bundle isomorphism. $E$ is called pullback of $F$ by $f: X \to Y$ denoted by $E = f^* F$, $\pi_E = f^* \pi_F$, $g = f^* f$
+	\end{center}
+	\begin{proof}
+		\note{TODO}
+	\end{proof}
+\end{proposition}
+
+\begin{proposition}
+	Let $\pi_E: E \to X$ and $\pi_F: F \to Y$ be $\Str$-bundles. If $f: E \to F$ is an $\Str$-morphism of total spaces that preserves fibers and a linear on each fiber, then $f: E \to F$ can decomposed into a $\Str$-bundle homomorphism and an $\Str$-bundle morphism
+	\begin{center}
+		\begin{tikzcd}
+			E \arrow[d, "\pi_E"', two heads] \arrow[rr, "f", bend left] \arrow[r, "h"', dashed] & G \arrow[r, "k"', dashed] \arrow[d, "\pi_G", dashed] & F \arrow[d, "\pi_F", two heads] \\
+			X \arrow[r, "\cong", dashed]                                                        & X \arrow[r, dashed]                                  & Y                              
+		\end{tikzcd}
+	\end{center}
+	\begin{proof}
+		\note{TODO}
+	\end{proof}
+\end{proposition}

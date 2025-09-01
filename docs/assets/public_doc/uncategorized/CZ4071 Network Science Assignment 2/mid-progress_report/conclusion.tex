@@ -1,0 +1,9 @@
+\chapter{Significance of paper}
+The paper introduced Layer-Dependent Importance Sampling (LADIES), which took into consideration both the positives and setbacks for each of the two sampling-based methods previously mentioned.
+
+Neighbours in the graph for each layer are picked and a bipartite graph is constructed between the layers among the sampled nodes in the upper layer \cite{assigned_paper_zou2019layer}. Based on the current layer's nodes' degree, the sampling probability is calculated to reduce sampling variance and a fixed number of nodes is sampled based on the calculated probability \cite{assigned_paper_zou2019layer}. The sampled adjacency matrix between layers is constructed, and training and inference is conducted. Row-wise normalisation is applied to these matrices for training stabilisation, and the result is a whole computation graph \cite{assigned_paper_zou2019layer}.
+
+This method thus incorporates the advantages of each aforementioned method and minimises their issues. The layer-wise structure avoids an exponential growth of the receptive field by taking neighbour nodes into account to calculate the next layer's embeddings, thus eliminating redundancy \cite{assigned_paper_zou2019layer}. Importance sampling, which reduces sampling variance and accelerates convergence, is also conducted with dependence on each layer, thus ensuring the sampled adjacency matrix is dense and that node connectivity in the two adjacent layers is maintained \cite{assigned_paper_zou2019layer}. A dense sampled adjacency matrix is also produced due to the method's neighbour-dependence, minimising information loss during training \cite{assigned_paper_zou2019layer}.
+
+LADIES can thus be used for training deep and large convolutional networks, while providing improved memory complexities, time complexities and smaller variance.
+\chapter{Conclusion}

@@ -1,0 +1,459 @@
+\chapter{Manifolds}
+
+\section{Manifolds}
+
+\begin{definition}[Hausdorff space and second-countable space, locally homeomorphic]
+	Given a topological space $(M, \Tau)$
+	\begin{itemize}
+		
+		\item $(M, \Tau)$ is said to be Hausdorff if for every pair $x, y \in M$, there exists open neighbourhood $U$ of $x$ and $V$ of $y$ such that $U \cap V = \emptyset$
+		
+		\item $(M, \Tau)$ is said to be second-countable if $\Tau$ has a countable basis, i.e. there exists a countable collection of open sets $\mathcal{B}$ such that every open set in $\Tau$ is a union of open sets in $\mathcal{B}$. \footnote{remark: given a countable collection of sets $\mathcal{B}$, the collection of all finite intersections of $\mathcal{B}$ is countable.}
+		
+		\item $(M, \Tau)$ is said to be locally homeomorphic to $K^n$ where $K$ is either $\R$ or $\C$ if for every point $x \in M$, there exists an open neighbourhood $U_x$ and a homeomorphism $h_x: U_x \to U'_x$ where $U'_x$ is an open subset of $K^n$
+		
+	\end{itemize}
+\end{definition}
+
+\begin{remark}
+	The Hausdorff condition means the topology has a lot of open sets. On the other hand, the second-countable condition limits how many open sets there are.
+\end{remark}
+
+\begin{definition}[topological manifold \footnote{analogous to $n$-dimensional vector space over $K$}, chart, atlas, transition function]
+	A topological space $(M, \Tau)$ is called a topological manifold of dimension $n$ over field $K$ (either $\R$ or $\C$) if it is Hausdorff, second-countable, and locally homeomorphic to $K^n$. The homeomorphism $h_x: U_x \to U'_x$ is called chart, the collection $\set{h_x: U_x \to U'_x}_{x \in M}$ is called atlas. The atlas is also defined by $\set{h_i: U_i \to U'_i}_{i \in I}$ where $\set{U_i}$ is an open cover of $M$. Let $h_i: U_i \to U'_i$ and $h_j: U_j \to U'_j$ be two charts such that $U = U_i \cap U_j \neq \emptyset$, then the homeomorphism
+	$$
+	t_{ij} = h_j h_i^{-1}: h(U_i) \to h(U_j)
+	$$
+	is called transition function.
+\end{definition}
+
+\begin{definition}[$\Str$-manifold]
+	A topological manifold is called a $\Str$-manifold where $S$ is either $\E$, $\mathcal{A}$, or $\mathcal{O}$ if the transition function is $\Str$-function.
+\end{definition}
+
+\begin{remark}
+	We can assume that there is an atlas $C$ being a maximal set of charts \footnote{by Zorn's lemma}.
+\end{remark}
+
+\begin{definition}[algebraic manifold]
+	A complex holomorphic manifold with transition function being rational function (fraction of polynomials) is called algebraic manifold.
+\end{definition}
+
+\section{Functions on manifolds (Part 1)}
+
+\begin{definition}[$\Str$-structure $\Str_M$]
+	Let $(M, \Tau)$ together with atlas $\set{(U_i, h_i)}_{i \in I}$ be an $\Str$-manifold. An $\Str$-structure $S_M$ on an $\Str$-manifold $M$ is a family of $K$-valued continuous functions defined on the open sets of $M$ satisfying the following: Let $V$ be an open set of $M$ and a function $f: V \to K$ is in $\Str_M$ if for every $i \in I$, let $f$ be restricted to $V \cap U_i$, then the composition $f h^{-1}$ is of $\Str$-function
+	
+	\begin{center}
+		\begin{tikzcd}
+			V \cap U_i \subseteq M \arrow[r, "f"] \arrow[d, "h_i"']         & K \\
+			h_i(V \cap U_i) \subseteq K^n \arrow[ru, "f h_i^{-1}"', dashed] &  
+		\end{tikzcd}
+	\end{center}
+	
+	Note that, later on, we will also denote the collection of $\Str$-functions on $M$ by $\Str(M) \subseteq \Str_M$
+\end{definition}
+
+
+\begin{proposition}
+	A manifold structure on a topological space $M$ is characterized by its $\Str$-structure $\Str_M$, that is, if $A_1$ and $A_2$ are two atlases on $M$, that makes two manifolds $M_1 = (M, A_1)$ and $M_2 = (M, A_2)$ then $\Str_{M_1} = \Str_{M_2}$ implies $A_1$ and $A_2$ are compatible
+	\begin{proof}
+		Let $h_1: U_1 \to U_1' \subseteq \R^n$ and $h_2: U_2 \to U_2' \subseteq \R^n$ be two charts from $A_1$ and $A_2$ respectively such that $U = U_1 \cap U_2 \neq \emptyset$. Let $\pi_i: \R^n \to \R$ be the canonical projection into the $i$-th coordinate. Then, the restriction of $\pi_i h_2$ on $U$, namely $\pi_i h_2 \vert_U: U \to \R$ is an $\Str$-function with respective to $A_2$, by the premise, it is also an $\Str$-function with respective to $A_1$. Therefore, $\pi_i h_2 h_1^{-1} \vert_{h_1(U)}: h_1(U) \to \R$ is an $\Str$-function. As this is true for all $i \in [n]$, the transition function $h_2 h_1^{-1} \vert_{h_1(U)}: h_1(U) \to h_2(U)$ is an $\Str$-function. Therefore, $A_1$ is compatible with $A_2$
+	\end{proof}
+\end{proposition}
+
+\begin{definition}[$\Str$-morphism]
+	An $\Str$-morphism $F: (M, \Str_M) \to (N, \Str_N)$ is a continuous map $F: M \to N$ such that $f \in \Str_N$ implies $f F \in \Str_M$
+	\begin{center}
+		\begin{tikzcd}
+			{(M, \Str_M)} \arrow[r, "F"] \arrow[rd, "fF"', dashed] & {(N, \Str_N)} \arrow[d, "f"] \\
+			& K                                 
+		\end{tikzcd}
+	\end{center}
+	That is, an $\Str$-morphism is a continuous map $F: M \to N$ and it induces a map
+	\begin{align*}
+		F_*: \Str_N &\to \Str_M \\
+		f &\mapsto fF
+	\end{align*}
+\end{definition}
+
+\begin{definition}[$\Str$-isomorphism]
+	An $\Str$-morphism $F: (M, \Str_M) \to (N, \Str_N)$ is an $\Str$-isomorphism if $F: M \to N$ is a homeomorphism and $F^{-1}: (N, \Str_N) \to (M, \Str_M)$ is also an $\Str$-morphism.
+	Hence, $\Str$-isomorphism induces a bijection between $\Str_M$ and $\Str_N$ which in turn induces an equivalence of manifold structure between $(M, \Str_M)$ and $(N, \Str_N)$
+\end{definition}
+
+\begin{remark}[$\Str$-morphism from neighbourhoods]
+	Let $f: X \to Y$, for each $y \in Y$, there is an open neighbourhood $U_y \subseteq Y$ of $y$, such that $U_x =  f^{-1} U_y$, $f: U_x \to U_y$ is an $\Str$-morphism, then $f: X \to Y$ is an $\Str$-morphism.
+\end{remark}
+
+
+
+\section{Functions on manifolds (Part 2): Partition of Unity}
+
+\begin{definition}[refinement, locally finite, paracompact]
+	Let $M$ be a topological space. 
+	
+	\begin{enumerate}
+		\item Let $\mathcal{U}_A = \set{U_\alpha}_{\alpha \in A}$ and $\mathcal{U}_B = \set{V_\beta}_{\beta \in B}$ be two open covers of $M$. $\mathcal{U}_B$ is said to be a refinement of $\mathcal{U}_A$ if for each $V_\beta \in \mathcal{U}_B$, there exists a $U_\alpha \in \mathcal{U}_A$ such that $V_\beta \subseteq U_\alpha$
+		
+		\item Let $\mathcal{U}_A = \set{U_\alpha}_{\alpha \in A}$ be a cover of $M$ (not necessarily open). $\mathcal{U}_A$ is called locally finite if for every $x \in M$, there exists an open neighbourhood $W$ of $x$ such that $W \cap U_\alpha \neq \emptyset$ for finitely many $\alpha \in A$
+		
+		\item A topological space is paracompact if every open cover has an open locally finite refinement.
+	\end{enumerate}
+\end{definition}
+
+\begin{proposition}
+	Let $M$ be a smooth manifold with atlas $\set{(U_i, h_i)}_{i \in I}$, then
+	\begin{enumerate}
+		\item There is a countable subset $J \subseteq I$ such that $\set{(U_j, h_j)}_{j \in J}$ is also an atlas of $M$
+		
+		\item For each $j \in J$, $U_j$ is paracompact
+		
+		\item $M$ is paracompact
+	\end{enumerate}
+	\begin{longproof}
+		\begin{enumerate}
+			\item $M$ is second-countable, hence let $\set{U_j}_{j \in J}$ a countable basis of $M$. Construct charts on $\set{U_j}_{j \in J}$ by restriction from $\set{(U_i, h_i)}_{i \in I}$ as $\set{U_j}_{j \in J}$ is a refinement of $\set{(U_i, h_i)}_{i \in I}$
+			
+			\item each $U_j$ is homeomorphic to open set in $\R^n$, hence it is paracompact (\note{google it, metrizable implies paracompact}).
+			
+			\item combine (1) and (2)
+		\end{enumerate}
+		
+	\end{longproof}
+\end{proposition}
+
+
+
+\begin{lemma}
+	For $r>0$, denote the open cube
+	$$
+	C(r) = \set{(x_1, ..., x_d) \in \R^d: \forall i \in [d], -r < x_i < +r}
+	$$
+	There exists a non-negative smooth function on $\R^d$ which equals $1$ on $C(1)$ and $0$ on $\R^d \setminus C(2)$
+	\begin{proof}
+		\note{result in analysis, skip}
+	\end{proof}
+\end{lemma}
+
+
+
+\begin{definition}[partition of unity]
+	A partition of unity on a smooth manifold $M$ is a collection $\set{\phi_i}_{i \in I}$ of non-negative smooth functions on $M$ such that the collection of supports $\set{\supp \phi_i}_{i \in I}$ is locally finite and for every $x \in M$
+	$$
+	\sum_{i \in I} \phi_i(x) = 1
+	$$
+\end{definition}
+
+\begin{theorem}[countable partition of unity]
+	Let $M$ be a smooth manifold and $\set{U_\alpha}_{\alpha \in A}$ be an open cover of $M$. Then there exists a countable partition of unity $\set{\phi_i}_{i \in \N}$
+	such that for every $i \in \N$, $\supp \phi_i$ is compact and $\set{\supp \phi_i}_{i \in \N}$ is a refinement of $\set{U_\alpha}_{\alpha \in A}$
+	\begin{proof}
+		\note{a little tedious - defer to the end of semester}
+	\end{proof}
+\end{theorem}
+
+\begin{theorem}[arbitrary partition of unity]
+	Let $M$ be a smooth manifold and $\set{U_\alpha}_{\alpha \in A}$ be an open cover of $M$. Then there exists a partition of unity $\set{\phi_\alpha}_{\alpha \in A}$ such that for every $\alpha \in A$, $\supp \phi_\alpha$ is compact and $\set{\phi_\alpha}_{\alpha \in A}$ is a refinement of $\set{U_\alpha}_{\alpha \in A}$
+	\begin{proof}
+		Let $\set{\phi_i}_{i \in \N}$ be a countable partition of unity. Let $f: \N \to A$ be a function such that $\supp \phi_i \subseteq U_{f(i)}$. Then for each $\alpha \in \im f \subseteq A$, define $\phi_\alpha = \sum_{i \in f^{-1} \alpha} \phi_i$ and for each $\beta \notin \im f \subseteq A$, $\phi_\beta = 0$
+	\end{proof}
+\end{theorem}
+
+
+\begin{corollary}
+	Let $M$ be a smooth manifold and $A \subset G \subseteq M$ such that $A$ is closed and $G$ is open, then there exists a smooth non-negative function $\phi: M \to \R$ such that $\supp \phi \subseteq G$ and it attains its maximum value $1$ in $A$
+	\begin{proof}
+		Note that $\set{G, M \setminus A}$ is an open cover of $M$. There is a partition of unity $\set{\phi, \psi}$ such that the $\supp \phi \subseteq G$ and $\supp \psi \subseteq M \setminus A$
+	\end{proof}
+\end{corollary}
+
+\section{Submanifolds}
+
+\begin{definition}[$\Str$-submanifold \footnote{analogous to subspace of a vector space}]
+	Let $M$ be an $\Str$-manifold of dimension $m$ over field $K$, let $N$ be a closed subset of $M$, $0 \leq n \leq m$ and $K^n$ is the $n$-dimensional canonical subspace of $K^m$. $N$ is called an $\Str$-submanifold of $M$ of dimension $n$ if for every point $x_0 \in N$, there is a chart $h: U \to U' \subseteq K^m$ of $M$ where $x_0 \in U$ then
+	$$
+	h(U \cap N) = U' \cap K^n
+	$$
+	
+	The restriction of $h: U \to U'$ into $U \cap N$ is evidently the chart of $N$ so that the $\Str$-submanifold $N$ is a $\Str$-manifold. The difference $m-n$ is called the $K$-codimension of $N$
+\end{definition}
+
+\begin{definition}[$\Str$-embedding]
+	An $\Str$-morphism $f: (M, \Str_M) \to (N, \Str_N)$ is an $\Str$-embedding if $f$ is an $\Str$-isomorphism onto an $\Str$-submanifold of $N$
+\end{definition}
+
+\begin{theorem}[Whitney]
+	Let $M$ be a smooth $n$-manifold, then there exists a smooth embedding $f: M \to \R^{2n+1}$
+\end{theorem}
+
+\subsection{Projective Space}
+
+\begin{definition}[projective space]
+	Let $V$ be a $n$-dimensional vector space over field $K$. For any $x \in V$, let $[x] = \set{kx: k \in K}$ denote the $1$ dimensional subspace of $V$ spanned by $x$. Let
+	$$
+	P(V) = \set{[x]: x \in V \setminus \set{0}}
+	$$
+	$P(V)$ is called the projective space of $V$. Let $\pi: V \setminus \set{0} \to P(V)$ be defined by $\pi(x) = [x]$, $\pi$ being surjective gives $P(V)$ the quotient topology. We denote $P_n(\R) = P(\R^n), P_n(\C) = P(\C^n)$
+\end{definition}
+
+\begin{proposition}:
+	\begin{itemize}
+		\item $P_n(\R)$ is a real analytic manifold of dimension $n$
+		\item $P_n(\C)$ is a complex holomorphic manifold of dimension $n$
+	\end{itemize}
+	\begin{longproof}
+		
+		$\pi: K^n \setminus \set{0} \to P_n(K)$ is an open map. Let $U \subseteq K^n \setminus \set{0}$ be an open set, then $\pi^{-1} \pi U = \set{kx: k \in K, x \in U}$ is open. By definition of quotient topology, $\pi^{-1} \pi U$ open implies $\pi U$ open. Therefore, $P_n(K)$ has a countable basis induced from countable basis of $K^n \setminus \set{0}$. As $\pi: K^n \setminus \set{0} \to P_n(K)$ factors through $S^n(K)$, $P_n(K)$ is compact. As $S^n(K)$ is Hausdorff and preimage of $2$ points on $P_n(K)$ are $4$ points on $S^n(K)$, $P_n(K)$ is also Hausdorff
+		
+		\begin{itemize} 
+			\item $P_n(\R)$ is a real analytic manifold of dimension $n$
+			
+			For each $i=0, 1, ..., n$, let
+			$$
+			U_i = \set{x = (x_0, x_1, ..., x_n) \in \R^{n+1}: x_i \neq 0}
+			$$
+			
+			Each $\pi U_i$ is open, so $\set{\pi U_i}_{i=0}^n$ is an open cover of $P_n(\R)$. Define a chart $h_i: \pi U_i \to U_i' \subseteq \R^{n}$ on $P_n(\R)$ by 
+			$$
+			h_i([x]) = \tuple*{\frac{x_0}{x_i}, ..., \frac{x_{i-1}}{x_i}, \frac{x_{i+1}}{x_i}, ..., \frac{x_n}{x_i}}
+			$$
+			
+			Note that, we can identify $\pi U_i$ by the hyperplane $V_i = \set*{\tuple*{\frac{x_0}{x_i}, ..., \frac{x_n}{x_i}}: x \in U_i}$, then $h_i$ is a homeomorphism.
+			
+			\begin{center}
+				\begin{tikzcd}
+					\R^{n+1}                                                                                  & P_n(\R)                                  & \R^n                 \\
+					U_i \arrow[u, hook] \arrow[r, "\pi", two heads] \arrow[rr, two heads, dashed, bend right] & \pi U_i \arrow[u, hook] \arrow[r, "h_i"] & U_i' \arrow[u, hook]
+				\end{tikzcd}
+			\end{center}
+			
+			Now we will check if the transition function is smooth. Let $h_1: U_1 \to U_1'$, $h_2: U_2 \to U_2'$  be two charts such that $U = U_1 \cap U_2 \neq \emptyset$, let $z = (z_0, ..., z_{j-1}, z_{j+1}, ..., z_n) \in U_2' \subseteq \R^n$, then 
+			
+			$$
+			h_2^{-1}(z) = [(z_0, ..., z_{j-1}, 1, z_{j+1}, ..., z_n)]
+			$$
+			
+			As $h_2^{-1}(z) \in U$, so $z_i \neq 0$, then
+			
+			$$
+			h_1 h_2^{-1}(z) = \tuple*{\frac{z_0}{z_i}, ..., \frac{z_{i-1}}{z_i}, \frac{z_{i+1}}{z_i}, ..., \frac{z_{j-1}}{z_i}, \frac{1}{z_i}, \frac{z_{j+1}}{z_i}, \frac{z_n}{z_i}}
+			$$
+			
+			As $\R^{n+1}$ is second-countable, $P_n(\R) = \pi \R^{n+1}$ is also second-countable. Now, we will prove that $P_n(\R)$ is Hausdorff. Let $[x], [y] \in P_n(\R)$, if $[x], [y]$ are in the same $U_i$, as $U_i$ is homeomorphic to a Hausdorff space, $[x], [y]$ can be separated by open sets, if $[x], [y]$ are in $U_i, U_j$ and $U_i \cap U_i = \emptyset$, $U_i, U_j$ are evidently the separating sets. if $U = U_i \cap U_i \neq \emptyset$, write
+			\begin{align*}
+				[x] &= [(x_0, ..., x_{i-1}, x_i, x_{i+1}, ..., x_{j-1}, 0, x_{j+1}, ..., x_n)] \\
+				[y] &= [(y_0, ..., y_{i-1}, 0, y_{i+1}, ..., y_{j-1}, y_j, y_{j+1}, ..., y_n)] \\
+			\end{align*}
+			
+			we construct two open sets in $\R^{n+1}$
+			
+			\begin{align*}
+				U_x &= \set{z \in \R^{n+1}: |z_i| > |z_j|} \\
+				U_y &= \set{z \in \R^{n+1}: |z_i| < |z_j|}
+			\end{align*}
+			
+			Then, $[x] \in \pi U_x$, $[y] \in \pi U_y$ and $U_x, U_y$ do not intersect.
+			
+			\item $P_n(\C)$ is a complex holomorphic manifold of dimension $n$
+			
+			same proof as above
+		\end{itemize}
+	\end{longproof}
+\end{proposition}
+
+\subsection{Matrices of Constant Rank}
+
+\begin{proposition}[matrices of rank $\geq m$]
+	Let $m \leq k \leq n$, then
+	$$
+	M_{k, n}^{\geq m} = \set{A \in K^{k \times n}: \rank(A) \geq m}
+	$$
+	
+	is an open subset of $K^{k \times n}$. In particular, $GL(K^r) = M_{r, r}^{\geq r}$ is an open subset of $K^{r \times r}$
+	\begin{longproof}
+		A matrix in $K^{k \times n}$ of rank $m$ must have at least one $m \times m$ minor that is non-singular, denote $\set{\sigma_i: K^{k \times n} \to K^{m \times m}}$ be the collection of $m \times m$ minors, then
+		$$
+		M_{k, n}^{\geq m} = \bigcup_{\sigma_i} \set{A \in K^{k \times n}: \det \sigma_i A \neq 0}
+		$$
+		
+		$\det \sigma_i: K^{k \times n} \to K$ is continuous, and $K \setminus \set{0}$ is open (in both case of $\R$ and $\C$), therefore, each $\set{A \in K^{k \times n}: \det \sigma_i A \neq 0}$ is open, hence $M_{k, n}^{\geq m}$ is an open subset of $K^{k \times n}$
+	\end{longproof}
+\end{proposition}
+
+\begin{proposition}[Wells example 1.7 - matrices of rank $m$]
+	Let $m \leq k \leq n$, then
+	$$
+	M_{k, n}^m(K) = \set{A \in K^{k \times n}: \rank(A) = m}
+	$$
+	
+	is a real analytic manifold or complex holomorphic manifold when $K = \R$ or $K = \C$ of dimension $(k-m)(n-m)$.
+	\begin{longproof}
+		\note{TODO - long argument}
+	\end{longproof}
+\end{proposition}
+
+
+
+
+\subsection{Grassmannian}
+
+\begin{definition}[Grassmannian]
+	Let $V$ if a $n$-dimensional vector space over field $K$. Let $k$ be an integer such that $0 \leq k \leq n$, and let
+	$$
+	G_k(V) := \set{W \text{ is a subspace of } V: \dim W = k}
+	$$
+	$G_k(V)$ is called Grassmannian manifold. We denote $G_{k, n}(\R) = G_k(\R^n), G_{k, n}(\C) = G_k(\C^n)$
+\end{definition}
+
+\begin{proposition}:
+	$G_{k, n}(\R)$ is a compact smooth manifold of dimension $k(n-k)$. $G_{k, n}(\C)$ is an algebraic manifold of dimension $k(n-k)$.
+	\begin{proof}
+		Define $\pi: M_{k, n}^k(K) \to G_{k, n}(K)$ be the map from matrices $K^{k \times n}$ of rank $k$ to the Grassmannian by
+		$$
+		\pi(W) = \text{ row space of } W
+		$$
+		
+		Let the topology on $G_{k, n}(K)$ be the quotient topology induced by $\pi$. Note that, $W_1, W_2 \in M_{k, n}^k(K)$ have the same row space if and only if 
+		$$
+		W_1 = U W_2
+		$$
+		
+		where $U \in GL_k(K)$ is a $K^{k \times k}$ invertible linear transformation, that defines an equivalence relation on $M_{k, n}^k(K)$ and the equivalence classes is $G_{k, n}(K)$.
+		
+		\note{prove that $G_{k, n}(K)$ is second-countable, compact and Hausdorff}
+		
+		Given $W \in M_{k, n}^k(K)$, $W$ must have $k$ independent columns, let $\sigma \subseteq [n]$ be the $k$ independent columns of $W$, let $\sigma: K^{k \times n} \to K^{k \times k}$ be the selection of $k$ columns according to $\sigma$, that is, $\sigma \in \set{0, 1}^{n \times k}$ and $W \sigma \in GL_k(K)$ consists of $k$ columns of $W$ from $\sigma$
+		
+		Now, for each $\sigma \subseteq [n]$ such that $|\sigma| = k$, let
+		$$
+		U_\sigma = \set{W \in M_{n, k}^k(K): \det (W \sigma) \neq 0}
+		$$
+		
+		As $W \mapsto \det(W \sigma)$ is continuous, $U_\sigma$ is an open set of $M_{n, k}^k(K)$. As every $W \in M_{n, k}^k(K)$ belongs to at least one of $U_\sigma$, $\bigcup_{\sigma \subseteq [n]} U_\sigma$ is an open cover of $M_{n, k}^k(K)$. We define an equivalent relation on $M_{n, k}^k(K)$ as follows: $W_1 \sim W_2$ if and only if there exists $\sigma \subseteq [n]$ such that $W_1, W_2 \in U_\sigma$ and $(W_1 \sigma)^{-1} W_1 = (W_2 \sigma)^{-1} W_2$. We will show that this equivalence relation coincides with Grassmannian by showing that if $W_1, W_2$ have the same row space then $W_1 \sim W_2$.
+		
+		Since $W_1 \in M_{n, k}^k(K)$, let $\sigma \subseteq [n]$ such that $(W \sigma) \in GL_k(K)$, as $W_1 = U W_2$ with $U$ invertible, we have
+		$$
+		(W_1 \sigma)^{-1} W_1 = (W_1 \sigma)^{-1} U W_2 = (U^{-1} W_1 \sigma)^{-1} W_2 = (W_2 \sigma)^{-1} W_2
+		$$
+		
+		Hence, $W_2 \in U_\sigma$ and $(W_1 \sigma)^{-1} W_1 = (W_2 \sigma)^{-1} W_2$. Now, we prove that under $\sim$, $M_{n, k}^k(K)$ induces a manifold of dimension $k(n-k)$.
+		
+		We have shown that every fiber of Grassmannian belong to the same $\mathcal{U}_\alpha$, therefore, $\mathcal{U}_\alpha / \sim$ is open in $G_{k, n}(K)$. For each $\sigma \subseteq [n]$, let
+		$$
+		V_\sigma = \set{W \in U_\alpha: W\sigma = I_k} \cong K^{(n-k) \times k}
+		$$
+		
+		Every $W \in U_\sigma$ is equivalent to one of $V \in V_\sigma$ by the map $h_\sigma: U_\sigma \to V_\sigma$ defined by
+		$$
+		h_\sigma(W) = (W \sigma)^{-1} W
+		$$
+		
+		And no two $V_1, V_2 \in V_\sigma$ are equivalent, hence, $U_\sigma / \sim \cong V_\sigma \cong K^{(n-k) \times k}$. That defines a chart $h_\sigma: U_\sigma/\sim \to K^{(n-k) \times k}$. Therefore, $G_{k, n}(K)$ is a manifold of dimension $k(n-k)$. It remains to show that transition function is smooth.
+		
+		Let $U = U_\alpha \cap U_\beta \neq \emptyset$. Let $W \in h(U_\alpha)$, that is both $W \alpha, W \beta$ are invertible and $W_\alpha = I_k$, the transition function $t_{\alpha \beta}: V_\alpha \to V_\beta$ is
+		$$
+		t_{\alpha \beta}(W) = (W \beta)^{-1} W
+		$$
+		
+		Note that $W \mapsto (W \beta)^{-1} W$ is a sequence of elementary row operations that put $W$ into its row echelon form, therefore $t_{\alpha \beta}(W)$ is a rational function, hence in the case $K = \R$, it is smooth.
+	\end{proof}
+\end{proposition}
+
+\subsection{Projective Hyperplane}
+
+\begin{definition}[hyperplane, projective hyperplane]
+	Consider the surjective map $\pi: \C^{n+1} \setminus \set{0} \to P^n(\C)$. For any $a \in \C^{n+1} \setminus \set{0}$, define 
+	$$
+	\Tilde{H} = \set{x \in \C^{n+1}: x \cdot a = 0}
+	$$
+	and
+	$$
+	H = \pi(\Tilde{H})
+	$$
+	$\Tilde{H}$ is called hyperplane and $H$ is called projective hyperplane.
+\end{definition}
+
+\begin{proposition}
+	$H$ is an algebraic submanifold of $P^n(\C)$ of dimension $n-1$
+	\begin{proof}
+		\note{todo}
+	\end{proof}
+\end{proposition}
+
+\section{Complex compact manifolds}
+
+\begin{theorem}
+	Let $X$ be a connected compact complex holomorphic manifold and let $f \in \mathcal{O}(X)$. Then $f$ is constant i.e. global holomorphic function on a manifold is constant.
+	\begin{proof}
+		As $X$ is compact, the function $F : X \to \R$ defined by $F(x) = |f(x)|$ attains its maximum $r$. Let $S = F^{-1} r$. $S$ is necessary closed as the singleton $r$ is closed. We will prove that $S$ is also open, i.e. for every $x \in X$, $x$ is an interior point.
+		
+		Let $x \in S$, and $h: U \to U' \subseteq \C^n$ be a chart containing $x$. Suppose $h(x) = 0$. Let $B \subseteq U' \subseteq \C^n$ be an open ball centered at $0$, for every $z \in B$, the function $g(\lambda) = fh^{-1}(\lambda z)$ is a holomorphic function on the open set $\set{\lambda \in \C: \lambda z \in B} \subseteq \C$ of one variable ($\lambda)$ having its maximum absolute value at $\lambda = 0$. By maximum modulus principle, $g$ is constant, so $f(x) = f h^{-1}(0) = g(0) = g(1) = f h^{-1}(z)$. That is, $f$ is constant on the open neighbourhood $h^{-1}(B)$ of $x$, then $x$ is an interior point.
+	\end{proof}
+\end{theorem}
+
+\begin{corollary}
+	There is no compact holomorphic submanifold of $\C^n$ of positive dimension.
+	\begin{proof}
+		Suppose $X \subseteq \C^n$ be a compact holomorphic submanifold. Let $X_0$ be a connected component of $X$, then $X_0$ is both open and closed in $X$. As $X_0$ is closed in a compact space $X$, $X_0$ is compact. As $X_0$ is open in $X$, it is a manifold. Hence, $X_0$ is a connected compact complex holomorphic manifold.
+		Since $X$ is a submanifold of $\C^n$, it inherits the charts of $\C^n$. The open set $X_0$ of $X$ inherits the charts of $X$. Hence, let $x = (x_1, x_2, ..., x_n) \in X_0$, then function $x \to x_i$ is complex holomorphic. As $X_0$ is connected, compact, complex holomorphic, it is a constant function. This shows that $X_0$ is a single point. $\dim X = \dim X_0 = 0$
+	\end{proof}
+\end{corollary}
+
+
+
+\begin{theorem}[Serre \footnote{Fields medal in 1954, said he loved rock climbing at his 80 years of age}, Chow \footnote{A Chinese mathematician}]
+	A complex holomorphic submanifold of $P^n(\C)$ is a projective algebraic manifold
+\end{theorem}
+
+\begin{definition}[projective algebraic manifold]
+	A holomorphic manifold $X$ has an embedding into $P^n(\C)$ is called projective algebraic manifold.
+	Moreover, as $X$ is homeomorphic to a closed set in compact space $P^n(\C)$, $X$ is compact by defintion.
+\end{definition}
+
+\begin{proposition}
+	The Grassmannian manifold $G_{k, n}(\C)$ are projective algebraic manifold.
+\end{proposition}
+
+\begin{proof}
+	We have shown that $G_{k, n}(\C)$ is an algebraic manifold. We will show that $G_{k, n}(\C)$ is projective, i.e. $G_{k, n}(\C)$ is a closed subset of $P^N(\C)$ for some $N \in \N$.
+	
+	Let $V \in G_{k, n}(\C)$ be a $k$-dimensional subspace of $\C^n$. Let $B = \set{v_1, ..., v_k}$ be a basis of $V$, then $\wedge^k v_i$ is a non-zero vector in $\wedge^k \C^n$. Define a function $t: G_{k,n}(\C) \to P(\wedge^k \C^n)$ by
+	$$
+	t(V) = \bracket*{\wedge^k v_i}
+	$$
+	
+	$t$ is well-defined and it is an injection that maps $k$-dimensional subspace of $\C^n$ to a line in $\wedge^k \C^n$. The map is called Plucker embedding.
+	
+	\note{finish the proof by showing $\im t$ is a submanifold of $P(\wedge^k \C^n)$: (1) $t$ is injective (2) $\im t$ is closed (3) $\im t$ is an algebraic subset (4) $\im t$ is an algebraic submanifold}
+\end{proof}
+
+\section{Grassmannian is a complex algebraic manifold}
+
+\note{this is merely the proof of previous part}
+
+\section{The Category of manifolds}
+
+\begin{definition}[Category]
+	A category $\mathcal{C}$ consists of a collection of objects denoted by $\ob \mathcal{C}$ and for each ordered pair $A, B \in \ob \mathcal{C}$, there is a collection of morphisms denoted by $\Hom(A, B)$. A morphism $f \in \Hom(A, B)$ is also denoted by $f: A \to B$. Morphisms satisfy the following
+	\begin{itemize}
+		\item (composition) if $f: A \to B, g: B \to C$, then there exists a morphism $gf: A \to C$. That is, there exists a map
+		\begin{align*}
+			\Hom(A, B) \times \Hom(B, C) &\to \Hom(A, C) \\
+			(f, g) &\mapsto gf
+		\end{align*}
+		for every $A, B, C \in \ob \mathcal{C}$
+		
+		\item (associativity) if $f: A \to B$, $g: B \to C$, $h: C \to D$, then
+		$$
+		h(gf) = (hg)f
+		$$
+		
+		\item (identity) for every object $A \in \ob \mathcal{C}$, there exists a morphism $1_A: A \to A$ called identity such that for every morphism $f: A \to B$, $f = f 1_A$ and for every morphism $g: C \to A$, $g = 1_A g$
+		
+	\end{itemize}
+\end{definition}
+
+\begin{proposition}[the category of $\Str$-manifold]
+	The collection of $\Str$-manifolds and $\Str$-morphisms form a category.
+\end{proposition}

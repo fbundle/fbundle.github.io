@@ -1,0 +1,454 @@
+\chapter{MODULES}
+
+\section{MODULE AND MODULE HOMOMORPHISM}
+
+\begin{definition}[module]
+	An module $M$ over a ring $R$ is an abelian group in which $R$ acts linearly on: that is, there is a multiplication map $\cdot: R \times M \to M$ such that
+	\begin{align*}
+		r(x + y) &= rx + ry \\
+		(r + s)x &= rx + sx \\
+		(rs)x &= r(sx) \\
+		1x &= x 
+	\end{align*}
+	for all $r, s \in R$ and $x, y \in M$
+\end{definition}
+
+\begin{definition}[module homomorphism]
+	Let $M$ and $N$ be $R$-modules, a map $f: M \to N$ is an $R$-module homomorphism (or $R$-linear) if
+	\begin{align*}
+		f(x + y) &= f(x) + f(y) \\
+		f(ax) &= a f(x)
+	\end{align*}
+	for all $a \in A$ and $x, y \in M$
+\end{definition}
+
+\begin{remark}[$\Hom_R(M, N)$ is an $R$-module]
+	Let $M$ and $N$ be $R$-modules, the set of $R$-module homomorphisms of $M$ into $N$, denoted by $\Hom_R(M, N)$ is naturally an $R$-module by defining addition $+: \Hom_R(M, N) \times \Hom_R(M, N) \to \Hom_R(M, N)$ and multiplication  $\cdot: \Hom_R(M, N) \times \Hom_R(M, N) \to \Hom_R(M, N)$ as follows:
+	\begin{align*}
+		(f + g)(x) &= f(x) + g(x) \\
+		(r g)(x) &= r g(x)
+	\end{align*}
+	for all $x \in M$, $f, g \in \Hom_R(M, N)$, and $r \in R$
+\end{remark}
+
+\begin{remark}
+	Let $M$ be an $R$-module, then there is a natural isomorphism
+	\begin{align*}
+		\Hom_R(R, M) &\xrightarrow{\sim} M \\
+		f &\mapsto f(1)
+	\end{align*}
+	
+	Let $I$ be an ideal of $R$, then there is a natural isomorphism
+	\begin{align*}
+		\Hom_R(R / I, M) &\xrightarrow{\sim} M[I]
+	\end{align*}
+	
+	where $M[I] = \set{m \in M: im = 0 \text{ for all } i \in I}$
+\end{remark}
+
+\begin{remark}[functor $\Hom_R(L, -)$ and $\Hom_R(-, L)$]
+	Let $L$ be a $R$-module, $\Hom_R(L, -)$ is a covariant functor and $\Hom_R(-, L)$ is a contravariant functor. If $f: M \to N$ is an $R$-module morphism, then the induced morphism is defined by
+	\begin{align*}
+		f^*: \Hom_R(L, M) &\rightarrow \Hom_R(L, N) \\
+					g &\mapsto fg \\
+		f^*: \Hom_R(M, L) &\leftarrow \Hom_R(N, L) \\
+					gf &\mapsfrom g 
+	\end{align*}
+	\begin{center}
+		\begin{tikzcd}
+			L \arrow[d, "g"'] \arrow[rd, "fg", dashed] &   & M \arrow[r, "f"] \arrow[rd, "gf"', dashed] & N \arrow[d, "g"] \\
+			M \arrow[r, "f"]                           & N &                                            & L               
+		\end{tikzcd}
+	\end{center}
+\end{remark}
+
+\section{SUBMODULE AND QUOTIENT MODULE}
+
+\begin{definition}[submodule]
+	A submodule $N$ of an $R$-module $M$ is a subgroup of $M$ and closed under multiplication by elements of $R$, that is,
+	$$
+		R N \subseteq N
+	$$
+	
+	$N$ is also an $R$-module.
+\end{definition}
+
+\begin{remark}
+	Let $A$ be a ring, then $A$ is naturally an $A$-module. The submodules of $A$ as an $A$-module is precisely the ideals of $A$
+\end{remark}
+
+\begin{definition}[quotient module]
+	Let $N$ be a submodule of an $R$-module $M$, then the quotient group $M / N$ is also an $R$-module and called quotient module with multiplication defined by
+	$$
+		\bar{x}\bar{y} = \overline{xy}
+	$$
+	for all $x, y \in M$. Moreover, the natural projection
+	\begin{align*}
+		\phi: M &\twoheadrightarrow M / N \\
+				x &\mapsto \bar{x}
+	\end{align*}
+	is a surjective $R$-module homomorphism.
+\end{definition}
+
+\begin{remark}
+	Let $f: M \to N$ be an $R$-module homomorphism, let 
+	\begin{align*}
+		\ker f &= \set{x \in M: f(x) = 0} \subseteq M\\
+		\im f &= \set{f(x): x \in M} \subseteq N
+	\end{align*}
+	Then, $\ker f$ is a submodule of $M$, $\im f$ is a submodule of $N$
+\end{remark}
+
+\begin{theorem}[the first isomorphism theorem for modules]
+	Let $f: M \to N$ be an $R$-module homomorphism, then $f: A \to B$ factors through $M / \ker f$ by the natural projection and a module homomorphism
+	\begin{center}
+		\begin{tikzcd}
+			M \arrow[d, "\phi"'] \arrow[r, "f"] & \im f \\
+			M / \ker f \arrow[ru, "\sim"']     &      
+		\end{tikzcd}
+	\end{center}
+\end{theorem}
+
+\begin{theorem}[the fourth isomorphism theorem for modules]
+	Let $N$ be a submodule of $M$. There is a one-to-one correspondence between the set of submodules of $M$ containing $N$ and the set of submodules of $M / N$ given by the map $\phi: M \twoheadrightarrow M / N$
+	$$
+		\bar{P} = \phi(P)
+	$$
+	
+	Moreover, consider the partial order by inclusions of submodules, the correspondence is also order preserving, that is, given submodule $P, Q$ containing $N$ in $M$, then $P \subseteq Q \iff \bar{P} \subseteq \bar{Q}$
+	\begin{center}
+		\begin{tikzcd}
+			N \arrow[r, hook] \arrow[d, dashed] & P \arrow[r, hook] \arrow[d, dashed] & Q \arrow[d, dashed] \arrow[r, hook] & M \arrow[d, dashed] \\
+			\set{0} \arrow[r, hook]             & \bar{P} \arrow[r, hook]        & \bar{Q} \arrow[r, hook]        & M / N             
+		\end{tikzcd}
+	\end{center}
+\end{theorem}
+
+\section{OPERATION ON SUBMODULE}
+
+\begin{definition}[sum, intersection]
+	Let $M$ be an $R$-module and $P$ and $Q$ be submodules of $M$, define the following modules
+	\begin{enumerate}
+		\item sum of submodules
+		$$
+			P + Q = \set{p + q: p \in P, q \in Q}
+		$$
+		
+		$P + Q$ is the smallest submodule containing $P$ and $Q$.
+		
+		\item arbitrary sum of submodules
+		
+		$$
+			\sum_{i \in I} N_i = \set{n_{j_1} + ... + n_{j_k}: j_1, ..., j_k \in I, k \in \Z_{\geq 0}}
+		$$
+		
+		\item intersection of submodules
+		$$
+			P \cap Q
+		$$
+	\end{enumerate}
+\end{definition}
+
+\begin{proposition}[the second and third isomorphism theorems for modules]
+	If $L \supseteq M \supseteq N$ are $R$-modules, then
+	$$
+		\frac{L / N}{M / N} \cong \frac{L}{M}
+	$$
+	
+	If $P$ and $Q$ are submodules of $M$, then 
+	$$
+		\frac{P + Q}{P} \cong \frac{Q}{P \cap Q}
+	$$
+\end{proposition}
+
+\begin{remark}
+	Let $f: M \to P$ be a $R$-module morphism such that $N \subseteq \ker f$ for some submodule $N$ of $M$, then $f$ factors uniquely through the natural projection $M \twoheadrightarrow M / N$ by a map $f': M / N \to P$ defined by $f'(\bar{x}) = f(x)$. This is a consequence of the second isomorphism theorems for modules.
+\end{remark}
+
+\begin{remark}[$IM$-notation]
+	Let $M$ be an $R$-module and $I$ be a subset in $R$, then
+	$$
+		IM = \set{i_1 m_1 + i_2 m_2 + ... + i_n m_n: i_1, ..., i_n \in I, m_1, ..., m_n \in M} \subseteq M
+	$$
+	
+	if $I$ is an ideal in $R$, then $IM$ is a submodule of $M$.
+	
+	Let $A$ be a subset of $R$, then $RA = (A)$ is the ideal generated by set $A$. 
+	
+	Let $f: A \to B$ be a ring map, and $\mf{a} \subseteq A$ be an ideal in $A$, then $f(\mf{a}) B$ is the extension of $\mf{a}$ in $B$
+\end{remark}
+
+\section{DIRECT SUM AND DIRECT PRODUCT}
+
+\begin{definition}[direct sum, direct product]
+	Let $(M_i)_{i \in I}$ be $R$-modules, define  the direct product $\prod_{i \in I} M_i$ and direct sum $\bigoplus_{i \in I} M_i$
+	$$
+		\bigoplus_{i \in I} M_i = \set*{(m_i)_{i \in I} \in \prod_{i \in I} M_i: \text{ $m_i$ are all zeros but a finite number}}
+	$$
+	
+	In particular, if $M$ and $N$ are $R$-module, $M \oplus N = M \times N$. Direct product and direct sum are $R$-modules with addition and multiplication defined element-wise.
+\end{definition}
+
+\section{EXACT SEQUENCE}
+
+\begin{definition}[complex, exact sequence]
+	Given a sequence $R$-module maps
+	\begin{center}
+		\begin{tikzcd}
+			... \arrow[r] & M_{i-1} \arrow[r, "f"] & M_i \arrow[r, "f"] & M_{i+1} \arrow[r] & ...
+		\end{tikzcd}
+	\end{center}
+	for every $i \in \Z$. The sequence is called a complex if
+	$$
+		\im (f: M_{i-1} \to M_i) \subseteq \ker (f: M_i \to M_{i+1})
+	$$
+	for every $i \in \Z$. The sequence is called exact at $M_i$ if 
+	$$
+		\im (f: M_{i-1} \to M_i) = \ker (f: M_i \to M_{i+1})
+	$$
+	The sequence is called exact if it is exact at every $i \in \Z$
+\end{definition}
+
+\begin{remark}
+	Some example of exact sequences
+	\begin{enumerate}
+		\item \begin{tikzcd}0 \arrow[r] & M \arrow[r, "f", hook] & N\end{tikzcd} is exact if and only if $f$ is injective
+		
+		\item \begin{tikzcd}N \arrow[r, "g", two heads] & Q \arrow[r] & 0\end{tikzcd} is exact if and only if $g$ is surjective
+		
+		\item \begin{tikzcd}0 \arrow[r] & M \arrow[r, "id"] & M \arrow[r] & 0\end{tikzcd} is always exact
+		
+		\item \begin{tikzcd}0 \arrow[r] & M \arrow[r, "f", hook] & N \arrow[r, "g", two heads] & Q \arrow[r] & 0\end{tikzcd} is exact if and only if $f$ is injective, $g$ is surjective, and $\im f = \ker g$. A sequence of this form is called short exact sequence (SES).
+		
+		\item given any $f: M \to N$, there are two short exact sequences
+		\begin{center}
+			\begin{tikzcd}
+				0 \arrow[r] & \ker f \arrow[r, hook] & M \arrow[r, "f", two heads] & \im f \arrow[r]    & 0 \\
+				0 \arrow[r] & \im f \arrow[r, hook]  & N \arrow[r, two heads]      & \coker f \arrow[r] & 0
+			\end{tikzcd}
+		\end{center}
+	\end{enumerate}
+\end{remark}
+ 
+\section{FINITELY GENERATED MODULE \\ FINITELY PRESENTED MODULE}
+
+\begin{definition}[free module]
+	A free $R$-module is a module $M$ isomorphic to $R^A$ for some set $A$
+\end{definition}
+
+\begin{definition}[finitely generated (f.g) module]
+	Let $M$ be an $R$-module, if there exists a finite set $\set{x_1, x_2, ..., x_n} \subseteq M$ such that every element $x \in M$ can be expressed as
+	$$
+		x = r_1 x_1 + r_2 x_2 + ... + r_n x_n
+	$$
+	for some $r_1, r_2, ..., r_n \in R$. Then $M$ is called finitely generated module.
+\end{definition}
+
+\begin{proposition}
+	$M$ is a finitely generated $R$-module if and only if there is an exact sequence
+	\begin{center}
+		\begin{tikzcd}
+			R^n \arrow[r, two heads] & M \arrow[r] & 0
+		\end{tikzcd}
+	\end{center}
+	so that the map $R^n \to M$ maps the $i$-th basis vector of $R^n$ into $x_i$
+\end{proposition}
+
+\begin{corollary}
+	$A$-module $M$ generated by one element is the same as a quotient module of $A$, that is, there exists an ideal $\mf{a}$ in $A$ so that $M \cong A / \mf{a}$
+\end{corollary}
+
+\begin{definition}[finitely presented (f.p)]
+	$M$ is finitely presented $R$-module if and only there is an exact sequence
+	\begin{center}
+		\begin{tikzcd}
+			R^m \arrow[r] & R^n \arrow[r, two heads] & M \arrow[r] & 0
+		\end{tikzcd}
+	\end{center}
+\end{definition}
+
+\begin{remark}[finitely generated module but not finitely presented]
+	Let $K$ be a field, $R = K[x_1, x_2, ...]$ be the polynomial ring of countably infinite number of variables over $K$, $\mf{m} = (x_1, x_2, ...)$, and $M = R / \mf{m} \cong K$. Then
+	$M$ is finitely genrated but not finitely presented as $R$-module.
+	\begin{center}
+		\begin{tikzcd}
+			R^m \arrow[r, "\nexists", dashed] & R \arrow[r, two heads] & M = R / \mf{m} \cong K \arrow[r] & 0
+		\end{tikzcd}
+	\end{center}
+	
+	\note{TODO}
+\end{remark}
+
+\begin{proposition}
+	Given a short exact sequence
+	\begin{center}
+		\begin{tikzcd}
+			0 \arrow[r] & M \arrow[r, hook] & N \arrow[r, two heads] & Q \arrow[r]    & 0
+		\end{tikzcd}
+	\end{center}
+	
+	Then,
+	\begin{enumerate}
+		\item If $M$ and $Q$ are finitely generated then $N$ is finitely generated
+		\item If $M$ and $Q$ are finitely presented then $N$ is finitely presented
+	\end{enumerate}
+\end{proposition}
+
+\begin{longproof}
+	\begin{enumerate}
+		\item (If $M$ and $Q$ are finitely generated then $N$ is finitely generated)
+		
+		\note{homework 1 (chapter 2 - problem 9)}
+		
+		\item (If $M$ and $Q$ are finitely presented then $N$ is finitely presented)
+		
+		\note{TODO - use snake lemma}
+	\end{enumerate}
+\end{longproof}
+
+\begin{lemma}[snake lemma]
+	Let $R$ be a ring, given a commutative diagram of modules and module homomorphisms
+	\begin{center}
+		\begin{tikzcd}
+			0 \arrow[r, dashed] & M_1 \arrow[r, "a"] \arrow[d, "f_1"] & M_2 \arrow[r, "b", two heads] \arrow[d, "f_2"] & M_3 \arrow[r] \arrow[d, "f_3"] & 0 \\
+			0 \arrow[r]         & N_1 \arrow[r, "c", hook]                  & N_2 \arrow[r, "d"]                  & N_3 \arrow[r, dashed]          & 0
+		\end{tikzcd}
+	\end{center}
+	
+	and rows are exact, then there exists a \textbf{natural} exact sequence 
+	\begin{center}
+		\begin{tikzcd}
+			0 \arrow[r, dashed] & \ker f_1 \arrow[r]   & \ker f_2 \arrow[r]   & \ker f_3 \arrow[lld, "\delta"'] &   \\
+			& \coker f_1 \arrow[r] & \coker f_2 \arrow[r] & \coker f_3 \arrow[r, dashed]    & 0
+		\end{tikzcd}
+	\end{center}
+	
+	Moreover, if there are maps $0 \to M_1$ and $N_3 \to 0$, then there are maps $0 \to \ker f_1$ and $\coker f_3 \to 0$. The connecting homomorphism $\delta: \ker f_3 \to \coker f_1$ is defined by
+	\begin{enumerate}
+		\item given $x \in \ker f_3 \subseteq M_3$
+		\item since $b$ is surjective, pick $y \in M_2$ so that $b y = x$, then $0 = f_3 x = f_3 b y = d f_2 y$, thus, $f_2 y \in \ker d = \im c$
+		\item since $c$ is injective, there is a unique $z \in N_1$ so that $c z = f_2 y$
+		\item define $\delta: \ker f_3 \to \coker f_1$ by $\delta(x) = [z]$
+	\end{enumerate}
+	
+	the construction is independent of the choice of $y$
+\end{lemma}
+
+\begin{remark}[natural exact sequence]
+	By natural, we mean
+	\begin{center}
+		\begin{tikzcd}
+			0 \arrow[rr, dashed] &                      & M_1 \arrow[rr, "a"] \arrow[dd, "f_1"] \arrow[rd] &                                          & M_2 \arrow[rr, "b"] \arrow[dd, "f_2"] \arrow[rd] &                                          & M_3 \arrow[rr] \arrow[dd, "f_3"] \arrow[rd] &                                    & 0 &   \\
+			& 0 \arrow[rr, dashed] &                                                  & M_1' \arrow[rr, "a'"] \arrow[dd, "f_1'"] &                                                  & M_2' \arrow[rr, "b'"] \arrow[dd, "f_2'"] &                                             & M_3' \arrow[rr] \arrow[dd, "f_3'"] &   & 0 \\
+			0 \arrow[rr]         &                      & N_1 \arrow[rr, "c"] \arrow[rd]                   &                                          & N_2 \arrow[rr, "d"] \arrow[rd]                   &                                          & N_3 \arrow[rr, dashed] \arrow[rd]           &                                    & 0 &   \\
+			& 0 \arrow[rr]         &                                                  & N_1' \arrow[rr, "c'"]                    &                                                  & N_2' \arrow[rr, "d'"]                    &                                             & N_3' \arrow[rr, dashed]            &   & 0
+		\end{tikzcd}
+	\end{center}
+	
+	induces
+	\begin{center}
+		\begin{tikzcd}
+			0 \arrow[r, dashed] & \ker f_1 \arrow[r] \arrow[d] & \ker f_2 \arrow[r] \arrow[d] & \ker f_3 \arrow[r, "\delta"] \arrow[d] & \coker f_1 \arrow[r] \arrow[d] & \coker f_2 \arrow[r] \arrow[d] & \coker f_3 \arrow[r, dashed] \arrow[d] & 0 \\
+			0 \arrow[r, dashed] & \ker f_1' \arrow[r]          & \ker f_2' \arrow[r]          & \ker f_3' \arrow[r, "\delta"]          & \coker f_1' \arrow[r]          & \coker f_2' \arrow[r]          & \coker f_3' \arrow[r, dashed]          & 0
+		\end{tikzcd}
+	\end{center}
+\end{remark}
+
+\begin{proof}
+	\note{TODO}
+\end{proof}
+
+
+
+\begin{lemma}[Nakayama lemma - useless version]
+	Let $A$ be a ring and $M$ be a finitely generated $A$-module. If $\phi \in \Hom_A(M, M)$ is an $R$-module endomorphism such that $\im \phi \subseteq IM$ for an ideal $I$ of $A$. Then there is an equation in $\Hom_A(M, M)$ 
+	$$
+		\phi^n + a_1 \phi^{n-1} + ... + a_{n-1} \phi + a_n = 0
+	$$
+	for some $a_1, a_2, ..., a_n \in I$
+\end{lemma}
+\begin{proof}
+	Let $\set{x_1, x_2, ..., x_n}$ generates $M$. Since $\im \phi \subseteq IM$, then for each $i=1, ..., n$, $\phi(x_i) \in IM$, we can write
+	$$
+	\phi(x_i) = \sum_{j=1}^n a_{ij} x_j
+	$$
+	for some $a_{ij} \in I$. We can rewrite the equation for each $i=1, ..., n$
+	$$
+	\sum_{j=1}^n (\delta_{ij} \phi - a_{ij}) x_j = 0
+	$$
+	where $\delta_{ij} = 1$ if and only if $i = j$, otherwise $\delta_{ij} = 0$ (Kronecker delta). We can rewrite the system of equations in matrix form
+	$$
+	A \vec{x} = 0
+	$$
+	where $\vec{x} = (x_1, x_2, ..., x_n) \in M^n$ is a vector of $n$-dimension and $A \in M_n[\Hom_A(M, M)]$ with $A_{ij} = \delta_{ij} \phi - a_{ij}$ is a $n \times n$ matrix. Consider the ring $\Hom_A(M, M)$ with multiplication defined by function composition, we have \footnote{$\adj(A)$ is the adjugate matrix of $A$}
+	$$
+	\det(A) I_n = \adj(A) A
+	$$
+	
+	Hence,
+	$$
+	\begin{bmatrix}
+		\det(A) x_1 \\
+		\det(A) x_2 \\
+		... \\
+		\det(A) x_n
+	\end{bmatrix} = \det(A) I_n \vec{x} = \adj(A) A \vec{x} = 0
+	$$
+	
+	Thus, $\det(A) x_i = 0$ for each $i= 1, 2,..., n$. Hence, $\det(A) = 0$ in $\Hom_A(M, M)$. Hence, there is a polynomial as required.
+\end{proof}
+
+\begin{corollary}
+	Let $M$ be a finitely generated $A$-module and $M = IM$ for an ideal $I$ of $A$, then there is $a \in A$ so that $a = 1 \mod I$ and $aM = 0$
+\end{corollary}
+
+\begin{proof}
+	Let $\phi = \id_{M}: M \to M$. Nakayama lemma implies that there exists $a_n \in I$ such that $\id_M + a_n = 0 \in \Hom_A(M, M)$. Let $a = 1 + a_n \in A$, then $aM = 0$
+\end{proof}
+
+\begin{lemma}[Nakayama lemma - version 1]
+	Let $M$ be a finitely generated $A$-module. If $I \subseteq J(A)$ is an ideal of $A$ and $IM = M$, then $M = 0$
+\end{lemma}
+
+\begin{proof}
+	Let $a \in A$ so that $a = 1 \mod I$ such that $aM = 0$. Since $I \subseteq J(A)$, then $a \in A^{\times}$ is a unit of $A$, hence $M = a^{-1} a M = 0$
+\end{proof}
+
+\begin{lemma}[Nakayama lemma - version 2]
+	Let $M$ be a finitely generated $A$-module.  If $I \subseteq J(A)$ is an ideal of $A$ and $N$ is a submodule of $M$ such that $M = IM + N$, then $M = N$.
+\end{lemma}
+
+\begin{proof}
+	Let $Q = M / N$ be an $A$-module, observe that $I(M / N) = (IM + N) / N$
+	$$
+		IQ = I(M / N) = (IM + N) / N = M / N = Q
+	$$
+	
+	By Nakayama lemma version 1, $Q = 0$, hence $M = N$
+\end{proof}
+
+\begin{remark}
+	Given any $R$-module $M$ and ideal $I$ of $R$, $M / IM$ is a $R/I$-module
+\end{remark}
+
+\begin{proof}
+	$IM$ is a submodule of $M$, then $M / IM$ is a quotient group of $M$. We need to define the action of $R/I$ on $M / IM$. Let $r \in R$, $m \in M$, define
+	\begin{align*}
+		\times: R / I \times M / IM &\to M / IM \\
+		(\bar{r}, \bar{m}) &\mapsto \overline{rm}
+	\end{align*}
+	
+	The action is well defined. Let $r_1 - r \in I$ and $m_1 - m \in IM$, then
+	$$
+	\bar{r}_1 \bar{m}_1 - \bar{r} \bar{m} = \overline{r_1 m_1 - rm}  = \overline{r_1(m_1 - m) + (r_1 - r)m} = 0
+	$$	
+\end{proof}
+
+\begin{lemma}[Nakayama lemma - version 3]
+	Let $(A, \mf{m}, k)$ be a local ring. If $M$ is finitely generated $A$-module and $\set{x_1, x_2, ..., x_n} \in M / \mf{m} M$ generates the $k$-vector space $M / \mf{m} M$, then any choice of lifts $\set{\tilde{x}_1, \tilde{x}_2, ..., \tilde{x}_n}$ generates $M$
+\end{lemma}
+
+\begin{proof}
+	Let $N$ be the submodule of $M$ generated by $\set{\tilde{x}_1, \tilde{x}_2, ..., \tilde{x}_n}$, then $M = N + \mf{m}M$. By Nakayama lemma version 2, $N = M$
+\end{proof}
+

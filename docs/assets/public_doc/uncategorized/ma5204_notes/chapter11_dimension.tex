@@ -1,0 +1,357 @@
+\chapter{DIMENSION THEORY}
+
+\begin{remark}[dimension, projective dimension, embedding dimension]
+	dimension of a variety is like manifold dimension. embedding dimension is like the dimension of the tangent space.
+	
+\end{remark}
+
+\section{NOETHERIAN RING}
+
+\begin{definition}[minimal prime]
+	Let $\mf{p}$ be a prime in $A$, then
+	$$
+		\hgt \mf{p} = \sup \set{n \in \N: \text{ there exists a chain of primes } \mf{p}_0 \subsetneq \mf{p}_1 \subsetneq \mf{p}_2 \subsetneq ... \subsetneq \mf{p}_n = \mf{p}}
+	$$
+	
+	which is also $\codim V(\mf{p})$ in $\Spec A$ (in manifold sense) and
+	$$
+		\dim A = \sup_{\mf{p} \subseteq A} \hgt \mf{p}
+	$$
+	
+	If $I$ is an ideal in $A$, then a minimal prime $\mf{p}$ over $I$ is the minimal element of the poset set of primes containing $I$ ordered by inclusion. Minimal prime over $I$ is also the minimal prime in $A / I$
+\end{definition}
+
+\begin{theorem}[Krull principal ideal theorem]
+	Let $A$ be a Noetherian ring and any $x \in A$, then any minimal prime over the principal ideal $(x)$ has height $\hgt \mf{p} \leq 1$
+\end{theorem}
+
+\begin{theorem}[Krull height theorem (KHT)]
+	Let $A$ be a Noetherian ring
+	\begin{enumerate}
+		\item given $x_1, ..., x_n \in A$, any minimal prime $\mf{p}$ over finitely generated ideal $(x_1, ..., x_n)$ has height $\hgt \mf{p} \leq n$
+		
+		\item if $\mf{q}$ is a prime of height $n$ then there exists $x_1, ..., x_n$ such that $\mf{q}$ is minimal over the finitely generated ideal $(x_1, ..., x_n)$
+	\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+	\note{TODO}
+\end{proof}
+
+\subsection{CONSEQUENCES OF KRULL HEIGHT THEOREM FOR LOCAL RING}
+
+\begin{corollary}
+	Some corollaries of KHT
+	\begin{enumerate}
+		\item If $(A, \mf{m})$ is a Noetherian local ring, then $\dim A = \hgt \mf{m} < \infty$
+		\item If $A$ is a Noetherian ring, and $\mf{p} \subseteq A$ is a prime, then $\hgt \mf{p} < +\infty$
+	\end{enumerate}
+\end{corollary}
+
+\begin{lemma}[prime avoidance lemma]
+	Let $I$ be an ideal in a ring $A$, let $J_1, ..., J_n$ be ideals in $A$ such that for all but $\leq 2$ of them are not prime. If $I \nsubseteq J_i$ for every $i=1, ..., n$, then
+	$$
+		I \nsubseteq \bigcup_{i=1}^n J_i
+	$$ 
+\end{lemma}
+
+\begin{corollary}
+	If $k$ is an algebraically closed field, then $\dim k[x_1, ..., x_n] = n$
+\end{corollary}
+
+\begin{proposition}
+	Let $I$ be an ideal in a Noetherian local ring $(A, \mf{m})$, the following are equivalent
+	\begin{enumerate}
+		\item $\mf{m}$ is a minimal prime over $I$
+		\item $\sqrt{I} = \mf{m}$
+		\item $I$ is $\mf{m}$-primary
+		\item $\mf{m}^n \subseteq I$ for large $n$
+	\end{enumerate}
+\end{proposition}
+
+
+\begin{definition}[system of parameters (SoP)]
+	By KHT, given a Noetherian local ring $(A, \mf{m})$ with $\dim A = \hgt \mf{m} = n < \infty$, we can choose exactly $n$ elements $x_1, ..., x_n \in A$ so that $\mf{m}$ is minimal over $(x_1, ..., x_n)$, that is $(x_1, ..., x_n)$ is $\mf{m}$-primary. Such a list is called a system of parameters of $A$
+\end{definition}
+
+\begin{proposition}
+	Let $(A, \mf{m})$ be a Noetherian local ring and $x_1, ..., x_m$ be some elements in $\mf{m}$ with $m \leq \dim A$, then the following are equivalent
+	\begin{enumerate}
+		\item $x_1, ..., x_m$ can be extended into a system of parameters
+		\item $\dim A / (x_1, ..., x_m) \leq \dim A - m$
+		\item $\dim A / (x_1, ..., x_m) = \dim A - m$
+	\end{enumerate}
+\end{proposition}
+
+\begin{longproof}
+	($2 \implies 1$) Pick a system of parameters $y_1, ..., y_d$ of the local ring $A / (x_1, ..., x_m)$ of dimension $d$, then $(y_1, ..., y_d)$ is $\mf{m}$-primary in $A / (x_1, ..., x_m)$, that is every element $z + a_1 x_1 + ... + a_m x_m \in \mf{m} + (x_1, ..., x_m)$ satisfies $(z + a_1 x_1 + ... + a_m x_m)^k = z^k + b_1 x_1 + ... + b_m x_m \in (y_1, ..., y_d)$ for some $k$, so $z^k \in (x_1, ..., x_m, \tilde{y}_1, ..., \tilde{y}_d)$ where $\tilde{y}_i \in A$ is a lift for $y_i$. Hence, $(x_1, ..., x_n, \tilde{y}_1, ..., \tilde{y}_d)$ is $\mf{m}$-primary. So, $\mf{m}$ is minimal prime over $(x_1, ..., x_n, \tilde{y}_1, ..., \tilde{y}_d)$, by KHT,
+	$$
+		\dim A = \hgt{\mf{m}} \leq \dim A / (x_1, ..., x_m) + m \leq \dim A
+	$$
+	
+	So $\dim A = d + m$. Hence, $(x_1, ..., x_n, \tilde{y}_1, ..., \tilde{y}_d)$ is a system of parameters for $A$
+	
+	($1 \implies 3$) Choose $y_i$ so that $(x_1, ..., x_m, y_1, ..., y_d)$ is a system of parameters for $A$, then any element $z + a_1 x_1 + ... + a_m x_m \in \mf{m} + (x_1, ..., x_m)$ satisfies $z^k + a_1 x_1 + ... + a_m x_m = (z + a_1 x_1 + ... + a_m x_m)^k + b_1 x_1 + ... + b_m x_m \in (x_1, ..., x_m, y_1, ..., y_d)$ for some $k$. Hence, $(\bar{y}_1, ..., \bar{y}_d)$ is $\mf{m}$-primary in $A / (x_1, ..., x_m)$ where $\bar{y}_i \in A / (x_1, ..., x_m)$ is the projection of $y_i$, so $d = \dim A / (x_1, ..., x_m)$. Hence
+	$$
+		\dim A / (x_1, ..., x_m) = d = \dim A - m
+	$$
+
+\end{longproof}
+
+\subsection{CONSEQUENCES OF KRULL HEIGHT THEOREM FOR NON-LOCAL RING}
+
+\begin{lemma}
+	Let $A$ be Noetherian and $\mf{p} \subseteq A$ be a minimal prime, then any element $x \in \mf{p}$ is a zero divisor.
+\end{lemma}
+
+\begin{proof}
+	If $\mf{p}$ is minimal, then $\dim A_\mf{p} = \hgt \mf{p} = 0$, $A_\mf{p}$ is local Noetherian of dimension $0$, so it is local Artinian. So, the maximal ideal $\mf{p} A_\mf{p}$ is nilpotent. That is, for any nonzero element $x \in \mf{p}$, let $n$ be the smallest integer so that $x^n = 0$ in $A_\mf{p}$. Hence, $x^n y = 0$ in $A$ for some $y \in A - \mf{p}$. Since $y \neq 0$ and $x^{n-1} \neq 0$ in $A$, $x (x^{n-1} y) = 0$ implies $x$ is a zero divisor.
+\end{proof}
+
+\begin{theorem}
+	Let $A$ be a Noetherian ring and $x$ is a non zero-divisor, then 
+	$$
+	\dim A / (x) \leq \dim A - 1
+	$$
+\end{theorem}
+
+\begin{proof}
+	(Assuming $0 < \dim A$ and $\dim A < +\infty$) Given any maximal chain of primes in $A / (x)$ of strict inclusions
+	$$
+	\mf{p}_0 \subsetneq ... \subsetneq \mf{p}_n
+	$$
+	the chain is  lifted into a chain of primes in $A$ of strict inclusions
+	$$
+	\tilde{\mf{p}}_0 \subsetneq ... \subsetneq \tilde{\mf{p}}_n
+	$$
+	
+	Since $x \in \tilde{\mf{p}}_0$ is a non zero-divisor, hence $\tilde{\mf{p}}_0$ is not a minimal prime, we can extend the lifted chain by the minimal prime contained in $\tilde{\mf{p}}_0$. Hence
+	$$
+	\dim A / (x) \leq \dim A - 1
+	$$
+\end{proof}
+
+\begin{remark}
+	$x$ being a non zero-divisor is necessary, if not let $A = k[x, y] / (x, y)$ for some field $k$, then $\dim A = 1$, and $\dim A / (x) = \dim k[y] = 1$
+\end{remark}
+
+\begin{theorem}
+	Let $A$ be Noetherian, then
+	$$
+		\dim A[x] = \dim A + 1
+	$$
+	and
+	$$
+		\dim A[[x]] = \dim A + 1
+	$$
+\end{theorem}
+
+\begin{proof}
+	\note{TODO}
+\end{proof}
+
+\begin{theorem}
+	Let $A \to B$ be a map of Noetherian rings. Let $\mf{q} \subseteq B$ be a prime ideal and $\mf{p} = \mf{q} \cap A$, then
+	$$
+		\hgt \mf{q} \leq \hgt \mf{p} + \dim B_\mf{q} / \mf{p} B_\mf{q}
+	$$
+	
+	if going-down theorem holds for $A \to B$, then $\hgt \mf{q} = \hgt \mf{p} + \dim B_\mf{q} / \mf{p} B_\mf{q}$
+\end{theorem}
+
+\begin{remark}
+	A local homomorphism of Notherian rings $(A, \mf{m})$ and $(B, \mf{n})$ is a ring map $\phi: A \to B$ so that $\mf{m} = \mf{n} \cap A$, then
+	$$
+	\dim B \leq \dim A + \dim B / \mf{p} B
+	$$
+	
+	if the map is flat, then the equality holds.
+\end{remark}
+
+\section{REGULAR  NOETHERIAN LOCAL RING}
+
+\subsection{AUSLANDER-BUCHSBAUM-SERRE THEOREM}
+
+\begin{theorem}[Auslander-Buchsbaum-Serre]
+	Let $(A, \mf{m}, k)$ be a Noetherian local ring, then the following are equivalent
+	\begin{enumerate}
+		\item $A$ is regular, that is $\embdim A = \dim A$
+		\item $\projdim_A k < \infty$
+		\item $\projdim_A M < \infty$ for every finitely generated $A$-module $M$
+	\end{enumerate}
+	
+	Moreover, $A$ is regular implies every localization $A_\mf{p}$ is regular.
+\end{theorem}
+
+The proof of Auslander-Buchsbaum-Serre theorem, consists the proving the following inequalities assuming $\projdim_A k < +\infty$
+$$
+	\dim A \leq \embdim A \leq \projdim_A k = \depth_A A \leq \dim A
+$$
+
+\begin{definition}[cotangent space, embedding dimension]
+	Let $(A, \mf{m}, k)$ be a Noetherian local ring, then $\mf{m} / \mf{m}^2$ is a $k$-vector space and called cotangent space. Define the embedding dimension of $A$ by
+	$$
+		\embdim A = \dim_k \mf{m} / \mf{m}^2
+	$$
+\end{definition}
+
+\begin{remark}
+	Embedding dimension of $A$ is also the least \footnote{that is also the rank of $\mf{m}$ as an $A$-module} number of generators $s \geq 0$ of $\mf{m}$. Since $\mf{m}$ is minimal over itself, by KHT
+	$$
+		\dim A = \hgt \mf{m} \leq s = \embdim A
+	$$
+\end{remark}
+
+\begin{proof}
+	$A$ is Noetherian, so $\mf{m}$ is finitely generated. Let $s$ be the least number so that $x_1, ..., x_s$ generates $\mf{m}$, so $\bar{x}_1, ..., \bar{x}_s$ also generates $\mf{m} / \mf{m}^2$, so $\embdim A \leq s$. On the other hand, pick a basis $y_1, ..., y_r$ on the $k$-vector space $\mf{m} / \mf{m}^2$, by Nakayama lemma, the lifts $\tilde{y}_1, ..., \tilde{y}_r$ also generates $\mf{m}$, hence $\embdim A \geq s$.
+	
+	
+\end{proof}
+
+\begin{definition}[$I$-depth]
+	Let $I$ be an ideal in a ring $A$, then $I$-depth of an $A$-module $M$ is defined by the maximal length of a $M$-regular sequence contained in $I$, or equivalently
+	$$
+		\depth_I M = \inf \set{i \geq 0: \Ext_A^i(A / I, M) \neq 0}
+	$$
+	
+	When $(A, \mf{m})$ is a Noetherian local, we write $\depth_A M = \depth_{\mf{m}} M$
+\end{definition}
+
+\begin{remark}
+	If $A = k[[x_1, ..., x_n]]$ for some field $k$, then $x_1, ..., x_n$ is a $A$-regular sequence, then
+	$$
+		\depth_A A \geq n
+	$$
+\end{remark}
+
+\begin{theorem}
+	Let $(A, \mf{m}, k)$ be a Noetherian local ring, then $\depth_A A \leq \dim A$
+\end{theorem}
+
+\begin{proof}
+	We will prove by induction
+	
+	\textbf{base case:} If $\dim A = 0$, since $A$ is Noetherian local of dimension $0$, $A$ is Artinian local, so $\mf{m}$ is nilpotent, that is, element every element of $A$ must be either a unit or a zero-divisor. We need to show that $\depth_A A = 0$, that is there is no $A$-regular sequence in $A$. Suppose there is an  $A$-regular sequence $x_1, ..., x_r$, then $x_1$ cannot be unit since $A / (x_1, ..., x_r) A \neq 0$. Moreover, $x_1$ cannot be zero divisor since $x_1: A \to A$ is injective. So, no $A$-regular sequence exists in $A$, hence $\depth_A A = 0$
+	
+	\textbf{induction case:} when $\dim A = n > 0$, if $\depth_A A = 0$, we are done. If $\depth_A A = r > 0$, pick a maximal $A$-regular sequence $a_1, a_2, ..., a_r \in A$. Note that, $\frac{A / (a_1)}{(a_2, ..., a_i) A / (a_1)} = \frac{A}{(a_1, a_2, ..., a_i)}$, so $\frac{A}{(a_1, ..., a_r)}\neq 0$ and each $a_i: A / (a_1, ..., a_i) \to A / (a_1, ..., a_i)$ injective imply $\bar{a}_2, ..., \bar{a}_r \in A / (a)$ is a $A / (a)$-regular sequence, then
+	$$
+	\depth_A A - 1 \leq \depth_{A / (a)} A / (a)
+	$$
+	
+	Since $a$ is not a zero divisor, $\dim A / (a) \leq \dim A - 1 = n-1$, by induction hypothesis for $A / (a)$
+	$$
+	\depth_{A / (a)} A / (a) \leq \dim A / (a) \leq \dim A - 1 
+	$$
+	
+	Hence, 
+	$$
+	\depth_A A \leq \dim A
+	$$
+\end{proof}
+
+\begin{theorem}[Auslander–Buchsbaum formula]
+	Let $(A, \mf{m}, k)$ be a Noetherian local ring and $M$ be a finitely generated module with $\projdim_A M < +\infty$, then 
+	$$
+		\projdim_A M + \depth_A M = \depth_A A
+	$$
+	
+	In particular, $\projdim_A M < +\infty \implies \projdim_A k = \depth_A A$
+\end{theorem}
+
+\begin{proposition}
+	Let $(A, \mf{m}, k)$ be any Noetherian local ring, let $s = \embdim A$, then
+	$$
+		\dim_k \Tor_i^A(k, k) \geq {s \choose i}
+	$$
+	for every $i=0, ..., s$. Recall that 
+	$$
+		\projdim_A M = \sup\set{i \geq 0: \Tor_i^A(M, k) \neq 0} \leq \projdim_A k
+	$$
+	
+	Then, $\Tor_i^A (k, k) \neq 0$ for every $i=0, ..., s$, hence $\embdim A \leq \projdim_A k$
+\end{proposition}
+
+\begin{definition}[Koszul complex]
+	Let $A$ be a ring and $x_1, ..., x_n \in A$, define the chain complex $K_\bullet = K_\bullet(x_1, ..., x_n; A)$ as follows: for each $p=0, ..., n$, let 
+	$$
+		K_p = \bigoplus_{i = \set{i_1 < ... < i_p}} A e_i
+	$$
+	where each $i$ is a ordered subset of $\set{1, ..., n}$ of size $p$, denoted by $i = \set{i_1 < ... < i_p}$. Otherwise, if $p \neq 0, ..., n$, then $K_p = 0$. The differentials are defined by
+	\begin{align*}
+		d_p: K_p &\to K_{p-1} \\
+		e_{\set{i_1 < ... < i_p}} &\mapsto \sum_{r=1}^p (-1)^{r-1} e_{\set{i_1 < ... < \hat{i}_r < ... < i_p}}
+	\end{align*}
+	
+	where $\set{i_1 < ... < \hat{i}_r < ... < i_p} = \set{i_1 < ... < i_{r-1} < i_{r+1} < ... < i_p}$ is the original set dropping $i_r$
+\end{definition}
+
+\begin{remark}
+	Let $(A, \mf{m}, k)$ be a Noetherian local ring, $s = \embdim A$ and let $(x_1, ..., x_s) = \mf{m}$, then there exists maps
+	$$
+		f_\bullet: K_\bullet(x_1, ..., x_s; A) \to L_\bullet
+	$$
+	realizing $K_i$ as a summand of $L_i$ since $\rank K_i = {s \choose i}$
+\end{remark}
+
+\subsection{REGULAR IMPLIES FINITE PROJECTIVE DIMENSION}
+
+\begin{definition}[regular system of parameters (RSoP)]
+	Let $(A, \mf{m}, k)$ be a regular Noetherian local ring of dimension $n$, we can choose a system of parameters $x_1, ..., x_n$ generating $\mf{m}$, such a system of parameters is called a regular system of parameters.
+\end{definition}
+
+\begin{remark}
+	$k[[x_1, ..., x_n]]$ is regular Noetherian local ring with $x_1, ..., x_n$ being a regular system of parameters
+\end{remark}
+
+\begin{proposition}
+	Let $(A, \mf{m}, k)$ be a regular Noetherian local ring of dimension $n$, let $x_1, ..., x_i \in \mf{m}$ for $i \leq n$, then the following are equivalent
+	\begin{enumerate}
+		\item $x_1, ..., x_i$ can be extended into a regular system of parameters
+		\item $\im (x_1, ..., x_i)$ in $\mf{m} / \mf{m}^2$ as a $k$-vector space are linear independent
+		\item $A / (x_1, ..., x_i)$ is regular Noetherian local of dimension $n-i$
+	\end{enumerate}
+\end{proposition}
+
+\begin{theorem}
+	If $A$ is regular Noetherian local ring then $A$ is a domain
+\end{theorem}
+
+\begin{corollary}
+	A regular Noetherian local ring with $x_1, ..., x_n$ being a regular system of parameters, then $x_1, ..., x_n$ is also a $A$-regular sequence.
+\end{corollary}
+
+\begin{lemma}
+	If $0 \to M_1 \to M_2 \to M_3 \to 0$ is a short exact sequence, then
+	$$
+		\projdim_A M_3 \leq \max \set{\projdim_A M_2, 1 + \projdim_A M_1}
+	$$
+\end{lemma}
+
+\section{REGULAR NOETHERIAN RING}
+
+\begin{definition}
+	A Noetherian ring $A$ is regular if $A_\mf{p}$ is regular for every prime $\mf{p}$ if and only if $A_\mf{m}$ is regular for every maximal $\mf{m}$
+\end{definition}
+
+\begin{remark}
+	Some remarks on regular ring
+	\begin{enumerate}
+		\item if $A$ is regular so are $A[x]$ and $A[[x]]$
+		\item if $A$ is local, let $\hat{A}$ denote the $\mf{m}$-adic completion, then 
+		$$
+			A \text{ is regular } \iff \hat{A} \text{ is regular }
+		$$
+		
+		\item if $A$ is local and $\mf{m}$-adic complete, then 
+		$$
+			A \cong R[[x_1, ..., x_n]] / I
+		$$
+		
+		for $R$ being either a field or discrete valuation ring. Moreover if $A$ is regular, then
+		$$
+			A \cong R[[x_1, ..., x_n]]
+		$$
+		
+		this is called Cohen structure theorem
+	\end{enumerate}
+\end{remark}

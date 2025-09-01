@@ -1,0 +1,512 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\input{header}
+
+
+\title{ma5210 assignment 2}
+\author{Nguyen Ngoc Khanh - A0275047B}
+\date{August 2024}
+
+\begin{document}
+
+\maketitle
+
+\section{Questions 1-4}
+
+\subsection{Question 1}
+Let $A$ be an $m$ by $m$ real matrix. Suppose $A^2 = -I_m$ where $I_m$ is the identity matrix
+\begin{enumerate}
+    \item Show that $A$ is an invertible matrix
+    \item Show that $m$ is an even integer
+\end{enumerate}
+
+\begin{proof}[Answer]
+The inverse of $A$ is $A^{-1} = -A$. If $A^2 = -I_m$, then 
+$$
+    \det(A)^2 = \det(A^2) = \det(-I_m) = (-1)^m
+$$
+
+If $m$ is odd, then we have $\det(A)^2 = -1$ which is a contradiction since $\det(A)$ is real.
+\end{proof}
+
+\subsection{Question 2}
+
+Let $V$ be a $\R$-vector space of finite dimension $m$. Let $J$ be a complex structure on $V$ i.e. $J: V \to V$ is an $\R$-linear transformation such that $J^2 = -\id_V$
+
+\begin{enumerate}
+    \item Show that $J$ is an invertible linear transformation
+    \item Show that $m$ is an even integer
+\end{enumerate}
+
+\begin{proof}[Answer]
+The inverse of $J$ is $J^{-1} = -J$. Let $B = \set{e_1, e_2, ..., e_m}$ be a basis of $V$. Then, let $A \in \R^{m \times m}$ be the matrix of $J$ over $B$. Then we have, $A^2 = -I_m$. Therefore, $m$ is even.
+\end{proof}
+
+\subsection{Question 3}
+Let $U'$ be an open subset of $\R^6$. Let $\phi$ be a section in $\mathcal{E}^2(U') = \mathcal{E}(U', \wedge^2 T^*(\R^6))$. We write
+$$
+    \phi(x) = \sum_{1 \leq j < k \leq 6} f_{jk}(x) dx_j \wedge dx_k
+$$
+
+where $x = (x_1, x_2, ..., x_6) \subseteq U'$ and $f_{jk}: U' \to \R$ is a smooth function.
+
+\begin{enumerate}
+    \item Compute $d \phi \subseteq \mathcal{E}^3(U')$ in terms of $dx_1, dx_2, ..., dx_6$
+
+    \item Show that $d^2 \phi = 0$ in $\mathcal{E}^4(U')$
+\end{enumerate}
+
+\subsubsection{Compute $d \phi \subseteq \mathcal{E}^3(U')$}
+
+\begin{align*}
+    d\phi
+    &= d\tuple*{\sum_{1 \leq j < k \leq 6} f_{jk} dx_j \wedge dx_k} \\
+    &= \sum_{1 \leq j < k \leq 6} d f_{jk} \wedge dx_j \wedge dx_k \\
+    &= \sum_{1 \leq j < k \leq 6} \tuple*{\sum_{i=1}^6 \frac{\partial f_{jk}}{\partial x_i} dx_i} \wedge dx_j \wedge dx_k \\
+    &= \sum_{1 \leq j < k \leq 6} \sum_{i=1}^6 \frac{\partial f_{jk}}{\partial x_i} dx_i \wedge dx_j \wedge dx_k
+\end{align*}
+
+\subsubsection{Show that $d^2 \phi = 0$ in $\mathcal{E}^4(U')$}
+
+We will show that $d^2 = 0$ for the general case.
+
+Let $U' \subseteq \R^n$ be an open set, let $0 \leq m < n$, let $\phi$ be a section in $\mathcal{E}^m(U') = \mathcal{E}(U', \wedge^m T^*(\R^n))$. Let 
+$$
+    [n] = \set{1, ..., n}
+$$
+
+for any subset $\sigma \subseteq [n]$ of size $m$ where $\sigma = \set{i_1 < i_2 < ... < i_m}$, let
+$$
+    dx_\sigma = dx_{i_1} \wedge dx_{i_2} \wedge ... \wedge dx_{i_m} \in \mathcal{E}^m(U')
+$$
+
+Then a basis of $\mathcal{E}^m(U')$ is
+$$
+    D_m =\set{dx_\sigma: \sigma \subseteq [n], |\sigma| = m}
+$$
+
+We can write $\phi \in \mathcal{E}^m(U')$ as 
+$$
+    \phi = \sum_{\sigma \in D_m} f_\sigma dx_\sigma
+$$
+
+By defintion of $d: \mathcal{E}^m(U') \to \mathcal{E}^{m+1}(U')$, we have
+
+$$
+    d\phi = \sum_{\sigma \in D_m} d f_\sigma \wedge dx_\sigma = \sum_{\sigma \in D_m} \sum_{i=1}^n \frac{\partial f_\sigma}{\partial x_i} dx_i \wedge dx_\sigma
+$$
+
+And
+\begin{align*}
+    d^2 \phi 
+    &= \sum_{\sigma \in D_m} \sum_{i=1}^n d \tuple*{\frac{\partial f_\sigma}{\partial x_i}} \wedge dx_i \wedge dx_\sigma \\
+    &= \sum_{\sigma \in D_m} \sum_{i=1}^n \sum_{j=1}^n \frac{\partial^2 f_\sigma}{\partial x_i\partial x_j} dx_j \wedge dx_i \wedge dx_\sigma \\
+\end{align*}
+
+For all pairs of $(i, j) \in [n] \times [n]$, if $i = j$, then $dx_i \wedge dx_i \wedge dx_\sigma = 0$. If $i \neq j$, we have
+$$
+    \frac{\partial^2 f_\sigma}{\partial x_i\partial x_j} dx_j \wedge dx_i \wedge dx_\sigma + \frac{\partial^2 f_\sigma}{\partial x_i\partial x_j} dx_i \wedge dx_j \wedge dx_\sigma = 0
+$$
+
+Therefore, $d^2 = 0$. This is also true for the case $m < 0$ or $n \leq m$ since $d^2: \mathcal{E}^m(U')\to \mathcal{E}^{m+2}(U')$ is a linear map from or to a zero dimensional vector space.
+
+
+\subsection{Question 4}
+
+Let $M$ be a real smooth $\mathcal{E}$-manifold of dimension $6$.
+\begin{enumerate}
+    \item Let $h: U \to U'$ be a chart where $U'$ is an open subset of $\R^6$. Let $\omega \in \mathcal{E}^2(U) = \mathcal{E}(U, \wedge^2 T^*(M))$. Show that $d^2 \omega = 0$
+
+    \item Consider the composition of maps
+\begin{center}
+\begin{tikzcd}
+\mathcal{E}^2(M) \arrow[r, "d"] \arrow[rr, "d^2"', bend right] & \mathcal{E}^3(M) \arrow[r, "d"] & \mathcal{E}^4(M)
+\end{tikzcd}
+\end{center}
+
+    True or false: $d^2 = 0$, give proof, counterexample
+
+\end{enumerate}
+
+\subsubsection{Show that $d^2 \omega = 0$}
+
+The diagram below commutes ($m=2$)
+
+\begin{center}
+\begin{tikzcd}
+\mathcal{E}^m(U') \arrow[r, "d"'] \arrow[d, "\cong"] \arrow[rr, "d^2 = 0", bend left] & \mathcal{E}^{m+1}(U') \arrow[d, "\cong"] \arrow[r, "d"'] & \mathcal{E}^{m+2}(U') \arrow[d, "\cong"] \\
+\mathcal{E}^m(U) \arrow[r, "d", dotted] \arrow[rr, "d^2"', dotted, bend right]        & \mathcal{E}^{p+1}(U) \arrow[r, "d", dotted]              & \mathcal{E}^{m+2}(U)                    
+\end{tikzcd}
+\end{center}
+
+Therefore, $d^2: \mathcal{E}^m(U) \to \mathcal{E}^{m+2}(U)$ is a composition of 
+\begin{align*}
+    \cong&: \mathcal{E}^m(U) \to \mathcal{E}^m(U') \\
+    d^2&: \mathcal{E}^m(U') \to \mathcal{E}^{m+2}(U') \\
+    \cong&: \mathcal{E}^{m+2}(U') \to \mathcal{E}^{m+2}(U)
+\end{align*}
+
+$d^2: \mathcal{E}^m(U') \to \mathcal{E}^{m+2}(U')$ is a zero map implies $d^2: \mathcal{E}^m(U) \to \mathcal{E}^{m+2}(U)$ is a zero map
+
+\subsubsection{True or false: $d^2 = 0$, give proof, counterexample}
+
+Let $U \subseteq M$ be a chart of $M$. The diagram below commutes
+
+\begin{center}
+\begin{tikzcd}
+\mathcal{E}^m(U) \arrow[r, "d"'] \arrow[rr, "d^2 = 0", bend left]                                            & \mathcal{E}^{m+1}(U) \arrow[r, "d"']                                      & \mathcal{E}^{m+2}(U)                               \\
+\mathcal{E}^m(M) \arrow[u, "r^M_U", two heads] \arrow[r, "d", dashed] \arrow[rr, "d^2"', dashed, bend right] & \mathcal{E}^{m+1}(M) \arrow[u, "r^M_U", two heads] \arrow[r, "d", dashed] & \mathcal{E}^{m+2}(M) \arrow[u, "r^M_U", two heads]
+\end{tikzcd}
+\end{center}
+
+Let $\omega \in \mathcal{E}^m(M) = \mathcal{E}(M, \wedge^m T^*(M))$, then the restriction of $d^2 \omega$ on $U$ denoted by $(d^2 \omega) \vert_{U} \in \mathcal{E}^{m+2}(U) = \mathcal{E}(U, \wedge^{m+2} T^*(M))$ is
+
+$$
+    (d^2 \omega)\vert_U = r^M_U d^2 \omega = d^2 r^M_U \omega = 0
+$$
+
+$d^2 \omega$ restricted to any chart is zero, therefore, it is zero globally.
+
+\section{Questions 5-10}
+
+In the last few questions, we clarify some connections between the real tangent spaces and complex tangent spaces of a complex manifold. 
+
+Let $M = \C^3$ which is a complex analytic manifold. When we consider $M$ as a real manifold, we will denote it by $M_0$ to avoid confusion. We have $M_0 = \R^6$ and the bijection $\Phi: M \to M_0$ is given by
+$$
+    \Phi(z_1, z_2, z_3) = (x_1, y_1, x_2, y_2, x_3, y_3)
+$$
+
+where $z_j = x_j + \sqrt{-1} y_j$ for $j=1, 2, 3$.
+
+We fix a point $x = (a_1, b_1, a_2, b_2, a_3, c_3) \in M_0$.
+
+The real tangent space of $M_0$ at $x$ is
+$$
+    T_x(M_0) = \R-\Span \set*{\frac{\partial}{\partial x_1}, \frac{\partial}{\partial y_1}, \frac{\partial}{\partial x_2}, \frac{\partial}{\partial y_2}, \frac{\partial}{\partial x_3}, \frac{\partial}{\partial y_3}}
+$$
+
+We set 
+\begin{align*}
+    \frac{\partial }{\partial z_j} = \frac{1}{2} \tuple*{\frac{\partial}{\partial x_j} - \sqrt{-1} \frac{\partial}{\partial y_j}} \\
+    \frac{\partial }{\partial \bar{z}_j} = \frac{1}{2} \tuple*{\frac{\partial}{\partial x_j} + \sqrt{-1} \frac{\partial}{\partial y_j}}
+\end{align*}
+
+for $j=1,2,3$
+
+\subsection{Question 5}
+
+Show that $T_x(M_0) \otimes_\R \C = T^{1,0} \oplus T^{0,1}$ where
+\begin{align*}
+    T^{1,0} = \C-\Span \set*{\frac{\partial}{\partial z_1}, \frac{\partial}{\partial z_2}, \frac{\partial}{\partial z_3}} \\
+    T^{0, 1} = \C-\Span \set*{\frac{\partial}{\partial \bar{z}_1}, \frac{\partial}{\partial \bar{z}_2}, \frac{\partial}{\partial \bar{z}_3}} \\
+\end{align*}
+
+\begin{proof}
+A basis of $T_x(M_0) \otimes_\R \C$ is
+
+$$
+    \set*{\frac{\partial}{\partial x_1}, \frac{\partial}{\partial y_1}, \frac{\partial}{\partial x_2}, \frac{\partial}{\partial y_2}, \frac{\partial}{\partial x_3}, \frac{\partial}{\partial y_3}} \otimes_\R 1
+$$
+
+Without confusion, we denote the basis vectors of $T_x(M_0) \otimes_\R \C$ by
+$$
+    \frac{\partial}{\partial x_j} := \frac{\partial}{\partial x_j} \otimes_\R 1 \text{ and } \frac{\partial}{\partial y_j} := \frac{\partial}{\partial y_j} \otimes_\R 1
+$$
+
+It is clear that basis vectors of $T^{1,0} \oplus T^{0,1}$ are linear combinations of basis vectors of $T_x(M_0) \otimes \C$, that is
+
+\begin{align*}
+    \frac{\partial}{\partial z_j} &= \frac{1}{2} \tuple*{\frac{\partial}{\partial x_j} - i \frac{\partial}{\partial y_j}} \\
+    \frac{\partial}{\partial \bar{z}_j} &= \frac{1}{2} \tuple*{\frac{\partial}{\partial x_j} + i \frac{\partial}{\partial y_j}}
+\end{align*}
+
+Therefore, $T_x(M_0) \otimes_\R \C \supseteq T^{1,0} \oplus T^{0,1}$. Moreover, basis vectors of $T_x(M_0) \otimes_\R \C$ are also linear combinations of basis vectors of $T^{1,0} \oplus T^{0,1}$
+
+\begin{align*}
+    \frac{\partial}{\partial x_j} &= \frac{\partial}{\partial \bar{z}_j} +  \frac{\partial}{\partial z_j} \\
+    \frac{\partial}{\partial y_j} &= i \tuple*{\frac{\partial}{\partial \bar{z}_j} -  \frac{\partial}{\partial z_j}}
+\end{align*}
+
+
+\note{TODO - mistake here}
+
+Therefore, $T_x(M_0) \otimes_\R \C \subseteq T^{1,0} \oplus T^{0,1}$, then
+$$
+    T_x(M_0) \otimes_\R \C = T^{1,0} \oplus T^{0,1}
+$$
+\end{proof}
+
+\subsection{Question 6}
+
+The same point $x$ is the point $(a_1 + \sqrt{-1}b_1, a_2 + \sqrt{-1}b_2, a_2 + \sqrt{-1}b_2, a_3 + \sqrt{-1}b_3) \in M$. The complex tangent space of $M$ at $x$ is
+$$
+    T_x(M) = T^{1, 0} = \C-\Span \set*{\frac{\partial}{\partial z_1}, \frac{\partial}{\partial z_2}, \frac{\partial}{\partial z_3}}
+$$
+
+Indeed this is the space of derivations of the holomorphic germs at $x$.
+
+We have shown in class that two tangent spaces $T_x(M)$ and $T_x(M_0)$ are isomorphic as a real vector spaces. Since $T_x(M)$ is a complex vector space, it gives a complex structure $J$ on $T_x(M_0)$, i.e $J: T_x(M_0) \to T_x(M_0)$ is an $\R$-linear transformation satisfying $J^2 = -\id$. Compute
+$$
+    J\tuple*{\frac{\partial}{\partial x_j}} \text{ and } J\tuple*{\frac{\partial}{\partial y_j}}
+$$
+
+for $j=1,2,3$
+
+\begin{proof}
+Let $t: T_x(M_0) \to T^{1,0} = T_x(M)$ be the isomorphism as real vector space.
+
+\begin{center}
+\begin{tikzcd}
+T_x(M_0) \arrow[r, "inc", hook] \arrow[rd, "t"', dashed] & T_x(M_0) \otimes C \arrow[d, "proj", two heads] \\
+                                                         & {T_{1,0}}                                      
+\end{tikzcd}
+\end{center}
+
+Then, $t \frac{\partial}{\partial x_j}$ and $t \frac{\partial}{\partial y_j}$ are
+
+\begin{center}
+\begin{tikzcd}
+T_x(M_0) \arrow[r, "inc", hook] \arrow[rr, "t", bend left] & T_x(M_0) \otimes_\R \C \arrow[r, "proj", two heads]                                                                                          & {T^{1,0}}                         \\
+\frac{\partial}{\partial x_j} \arrow[r, maps to]           & \frac{\partial}{\partial x_j} = \frac{\partial}{\partial \bar{z}_j} +  \frac{\partial}{\partial z_j} \arrow[r, maps to]            & \frac{\partial}{\partial z_j}     \\
+\frac{\partial}{\partial y_j} \arrow[r, maps to]           & \frac{\partial}{\partial y_j} = i \tuple*{\frac{\partial}{\partial \bar{z}_j} -  \frac{\partial}{\partial z_j}} \arrow[r, maps to] & - i \frac{\partial}{\partial z_j}
+\end{tikzcd}
+\end{center}
+
+$J: T_x(M_0) \to T_x(M_0)$ is defined by
+
+\begin{center}
+\begin{tikzcd}
+{T^{1,0}} \arrow[r, "i"]                        & {T^{1,0}}               \\
+T_x(M_0) \arrow[u, "t"] \arrow[r, "J"', dashed] & T_x(M_0) \arrow[u, "t"]
+\end{tikzcd}
+\end{center}
+
+Then, $J \frac{\partial}{\partial x_j}$ and $J \frac{\partial}{\partial y_j}$ are
+\begin{center}
+\begin{tikzcd}
+T_x(M_0) \arrow[r, "t"'] \arrow[rrr, "J", bend left] & {T^{1,0}} \arrow[r, "i"']                   & {T^{1,0}} \arrow[r, "t^{-1}"']            & T_x(M_0)                        \\
+\frac{\partial}{\partial x_j} \arrow[r, maps to]     & \frac{\partial}{\partial z_j} \arrow[r]     & i \frac{\partial}{\partial z_j} \arrow[r] & - \frac{\partial}{\partial y_j} \\
+\frac{\partial}{\partial y_j} \arrow[r, maps to]     & - i \frac{\partial}{\partial z_j} \arrow[r] & \frac{\partial}{\partial z_j} \arrow[r]   & \frac{\partial}{\partial x_j}  
+\end{tikzcd}
+\end{center}
+
+
+\end{proof}
+
+\subsection{Question 7}
+
+The cotangent space at $x$ is 
+$$
+    T_x^*(M_0) = \R-\Span \set*{dx_1, dy_1, dx_2, dy_2, dx_3, dy_3}
+$$
+
+where $dx_j: T_x(M_0) \to \R$ is the $\R$-linear transformation such that
+\begin{align*}
+    dx_j \tuple*{\frac{\partial}{\partial x_k}} &= \begin{cases}
+        1 &\text{if $k=j$} \\
+        0 &\text{if $k \neq j$}
+    \end{cases} \\
+    dx_j \tuple*{\frac{\partial}{\partial y_k}} &= 0 \text{ for every $k$}
+\end{align*}
+
+What is the defintion of $dy_j$ for $j=1,2,3$
+
+\begin{proof}[Answer]
+
+\begin{align*}
+    dy_j \tuple*{\frac{\partial}{\partial y_k}} &= \begin{cases}
+        1 &\text{if $k=j$} \\
+        0 &\text{if $k \neq j$}
+    \end{cases} \\
+    dy_j \tuple*{\frac{\partial}{\partial x_k}} &= 0 \text{ for every $k$}
+\end{align*}
+
+\end{proof}
+
+
+\subsection{Question 8}
+
+The cotangent space of complex manifold $M$ at $x$ is
+$$
+    T_x^*(M) = \C-\Span\set{dz_1, dz_2, dz_3}
+$$
+
+where $dz_j: T_x(M_0) \otimes_R \C \to \C$ is the $\C$-linear transformation such that
+\begin{align*}
+    dz_j \tuple*{\frac{\partial}{\partial z_k}} &= \begin{cases}
+        1 &\text{if $k=j$} \\
+        0 &\text{if $k \neq j$}
+    \end{cases} \\
+    dz_j \tuple*{\frac{\partial}{\partial \bar{z}_k}} &= 0 \text{ for every $k$}
+\end{align*}
+
+What is the defintion of $d\bar{z}_j$ for $j=1,2,3$
+
+\begin{proof}[Answer]
+
+\begin{align*}
+    d\bar{z}_j \tuple*{\frac{\partial}{\partial \bar{z}_k}} &= \begin{cases}
+        1 &\text{if $k=j$} \\
+        0 &\text{if $k \neq j$}
+    \end{cases} \\
+    d\bar{z}_j \tuple*{\frac{\partial}{\partial z_k}} &= 0 \text{ for every $k$}
+\end{align*}
+    
+\end{proof}
+
+\subsection{Question 9}
+Show that
+\begin{align*}
+    dz_j = dx_j + \sqrt{-1} dy_j \\
+    d\bar{z}_j = dx_j - \sqrt{-1} dy_j
+\end{align*}
+
+for $j=1,2,3$
+
+\begin{proof}
+    We extend $dx_j: T_x(M_0) \to \R$ and $dy_j: T_x(M_0) \to \R$ into $dx_j: T_x(M_0) \otimes_\R \C \to \C$ and $dy_j: T_x(M_0) \otimes_\R \C \to \C$ canonically as follows
+\begin{align*}
+    dx_j \tuple*{\frac{\partial}{\partial x_k}} &= \begin{cases}
+        1 &\text{if $k=j$} \\
+        0 &\text{if $k \neq j$}
+    \end{cases} \\
+    dx_j \tuple*{\frac{\partial}{\partial y_k}} &= 0 \text{ for every $k$} \\
+    dy_j \tuple*{\frac{\partial}{\partial y_k}} &= \begin{cases}
+        1 &\text{if $k=j$} \\
+        0 &\text{if $k \neq j$}
+    \end{cases} \\
+    dy_j \tuple*{\frac{\partial}{\partial x_k}} &= 0 \text{ for every $k$}
+\end{align*}
+
+We will verify that $dx_j + i dy_j$ agrees with the defintion of $dz_j$, $dx_j - i dy_j$ agrees with the defintion of $d\bar{z}_j$
+
+\begin{align*}
+    (dx_j + i dy_j) \frac{\partial}{\partial z_k}
+    &= (dx_j + i dy_j) \tuple*{\frac{1}{2} \tuple*{\frac{\partial}{\partial x_k}  - i \frac{\partial}{\partial y_k}}} \\
+    &= \frac{1}{2} \tuple*{dx_j \frac{\partial}{\partial x_k} + dy_j \frac{\partial}{\partial y_k}} \\
+    &= \begin{cases}
+        1 &\text{if $k = j$} \\
+        0 &\text{if $k \neq j$}
+    \end{cases}
+\end{align*}
+
+\begin{align*}
+    (dx_j + i dy_j) \frac{\partial}{\partial \bar{z}_k}
+    &= (dx_j + i dy_j) \tuple*{\frac{1}{2} \tuple*{\frac{\partial}{\partial x_k}  + i \frac{\partial}{\partial y_k}}} \\
+    &= \frac{1}{2} \tuple*{dx_j \frac{\partial}{\partial x_k} - dy_j \frac{\partial}{\partial y_k}} \\
+    &= 0
+\end{align*}
+
+\begin{align*}
+    (dx_j - i dy_j) \frac{\partial}{\partial z_k}
+    &= (dx_j - i dy_j) \tuple*{\frac{1}{2} \tuple*{\frac{\partial}{\partial x_k}  - i \frac{\partial}{\partial y_k}}} \\
+    &= \frac{1}{2} \tuple*{dx_j \frac{\partial}{\partial x_k} - dy_j \frac{\partial}{\partial y_k}} \\
+    &= 0
+\end{align*}
+
+\begin{align*}
+    (dx_j - i dy_j) \frac{\partial}{\partial \bar{z}_k}
+    &= (dx_j - i dy_j) \tuple*{\frac{1}{2} \tuple*{\frac{\partial}{\partial x_k}  + i \frac{\partial}{\partial y_k}}} \\
+    &= \frac{1}{2} \tuple*{dx_j \frac{\partial}{\partial x_k} + dy_j \frac{\partial}{\partial y_k}} \\
+    &= \begin{cases}
+        1 &\text{if $k = j$} \\
+        0 &\text{if $k \neq j$}
+    \end{cases}
+\end{align*}
+
+\end{proof}
+
+\subsection{Question 10}
+Let $f: M_0 \to \C$ be a smooth function. We warn that $f$ does not have to be holomorphic function. We define
+$$
+    df = \sum_{j=1}^3 \frac{\partial f}{\partial x_j} dx_j + \frac{\partial f }{\partial y_j} dy_j
+$$
+
+which is a section in 
+$$
+    \mathcal{E}^1(M_0, T(M) \otimes \C) = \mathcal{E}^1(M_0, T^{1, 0}) \oplus \mathcal{E}^1(M_0, T^{0, 1})
+$$
+
+We define $\partial f$ as the projection of $df$ into $\mathcal{E}^1(M_0, T^{1, 0})$. Show that
+$$
+    \partial f = \sum_{j=1}^3 \frac{\partial f}{\partial z_j} dz_j
+$$
+
+\begin{proof}
+
+Note that
+
+\begin{align*}
+    T(M) \otimes \C &= \coprod_{m \in M_0} \Hom(T_m(M_0) \otimes \C, \C) \\
+    T^{1, 0} &= \coprod_{m \in M_0} \Hom(T^{1, 0}_m, \C)
+\end{align*}
+
+where $T_m(M_0)$ is the tangent space at $m \in M$ of $M_0$ and $T_m(M_0) \otimes \C = T^{1, 0}_m \oplus T^{0, 1}_m$. The projection from $\mathcal{E}^1(M_0, T(M) \otimes \C)$ into $\mathcal{E}^1(M_0, T^{1, 0})$ is defined as follows
+\begin{center}
+\begin{tikzcd}
+                                                    &  & {T(M) \otimes \C = \coprod_{m \in M_0} \Hom(T_m(M_0) \otimes \C, \C)} \arrow[dd, two heads] \\
+                                                    &  &                                                                                             \\
+M_0 \arrow[rruu, "\phi"] \arrow[rr, "\psi", dashed] &  & {T^{1, 0} = \coprod_{m \in M_0} \Hom(T^{1, 0}_m, \C)}                                      
+\end{tikzcd}
+\end{center}
+
+\begin{align*}
+    \phi(m) : T_m(M_0) \otimes \C \to \C \\
+    \psi(m) : T^{1, 0}_m \otimes \C \to \C
+\end{align*}
+
+$\phi \in \mathcal{E}^1(M_0, T(M) \otimes \C)$ is projected into $\psi \in \mathcal{E}^1(M_0, T^{1, 0})$ such that for all $m \in M_0$, $\psi(m): T^{1, 0}_m \otimes \C \to \C$ is a restriction of $\phi(m): T_m(M_0) \otimes \C \to \C$.
+
+
+Note that, $\mathcal{E}^1(M_0, T(M) \otimes \C), \mathcal{E}^1(M_0, T^{1, 0}), \mathcal{E}^1(M_0, T^{0, 1})$ are all $\mathcal{E}(M_0)$-algebra.
+
+Note that $\frac{\partial f}{\partial x_j}: M_0 \to \C$ is defined by
+$$
+    \frac{\partial f}{\partial x_j}: m \mapsto \frac{\partial f}{\partial x_j}\bigg\vert_m = \frac{\partial}{\partial x_j} [f]_m
+$$
+
+where $[f]_m$ is the germ of $f$ at $m \in M_0$. Similar for $\frac{\partial f}{\partial y_j}$. Therefore, from previous part, $\frac{\partial}{\partial z_j}\bigg\vert_m = \frac{1}{2} \tuple*{\frac{\partial}{\partial x_j}  - i\frac{\partial}{\partial y_j} }\bigg\vert_m$ implies
+
+$$
+    \frac{\partial f}{\partial z_j}\bigg\vert_m = \frac{1}{2} \tuple*{\frac{\partial f}{\partial x_j}  - i\frac{\partial f}{\partial y_j} }\bigg\vert_m
+$$
+
+Now, for any $m \in M_0$, we have
+$$
+    (df)(m) = \sum_{j=1}^3 \frac{\partial f}{\partial x_j}\bigg\vert_m dx_j\vert_m + \frac{\partial f}{\partial y_j}\bigg\vert_m dy_j\vert_m
+$$
+
+From previous part we have
+\begin{align*}
+    dz_j\vert_m = dx_j\vert_m + i dy_j\vert_m \\
+    d\bar{z}_j\vert_m = dx_j\vert_m - i dy_j\vert_m \\
+\end{align*}
+
+Therefore, 
+\begin{align*}
+    dx_j\vert_m &= \frac{1}{2} (d\bar{z}_j\vert_m + dz_j\vert_m) \\
+    dy_j\vert_m &= \frac{i}{2} (d\bar{z}_j\vert_m - dz_j\vert_m) \\
+\end{align*}
+
+Then,
+$$
+    (df)(m) 
+    = \sum_{j=1}^3 \frac{\partial f}{\partial x_j}\bigg\vert_m \frac{1}{2} (d\bar{z}_j\vert_m + dz_j\vert_m) + \frac{\partial f}{\partial y_j}\bigg\vert_m \frac{i}{2} (d\bar{z}_j\vert_m - dz_j\vert_m)
+$$
+
+Restrict into $\Hom(T^{1, 0}_m, \C) = T_m^*(M) = \C-\Span\set{dz_1\vert_m, dz_2\vert_m, dz_3\vert_m}$, we have
+\begin{align*}
+    (\partial f)(m) 
+    &= \sum_{j=1}^3 \frac{\partial f}{\partial x_j}\bigg\vert_m \frac{1}{2} dz_j\vert_m - \frac{\partial f}{\partial y_j}\bigg\vert_m \frac{i}{2} dz_j\vert_m \\
+    &= \sum_{j=1}^3 \frac{1}{2} \tuple*{\frac{\partial f}{\partial x_j}  - i\frac{\partial f}{\partial y_j} }\bigg\vert_m dz_j\vert_m \\
+    &= \sum_{j=1}^3 \frac{\partial f}{\partial z_j}\bigg\vert_m dz_j\vert_m
+\end{align*}
+
+Then,
+
+$$
+    \partial f = \sum_{j=1}^3 \frac{\partial f}{\partial z_j} dz_j
+$$
+
+\end{proof}
+\end{document}

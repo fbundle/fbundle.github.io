@@ -1,0 +1,178 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\input{header}
+
+\title{
+    Differential Forms and Stoke's Theorem
+}
+\author{Khanh Nguyen}
+\date{August 2023}
+
+\begin{document}
+
+\maketitle
+
+\emph{this is my notes on Differential Forms and Stoke's Theorem from the book: all the mathematics you missed by Thomas A. Garrity}
+
+\section{Volumes of Parallelepipeds}
+
+\begin{theorem}
+    In $R^n$, the volume of the parallelepiped spanned by the columns of matrix $A \in \R^{k \times n}$ is
+    $$
+        \sqrt{\det (A A^T)}
+    $$
+\end{theorem}
+
+\section{Differential Forms and the Exterior Derivative}
+
+\subsection{Elementary $k$-forms}
+
+In $\R^n$, let $I = \{i_1, i_2, ..., i_k \} \subseteq \{1, 2, ..., n\}$ be an index sequence. The elementary $k$-forms $dx_I$ is defined as the operator measuring the signed volume of the projection of a a parallelepiped into the subspace formed by $e_I = \{e_{i_1}, e_{i_2}, ..., e_{i_k} \}$. \footnote{We also write $dx_I = dx_{i_1} \wedge dx_{i_2} \wedge ... \wedge dx_{i_k}$}
+
+$$
+    dx_I(A) = \det \left[ \pi_{e_I}(A) \right]
+$$
+
+
+\subsection{The Vector Space of $k$-forms}
+
+\begin{definition}[Multilinear map]
+    A function $f: V_1 \times V_2 \times ... \times V_n \to  W$ is a multilinear map if it is a linear map w.r.t each variable, i.e. for each $k \in \{1, 2, ..., n\}$,
+    \begin{itemize}
+        \item $f(v_1, ..., a_k + b_k, ..., v_n) = f(v_1, ..., a_k, ..., v_n) + f(v_1, ..., b_k, ..., v_n)$
+        \item $f(v_1, ..., \lambda v_k, ..., v_n) = \lambda f(v_1, ..., v_k, ..., v_n)$
+    \end{itemize}
+\end{definition}
+
+\begin{definition}[Determinant]
+    Determinant of an $n \times n$ matrix $A$ is defined as the unique real-valued multilinear map w.r.t each column of $A$
+    $$
+        det: \R^{n \times n} \to \R
+    $$
+    with $det(I) = 1$
+\end{definition}
+
+\begin{definition}[$k$-forms]
+    \label{def:k_form}
+    A $k$-form $\omega$ is a real-valued multilinear map w.r.t each column of a $n \times k$ matrix
+    $$
+        \omega: \R^{n \times k} \to \R
+    $$
+\end{definition}
+
+By the properties of determinant, each elementary $k$-form is a $k$-form defined in definition \ref{def:k_form}. Furthermore, 
+
+\begin{theorem}
+    In $\R^n$, the set of elementary $k$-forms with increasing indices is precisely the basis of the vector space of $k$-forms over the field $\R$ denoted by $\bigwedge^k (\R^n)$. The dimensional of this vector space is $n \choose k$. 
+\end{theorem}
+
+\subsection{Rules for Manipulating $k$-forms}
+
+\begin{definition}
+    In the symmetric group $S_m$ \footnote{permutation of $m$ elements}, let $k+l = m$ and $\sigma \in S_m$ be the $(k, l)$-shuffle which has the property that
+    $$
+        \sigma(1) < \sigma(2) < .. < \sigma(k)
+    $$
+    and 
+    $$
+        \sigma(k+1) < \sigma(k_2) < .. < \sigma(k+l)
+    $$
+    The set of all $(k, l)$-shuffles is denoted by $S(k, l)$
+\end{definition}
+
+\begin{definition}[Wedge Product]
+    Let $A = (A_1, A_2, ..., A_{k+l})$ be an $n \times (k + l)$ matrix. Let $\tau$ be a $k$-form and $\omega$ be an $l$-form, we define the wedge product
+    $$
+        (\tau \wedge \omega)(A) = \sum_{\sigma \in S(k, l)} (-1)^{\sign(\sigma)} \tau(A_{\sigma(1)}, ..., A_{\sigma(k)}) \omega(A_{\sigma(k+1)}, ..., A_{\sigma(k+l)}))
+    $$
+    
+\end{definition}
+
+\subsection{Differential $k$-forms and the Exterior Derivative}
+
+\begin{definition}
+    In the symmetric group $S_n$, let $I = \{i_1, i_2, ..., i_k \} \in S_n$ be the $(k)$-shuffle which has the property that
+    $$
+        i_1 < i_2 < .. < i_k
+    $$
+    The set of all $(k)$-shuffles is denoted by $S(k)$
+\end{definition}
+
+\begin{definition}[Differential $k$-forms]
+    A differential $k$-form is defined as
+    $$
+        \omega = \sum_{I \in S(k)} f_I dx_I
+    $$
+    where each $f_I \in C^1(\R^n, \R)$: a differentiable function
+\end{definition}
+
+\begin{definition}[Exterior derivative]
+    Given a differential $k$-form $\omega = \sum_{I \in S(k)} f_I dx_I$, the exterior derivaive $d\omega$ is
+    $$
+        d\omega = \sum_{I \in S(k)} df_I \wedge dx_I
+    $$
+    where $df_I = \sum_{i \in I} \frac{\partial f_I}{\partial x_i} dx_i$
+\end{definition}
+
+\begin{proposition}
+    For any differential $k$-form $\omega$, we have
+    $$
+        d(d\omega) = 0
+    $$
+\end{proposition}
+
+\section{Differential Forms and Vector Fields}
+
+\begin{definition}[$T_0, T_1, T_2, T_3$]
+In $\R^3$ with standard coordinates $x, y, z$
+
+Let $T_0$ be the identity map on the space of $0$-form \footnote{$C^1(R^n, R)$}
+$$
+    T_0(f) = f
+$$
+
+Let $T_1$ be the map from the space of $1$-form into $\R^3$
+$$
+    T_1(f_1 dx + f_2 dy + f_3 dz) = (f_1, f_2, f_3)
+$$
+
+Let $T_2$ be the map from the space of $2$-form into $\R^3$
+$$
+    T_2(f_1 dx \wedge dy + f_2 dy \wedge dz + f_3 dz \wedge dx) = (f_2, f_3, f_1)
+$$
+
+Let $T_3$ be the map from the space of $3$-form \footnote{isomorphic to $C^1(\R^n, \R)$} into $C^1(\R^n, \R)$
+$$
+    T_3(f dx \wedge dy \wedge dz) = f
+$$
+
+\end{definition}
+
+\begin{theorem}
+    In $\R^3$, let $\omega_k$ denote a differential $k$-form. Then
+    \begin{align*}
+        T_1(d\omega_0)  &= \grad(T_0(\omega_0)) \\
+        T_2(d\omega_1)  &= \curl(T_1(\omega_1)) \\
+        T_3(d\omega_2)  &= \Div(T_2(\omega_2)) \\
+    \end{align*}
+\end{theorem}
+
+In $\R^2$ with coordinates $x_1, x_2, ..., x_n$. There is a single elementary $n$-form, namely $dx_1 \wedge dx_2 \wedge ... \wedge dx_n$. Define the map from space of $n$-forms into $\R$
+
+$$
+    T: \bigwedge^n (\R^n) \to \R
+$$
+
+by $T(\alpha dx_1 \wedge dx_2 \wedge ... \wedge dx_n) = \alpha$. For $k$-forms, the dual space of $\bigwedge^k(\R^n)$ is isomorphic to $\bigwedge^{n-k}(\R^n)$. Let $\omega_{n-k}$ be a $n-k$-form, the associated linear map in the dual space of $\bigwedge^k(\R^n)$ is
+
+$$
+    T_{\omega_{n-k}}: \bigwedge^{k}(\R^n) \to \R
+$$
+
+defined by $T_{\omega_{n-k}} (\omega_k) = T(\omega_{n-k} \wedge \omega_k)$. Moreover, dimension of the dual space equals dimension of the original space, i.e. $\dim \bigwedge^{k}(\R^n)= \dim \bigwedge^{n-k}(\R^n)$
+
+\section{Manifolds}
+
+
+\end{document}

@@ -1,0 +1,84 @@
+\chapter{DERIVATIVE}
+
+\section{LIE DERIVATIVE}
+
+\subsection{DIRECTIONAL DERIVATIVE}
+
+\begin{definition}[directional derivative]
+	Given a vector field $X \in TM$, directional derivative operator $\nabla_X$, $D_X$, $L_X$ sends a smooth function on $M$ into a smooth function on $M$ and defined by
+	$$
+		\nabla_X f = D_X f = L_X f = X(f)
+	$$
+\end{definition}
+
+\subsection{LIE DERIVATIVE}
+
+Given a vector field $X \in TM$ and $p \in M$, a local flow $F^t$ at $p$ for some small $t > 0$ sends $p$ into $F^t(p)$. Lie derivative $L_X$ is defined as the first order term of the Taylor expansion across the local flow.
+
+\subsubsection{LIE DERIVATIVE ON SMOOTH FUNCTION}
+
+Let $f: M \to \R$ be a smooth function, then  Lie derivative $L_X f$ of $f$ at $p$ is defined by
+$$
+	f(F^t(p)) = f(p) + t (L_X f) + o(t)
+$$
+
+This coincides with directional derivative
+
+
+\subsubsection{LIE DERIVATIVE ON VECTOR FIELD}
+
+Let $Y \in TM$ be a vector field, then consider the pullback of $Y(F^t(p))$ into $T_p M$. Note that, the map $F^{-t}$ sends $F^t(p)$ into $p$, then Lie derivative $L_X Y$ of $Y$ at $p$ is defined by
+$$
+	d(F^{-t}) Y(F^t(p)) = Y(p) + t (L_X Y) + o(t)
+$$
+
+\begin{proposition}
+	Given two vector fields $X, Y \in TM$, then $L_X Y$ is a vector field and
+	$$
+		L_X Y = [X, Y]
+	$$
+\end{proposition}
+
+\subsubsection{LIE DERIVATIVE ON TENSOR}
+
+. Given any tensor $T$ of type $(0, k)$
+Let $T$ be a $(0, k)$-tensor, define the pullback $(F^t)^*: \bigotimes^k T^* M \to \bigotimes^k T^* M$ by
+$$
+	((F^t)* T)(Y_1, ..., Y_k) = T(d(F^t)(Y_1), ..., d(F^t)(Y_k))
+$$
+
+\begin{definition}[Lie derivative on tensor]
+	Lie derivative of a $(0, k)$-tensor $T$ is the unique tensor $L_X T$ of type $(0, k)$ so that
+	$$
+		(F^t)^* T = T + t(L_X T) + o(t)
+	$$
+\end{definition}
+
+\begin{proposition}
+	Given a $(0, k_1)$-tensor $T_1$ and $(0, k_2)$-tensor $T_2$, then
+	$$
+		L_X(T_1 \cdot T_2) = (L_X T_1) \cdot T_2 + T_1 \cdot (L_X T_2)
+	$$
+\end{proposition}
+
+\begin{proposition}
+	If $T$ is a $(0, k)$-tensor and $f: M \to \R$ is a smooth function, then
+	$$
+		L_{fX} T = f L_X T + \sum_{i=1}^k (L_{Y_i} f) T
+	$$
+\end{proposition}
+
+\begin{lemma}
+	If a vector field $X$ vanishes at $p$, then the Lie derivative $L_X T$ at $p$ depends only on the value of $T$ at $p$
+\end{lemma}
+
+\begin{proposition}[the generalized Jacobi identity]
+	For all vector fields $X, Y, Z$ and tensor $T$
+	$$
+		(L_X L)_Y T = 0
+	$$
+	
+	\note{THE FUCK?}
+\end{proposition}
+
+\subsection{LIE DERIVATIVE AND METRIC}

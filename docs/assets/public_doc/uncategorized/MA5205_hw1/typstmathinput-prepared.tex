@@ -1,0 +1,183 @@
+\catcode`\$\active\xdef${\csname _typstmathinput_handle_formula\endcsname}
+\ExplSyntaxOn
+\providecommand\typstmathinputtext{\text}
+\providecommand\typstmathinputenable[1]{
+	\catcode `#1 \active
+}
+\providecommand\typstmathinputdisable[1] {
+	\catcode `#1 = 3 \relax
+}
+\protected\gdef \_typstmathinput_handle_formula {
+	\_typstmathinput_handle_formula_a \empty
+}
+\protected\gdef \_typstmathinput_set_handle_formula_delimiter #1 {
+	\protected\gdef \_typstmathinput_handle_formula_a ##1 #1 {
+		\begingroup\expandafter\endgroup\csname _typstmathinput_prepared)\detokenize\expandafter{##1}\endcsname
+	}
+}
+\ExplSyntaxOff
+\csname _typstmathinput_set_handle_formula_delimiter\endcsname{$}\begingroup\def\\#1{\expandafter\gdef\csname _typstmathinput_prepared)\detokenize{#1}\endcsname}
+\\{
+& quad |∑_(i=1)^m
+g(ξ_i) ⋅ (ψ(x_i) - ψ(x_(i-1)) - f(ξ_i) ⋅ (φ(x_i) - φ(x_(i-1))))| \
+&= |∑_(i=1)^m g(ξ_i) ⋅ ( ∫_(x_(i-1))^(x_i) f dif φ  - f(ξ_i) ⋅ (φ(x_i) - φ(x_(i-1))))| \
+&≤ ∑_(i=1)^m N ⋅ |∫_(x_(i-1))^(x_i) (f(x)-f(ξ_i)) dif φ(x)| \
+&≤ ∑_(i=1)^m N ⋅ V[φ; x_(i-1), x_i] ⋅ ε.
+}{\begin{align*}&\hspace{1em}\bigl\vert ∑^{m}_{i=1}g(ξ_{i})⋅(ψ(x_{i})−ψ(x_{i−1})−f(ξ_{i})⋅(φ(x_{i})−φ(x_{i−1})))\bigr\vert \\&=\Bigl\vert ∑^{m}_{i=1}g(ξ_{i})⋅\Bigl(∫^{x_{i}}_{x_{i−1}}f\hspace{0.16666666666666666em}\mathrm{d}φ−f(ξ_{i})⋅(φ(x_{i})−φ(x_{i−1}))\Bigr)\Bigr\vert \\&≤∑^{m}_{i=1}N⋅\Bigl\vert ∫^{x_{i}}_{x_{i−1}}(f(x)−f(ξ_{i}))\hspace{0.16666666666666666em}\mathrm{d}φ(x)\Bigr\vert \\&≤∑^{m}_{i=1}N⋅V[φ;x_{i−1},x_{i}]⋅ε.\end{align*}}
+\\{
+S_Γ [ψ; a, b] &= ∑_(i=1)^m |ψ(x_i) - ψ(x_(i-1))| \
+       &= ∑_(i=1)^m |∫^(x_i)_(x_(i-1)) f dif φ|.
+}{\begin{align*}S_{Γ}[ψ;a,b]&=∑^{m}_{i=1}\vert ψ(x_{i})−ψ(x_{i−1})\vert \\&=∑^{m}_{i=1}\Bigl\vert ∫^{x_{i}}_{x_{i−1}}f\hspace{0.16666666666666666em}\mathrm{d}φ\Bigr\vert .\end{align*}}
+\\{
+cases(
+|∫_a^b g dif ψ - R_(Γ₁')| < ε/3,
+|∫_a^b g f dif φ - R_(Γ₂')| < ε/3
+).
+#forcetag("equation-1")
+}{\[\begin{cases}\Bigl\vert ∫^{b}_{a}g\hspace{0.16666666666666666em}\mathrm{d}ψ−R_{Γ_{1}′}\Bigr\vert <\frac{ε}{3}\\\Bigl\vert ∫^{b}_{a}gf\hspace{0.16666666666666666em}\mathrm{d}φ−R_{Γ_{2}′}\Bigr\vert <\frac{ε}{3}\end{cases}.\stepcounter{equation}\tag{\theequation}\label{equation-1}\]}
+\\{ f(x)=cases(1" if "x=0, 0" otherwise"), }{\[f(x)=\begin{cases}1\typstmathinputtext{ if }x=0\\0\typstmathinputtext{ otherwise}\end{cases},\]}
+\\{ |∫^q_p f dif φ| ≤ M ⋅ V[φ; p, q]}{\(\vert ∫^{q}_{p}f\hspace{0.16666666666666666em}\mathrm{d}φ\vert ≤M⋅V[φ;p,q]\)}
+\\{(-n, 0)}{\((−n,0)\)}
+\\{(-∞, b)}{\((−∞,b)\)}
+\\{(0,n)}{\((0,n)\)}
+\\{(a, b)}{\((a,b)\)}
+\\{(a, b]}{\((a,b]\)}
+\\{(a,+∞)}{\((a,+∞)\)}
+\\{0}{\(0\)}
+\\{0 ≤ a < b ≤ n}{\(0≤a<b≤n\)}
+\\{0<ε ≤ b-a}{\(0<ε≤b−a\)}
+\\{0<ε'≤ε}{\(0<ε′≤ε\)}
+\\{< δ}{\(<δ\)}
+\\{F}{\(F\)}
+\\{I ⊆ (-n, 0)}{\(I⊆(−n,0)\)}
+\\{I_k}{\(I_{k}\)}
+\\{M}{\(M\)}
+\\{M=0}{\(M=0\)}
+\\{M≥0}{\(M≥0\)}
+\\{N>0}{\(N>0\)}
+\\{P = N ⋅ ε ⋅ V[φ; a, b]}{\(P=N⋅ε⋅V[φ;a,b]\)}
+\\{P=ε/3}{\(P=\frac{ε}{3}\)}
+\\{P>0}{\(P>0\)}
+\\{R_Γ}{\(R_{Γ}\)}
+\\{S_(Γ') ≤ |f(a)-f(y₂)| + V[f; y₂, b] ≤ Y+δ + V[f; y₂, b]}{\(S_{Γ′}≤\vert f(a)−f(y_{2})\vert +V[f;y_{2},b]≤Y+δ+V[f;y_{2},b]\)}
+\\{S_Γ [ψ; a, b] ≤ M ⋅ V[φ; a, b]}{\(S_{Γ}[ψ;a,b]≤M⋅V[φ;a,b]\)}
+\\{S_Γ ≤ S_(Γ') ≤ X+Y+δ}{\(S_{Γ}≤S_{Γ′}≤X+Y+δ\)}
+\\{V[f; a+ε, b]}{\(V[f;a+ε,b]\)}
+\\{V[f; a+ε, b]≥ X-δ/2}{\(V[f;a+ε,b]≥X−\frac{δ}{2}\)}
+\\{V[f; a, b] = X+Y}{\(V[f;a,b]=X+Y\)}
+\\{V[f; a, b] ≤ M}{\(V[f;a,b]≤M\)}
+\\{V[f; a, b] ≤ X+Y+δ}{\(V[f;a,b]≤X+Y+δ\)}
+\\{V[f; a, b] ≥ X+Y - δ}{\(V[f;a,b]≥X+Y−δ\)}
+\\{V[f; a, b]=1}{\(V[f;a,b]=1\)}
+\\{V[f; a, b]=V[f; a, x]+V[f; x, a+ε]+V[f; a+ε,b] ≥ Y-δ/2 + X-δ/2 = X+Y-δ}{\(V[f;a,b]=V[f;a,x]+V[f;x,a+ε]+V[f;a+ε,b]≥Y−\frac{δ}{2}+X−\frac{δ}{2}=X+Y−δ\)}
+\\{V[f; a, b]=X+Y}{\(V[f;a,b]=X+Y\)}
+\\{V[f; a, x] ≥ Y-δ/2}{\(V[f;a,x]≥Y−\frac{δ}{2}\)}
+\\{V[f; y₂, b] ≤ X}{\(V[f;y_{2},b]≤X\)}
+\\{V[ψ; a, b] ≤ M ⋅ V[φ; a, b]}{\(V[ψ;a,b]≤M⋅V[φ;a,b]\)}
+\\{X}{\(X\)}
+\\{X ≤ M}{\(X≤M\)}
+\\{X=0}{\(X=0\)}
+\\{X=M}{\(X=M\)}
+\\{X=lim_(ε → 0) V[f; a+ε, b]}{\(X=\operatorname*{lim}_{ε→0}V[f;a+ε,b]\)}
+\\{Y}{\(Y\)}
+\\{Y=0}{\(Y=0\)}
+\\{Y=1}{\(Y=1\)}
+\\{Y=lim_(ε → 0) sup_(x ∈[a, a+ε]) |f(x)-f(a)|}{\(Y=\operatorname*{lim}_{ε→0}\operatorname*{sup}_{x∈[a,a+ε]}\vert f(x)−f(a)\vert \)}
+\\{Y=limsup_(x → a+) |f(x)-f(a)|}{\(Y=\operatorname*{lim sup}_{x→a+}\vert f(x)−f(a)\vert \)}
+\\{Z}{\(Z\)}
+\\{Z = ⋃_(n ∈ ℤ⁺) Z_n}{\(Z=⋃_{n∈ℤ^{+}}Z_{n}\)}
+\\{Z_n}{\(Z_{n}\)}
+\\{Z_n = Z ∩ (-n, n)}{\(Z_{n}=Z∩(−n,n)\)}
+\\{Z_n = ⋃_k I_k}{\(Z_{n}=⋃_{k}I_{k}\)}
+\\{Z_n ∖ {0}}{\(Z_{n}∖\{0\}\)}
+\\{[a, b]}{\([a,b]\)}
+\\{[p, q]}{\([p,q]\)}
+\\{a}{\(a\)}
+\\{a, b ∈ ℝ}{\(a,b∈ℝ\)}
+\\{a<b}{\(a<b\)}
+\\{a=0}{\(a=0\)}
+\\{b=1}{\(b=1\)}
+\\{b²-a² = (b-a)(b+a) ≤ 2n ⋅ (b-a) = 2n ⋅ |(a, b)|}{\(b^{2}−a^{2}=(b−a)(b+a)≤2n⋅(b−a)=2n⋅\vert (a,b)\vert \)}
+\\{diam Γ < δ}{\(\diam Γ<δ\)}
+\\{f}{\(f\)}
+\\{f(a)}{\(f(a)\)}
+\\{f(b)}{\(f(b)\)}
+\\{g}{\(g\)}
+\\{g f}{\(gf\)}
+\\{g(x)}{\(g(x)\)}
+\\{g(x) = f(b)}{\(g(x)=f(b)\)}
+\\{g(x)=f(a)}{\(g(x)=f(a)\)}
+\\{g(x)=f(a) + (f(b)-f(a)) ⋅ (x-a)/(b-a)}{\(g(x)=f(a)+(f(b)−f(a))⋅\frac{x−a}{b−a}\)}
+\\{i}{\(i\)}
+\\{k ∈ ℤ⁺}{\(k∈ℤ^{+}\)}
+\\{n ∈ ℤ⁺}{\(n∈ℤ^{+}\)}
+\\{p=x_(i-1)}{\(p=x_{i−1}\)}
+\\{q=x_i}{\(q=x_{i}\)}
+\\{sup_(x ∈[a, a+ε]) |f(x)-f(a)|}{\(\operatorname*{sup}_{x∈[a,a+ε]}\vert f(x)−f(a)\vert \)}
+\\{sup_(x ∈[a, a+ε]) |f(x)-f(a)| ≥ Y-δ/4}{\(\operatorname*{sup}_{x∈[a,a+ε]}\vert f(x)−f(a)\vert ≥Y−\frac{δ}{4}\)}
+\\{x}{\(x\)}
+\\{x ∈ [x_(i-1), x_i]}{\(x∈[x_{i−1},x_{i}]\)}
+\\{x ∈[a, a+ε]}{\(x∈[a,a+ε]\)}
+\\{x ∈[a, b]}{\(x∈[a,b]\)}
+\\{x, y ∈[a, b]}{\(x,y∈[a,b]\)}
+\\{x=a}{\(x=a\)}
+\\{x=b}{\(x=b\)}
+\\{x_i-x_(i-1) < δ}{\(x_{i}−x_{i−1}<δ\)}
+\\{x_m=q}{\(x_{m}=q\)}
+\\{x₀=p}{\(x_{0}=p\)}
+\\{y₂ ≤ a+ε}{\(y_{2}≤a+ε\)}
+\\{{x²: x ∈ Z_n}}{\(\{x^{2}:x∈Z_{n}\}\)}
+\\{{x²: x ∈ Z}= ⋃_(n ∈ ℤ⁺) {x²: x ∈ Z_n}}{\(\{x^{2}:x∈Z\}=⋃_{n∈ℤ^{+}}\{x^{2}:x∈Z_{n}\}\)}
+\\{{x²: x ∈(a, b)}= (a², b²)}{\(\{x^{2}:x∈(a,b)\}=(a^{2},b^{2})\)}
+\\{{ξ₁, …, ξ_m}}{\(\{ξ_{1},…,ξ_{m}\}\)}
+\\{|R_Γ| = |∑_(i=1)^m f(ξ_i) ⋅ (φ(x_i) - φ(x_(i-1)))| ≤ ∑_(i=1)^m |f(ξ_i)| ⋅ |φ(x_i) - φ(x_(i-1))| ≤ M ⋅ ∑_(i=1)^m |φ(x_i)-φ(x_(i-1))| ≤ M ⋅ V[φ; p, q]}{\(\vert R_{Γ}\vert =\vert ∑^{m}_{i=1}f(ξ_{i})⋅(φ(x_{i})−φ(x_{i−1}))\vert ≤∑^{m}_{i=1}\vert f(ξ_{i})\vert ⋅\vert φ(x_{i})−φ(x_{i−1})\vert ≤M⋅∑^{m}_{i=1}\vert φ(x_{i})−φ(x_{i−1})\vert ≤M⋅V[φ;p,q]\)}
+\\{|f(a)-f(a+ε')|<Y+δ}{\(\vert f(a)−f(a+ε′)\vert <Y+δ\)}
+\\{|f(a+ε)-f(a)|≤ M+|f(b)-f(a)|}{\(\vert f(a+ε)−f(a)\vert ≤M+\vert f(b)−f(a)\vert \)}
+\\{|f(a+ε)-f(b)|≤ M}{\(\vert f(a+ε)−f(b)\vert ≤M\)}
+\\{|f(x)-f(a)|≥ Y-δ/2}{\(\vert f(x)−f(a)\vert ≥Y−\frac{δ}{2}\)}
+\\{|f(x)-f(y)|<ε}{\(\vert f(x)−f(y)\vert <ε\)}
+\\{|f(x)-f(ξ_i)| ≤ ε}{\(\vert f(x)−f(ξ_{i})\vert ≤ε\)}
+\\{|f(x)|≤ M}{\(\vert f(x)\vert ≤M\)}
+\\{|f(y)|≤ M ∀y ∈ ℝ}{\(\vert f(y)\vert ≤M∀y∈ℝ\)}
+\\{|g(x)|}{\(\vert g(x)\vert \)}
+\\{|g(x)|≤ N}{\(\vert g(x)\vert ≤N\)}
+\\{|x-y|<δ}{\(\vert x−y\vert <δ\)}
+\\{|{x²: x ∈ I}|≤ 2n ⋅ |I|}{\(\vert \{x^{2}:x∈I\}\vert ≤2n⋅\vert I\vert \)}
+\\{|{x²: x ∈ Z_n}| ≤ |{0} ∪ ⋃_k {x²: x ∈ I_k}| ≤ ∑_k |{x²: x ∈ I_k}| ≤ ∑_k (2n ⋅ |I_k|) < 2n ⋅ ε}{\(\vert \{x^{2}:x∈Z_{n}\}\vert ≤\vert \{0\}∪⋃_{k}\{x^{2}:x∈I_{k}\}\vert ≤∑_{k}\vert \{x^{2}:x∈I_{k}\}\vert ≤∑_{k}(2n⋅\vert I_{k}\vert )<2n⋅ε\)}
+\\{|{x²: x ∈ Z_n}|=0}{\(\vert \{x^{2}:x∈Z_{n}\}\vert =0\)}
+\\{|∫_a^b g dif ψ - ∫_a^b g f dif φ| > ε}{\(\vert ∫^{b}_{a}g\hspace{0.16666666666666666em}\mathrm{d}ψ−∫^{b}_{a}gf\hspace{0.16666666666666666em}\mathrm{d}φ\vert >ε\)}
+\\{|∫_p^q f dif φ| ≤ M ⋅ V[φ; p, q]}{\(\vert ∫^{q}_{p}f\hspace{0.16666666666666666em}\mathrm{d}φ\vert ≤M⋅V[φ;p,q]\)}
+\\{Γ}{\(Γ\)}
+\\{Γ'=Γ ∪ {a+ε} = {y₁, y₂, …, y_n}}{\(Γ′=Γ∪\{a+ε\}=\{y_{1},y_{2},…,y_{n}\}\)}
+\\{Γ={x₀, x₁, …, x_m}}{\(Γ=\{x_{0},x_{1},…,x_{m}\}\)}
+\\{Γ={x₀, …, x_m}}{\(Γ=\{x_{0},…,x_{m}\}\)}
+\\{Γ={x₁, x₂, …, x_m}}{\(Γ=\{x_{1},x_{2},…,x_{m}\}\)}
+\\{Γ=Γ₁'=Γ₂'}{\(Γ=Γ_{1}′=Γ_{2}′\)}
+\\{Γ₁}{\(Γ_{1}\)}
+\\{Γ₁'}{\(Γ_{1}′\)}
+\\{Γ₂}{\(Γ_{2}\)}
+\\{Γ₂'}{\(Γ_{2}′\)}
+\\{δ}{\(δ\)}
+\\{δ>0}{\(δ>0\)}
+\\{ε}{\(ε\)}
+\\{ε → 0+}{\(ε→0+\)}
+\\{ε/3}{\(\frac{ε}{3}\)}
+\\{ε>0}{\(ε>0\)}
+\\{ξ₁, …, ξ_m}{\(ξ_{1},…,ξ_{m}\)}
+\\{φ}{\(φ\)}
+\\{ψ}{\(ψ\)}
+\\{ℝ}{\(ℝ\)}
+\\{ℝ ∖ F}{\(ℝ∖F\)}
+\\{∑_(i=1)^m g(ξ_i) f(ξ_i) ⋅ (φ(x_i) - φ(x_(i-1)))}{\(∑^{m}_{i=1}g(ξ_{i})f(ξ_{i})⋅(φ(x_{i})−φ(x_{i−1}))\)}
+\\{∑_(i=1)^m g(ξ_i) ⋅ (ψ(x_i) - ψ(x_(i-1)))}{\(∑^{m}_{i=1}g(ξ_{i})⋅(ψ(x_{i})−ψ(x_{i−1}))\)}
+\\{∑_k |I_k| < ε}{\(∑_{k}\vert I_{k}\vert <ε\)}
+\\{∫_a^b g dif ψ}{\(∫^{b}_{a}g\hspace{0.16666666666666666em}\mathrm{d}ψ\)}
+\\{∫_a^b g dif ψ = ∫_a^b g f dif φ}{\(∫^{b}_{a}g\hspace{0.16666666666666666em}\mathrm{d}ψ=∫^{b}_{a}gf\hspace{0.16666666666666666em}\mathrm{d}φ\)}
+\\{∫_a^b g f dif φ}{\(∫^{b}_{a}gf\hspace{0.16666666666666666em}\mathrm{d}φ\)}
+\\{≤
+N ⋅ ε ⋅ ∑_(i=1)^m  V[φ; x_(i-1), x_i] = N ⋅ ε ⋅ V[φ; a, b]}{\(≤N⋅ε⋅∑^{m}_{i=1}V[φ;x_{i−1},x_{i}]=N⋅ε⋅V[φ;a,b]\)}
+\\{≤ M}{\(≤M\)}
+\\{≤ P}{\(≤P\)}
+\\{≥ 0}{\(≥0\)}
+\\{≥0}{\(≥0\)}
+\endgroup

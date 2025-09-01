@@ -1,0 +1,396 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\input{header}
+
+\title{ma5259\_hw3}
+\author{Nguyen Ngoc Khanh - A0275047B}
+\date{November 2024}
+
+\begin{document}
+
+\maketitle
+
+\section{Q1}
+We roll a fair die repeatedly until the sum of all throws first becomes larger than or equal to 2024. What is the most likely value of this sum when we stop?
+
+\subsection{Most likely value of this sum when we stop}
+
+Let $\set{X_n}_{n \in \N}$ denote the sequence of die throws and 
+$$
+    S_n = \sum_{i=1}^n X_i
+$$
+
+Let $a \in \N_0$ and $f(a)$ denote the probability of $a$ belonging to the sequence $\set{S_n}$, that is
+$$
+    f(a) = P(\set{\exists n \in \N, S_n = a})
+$$
+
+Let $g(a, b)$ with $a \leq b$ denote the probability of $a$ belonging to the sequence $\set{S_n}$ and $b$ being the next value, that is
+$$
+    g(a, b) = P(\set{\exists n \in \N, S_n = a, S_{n+1} = b} )
+$$
+
+If $b - a \in \set{1, 2, 3, 4, 5, 6}$, then 
+\begin{align*}
+    g(a, b)
+    &= P(\set{\exists n \in \N, S_n = a, S_{n+1} = b} ) \\
+    &= P(\set{\exists n \in \N, S_n = a, X_{n+1} = b-a} ) \\
+    &= P(X_\cdot = b-a | \set{\exists n \in \N, S_n = a}) P(\set{\exists n \in \N, S_n = a}) \\
+    &= \frac{1}{6} f(a)
+\end{align*}
+
+When $b \geq 7$, we have
+
+\begin{align*}
+    f(b)
+    &= g(b-1, b) + g(b-2, b) + g(b-3, b) + g(b-4, b) + g(b-5, b) + g(b-6, b) \\
+    &= \frac{1}{6} (f(b-1) + f(b-2) + f(b-3) + f(b-4) + f(b-5) + f(b-6))
+\end{align*}
+
+Let $h(a, b)$ with $a \leq b$ denote the probability of there is a value $a' < a$ belong to the sequence $\set{S_n}$ and $b$ being the next value, that is
+$$
+    h(a, b) = P(\set{\exists n \in \N, S_n < a, S_{n+1} = b})
+$$
+
+When $1 \leq b-6 \leq a \leq b$, we have
+\begin{align*}
+    h(a, b)
+    &= P(\set{\exists n \in \N, S_n < a, S_{n+1} = b}) \\
+    &= \sum_{a'=b-6}^{a-1} P(\set{\exists n \in \N, S_n = a', S_{n+1} = b}) \\
+    &= \sum_{a'=b-6}^{a-1} g(a', b) \\
+    &= \frac{1}{6} \sum_{a'=b-6}^{a-1} f(a') \\
+\end{align*}
+
+Therefore, we have,
+\begin{align*}
+    h(2024, 2024) &= f(2024) \\
+                &= \frac{1}{6} (f(2023) + f(2022) + f(2021) + f(2020) + f(2019) + f(2018)) \\
+    h(2024, 2025) &= \frac{1}{6} (f(2023) + f(2022) + f(2021) + f(2020) + f(2019) \\
+    h(2024, 2026) &= \frac{1}{6} (f(2023) + f(2022) + f(2021) + f(2020)) \\
+    h(2024, 2027) &= \frac{1}{6} (f(2023) + f(2022) + f(2021)) \\
+    h(2024, 2028) &= \frac{1}{6} (f(2023) + f(2022)) \\
+    h(2024, 2029) &= \frac{1}{6} f(2023) \\
+    h(2024, b) &= 0 &\text{(if $b \geq 2030$)}
+\end{align*}
+
+Hence, the most likely value of the sum when we stop is 2024
+
+\section{Q2}
+
+Let $(X_n)_{n \geq 0}$ be a simple symmetric random walk on $\Z$ with $X_0 = a$ for some $0 < a < L$. Let $\tau := \min\set{n \geq 0: X_n \in \set{0, L}}$. Show that $M_n = \sum_{i=0}^n X_i - \frac{1}{3} X_n^3$ is a martingale and use this to compute $\Exp\bracket*{\sum_{n=0}^\tau X_n}$
+
+\subsection{$M_n$ is a martingale with respect to $F_n = \sigma(X_0, X_1, ..., X_n)$}
+
+In Doob decomposition, for any stochastic process $(Y_n)_{n \in \N}$, let $D_n = Y_n - Y_{n-1}$, $N_0 = 0$
+$$
+    N_n - N_{n-1} = D_n - \Exp[D_n | \mathcal{F}_{n-1}]
+$$
+
+is a martingale with respect to $\mathcal{F}_n = \sigma(Y_0, Y_1, ..., Y_n)$. Now, let $Y_n = f(X_n)$ be a function of $X_n$, then $\mathcal{F}_n = \sigma(Y_0, Y_1, ..., Y_n) = \sigma(X_0, X_1, ..., X_n)$. We will construct a function $f: \N \to \N$ so that it $M_n = N_n$. We have
+
+$$
+    M_n - M_{n-1} = X_{n} - \frac{1}{3} X_n^3 + \frac{1}{3} X_{n-1}^3
+$$
+
+Let $x \in \N$, we have $\Exp[f(X_n) | X_{n-1} = x] = \frac{1}{2} f(x + 1) + \frac{1}{2} f(x-1)$, then $\Exp[f(X_n) | X_{n-1}] = \frac{1}{2} f(X_{n-1} + 1) + \frac{1}{2} f(X_{n-1}-1)$. Hence
+
+\begin{align*}
+    D_n - \Exp[D_n | \mathcal{F}_n]
+    &= f(X_n) - f(X_{n-1}) - \Exp[f(X_n) - f(X_{n-1}) | \mathcal{F}_{n-1}] \\
+    &= f(X_n) - f(X_{n-1}) - \Exp[f(X_n) - f(X_{n-1}) | X_{n-1}] &\text{($X$ is a Markov chain)}\\
+    &= f(X_n) - f(X_{n-1}) - \Exp[f(X_n)| X_{n-1}] + \Exp[f(X_{n-1}) | X_{n-1}] \\
+    &= f(X_n) - \Exp[f(X_n)| X_{n-1}] \\
+    &= f(X_n) - \frac{1}{2} f(X_{n-1} + 1) - \frac{1}{2} f(X_{n-1}-1)
+\end{align*}
+
+Let $Y_n = f(X_n) = X_n - \frac{1}{3} X_n^3$, then 
+
+$$
+    D_n - \Exp[D_n | \mathcal{F}_n] = f(X_n) - \frac{1}{2} f(X_{n-1} + 1) - \frac{1}{2} f(X_{n-1}-1) = X_{n} - \frac{1}{3} X_n^3 + \frac{1}{3} X_{n-1}^3
+$$
+
+Therefore, $M_n$ is a martingale with respect to $\mathcal{F}_n$
+
+\subsection{Compute $\Exp\bracket*{\sum_{n=0}^\tau X_n}$}
+
+$$
+    \Exp\bracket*{\sum_{n=0}^\tau X_n} = \Exp\bracket*{M_\tau + \frac{1}{3} X_\tau^3} = \Exp[M_\tau] + \frac{1}{3} \Exp[X_\tau^3]
+$$
+
+By optional stopping theorem, $\Exp[M_\tau] = \Exp[M_0] = a - \frac{1}{3} a^3$. Moreover
+\begin{align*}
+	\Exp[X_\tau^3]
+	&= P(X_\tau = 0) \cdot 0^3 + P(X_\tau = L) \cdot L^3 \\
+	&= P(X_\tau = L) \cdot L^3 \\
+	&= \frac{a}{L}  L^3 = a L^2
+\end{align*}
+
+Then, 
+$$
+	\Exp\bracket*{\sum_{n=0}^\tau X_n} = a - \frac{1}{3} a^3 + \frac{1}{3} aL^2
+$$
+
+\section{Q3}
+
+Let $S_n$ be the number of individials in the $n$-th generation of a branching process (also called Galton-Watson process). Assume $S_0 = 1$. Each of the $S_n$ individuals in generation $n$ independently produces a random number of offsprings with common distribution $\mu$ for the $(n+1)$-st generation. Let $m = \sum_{k=0}^\infty k \mu(k)$ be the mean number of offsprings. Prove that the branching process dies out almost surely,  i.e. almost surely $S_n = 0$ for all $n$ sufficiently large, if $m \leq 1$ and $\mu(0) > 0$
+
+\subsection{$\frac{S_n}{m^n}$ is a martingale}
+
+Let $X_i^n$ for $i, n \in \N$ be i.i.d RVs with distribution $\mu$, that is, $\Exp[X_i^n] = m$, $S_n = \sum_{i=1}^{S_{n-1}} X_i^n$. Let $\mathcal{F}_n = \sigma(S_0, S_1, ..., S_n)$, then
+\begin{align*}
+	\Exp\bracket*{\frac{S_n}{m^n} | \mathcal{F}_n}
+	&= \Exp\bracket*{\frac{S_n}{m^n} | S_0, S_1, ..., S_n} \\
+	&= \Exp\bracket*{\frac{S_n}{m^n} | S_n} &\text{($S_\cdot$ is a Markov chain)}\\
+	&= \frac{1}{m^n} \Exp\bracket*{S_n | S_n} \\
+	&= \frac{S_n}{m^n}
+\end{align*}
+
+Similarly, 
+\begin{align*}
+	\Exp\bracket*{\frac{S_n}{m^n} | \mathcal{F}_{n-1}}
+	&= \Exp\bracket*{\frac{S_n}{m^n} | S_{n-1}} \\
+	&= \frac{1}{m^n} \Exp[S_n | S_{n-1}] \\
+	&= \frac{1}{m^n} \Exp\bracket*{\sum_{i=1}^{S_{n-1}} X_i^n | S_{n-1}} \\
+	&= \frac{1}{m^n} S_{n-1} \Exp[X_i^n] &\text{($X_i^n$ are independent)} \\
+	&= \frac{S_{n-1}}{m^{n-1}}
+\end{align*}
+
+Hence, $\frac{S_n}{m^n}$ is a martingale adapted to the filtration generated by $S_n$. Moreover, as $\frac{S_n}{m^n}$ is a martingale, we have
+
+\begin{align*}
+	\Exp\bracket*{\frac{S_n}{m^n}} =  \Exp\bracket*{\Exp\bracket*{\frac{S_n}{m^n} | \mathcal{F}_{n-1}}} = \Exp\bracket*{\frac{S_{n-1}}{m^{n-1}}} = ... = \Exp\bracket*{\frac{S_0}{m^0}} = 1
+\end{align*}
+
+Hence,
+$$
+	\Exp[S_n] = m^n
+$$
+
+\subsection{Branching process dies out almost surely if $\mu(0) > 0$ and $m = \Exp[X_i^n] \leq 1$}
+
+\subsubsection{Case 1: $m < 1$}
+
+By Markov inequality for nonnegative RV $S_n$
+
+\begin{align*}
+	P(S_n \geq 1) \leq \frac{\Exp[S_n]}{1} = m^n \to 0
+\end{align*}
+
+as $n \to 0$.  That is, there exists $N \in \N$ such that $S_N = 0$.  Moreover, if $S_N = 0$, then $S_n = 0$ for all $n > N$. Therefore, the process dies out.
+
+\subsubsection{Case 2: $m = 1$ and $\mu(0) > 0$}
+
+$S_n = \frac{S_n}{m^n}$ is a martingale. We have
+$$
+	\sup_{n} \Exp[|S_n^-|] = 0 < \infty
+$$
+
+By martingale convergence theorem, there exists a random variable $S_\infty$ such that $S_n \to S_\infty$ amost surely. $S_n$ are integer-valued, then $S_\infty$ is also integer-valued. For all $k \in \N$, we have
+$$
+	P(S_\infty = k) = P(X_n \to k) = P(\text{there exists } N \in \N, X_n = k \text{ for every } n > N)
+$$
+
+Since $\mu(1) < 1$,  for any $k \geq 1$, the event $\set{\text{there exists } N \in \N, X_n = k \text{ for every } n > N}$ has probability $0$. Hence, $X_\infty = 0$. Therefore, in almost every realization, there exists $N \in \N$ such that $S_n = 0$ for all $n > N$
+
+\section{Q4}
+
+Let $G(n, p) = (V, E)$ be an Erdős–Rényi random graph with $n$ vertices such that independently for every pair vertices, there is an edge between them with probability $p \in (0, 1)$. The chromatic number $\chi$ of a graph is the minimal number of colours needed to colour the vertices of the graph such that no two neighbouring vertices (connected by an edge) have the same colour. Prove that
+$$
+	P(|\chi - \Exp[\chi]| \geq a) \leq 2 e^{- \frac{a^2}{2n}}
+$$
+
+\begin{proposition}[tower property]
+	Let $\mathcal{H}$ be a sub-$\sigma$-algebra of $\mathcal{G}$, then
+	$$
+		\Exp[\Exp[X | \mathcal{G}] | \mathcal{H}] = \Exp[X | \mathcal{H}]
+	$$
+\end{proposition}
+
+\subsection{Doob martingale}
+
+Let $\mathcal{F}_1 \subseteq \mathcal{F}_2 \subseteq ...$ be a filtration of $\sigma$-algebras, and $Y$ be a random variable with $\Exp[|Y|] < \infty$, then
+$$
+	Z_n = \Exp[Y | \mathcal{F}_n]
+$$
+
+is a martingale. This is a direct application of tower property
+$$
+	\Exp[Z_n | \mathcal{F}_{n-1}] =  \Exp[\Exp[Y | \mathcal{F}_n] | \mathcal{F}_{n-1}] = \Exp[Y | \mathcal{F}_{n-1}] = Z_{n-1}
+$$
+
+\subsection{vertex exposure martingale}
+
+Let $G$ be a random graph with $n$ vertices and $G_k$ be the subgraph of the first $k$ vertices, $G = G_n$. Let
+$$
+	\mathcal{G}_k = \sigma(G_0, G_1, ..., G_k)
+$$
+
+Then, $\mathcal{G}_0 \subseteq \mathcal{G}_1 \subseteq ... \subseteq \mathcal{G}_n$ is a filtration. Let $f$ be a function of $G$, then 
+$$
+	Z_k = \Exp[f(G) | \mathcal{G}_k]
+$$
+
+is a Doob martingale.
+
+\subsection{Chromatic number}
+
+Note that, 
+$$
+	Z_k = \Exp[f(G) | \mathcal{G}_k] = \Exp[f(G) | G_k, G_{k-1} ..., G_0]  = \Exp[f(G) | G_k]
+$$
+ 
+When $f(G) = \chi(G)$ be the chromatic number, we can bound $|Z_k - Z_{k-1}|$ as follows: Given a realization $g_1, g_2, ..., g_{k-1}, g_k, ..., g_n$ of $G$.  Note that, if we color the $k$-th vertex with a new color, the same coloring suffices the neighboring condition. Therefore, for any graph $g_{k-1} \subseteq g_k$, the expectation does not differ more than $1$,
+$$
+	\abs{\Exp[\chi | G_{k-1} = g_{k-1}] - \Exp[\chi | G_{k-1} = g_{k-1}, G_k = g_k] } \leq 1
+$$
+
+Hence,
+$$
+	|Z_k - Z_{k-1}| \leq 1
+$$
+
+By Azuma-Hoeffding for martingale not starting from $0$ ($Z_k - Z_0$ is a martingale starting from $0$), for $a > 0$
+
+$$
+	P\tuple*{|Z_n - Z_0| \geq a} \leq e^{- \frac{a^2}{2n}} \text{ and } P\tuple*{|Z_n - Z_0| \leq -a} \leq e^{- \frac{a^2}{2n}}
+$$
+
+Hence, $P\tuple*{||Z_n - Z_0|| \geq a} \leq 2e^{- \frac{a^2}{2n}}$. Since, $Z_n - Z_0 = \Exp[\chi | G_n] - \Exp[\chi | G_0]= \chi - \Exp[\chi]$, we have
+$$
+P(|\chi - \Exp[\chi]| \geq a) \leq 2 e^{- \frac{a^2}{2n}}
+$$
+
+\section{Q5}
+
+Let $\xi_1, \xi_2, ..., \xi_n, ...$ be a sequence of i.i.d Bernoulli random variables with $P(\xi_1 = 0) = P(\xi_1 = 1) = \frac{1}{2}$. Let
+$$
+	\tau = \min\set{n \geq 5: \xi_{n-4} \xi_{n-3} \xi_{n-2} \xi_{n-1} \xi_n = 11001}
+$$
+
+Find $\Exp[\tau]$ by constructing a suitable martingale
+
+\subsection{constructing martingale}
+
+Let $\mathcal{F}_n = \sigma(\xi_1, \xi_2, ..., \xi_n)$. Given a countable number of gamblers each is associated with a natural number $k$, everyone starts with $\$1$. The gambler $k$ starts betting at time $k$ and do the following strategy: at each time step, he/she bets the total amount of money he/she has. The first time he/she bets $1$, then $1$, then $0$, then $0$, then $1$ (the bets after $5$ times are not important for our problem). Let $X^k_n$ denote the gain of gambler $k$ at time $n$. Then, $X^k_n$ is a martingale adapted to the filtration $\mathcal{F}_n$,
+$$
+	\Exp[X^k_n | \mathcal{F}_{n-1}] = \Exp[S^k_n | \xi_1, \xi_2, ..., \xi_{n-1}] =  \Exp[X^k_n | X^k_{n-1}] = \frac{1}{2} (2 (X^k_{n-1} + 1)) - 1 = X^k_{n-1}
+$$
+
+Let $X_n = \sum_{n=1}^\infty X^k_n$ be the gain of all gamblers at time $n$, then $X_n$ is also a martingale.
+
+\subsection{stopped martingale}
+
+If we stop the martingale at time $\tau = \min\set{n \geq 5: \xi_{n-4} \xi_{n-3} \xi_{n-2} \xi_{n-1} \xi_n = 11001}$, by optional stopping theorem
+$$
+	\Exp[X_\tau] = \Exp[X_0] = 0
+$$
+
+Note that, all gamblers betting more than $5$ times have lost the game. We have
+\begin{align*}
+	X_\tau^\tau &= 2 \times 1_{\set{\xi_\tau = 1}} - 1\\
+	X_\tau^{\tau - 1} &= 4 \times 1_{\set{\xi_{\tau-1} = 1, \xi_\tau = 1}} - 1\\
+	X_\tau^{\tau - 2} &= 8 \times 1_{\set{\xi_{\tau-2} = 1, \xi_{\tau-1} = 1, \xi_\tau = 0}} -1 \\
+	X_\tau^{\tau - 3} &= 16 \times 1_{\set{\xi_{\tau-3} = 1, \xi_{\tau-2} = 1, \xi_{\tau-1} = 0, \xi_\tau = 0}} -1 \\
+	X_\tau^{\tau - 4} &= 32 \times 1_{\set{\xi_{\tau - 4} = 1, \xi_{\tau-3} = 1, \xi_{\tau-2} = 0, \xi_{\tau-1} = 0, \xi_\tau = 1}} - 1\\
+	X_\tau^{\tau - 5} &= -1 \\
+	X_\tau^{\tau - 6} &= -1 \\
+	&... \\
+	X_\tau^1 &= -1
+\end{align*}
+
+Set $\set{\xi_{\tau - 4} = 1, \xi_{\tau-3} = 1, \xi_{\tau-2} = 0, \xi_{\tau-1} = 0, \xi_\tau = 1}$, 
+$$
+	X_\tau = \sum_{n=1}^\tau X^k_n= (\tau - 5)(-1) + (32-1) + (-1) + (-1) + (-1) + (2-1) = 34 - \tau
+$$
+
+Then, $\Exp[\tau] = 34$
+
+\section{Q6}
+
+Let $X$ be an asymmetric simple random walk on $\Z$ with $X_0 = x \in \N$ and $\xi_i = X_i - X_{i-1}$ are i.i.d with
+$$
+	P(\xi_1 = +1) = 1 - P(\xi_1 = -1) = p \in (0, 1/2) \cup (1/2, 1)
+$$
+
+For $a \in \Z$, let $\tau_a = \min\set{n \geq 0: X_n = a}$. Let $L \in \N$ with $x < L$. By finding suitable martingales, compute $P_x(\tau_0 < \tau_L)$ and $\Exp[\tau_0 \wedge \tau_L]$. By sending $L \to \infty$, compute $P_x(\tau_0 < \infty)$ and $\Exp_x[\tau_0]$
+
+\subsection{construct martingales and compute $P_x(\tau_0 < \tau_L)$}
+
+Let $\mathcal{F}_n = \sigma(X_0, X_1, ..., X_n)$. When $p \neq \frac{1}{2}$, the function $M_n(z)$ defined by 
+$$
+	M_n(z) = \tuple*{\frac{1-p}{p}}^z
+$$
+
+is harmonic. Then, $M_n = M_n(X_n) =  \tuple*{\frac{1-p}{p}}^{X_n}$ is a martingale adapted to $\mathcal{F}_n$. Since $\tau = \tau_0 \wedge \tau_L$ is a stopping time,
+$$
+	M_{n \wedge \tau} = \tuple*{\frac{1-p}{p}}^{X_{n \wedge \tau}}
+$$
+
+is also a martingale. By optional stopping theorem for $M_{n \wedge \tau}$, 
+$$
+	\Exp[M_\tau] = \Exp[M_0] =  \tuple*{\frac{1-p}{p}}^x
+$$
+
+Moreover, the martingale stops at $X_\tau = 0$ or $X_\tau = L$ with respective probabilities, then
+
+$$
+	\Exp[M_\tau]  = P_x(\tau_0 < \tau_L) \cdot  \tuple*{\frac{1-p}{p}}^0 + (1 - P_x(\tau_0 < \tau_L)) \cdot  \tuple*{\frac{1-p}{p}}^L
+$$
+
+Then, 
+$$
+	P_x(\tau_0 < \tau_L) = \frac{\tuple*{\frac{1-p}{p}}^x - \tuple*{\frac{1-p}{p}}^L}{1 - \tuple*{\frac{1-p}{p}}^L}
+$$
+
+\subsection{construct martingales and compute $\Exp[\tau] = \Exp[\tau_0 \wedge \tau_L]$}
+
+Let $\mathcal{F}_n = \sigma(X_0, X_1, ..., X_n)$, then $M_n$ defined by
+$$
+	M_n = X_n + n(1 - 2p)
+$$
+
+is a martingale. Since
+\begin{align*}
+	\Exp[M_n | \mathcal{F}_{n-1}]
+	&= \Exp[M_n | X_{n-1}, X_{n-2}, ..., X_0] \\
+	&= \Exp[M_n | X_{n-1}] &\text{(Markov chain)} \\
+	&= \Exp[X_n | X_{n-1}] + n(1 - 2p) \\
+	&= p(X_{n-1} + 1) + (1-p)(X_{n-1} - 1) + n(1 - 2p) \\
+	&= X_{n-1} + (n-1)(1 - 2p) = M_{n-1}
+\end{align*}
+
+Similarly, 
+$$
+	M_{n \wedge \tau} = X_{n \wedge \tau} + (n \wedge \tau)(1 - 2p)
+$$
+
+is also a martingale. By optional stopping theorem for $M_{n \wedge \tau}$, 
+$$
+	x = \Exp[M_0] = \Exp[M_\tau] = \Exp[X_\tau] + (1-2p)\Exp[\tau]
+$$
+
+Then
+\begin{align*}
+	\Exp[\tau]
+	&= \frac{1}{1-2p} (x - \Exp[X_\tau]) \\
+	&= \frac{1}{1-2p} (x - P_x(\tau_0 < \tau_L) \cdot 0 - (1 - P_x(\tau_0 < \tau_L)) \cdot L) \\
+	&= \frac{1}{1-2p} (x - (1 - P_x(\tau_0 < \tau_L)) \cdot L) \\
+	&= \frac{1}{1-2p} \tuple*{x -  \frac{1 - \tuple*{\frac{1-p}{p}}^x}{1 - \tuple*{\frac{1-p}{p}}^L} L}
+\end{align*}
+
+\subsection{when $L \to \infty$}
+
+If $p > 1/2$, then $\frac{1-p}{p} < 1$, then
+\begin{align*}
+	\lim_{L \to \infty} P_x(\tau_0 < \tau_L) &= \tuple*{\frac{1-p}{p}}^x \in (0, 1)\\
+	\lim_{L \to \infty} \Exp[\tau] &= +\infty
+\end{align*}
+
+If $p < 1/2$, then $\frac{1-p}{p} > 1$, then
+\begin{align*}
+	\lim_{L \to \infty} P_x(\tau_0 < \tau_L) &= 1 \\
+	\lim_{L \to \infty} \Exp[\tau] &= \frac{x}{1-2p}
+\end{align*}
+
+\end{document}

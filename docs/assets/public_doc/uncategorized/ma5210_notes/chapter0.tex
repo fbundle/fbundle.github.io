@@ -1,0 +1,573 @@
+\chapter{Preliminaries}
+
+\section{Natural Number}
+
+
+\begin{definition}
+	Denote $[n] = \set{1, 2, ..., n}$
+\end{definition}
+
+\section{Analysis}
+
+\begin{theorem}[Taylor theorem]
+	A function $f: \R^n \to \R$ be differentiable at $a \in \R^n$ if and only if there is a linear functional $L: \R^n \to \R$ and a function $h: \R^n \to \R$ such that
+	$$
+	f(x) = f(a) + L(x - a) + h(x) \norm{x-a}
+	$$
+	
+	where $h(x) \to 0$ as $x \to 0$. If this is the case, then $L: \R^n \to \R$ is unique and its Riesz representation $L^* \in \R^n$ is 
+	$$
+	L^* = \tuple*{\frac{\partial f}{\partial x_1}\bigg\vert_{x}, \frac{\partial f}{\partial x_2}\bigg\vert_{x}, ..., \frac{\partial f}{\partial x_n}\bigg\vert_{x}}
+	$$
+\end{theorem}
+
+\begin{definition}[smooth function]
+	Let $D$ be an open set in $\R^n$, a function $f: D \to \R$ is called smooth if it has partial derivatives of all orders and they are continuous at every point in $D$. The collection of all smooth functions is denoted by $\E$
+\end{definition}
+
+\begin{definition}[real analytic]
+	Let $D$ be an open set in $\R^n$, a function $f: D \to \R$ is called real analytic if for all $x_0 \in D$, there exists a neighbourhood $U \subseteq D$ such that $f$ can be written by a convergence power series
+	$$
+	f(x) = \sum_{m=0}^\infty P_m(x - x_0)
+	$$
+	for all $x \in U$ where $P_m$ is a homogeneous polynomial \footnote{$a_{20} x^2 + a_{11} xy + a_{02} y^2$ is an example of homogeneous polynomial of degree $2$ over $2$ variables} of degree $m$ on $n$ variables over $\R$. The collection of all real analytic functions is denoted by $\mathcal{A}$.
+\end{definition}
+
+\begin{remark}
+	real analytic implies smoothness
+\end{remark}
+
+\begin{definition}[complex holomorphic]
+	Let $D$ be an open set in $\C^n$, a function $f: D \to \C$ is called complex holomorphic if for all $x_0 \in D$, there exists a neighbourhood $U \subseteq D$ such that $f$ can be written by a convergence power series
+	$$
+	f(x) = \sum_{m=0}^\infty P_m(x - x_0)
+	$$
+	for all $x \in U$ where $P_m$ is a homogeneous polynomial of degree $m$ on $n$ variables over $\C$. The collection of all complex holomorphic functions is denoted by $\mathcal{O}$.
+\end{definition}
+
+\begin{theorem}[inverse function theorem for $\Str$-function]
+	Let $D$ be an open set in $K^n$ for $K$ being either $\R$ or $\C$ and $F: D \to K^n$ be an $S$-function where $\Str$ is either $\E$, $\mathcal{A}$, or $\mathcal{O}$. Suppose $p \in D$ is regular point, that is the Jacobian $dF$ at $p$ is invertible
+	$$
+	dF = \begin{bmatrix}
+		\frac{\partial F_1}{\partial x_1} & ... & \frac{\partial F_1}{\partial x_n} \\
+		... & ... & ... \\
+		\frac{\partial F_n}{\partial x_1} & ... & \frac{\partial F_n}{\partial x_n}
+	\end{bmatrix}
+	$$
+	Then, there exists open neighbourhoods $U \subseteq D$ of $p$ and $W \subseteq \R^n$ of $F(p)$ such that $F: U \to W$ is a bijection and $F^{-1}: W \to U$ is an $\Str$-function.
+\end{theorem}
+
+\begin{theorem}[maximum modulus principle]
+	Let $f: D \to \C$ be a holomorphic function on some connected open set $D \subseteq \C$. If $z_0$ has an open neighbourhood $N \subseteq D$ such that
+	$$
+	|f(z_0)| \geq |f(z)|
+	$$
+	for all $z \in N$ then $f$ is a constant on $D$
+\end{theorem}
+
+\begin{proposition}[chain rule]
+	$f: \R^2 \to \R$, $x: \R \to \R, y: \R \to \R$, define $g: \R \to \R$ by
+	$$
+	g(t) = f(x(t), y(t))
+	$$
+	
+	Then,
+	$$
+	\frac{dg}{dt}\bigg\vert_{t_1} = \tuple*{\frac{\partial f}{\partial x}\bigg\vert_{x(t_1)} \frac{dx}{dt}\bigg\vert_{t_1}} + \tuple*{\frac{\partial f}{\partial y}\bigg\vert_{y(t_1)} \frac{dy}{dt}\bigg\vert_{t_1}}
+	$$
+\end{proposition}
+
+\begin{remark}[Cauchy-Riemann equation and complex derivative]
+	This remark motivate the definition of complex holomorphic function. Let $f: \C \to \C$ be a function, write $f(z) = u(x, y) + i v(x, y)$ for $z \in \C$, $z = x + iy$, $x, y \in \R$, $u, v: \R \times \R \to \R$, we want to make the derivative $\frac{df}{dz}$ well-defined, that is, 
+	$$
+	\frac{df}{dz}\bigg\vert_{z_0} := \lim_{z \to z_0} \frac{f(z) - f(z_0)}{z - z_0} = \lim_{z \to z_0} \frac{(u(x, y) - u(x_0, y_0)) + i (v(x, y)  - v(x_0, y_0))}{(x - x_0) + i (y - y_0)}
+	$$
+	
+	exists. Set $y = y_0$, then 
+	\begin{align*}
+		\frac{df}{dz}\bigg\vert_{z_0}
+		&= \lim_{x \to x_0} \frac{(u(x, y_0) - u(x_0, y_0)) + i (v(x, y_0)  - v(x_0, y_0))}{x - x_0} \\
+		&= \frac{\partial u}{\partial x}\bigg\vert_{z_0} + i \frac{\partial v}{ \partial x}\bigg\vert_{z_0}
+	\end{align*}
+	
+	Set $x = x_0$, then
+	\begin{align*}
+		\frac{df}{dz}\bigg\vert_{z_0}
+		&= \lim_{y \to y_0} \frac{(u(x_0, y) - u(x_0, y_0)) + i (v(x_0, y)  - v(x_0, y_0))}{i (y - y_0)} \\
+		&= -i \frac{\partial u}{\partial y}\bigg\vert_{z_0} + \frac{\partial v}{\partial y}\bigg\vert_{z_0}
+	\end{align*}
+	
+	We recover the Cauchy-Riemann equation
+	$$
+	\frac{\partial u}{\partial x} = \frac{\partial v}{\partial y} \text{ and } \frac{\partial v}{\partial x} = - \frac{\partial u}{\partial y}
+	$$
+	
+	where all the partial derivatives exist. Use Taylor theorem we have
+	\begin{align*}
+		u(x, y) &= u(x_0, y_0) + \frac{\partial u}{\partial x}\bigg\vert_{x_0,y_0} (x - x_0) + \frac{\partial u}{\partial y}\bigg\vert_{x_0,y_0} (y - y_0) + o(z - z_0) \\
+		v(x, y) &= v(x_0, y_0) + \frac{\partial v}{\partial x}\bigg\vert_{x_0,y_0} (x - x_0) + \frac{\partial v}{\partial y}\bigg\vert_{x_0,y_0} (y - y_0) + o(z - z_0)
+	\end{align*}
+	
+	where $\frac{o(z - z_0)}{\norm{z - z_0}} \to 0$ as $z \to z_0$. Plug into the defintion of $\frac{df}{dz}$, we conclude that Cauchy-Riemann equation is both necessary and sufficient for $\frac{df}{dz}$ to be well-defined. And $\frac{df}{dz}$ is also written as
+	$$
+	\frac{df}{dz}\bigg\vert_{z_0} = \frac{1}{2} \tuple*{\frac{\partial f}{\partial x} - i \frac{\partial f}{\partial y}}
+	$$
+\end{remark}
+
+\section{Linear Algebra}
+
+\subsection{Tensor Product, Wedge Product}
+
+\begin{definition}[bilinear map]
+	Let $V, W, Z$ be vector spaces over field $K$. A function $f: V \times W \to Z$ is $K$-bilinear if for every $w \in W$, the induced function $f_w: V \to Z$ defined by $f_w(v) = f(v, w)$ is linear and for every $v \in V$, the induced function $f_v: W \to Z$ defined by $f_v(w) = f(v, w)$ is linear. The collection of bilinear maps $V \to W$ is denoted by $\Bil(V, W)$.
+\end{definition}
+
+\begin{proposition}[tensor product]
+	Let $V, W$ be vector spaces over field $K$, then there exists a vector space $V \otimes W$ over $K$ and a bilinear map $g: V \times W \to V \otimes W$ such that for every vector space $Z$ over $K$, there is a bijection 
+	$$
+	F: \Bil(V \times W, Z) \to \Hom(V \otimes W, Z)
+	$$
+	
+	that makes the diagram below commutes
+	
+	\begin{center}
+		\begin{tikzcd}
+			V \times W \arrow[d, "g"'] \arrow[r, "f"] & Z \\
+			V \otimes W \arrow[ru, "f_* = F(f)"']            &  
+		\end{tikzcd}
+	\end{center}
+	
+	$V \otimes W$ is called tensor product and it is unique up to isomorphism.
+\end{proposition}
+
+\begin{remark}[basis of tensor product]
+	Let $\set{v_1, ..., v_n}$ be a basis of $V$ and $\set{w_1, ..., w_m}$ be a basis of $W$, then
+	$$
+	\set{v_i \otimes w_j: (i, j) \in [n] \times [m]}
+	$$
+	is a basis of $V \otimes W$ and
+	$$
+	\dim (V \otimes W) = \dim V \times \dim W
+	$$
+\end{remark}
+
+\begin{definition}[skew-symmetric]
+	Let $V, Z$ be vector spaces over field $K$. A function $f: V \times V \to Z$ is skew-symmetric if for every $v_1, v_2 \in V$,
+	$$
+		f(v_1, v_2) = - f(v_2, v_1)
+	$$
+	The collection of bilinear skew-symmetric maps $V \times V \to Z$ is denoted by $\Skew(V, Z)$
+\end{definition}
+
+\begin{proposition}[wedge product]
+	Let $V$ be a vector space over field $K$, then there exists a vector space $V \wedge V$ over $K$ and a bilinear skew-symmetric map $g: V \times V \to V \wedge V$ such that for every vector space $Z$ over $K$, there is a bijection
+	$$
+	F: \Skew(V, Z) \to \Hom(V \wedge V, Z)
+	$$
+	that makes the diagram below commutes
+	\begin{center}
+		\begin{tikzcd}
+			V \times V \arrow[d, "g"'] \arrow[r, "f"] & Z \\
+			V \wedge V \arrow[ru, "f_* = F(f)"']            &  
+		\end{tikzcd}
+	\end{center}
+	
+	$V \times V$ is called wedge project and it is unique up to isomorphism.
+\end{proposition}
+
+\begin{remark}[basis of wedge product]
+	Let $\set{v_1, ..., v_n}$ be a basis of $V$, then
+	$$
+	\set{v_i \wedge v_j: (i, j) \in [n] \times [n]}
+	$$
+	is a basis of $V \wedge V$. Note that $v_i \wedge v_j = - v_j \wedge v_i$, then
+	$$
+	\dim(V \wedge V) = {\dim V \choose 2}
+	$$
+\end{remark}
+
+\begin{remark}[$n$-th skew-symmetric and $n$-th wedge product]
+	$f: V^n \to Z$ is called $n$-th skew-symmetric if for every permutation $\sigma \in S^n$
+	$$
+	f(v_1, ..., v_n) = \sign(\sigma) f(\sigma(v_1, ..., v_n))
+	$$
+	The $n$-th wedge product exists and denoted by $\wedge^n V$
+\end{remark}
+
+\begin{remark}[basis of wedge product]
+	Let $\dim V = n$, then each basis vector of $\wedge^k V$ corresponding to a sorted subset of $[n]$, then
+	$$
+	\dim\tuple*{\wedge^k V} = {\dim V \choose k}
+	$$
+\end{remark}
+
+\begin{proposition}
+	Some observations
+	\begin{itemize}
+		\item If $\set{v_1, ..., v_n}$ is linear dependent then $\wedge^n v_i = 0$
+		\item $\Span \set{v_1, ..., v_n} = \Span \set{w_1, ..., w_n}$ if and only if $\wedge^n v_i = c \wedge^n w_i$ for some constant $c$
+	\end{itemize}
+	
+\end{proposition}
+
+\begin{definition}[determinant]
+	Let the $h$ be the canonical map $K^{n \times n} \to (K^n)^n$ which maps an $n \times n$ matrix into its $n$ column vectors. Let $p: (K^n)^n \to \wedge^n K^n \cong K$ be the canonical skew-symmetric bilinear map. Let $k: \wedge^n K^n \cong K \to K$ be the unique linear map such that $k p h (I) = 1$.
+	\begin{center}
+		\begin{tikzcd}
+			K^{n \times n} \arrow[r, "h"] \arrow[rrr, "\det"', bend right] & (K^n)^n \arrow[r, "p"] & \wedge^n K^n \cong K \arrow[r, "k"] & K
+		\end{tikzcd}
+	\end{center}
+\end{definition}
+
+\begin{remark}[graded-structure of wedge product]
+	(\note{wedge product can be defined for $R$-module})
+	Let $R$ be a commutative ring and $M$ be a free $R$-module, for $n \in \N$, let $\wedge^n M$ be the $n$-th wedge product of $M$. Let
+	$$
+		\wedge M = \bigoplus_{n=1}^\infty \wedge^n M
+	$$
+	
+	be the direct product of $R$-modules. Define multiplication on $\wedge M$ by
+	\begin{align*}
+		\wedge: \wedge^p M \times \wedge^q M &\to \wedge^{p + q} M \\
+						(x_1 \wedge x_2 ... \wedge x_p, x_{p+1} \wedge x_{p+2} \wedge ... \wedge x_{p+q}) &\mapsto x_1 \wedge x_2 \wedge ... \wedge x_{p+q}
+	\end{align*}
+	
+	That makes $\wedge M$ be a grade-commutative ring with multiplication $\wedge: \wedge M \times \wedge M \to \wedge M$
+\end{remark}
+
+\subsection{Complex Structure}
+
+\begin{definition}[minimal polynomial]
+	Let $T: V \to V$ be a linear map. The minimal polynomial of $T$ is the unique monic polynomial $p$ (leading coefficient is $1$) of smallest degree such that $p(T) = 0$. Moreover, the zeros of $p$ are exactly the collection of eigenvalues of $T$ and if the roots of $p$ are distinct and $T$ is diagonalizable
+\end{definition}
+
+\begin{definition}[complex structure]
+	Let $V$ be a real vector space, suppose $J: V \to V$ is $\R$-linear invertible such that $J^2 = -I$. Then $J$ is called a complex structure on $V$
+\end{definition}
+
+\begin{proposition}[complex structure decomposes $V$ into $V^{1,0} \oplus V^{0, 1}$]
+	Let $V$ be a real vector space with a complex structure $J: V \to V$. Since $J^2 = -I$, the minimal polynomial of $J$ is $p(x) = x^2 + 1$. Since $p$ has two distinct roots $\set{+i, -i}$ which is the eigenvalues of $J$, then $J$ is diagonalizable. We can write $V$ into a direct sum of two eigenspaces $V^{1,0}, V^{0, 1}$ of two eigenvalues $\set{+i, -i}$ correspondingly
+	$$
+		V = V_{1,0} \oplus V_{0, 1}
+	$$
+\end{proposition}
+
+\begin{remark}[complex structure makes $V$ a complex vector space]
+	If $J$ is a complex structure on a real vector space $V$, define the complex scalar multiplication by
+	\begin{align*}
+		\cdot: \C \times V &\to V \\
+		((a + bi), v) &\mapsto a v + b J v
+	\end{align*}
+	
+	That makes $V$ a complex vector space, denoted by $(V, J)$
+\end{remark}
+
+\begin{definition}[complexification]
+	Let $V$ be a real vector space with basis $\set{v_\alpha}_{\alpha \in A}$. The space $\C$ of complex numbers is a real vector space with a basis $\set{1, i}$. The complexification of $V$ is $V \otimes_\R \C$ which has a $\R$-basis $\set*{v_\alpha \otimes_R 1: \alpha \in A} \cup \set*{v_\alpha \otimes_R i: \alpha \in A}$.	$V \otimes_\R \C$ is a complex vector space  denoted by $(V \otimes_\R \C, i)$ by complex structure
+	\begin{align*}
+		i: V \otimes_\R \C &\to V \otimes_\R \C \\
+		v \otimes_\R z &\mapsto v \otimes_\R iz
+	\end{align*}
+	
+	$(V \otimes_\R \C, i)$ has a $\C$-basis $\set*{v_\alpha \otimes_R 1: \alpha \in A}$. There is an $\R$-linear inclusion defined by
+	\begin{align*}
+		V &\hookrightarrow V \otimes_\R \C \\
+		v_\alpha &\mapsto v_\alpha \otimes_R 1
+	\end{align*}
+\end{definition}
+
+\begin{remark}[decomposition of the complexification of a real vector space with a complex structure]
+	Let $V$ be a real vector space of dimension $2n$ with a complex structure $J: V \to V$, then $J$ induces a complex structure on $V \otimes_\R \C$ by
+	\begin{align*}
+		J_\C: V \otimes_\R \C &\to V \otimes_\R \C \\
+		v \otimes_\R z &\mapsto J(v) \otimes_\R z
+	\end{align*}
+
+	The complex structure $J_\C$ decomposes $V \otimes_\R \C$ into the direct sum of two eigenspaces
+	$$
+		V \otimes_\R \C = V_{1,0} \oplus V_{0,1}
+	$$
+	
+	For any $v \in V, z \in \C$, define the conjugation on $V \otimes_\R \C$ by 
+	$$
+		\overline{v \otimes_\R z} = v \otimes_\R \overline{z}
+	$$
+	
+	Then the conjugation gives a vector space isomorphism $c: V_{1,0} \to V_{0,1}$, that is, if $v \otimes z \in V_{1,0}$, then $\overline{v \otimes z} \in V_{0,1}$ and vice versa.
+	\begin{align*}
+		J_\C(\overline{v \otimes z}) 
+		&= J_\C(v \otimes \overline{z}) \\
+		&= Jv \otimes \overline{z} \\
+		&= \overline{Jv \otimes z} \\
+		&= \overline{J_\C(v \otimes z)} \\
+		&= \overline{i(v \otimes z)} &\text{($v \otimes z \in V_{1,0}$)}\\
+		&= \overline{v \otimes i z} \\
+		&= v \otimes \overline{i z} \\
+		&= v \otimes (-i) \overline{z} \\
+		&= (-i) (v \otimes \overline{z}) \\
+		&= (-i) \overline{v \otimes z}
+	\end{align*}
+	
+	Therefore, $\C-\dim V_{1,0} = \C-\dim V_{0,1} = n$. As a real vector space, $V_{1,0}$ is of dimension $2n$, we can define a $\R$-linear isomorphism $t: V \to V_{1,0}$
+	\begin{center}
+		\begin{tikzcd}
+			V \arrow[r, "inc", hook] \arrow[rd, "t"', dashed] & V \otimes_\R \C \arrow[d, "proj", two heads] \\
+			& {V_{1,0}}                                  
+		\end{tikzcd}
+	\end{center}
+	
+	This is indeed an isomorphism, for any $v \in V$, let $v \otimes 1 = v_{1,0} + v_{0,1}$, then
+	$$
+		v_{1,0} + v_{0,1} = v \otimes 1 = v \otimes \overline{1} = \overline{v \otimes 1} = \overline{v_{1,0} + v_{0,1}} = \overline{v_{1,0}} + \overline{v_{0,1}}
+	$$
+	
+	As $v_{1,0}, \overline{v_{0,1}} \in V_{1, 0}$ and $v_{0, 1}, \overline{v_{1, 0}} \in V_{0, 1}$, then $v_{1,0} = \overline{v_{0,1}}$ and $v_{0,1} = \overline{v_{1,0}}$, then we can define the inverse of $t: V \to V_{1,0}$ by
+	$$
+		v_{1,0} \mapsto v_{1,0} + \overline{v_{1,0}} \mapsto v
+	$$
+	
+	Hence, $t: V \to V_{1,0}$ is a bijection. Moreover, for any $v \in V \otimes_\R \C$, let $v = v_{1,0} + v_{0,1}$, then
+	$$
+		t J v = t(i v_{1,0} - i v_{0,1}) = i t v_{1,0} = t i v
+	$$
+	
+	Recall that $J$ makes $V$ into a complex vector space, then when view $V$ as a complex vector space, $t: V \to V_{1,0}$ is a $\C$-linear isomorphism $t: (V, J) \to (V \otimes_\R \C, i)$.
+	\note{Note that, $V$ and $V_{1,0}$ are not the same subspace in $V \otimes_\R \C$}
+\end{remark}
+
+\subsection{Discussion on the natural isomorphism between $((-)_\C)^*$ and $((-)^*)_\C$}
+
+\begin{remark}[Dual of the complexification is complexification of the dual]
+	\url{https://math.stackexchange.com/a/4718945/700,122}
+	
+	Let $V$ be a real vector space, let $V^* = \Hom_\R(V, \R)$ be the dual space of $V$, let $(V^*)_\C = V^* \otimes_\R \C$ be the complexification of dual of $V$. For simplification, let $\dim V = 2$ and let $\set{f_1, f_2} \subseteq V^*$ be a basis for $V^*$. Then
+	$$
+	(V^*)_\C = \C-\Span \set{f_1, f_2}
+	$$
+	
+	Let $f \in (V^*)_\C$, then
+	\begin{align*}
+		f
+		&= (a_1 + ib_1) f_1 + (a_2 + ib_2) f_2 \\
+		&= (a_1 f_1 + a_2 f_2) + i (b_1 f_1 + b_2 f_2)
+	\end{align*}
+	
+	Therefore, 
+	$$
+	(V^*)_\C = \C-\Span \set{f_1, f_2} = \Hom_\R(V, \C)
+	$$
+	
+	Let $V_\C = V \otimes_\R \C$ be the complexification of $V$, let $(V_\C)^* = \Hom_\C(V_\C, \C)$ be the dual of complexification of $V$. Let $f \in (V^*)_\C = \Hom_\R(V, \C)$, then let $\Tilde{f} \in (V_\C)^* = \Hom_\C(V_\C, \C)$ be defined by
+	$$
+	f(v \otimes z) = z f(v)
+	$$
+	
+	Let $\Tilde{g} \in (V_\C)^* = \Hom_\C(V_\C, \C)$, then let $g \in (V^*)_\C = \Hom_\R(V, \C)$ be the restriction of $\Tilde{g}$ on $V$. The two maps define an isomorphism between $(V^*)_\C$ and $(V_\C)^*$.
+	\note{TODO - dual and complexification are functors, and this isomorphism is natural}
+\end{remark}
+
+Let $K$ be a field, let $\Vect_K$ be the category of vector spaces over $K$.
+
+\begin{definition}[dual space contravariant functor from $\Vect_K$ into $\Vect_K$]
+	The dual space functor $D = (-)^*$ is a contravariant functor from $\Vect_K$ into $\Vect_K$ defined as follows: Let $V \in \ob \Vect_K$ then $D$ induces $D(V) = V^* = \Hom(V, K)$ is the usual dual space of $V$. Let $f: V \to W$ be a linear map where $V, W \in \ob \Vect_K$, then $D$ induces $D(f) = f^*: W^* \to V^*$ defined by $g \mapsto gf$ for every $g \in W^* = \Hom(W, K)$
+	\begin{center}
+		\begin{tikzcd}
+			V \arrow[r, "f"] & W                           & V \arrow[r, "f"] \arrow[rd, "D(f)(g) = gf"', dashed] & W \arrow[d, "g"] \\
+			V^*              & W^* \arrow[l, "D(f) = f^*"] &                                                      & K               
+		\end{tikzcd}
+	\end{center}
+\end{definition}
+
+\begin{definition}[complexification covariant functor from $\Vect_\R$ into $\Vect_\C$]
+	The complexification functor $C = (-)_\C$ is a contravariant functor from $\Vect_\R$ to $\Vect_\C$ defined as follows: Let $V \in \ob \Vect_\R$, then $C$ induces $C(V) = V_\C = V \otimes_\R \C \in \ob \Vect_\C$ where complex multiplication is defined by
+	\begin{align*}
+		\C \times (V \otimes_\R \C) &\to V \otimes_\R \C \\
+		\tuple*{y, \sum_{i \in I} v_i \otimes_\R z_i} &\mapsto \sum_{i \in I} v_i \otimes_\R y z_i
+	\end{align*}
+	
+	Let $f: V \to W$ be a linear map where $V, W \in \ob \Vect_\R$, then $C$ induces $C(f) = f \otimes_\R 1: V_\C \to W_\C$ defined by the linear extension of $v \otimes_\R z \mapsto f(v) \otimes_\R z$
+\end{definition}
+
+\begin{proposition}
+	Let $D_\R$ and $D_\C$ denote the dual space functors on $\Vect_\R$ and $\Vect_\C$ respectively, then there exists a natural isomorphism 
+	$$
+	\mu:  D_\C C \to C D_\R
+	$$
+	\begin{proof}
+		For each $V, W \in \Vect_\R$, we will construct the maps such that the diagram below commutes
+		\begin{center}
+			\begin{tikzcd}
+				V \arrow[d, "f"'] & (V_\C)^* \arrow[r, "\mu_V"'] \arrow[rr, "1", bend left]                               & (V^*)_\C \arrow[r, "\nu_V"'] \arrow[rr, "1", bend left]                             & (V_\C)^* \arrow[r, "\mu_V"']                             & (V^*)_\C                            \\
+				W                 & (W_\C)^* \arrow[r, "\mu_W"] \arrow[u, "(f \otimes 1)^*"] \arrow[rr, "1"', bend right] & (W^*)_\C \arrow[u, "f^* \otimes 1"] \arrow[r, "\nu_W"] \arrow[rr, "1"', bend right] & (W_\C)^* \arrow[u, "(f \otimes 1)^*"] \arrow[r, "\mu_W"] & (W^*)_\C \arrow[u, "f^* \otimes 1"]
+			\end{tikzcd}
+		\end{center}
+		
+		Let $g: V \otimes \C \to \C$ be an object of $(V_\C)^*$, then $\mu_V(g)$ is an object of $(V^*)_\C$ defined by
+		$$
+		\mu_V(g) = \bracket*{v \mapsto \real g(v \otimes 1)} \otimes_R 1 + \bracket*{v \mapsto \imag g(v \otimes 1)} \otimes_R i
+		$$
+		
+		Let $h \otimes y$ where $h: V \to \R$ be an object of $(V^*)_\C$, then $\nu_V(h)$ is an object of $(V_\C)^*$ defined by
+		$$
+		v \otimes z \mapsto yz h(v)
+		$$
+		
+		$\nu_V$ is then extended linearly. We can verify that $\nu_V \mu_V = 1$ and $\mu_V \nu_V = 1$, that is, $\mu_V$ is an isomorphism.
+		
+		Suppose in the diagram commutes except $y_1 b = a y_2$, 
+		\begin{center}
+			\begin{tikzcd}
+				{} \arrow[r, "x_1"'] \arrow[rr, "1", bend left]                 & {} \arrow[r, "y_1"'] \arrow[rr, "1", bend left]                 & {} \arrow[r, "x_1"']               & {}                \\
+				{} \arrow[r, "x_2"] \arrow[u, "a"] \arrow[rr, "1"', bend right] & {} \arrow[r, "y_2"] \arrow[u, "b"] \arrow[rr, "1"', bend right] & {} \arrow[u, "a"] \arrow[r, "x_2"] & {} \arrow[u, "b"]
+			\end{tikzcd}
+		\end{center}
+		
+		Then $y_1 b = a y_2$ can be induced from the commutativity of the rest
+		$$
+		y_1 b = y_1 b x_2 y_2 = y_1 x_1 a y_2 = a y_2
+		$$
+		
+		Therefore, for naturality, it suffices to prove that 
+		$$
+		\mu_V (f^* \otimes 1) = (f \otimes 1)^* \mu_W
+		$$
+		
+		This is indeed true from the construction above. Hence, $\mu$ is a natural isomorphism. Moreover, from \href{https://math.stackexchange.com/a/4718941/700,122}{julio\_es\_sui\_glace}, this is a \href{https://en.wikipedia.org/wiki/Tensor-hom_adjunction}{tensor-hom adjunction}.
+	\end{proof}
+\end{proposition}
+
+
+
+\section{Algebra}
+
+\begin{definition}[vector space]
+	An abelian group $V$ is a vector space over field $K$ if there is a scalar multiplication $\cdot: K \times V \to V$ satisfying
+	\begin{enumerate}
+		\item $1 v = v$ for every $1 \in K, v \in V$
+		\item $a (b v) = (ab) v$ for every $a, b \in K, v \in V$
+		\item $a (v + u) = a v + a u$ for every $a \in K, v, u \in V$
+	\end{enumerate}
+\end{definition}
+
+\begin{definition}[module over a commutative ring]
+	Let $R$ be a commutative ring, an abelian group $(M, +)$ is a module over $R$, namely, $R$-module if there is an operation $\cdot: R \times M \to M$ such that 
+	\begin{align*}
+		r (x + y) &= rx + ry \\
+		(r + s) x &= rx + sx \\
+		(rs) x &= rsx
+	\end{align*}
+	for all $r, s \in R$, $x, y \in M$. If $R$ is unital, then $1x = x$. When $K$ is a field, then an $K$-module is a $K$-vector space. A basis of an $R$-module $M$ is a collection of elements $E$ such that every element in $M$ can be written as finite linear combination of elements in $E$ and moreover, every finite collection $\set{e_1, e_2, ..., e_n} \subseteq E$ is linearly independent, that is,
+	$$
+		r_1 e_1 + r_2 e_2 + ... + r_n e_n = 0
+	$$
+	
+	for $r_1, r_2, ..., r_n \in R$, then $r_1 = r_2 = ... = r_n = 0$
+\end{definition}
+
+\begin{definition}[algebra over an commutative ring]
+	Let $R$ be a commutative ring, an ring $(A, +, \times)$ is an algebra over $R$, namely $R$-algebra is an $R$-module and 
+	$$
+		r(xy) = rxy = x (ry)
+	$$
+	
+	for all $r \in R$ and $x, y \in A$.
+\end{definition}
+
+\begin{definition}[graded-ring]
+	A graded ring is a ring that is decomposed into a direct sum
+	$$
+		R = \bigoplus_{n=0}^\infty R_n = R_0 \oplus R_1 \oplus ...
+	$$
+	
+	of additive groups such that $R_n R_m \subseteq R_{n + m}$ for all nonnegative integers $n, m$. A non-zero element of $R_n$ is called homogeneous of degree $n$. An example for graded-ring is the polynomial ring.
+\end{definition}
+
+\begin{definition}[graded-commutative ring]
+	In a graded ring $R$, the multiplication is called graded-commutative if given two homogeneous elements $x \in R_p$ and $y \in R_q$, then
+	$$
+		xy = (-1)^{pq} yx
+	$$
+	
+	A graded-ring with graded-commutative multiplication is called graded-commutative ring.
+\end{definition}
+
+\begin{definition}[exact sequence]
+	In an abelian category, given a diagram \begin{tikzcd}A \arrow[r, "f"] & B \arrow[r, "g"] & C\end{tikzcd}, it is called exact at $B$ if $f$ factors through $\ker g$ by an epimorphism $A \to \ker g$
+	\begin{center}
+		\begin{tikzcd}
+			A \arrow[r, "f"] \arrow[d, "epi"', dashed] & B \arrow[r, "g"] & C \\
+			\ker g \arrow[ru, "i"']                    &                  &  
+		\end{tikzcd}
+	\end{center}
+	A sequence is called exact if if it is exact everywhere. In the context where $f, g$ are maps, then this is equivalent to
+	$$
+	\im f = \ker g
+	$$
+\end{definition}
+
+\section{Topology}
+
+\begin{proposition}
+	closed subset of a compact space is compact
+\end{proposition}
+
+\begin{proposition}
+	compact subset of a Hausdorff space is closed
+\end{proposition}
+
+\begin{definition}[quotient topology]
+	A surjection $\pi: X \twoheadrightarrow Y$ where $X$ is a topological space induces a topology on $Y$ called quotient topology as follows: $U \subseteq Y$ is open if and only $\pi^{-1} U$ is open. In other words, quotient topology is the densest topology such that $\pi$ is continuous.
+\end{definition}
+
+\subsection{Fiber Bundle}
+
+\begin{definition}[group action]
+	Let $K$ be a group and $F$ be a set. $K$ is called acting on $F$ if there exists a map $\cdot: K \times F \to F$ such that
+	$$
+	1 f = f \text{ and } (ab) f = a(b(f))
+	$$
+	
+	where $1$ is the identity of $K$ and for every $a, b \in K$, $f \in F$. If $K$ is a topological group and $F$ is a topological space, then $\cdot: K \times F \to F$ is required to be continuous
+\end{definition}
+
+\begin{definition}[Bredon - bundle projection]
+	Let $X, B, F$ be Hausdorff spaces. A continuous surjection $\pi: X \to B$ is called a bundle projection if there exists an open cover $\set{U_i}_{i \in I}$ of $X$ such that for each $U \in \set{U_i}_{i \in I}$, there is a homeomorphism $\phi: U \times F \to \pi^{-1} U$ such that the composition $\pi \phi: U \times F \to U$ is the canonical projection $(u, f) \mapsto u$
+	\begin{center}
+		\begin{tikzcd}
+			\pi^{-1} U \arrow[d, "\pi"', two heads] & U \times F \arrow[l, "\phi"'] \arrow[ld, "\pi \phi", two heads, dashed] \\
+			U                                       &                                                                        
+		\end{tikzcd}
+	\end{center}
+	
+	$X$ is called total space, $B$ is called base space, $F$ is called fiber, $\phi$ is called trivialization (local trivialization)
+\end{definition}
+
+\begin{definition}[Bredon - fiber bundle]
+	Let $\pi: X \to B$ be a bundle projection with fiber $F$. Let $K$ be a topological group acting on $F$. $\pi: X \to B$ is called a fiber bundle if $U = U_i \cap U_j \neq \emptyset$ is the intersection of two local trivializations
+	\begin{center}
+		\begin{tikzcd}
+			U \times F \arrow[r, "\phi_i"] \arrow[rr, "\phi_j^{-1} \phi_i"', dashed, bend right] & \pi^{-1} U & U \times F \arrow[l, "\phi_j"']
+		\end{tikzcd}
+	\end{center}
+	then there exists a map $\theta: U \to K$ such that restricted to $U$, we have $\phi_i(u, f) = \phi_j(u, \theta(u) f)$
+	\begin{align*}
+		\phi_j^{-1} \phi_i: U \times F &\to U \times F \\
+		(u, f) &\mapsto (u, \theta(u)f)
+	\end{align*}
+	
+	$K$ is called structure group.
+\end{definition}
+
+\begin{definition}[Bredon - vector bundle]
+	A vector bundle is a fiber bundle where fiber $F = \R^r$ or $\C^r$ and structure group $K = GL(F)$
+\end{definition}
+
+\section{Category Theory}
+
+\begin{definition}[limit, colimit]
+	\note{TODO}
+\end{definition}
+
+\begin{definition}[adjunction]
+	\note{TODO}
+\end{definition}

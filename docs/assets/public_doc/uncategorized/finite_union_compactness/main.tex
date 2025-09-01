@@ -1,0 +1,129 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\input{header}
+
+\title{
+    compactness
+}
+\author{Khanh Nguyen}
+\date{September 2023}
+
+\begin{document}
+
+\maketitle
+
+\emph{this text presents the idea of local-to-global principle as a definition of compactness}
+
+In mathematics, one often encounters the notion of compactness as the existence in a finite subcover in a cover of a compact set. The notion of compactness seems intuitive at first as it often described as finiteness since it shares many properties with finite sets. In fact, one can consider a finite set is the compact subset of the set of natural numbers as finite sets resemble two notions: discrete and finiteness.
+
+\section{Finite Union Property}
+
+A property is a characteristic that identifies subsets of a given set. \emph{Finite Union Property} is a property that is generalized to all finite union of sets. Formally,
+
+\begin{definition}[Finite Union Property]
+	Let $X$ be any set (one might call it the universal set) and property $p$ identify a family $P$ of subsets of $X$. That is, $P = \{ x \in \mathcal{P}(X): p(x) \}$.
+   Property $p$ (or family $P$) is said to have \emph{Finite Union Property (FUP)} if
+    $$
+    	U_1, U_2, ..., U_N \in P \implies \bigcup_{n=1}^N U_n \in P
+    $$
+    where $N \in \N$
+\end{definition}
+
+
+
+So, what is so special about \emph{FUP}? Before answer that question, let's see some example of properties that exhibit \emph{FUP}.
+
+\begin{enumerate}
+	\item Let $X$ be any non-empty set, property $p_1$ identifies all  finite subsets of $X$ \label{example1}
+    \item Let $\N$ be the set of natural numbers, property $p_2$ identifies all the subsets of $\N$ with its maximum element being even, e.g. $\{8\}, \{1, 4\}, \{n \in \N: n \leq 1000 \}, ...$  \label{example2}
+    \item Let $f: S \to \R$ be a real-valued continuous function on $S \subseteq \R$, property $p_3$ identifies all open subset of $O \subseteq S$ if the image of $O$ is bounded  \label{example3}
+    \item Let $\Omega$ be a sample space, property $p_4$ identifies all events $E \subseteq \Omega$ with probability greater than $0.1$  \label{example4}
+\end{enumerate}
+
+Example \ref{example1} and example \ref{example2} are on finite sets while example \ref{example3} and \ref{example4} are on arbitrary sets. So \emph{FUP} is a universal property that works on certain structures.
+
+\section{Compactness}
+
+In order to give a relation to compactness, let's recall the definition of compactness.
+
+\begin{definition}[Compactness]
+    \label{def:compact}
+    A topological space $(X, \Tau)$ is said to be compact if for every family of open sets $\mathcal{O} = \{O_i: i \in I\}$ where $I$ is an index set such that $\bigcup_{i \in I} O_i = X$, then there exists a finite subset $J \subseteq I$ such that $\bigcup_{j \in J} O_j = X$
+\end{definition}
+
+In many textbooks, compactness is often considered as a generalization of finiteness. Indeed, compactness and finiteness share many common properties.
+
+The statements \cite{tao2008compactness} below are true for any finite set $X$
+
+\begin{itemize}
+    \item (\textbf{bounded}) If $f: X \to \R$ is a real-valued function on $X$, then $f$ is bounded
+    \item (\textbf{maximum}) If $f: X \to \R$ is a real-valued function on $X$, then $f$ attains a maximum value
+    \item (\textbf{constant subsequence}) if $x_1, x_2, ..., x_n, ... \in X$ is a sequence of points in $X$, then there exists a constant subsequence $x_{n_1}, x_{n_2}, ...$
+\end{itemize}
+
+While for a compact set $X \subseteq \R$, a similar set of statements are true:
+
+\begin{itemize}
+    \item (\textbf{bounded}) If $f: X \to \R$ is a \emph{continuous} real-valued function on $X$, then $f$ is bounded
+    \item (\textbf{maximum}) If $f: X \to \R$ is a \emph{continuous} real-valued function on $X$, then $f$ attains a maximum value
+    \item (\textbf{convergence subsequence}) if $x_1, x_2, ..., x_n, ... \in X$ is a sequence of points in $X$, then there exists a convergence subsequence $x_{n_1}, x_{n_2}, ...$
+\end{itemize}
+
+The three statements above exhibit different equivalent notions of compactness in metric space; namely, \emph{local-to-global principle}, \emph{limit point compactness}, \emph{sequential compactness}. With the machinery of \emph{FUP}, we are ready to give a equivalent notion of compactness from \emph{FUP}
+
+
+\begin{proposition}[Finite Union Compactness]
+    \label{prop:compact_new}
+    A topological space $(X, \Tau)$ is compact if and only if for every property $p$ on $X$ with \emph{FUP}, for each point $x \in X$, there is an open neighbourhood $O_x$ (not necessarily distinct) that satisfies $p$ implies $X$ satisfies $p$.
+\end{proposition}
+
+In the perspective of \emph{local-to-global principle}, \emph{Finite Union Compactness} gives sufficient conditions to generalize $p$ into the whole set if every point has a neighbourhood satisfying $p$. In fact, \emph{Finite Union Compactness} is equivalent to \emph{Compactness}.
+
+Back to the four examples at the beginning. $p_1$ identifies the whole set $X$ if and only if $X$ is finite. If $p_2$ identifies a set $U$, then $U$ must be finite. If $p_3$ identifies $S$, then $S$ must be compact.
+
+
+Now, we have a better notion of compactness. We will define discreteness as follows
+
+\begin{definition}[Discreteness]
+    A set $X$ is said to be discrete if it has a bijective mapping onto a subset of $\N$
+\end{definition}
+
+Compactness of discrete sets is then defined as follows
+
+\begin{proposition}[Compactness of discrete sets]
+    \label{prop:compact_n}
+    A discrete set with the discrete topology is compact if and only if it is finite
+\end{proposition}
+
+Equivalently, we can say that any finite set resembles discreteness and compactness. One property enables countability, the other enables \emph{local-to-global principles}.
+
+
+\section{Proof}
+
+\subsection{Proposition \ref{prop:compact_new}}
+
+\textbf{Compactness $\implies$ Finite Union Compactness}
+
+Let $(X, \Tau)$ be a compact topological space with a property $p$ defined on $X$ that has \emph{FUP}. For each point $x \in X$, there is an open neighbourhood $O_x$ satisfies $p$. Clearly, $\bigcup_{x \in X} O_x = X$. By \emph{Compactness}, there is a subcover $O_{x_1}, O_{x_2}, ..., O_{x_N}$ for $N \in \N$, i.e. $\bigcup_{n=1}^N O_{x_n} = X$. By \emph{FUP}, $p(X) = p(\bigcup_{n=1}^N O_{x_n})$ is true since it is a finite union of sets satisfying $p$
+
+
+\textbf{Finite Union Compactness $\implies$ Compactness}
+
+Let $(X, \Tau)$ be a compact topological space with an open cover $\mathcal{O} = \{O_i: i \in I\}$ where $I$ is an index set. Let $p$ be the property on $X$ that identifies all open sets that can be covered by a finite number of open sets in $\mathcal{O}$. Clearly, $p$ is a \emph{FUP}.
+Invoke Axiom of Choice, for each $x \in X$, choose an open set $O_x \in \mathcal{O}$ containing $x$ (not necessary distinct). Each $O_x$ satisfies $p$. By \emph{Finite Union Compactness}, $p$ is true for the whole set $X$, that is, $X$ can be covered by a finite number of open sets in $\mathcal{O}$, namely a finite subcover of $\mathcal{O}$
+
+
+\subsection{Proposition \ref{prop:compact_n}} 
+
+\textbf{Finiteness $\implies$ Compactness}
+
+Trivial
+
+\textbf{Compactness $\implies$ Finiteness}
+
+Let $U$ be discrete and compact with discrete topology and let $p$ be a property defined on $U$ that identifies all finite sets. Clearly, each singleton in $U$ satisfies $p$. By \emph{Finite Union Compactness}, $p$ is true for $U$, that is, $U$ is finite.
+
+
+\bibliography{references}
+\end{document}

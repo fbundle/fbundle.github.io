@@ -1,0 +1,49 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\input{header}
+
+\title{
+filter \\
+\begin{large} 
+  \textit{originally from my facebook post \url{https://www.facebook.com/share/p/xWTeaskbL57ndGgn}}
+\end{large}
+}
+\author{Khanh Nguyen}
+\date{June 2024}
+
+\begin{document}
+
+\maketitle
+
+\subsection{TLDR}
+
+\begin{itemize}
+    \item most things in life can be described using coffee - Bradley,Bryson,Terilla
+    \item the key is to think about what's left not what's going through
+    \item happiness is hard to describe
+    \item sometimes, spending hours on a simple concept is worth it
+\end{itemize}
+
+\subsection{The game}
+
+Alice has a bag of balls, each ball is distinct from the others. Bob asks Alice to play a game where Bob thinks of a feature of balls and Alice will guess. The game progresses as follows: Alice chooses a subset of balls in the bag and Bob will answer whether he is happy with the subset. Based on the answer of Bob, Alice refines her choice until she knows what Bob is thinking.
+
+Two rules are applied:
+\begin{enumerate}
+    \item If Bob is happy with two subsets A and B, then he is also happy with the subset of balls that are in both A and B
+    \item If Bob is happy with subset D, then he is also happy with every subset containing D
+\end{enumerate}
+
+\subsection{Coffee filter}
+Suppose there is a smallest subset of balls that Bob is happy with (it always exists if the number of balls is finite and it can be empty). What Alice can do is to start from the whole bag, and take out one ball. If Bob is unhappy, then the took-out ball is in the smallest subset. Put it back in and do the same thing for every other ball. Eventually, Alice will know the smallest subset. It is natural to define the smallest subset by the intersection of all subsets that Bob is happy with.
+
+\subsection{Fréchet filter}
+However, the situation is more complicated when the number of balls is infinite. Let's say there is a countably infinite number of balls and each ball in the bag is labelled with a natural number. Bob is happy with a subset of balls if it contains all but a finite number of balls, that is, there is a number N such that the subset contains everything in the right of N on the number line. In this case, Bob is happy with all the subsets that Alice asks using the previous strategy. (footnote: unfortunately, I am not sure if there is any strategy in general). Moreover, from the definition, the smallest subset, in this case, is empty. And Bob is unhappy with the empty set.
+
+\subsection{Sifting points}
+\textit{(The following part is inspired by Gemini AI)}
+
+Now, Alice won't put back the ball, and every second she will take out one ball. If at some time point, Alice doesn't have the smallest subset, there exists a ball that can be taken out, the process continues, and also suppose that the process doesn't terminate. Depending on the choice of the taken-out balls, the process produces a chain of subsets. Bob’s concept at the beginning can be described as a collection of chains each representing a possible sequence of removing balls, i.e. a process of sifting, and what a filter is, is basically a coffee filter but we may never find the residue (it's funny that most things in life can be described using coffee). And the key is to think about what's left not what's going through
+
+\end{document}

@@ -1,0 +1,225 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\input{header}
+
+\title{
+    MA4271 Homework 2
+}
+\author{Nguyen Ngoc Khanh - A0275047B}
+\date{September 2023}
+
+\begin{document}
+
+\maketitle
+
+\section{Problem}
+
+\begin{problem}
+    Is the set $A = \{(x, y, z) \in \R^3: x^2 + y^2 \leq 1, z = 0\}$ a regular surface? Is the set $B = \{(x, y, z) \in \R^3: x^2 + y^2 < 1, z = 0\}$ a regular surface?
+\end{problem}
+
+($A$)
+Put $p = (1, 0, 0)$. For any open neighbourhood $V \subseteq \R^3$ containing $p$, $p$ is a boundary point of $A$ then $p$ is also a boundary point of $V \cap A$. Therefore, $V \cap A$ containing a boundary point hence, it is not homeomorphic to any open set in $\R^2$. Therefore, $A$ is not a regular surface.
+
+($B$)
+Let $D = \{(u, v): u^2 + v^2 < 1\} \subseteq \R^2$ be the unit disk in $\R^2$. There is a single parameterization $f: D \to B$ of $B$ as defined by 
+\[
+    f(u, v) = (u, v, 0)
+\]
+$f$ is a homeomorphism, smooth, and its differential is one-to-one.
+
+\[
+    df = 
+    \begin{bmatrix}
+    1 & 0\\
+    0 & 1\\
+    0 & 0
+    \end{bmatrix}
+\]
+
+Therefore, $B$ is a regular surface.
+
+\begin{problem}
+    Let two points $p(t)$ and $q(t)$ move with the same speed, $p$ starting from $(0, 0, 0)$ and moving along $z$ axis and $q$ starting at $(a, 0, 0), a \neq 0$ and moving parallel to the $y$ axis. Show that the line joining $p(t)$ and $q(t)$ describes a set in $\R^3$ given by
+    \[
+        y(x-a) + zx = 0
+    \]
+    Moreover, is this a regular surface?
+\end{problem}
+
+Write $p(t)$ and $q(t)$ as follows
+
+\begin{align*}
+    p(t) &= (0, 0, t) \\
+    q(t) &= (a, t, 0)
+\end{align*}
+
+Any point $r = (x, y, z)$ on the line containing $p(t)$ and $q(t)$ has the form
+
+\begin{align*}
+    r(\alpha, t) = (x, y, z)
+    &= p(t) + \alpha(q(t) - p(t)) \\
+    &= (0, 0, t) + \alpha ((a, t, 0) - (0, 0, t)) \\
+    &= (\alpha a, \alpha t, (1 - \alpha) t)
+\end{align*}
+
+For each $(\alpha, t) \in \R^2$, $r(\alpha, t) = (x, y, z)$ satisfies $y(x-a) + zx = 0$. On the other hand, for each $(x, y, z)$ satisfies $y(x-a) + zx = 0$, there is a unique $(\alpha, t)$ such that $r(\alpha, t) = (x, y, z)$. Therefore, the set $S = \{(x, y, z) \in \R^3: y(x-a) + zx\}$ describes the line joining $p(t)$ and $q(t)$.
+
+The parameterization $(\alpha, t) \mapsto (x, y, z)$ is a homeomorphism, smooth and the differential is
+
+\[
+    df = 
+    \begin{bmatrix}
+    a & 0\\
+    t & \alpha\\
+    -t & 1-\alpha
+    \end{bmatrix}
+\]
+
+This differential is one-to-one everywhere since $\alpha$ and $1 - \alpha$ cannot be zero at the same time (span of row space is $2$). Therefore, $y(x-a) + zx = 0$ is a regular surface. \footnote{there is another argument for regular surface using regular value}
+
+\begin{problem}
+    Let $S^2$ and $H$ be defined as following
+    \begin{align*}
+        S^2 &= \{(x, y, z) \in \R^3: x^2 + y^2 + z^2 = 1 \} \\
+        H   &= \{(x, y, z) \in \R^3: x^2 + y^2 - z^2 = 1\}
+    \end{align*}
+
+    Denote by $N = (0, 0, 1)$ and $S = (0, 0, -1)$ the north and south poles of $S^2$, respectively. Let $F: S^2 \setminus \{N, S \} \to H$ be defined as following: for each $p \in S^2 \setminus \{N, S \}$, let the perpendicular from $p$ to $z$ axis meet $Oz$ at $q$. Consider the half line $l$ starting at $q$ and containing $p$. Then $F(p) = l \cap H$.
+    Prove that $F$ is smooth
+\end{problem}
+
+Since both $S^2$ and $H$ are surfaces of revolution (invariant under rotation) on the $z$ axis. With an appropriate change of parameters, let $p = (0, y, z), y > 0$, then $F(p) = (0, \sqrt{1+z^2}, z)$. We will construct a parameterization for each $p$ and $F(p)$ \footnote{Informally, we will take the intersection between $l$ and the plane $y = 1$ }
+
+Let $f_1: \Ball_{\delta} {(0, z)} \subseteq \R^2 \to S^2$ be a parameterization on a neighbourhood of $p$ with $\delta$ small enough such that $1 - v^2 > 0$
+
+\begin{align*}
+    f_1(u, v) &= \left( u a(u, v), a(u, v), v \right) \\
+    df_1 &= \begin{bmatrix}
+    a + u \frac{\partial a}{\partial u} &  u \frac{\partial a}{\partial v}\\
+    \frac{\partial a}{\partial u} & \frac{\partial a}{\partial v} \\
+    0 & 1
+    \end{bmatrix}
+\end{align*}
+
+where $a(u, v) = \sqrt{\frac{1-v^2}{u^2+1}} > 0$, $f_1$ is a homeomorphism, smooth, and its differential is one-to-one ($a > 0$ so the first row and the last row of $df_1$ is linearly independent)
+
+Let $f_2: \Ball_{\delta} {(0, z)} \subseteq \R^2 \to H$ be a parameterization on a neighbourhood of $F(p)$.
+
+\begin{align*}
+    f_2(u, v) &= \left( u b(u, v), b(u, v), v \right) \\
+    df_2 &= \begin{bmatrix}
+    b + u \frac{\partial b}{\partial u} &  u \frac{\partial b}{\partial v}\\
+    \frac{\partial b}{\partial u} & \frac{\partial b}{\partial v} \\
+    0 & 1
+    \end{bmatrix}
+\end{align*}
+
+where $b(u, v) = \sqrt{\frac{1+v^2}{u^2+1}} > 0$, $f_2$ is a homeomorphism, smooth, and its differential is one-to-one ($b > 0$ so the first row and the last row of $df_2$ is linearly independent)
+
+Under these two parameterizations, $f_2^{-1} \circ F \circ f_1$ is the identity map which is smooth. Hence, $F$ is smooth.
+
+\begin{problem}
+    Let $a \neq 0$, $b \neq 0$, and $c \neq 0$. Show that each of the equations
+    \begin{align*}
+        x^2 + y^2 + z^2 &= ax \\
+        x^2 + y^2 + z^2 &= by \\
+        x^2 + y^2 + z^2 &= cz
+    \end{align*}
+    define a regular surface and that they all intersect orthogonally.
+\end{problem}
+
+Let $f(x, y, z) = x^2 + y^2 + z^2 - ax$, $0$ is a regular value since $f_x(0) = a \neq 0$. Therefore, $x^2 + y^2 + z^2 = ax$ defines a regular surface. Similar proofs for the other two cases.
+
+\begin{lemma}
+    \label{lemma:gradient}
+    A regular surface defined by $f(x, y, z) = 0$ has its unit normal vector being the normalized gradient.
+\end{lemma}
+
+Consider $f(x, y, z) = x^2 + y^2 + z^2 - ax$ and $g(x, y, z) = x^2 + y^2 + z^2 - by$. The gradient of each function is
+
+\begin{align*}
+    Df &= (2x - a, 2y , 2z) \\
+    Dg &= (2x, 2y - b, 2z)
+\end{align*}
+
+Then 
+
+\begin{align*}
+    Df \cdot Dg
+    &= (4x^2 - 2ax) + (4y^2 - 2yb) + 4z^2 \\
+    &= 2 [(x^2 + y^2 + z^2 - ax) + (x^2 + y^2 + z^2 - by)]
+\end{align*}
+
+Let $p = (x, y, z)$ on the intersection of two regular surfaces $f$ and $g$ (the intersection is non-empty since it contains $(0, 0, 0)$ ). Then
+
+\[
+    (Df \cdot Dg) |_p = 0
+\]
+
+Hence, the two normal vectors are orthogonal. Similar proof for the other two cases.
+
+\begin{problem}
+    Show that the area $A$ of a bounded region of the surface $z = f(x, y)$ is
+    \[
+        A = \int\int_{Q} \sqrt{1 + f_x^2 + f_y^2} dxdy
+    \]
+    where $Q$ is the normal projection of $P$ onto the $xy$ plane
+\end{problem}
+
+$P$ can be parameterized by 
+
+\[
+    x(u, v) = (u, v, f(u, v))
+\]
+
+where $(u, v) \in Q$. The area element is
+
+\[
+    ||x_u \times x_v|| = ||(1, 0, f_u) \times (0, 1, f_v)|| = ||(-f_u, -f_v, 1)|| = \sqrt{1 + f_u^2 + f_v^2}
+\]
+
+Hence, area is
+
+\[
+    A = \int_Q ||x_u \times x_v|| = \int_Q \sqrt{1 + f_u^2 + f_v^2}
+\]
+
+\section{Appendix}
+
+\textbf{Proof of Lemma \ref{lemma:gradient}}
+
+At $p \in S$ where $S$ is a regular surface defined by $f(x, y, z) = 0$. There exists a neighbourhood $V$ of $p$ where $V$ is a graph of a smooth function. Let $V$ be defined by $h: U \subseteq \R^2 \to \R^3$ as $h(x, y) = (x, y, g(x, y))$ on an open set $U \subseteq \R^2$. Consider the function $f \circ h: U \to \R$ where $(f \circ h)(x, y) = 0$ for all $(x, y) \in U$
+
+\begin{align*}
+    0
+    &= D(f \circ h) \\
+    &= (Df) \circ (Dh) \\
+    &= (f_x, f_y, f_z) \begin{bmatrix}
+    1 & 0\\
+    0 & 1\\
+    g_x & g_y
+    \end{bmatrix}
+\end{align*}
+
+Therefore, $g_x = -f_x / f_z$ and $g_y = - f_y / f_z$. On the other hand, we can construct the (scaled) normal vector at $p$ by
+
+\begin{align*}
+    \alpha n
+    &= h_x \times h_y \\
+    &= (1, 0, g_x) \times (0, 1, g_y) \\
+    &= (-g_x, -g_y, 1) \\
+    &= (f_x, f_y, f_z) / f_z \\
+    &= Df / f_z
+\end{align*}
+
+
+
+
+
+
+
+
+
+\end{document}

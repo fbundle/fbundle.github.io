@@ -1,0 +1,374 @@
+\documentclass{report}
+
+\title{complex\_analysis\_ahlfors}
+\author{Khanh Nguyen}
+\date{December 2023}
+
+\input{header}
+
+\begin{document}
+
+\maketitle
+
+\chapter{COMPLEX NUMBERS}
+\chapter{COMPLEX FUNCTIONS}
+
+\chapter{ANALYTIC FUNCTION AS MAPPING}
+
+\section{ELEMENTARY POINT SET TOPOLOGY}
+
+\section{CONFORMALITY}
+
+\subsection{ARCS AND CLOSED CURVES}
+
+\subsection{ANALYTIC FUNCTIONS IN REGIONS}
+
+\begin{definition}[Analytic Function on an Open Set]
+    A complex-valued function $f(z)$ defined on an open set $\Omega$ is said to be analytic in $\Omega$ if it has a derivative at each point of $\Omega$. An analytic function is also called holomorphic
+\end{definition}
+
+\begin{definition}[Analytic Function on an Arbitrary Set]
+    A function $f(z)$ is analytic on an arbitrary point set $A$ if it is the restriction to $A$ of a function which is analytic in some open set containing $A$
+\end{definition}
+
+\begin{theorem}
+    An analytic function in a region \footnote{a connected open set does not include $\infty$} $\Omega$ whose derivative vanishes \footnote{at one point} identically must reduce to a constant. The same is true if either the real part, the imaginary part, the modulus, or the argument is constant.
+\end{theorem}
+
+\subsection{CONFORMAL MAPPING}
+
+\subsection{LENGTH AND AREA}
+
+\section{LINEAR TRANSFORMATION}
+
+\subsection{THE LINEAR GROUP}
+
+\subsection{THE CROSS RATIO}
+
+\begin{definition}[Cross Ratio]
+    The cross ratio $(z_1, z_2, z_3, z_4)$ is the image of $z_1$ under the linear transformation which carries $z_2, z_3, z_4$ into $1, 0, \infty$
+\end{definition}
+
+\begin{theorem}
+    If $z_1, z_2, z_3, z_4$ are distinct points in the extended plane and $T$ any linear transformation, then $(Tz_1, Tz_2, Tz_3, Tz_4) = (z_1, z_2, z_3, z_4)$
+\end{theorem}
+
+\begin{theorem}
+    The cross ratio $(z_1, z_2, z_3, z_4)$ is real if and only if the four points lie on a circle (or a straight line)
+\end{theorem}
+
+\begin{theorem}
+    A linear transformation carries circles to circles (straight line is a special circle)
+\end{theorem}
+
+\subsection{SYMMETRY}
+
+\begin{definition}
+    The points $z, z^*$ are said to be symmetric with respect to the circle $C$ through $z_1, z_2, z_3$ if $(z^*, z_1, z_2, z_3) = \overline{(z, z_1, z_2, z_3)}$
+\end{definition}
+
+\begin{theorem}[The Symmetry Principle]
+    If a linear transformation carries a circle $C_1$ into a circle $C_2$, then it transforms any pair of symmetric points with respect to $C_1$ into  a pair of symmetric points with respect to $C_2$
+\end{theorem}
+
+\subsection{ORIENTED CIRCLES}
+
+\subsection{FAMILY OF CIRCLES}
+
+\section{ELEMENTARY CONFORMAL MAPPING}
+
+\subsection{THE USE OF LEVEL CURVES}
+
+\subsection{A SURVEY OF ELEMENTARY MAPPINGS}
+
+\subsection{ELEMENTARY RIEMANN SURFACES}
+
+\chapter{COMPLEX INTEGRATION}
+
+\section{FUNDAMENTAL THEOREM}
+
+\subsection{LINE INTEGRALS}
+
+\subsection{RECTIFIABLE ARCS}
+
+\subsection{LINE INTEGRALS AS FUNCTIONS OF ARCS}
+
+\begin{theorem}[Fundamental Theorem of Line Integral]
+    The line integral $\int_\gamma \tuple{pdx + qdy}$ defined in $\Omega$ depends only on the end point of $\gamma$ if and only if there exists a function $U(x, y)$ in $\Omega$ with partial derivatives $\frac{\partial U}{\partial x} = p$ and $\frac{\partial U}{\partial y} = q$
+\end{theorem}
+
+\begin{theorem}
+    The integral $\int_\gamma f(z)dz$ with continuous $f$ depends only on the end points of $\gamma$ if and only if $f$ is the derivative of an analytic function in $\Omega$
+\end{theorem}
+
+\subsection{CAUCHY THEOREM FOR A RECTANGLE}
+
+\begin{theorem}[Cauchy Theorem]
+    Let $\partial R$ denote the boundary curve of a rectangle $R$. If the function $f(z)$ is analytic on $R$ then
+    \[
+        \int_{\partial R} f(z) dz
+    \]
+\end{theorem}
+
+\begin{theorem}[Cauchy Theorem]
+    Let $f(z)$ be analytic on the set $R'$ obtained from a rectangle $R$ by omitting a finite number of interior point $\zeta_j$. If it is true that
+    \[
+        \lim_{z \to \zeta_j} (z -\zeta_j) f(z) = 0
+    \]
+    for all $j$, then
+    \[
+        \int_{\partial R} f(z) dz = 0
+    \]
+\end{theorem}
+
+\subsection{CAUCHY THEOREM IN A DISK}
+
+\begin{theorem}[Cauchy Theorem]
+    If $f(z)$ is analytic in an open disk $\Delta$, then 
+    \[
+        \int_{\gamma} f(z) dz = 0
+    \]
+    for every closed curve $\gamma$ in $\Delta$
+\end{theorem}
+
+\begin{theorem}[Cauchy Theorem]
+    Let $f(z)$ be analytic in the region $\Delta'$ obtained by omitting a finite number of point $\zeta_j$ from an open disk $\Delta$. If $f(z)$ satisfies the condition $\lim_{z \to \zeta_j} (z - \zeta_j) f(z) = 0$ for all $j$, then 
+    \[
+        \int_{\gamma} f(z) dz = 0
+    \]
+    for every closed curve $\gamma$ in $\Delta'$
+\end{theorem}
+
+\section{CAUCHY INTEGRAL FORMULA}
+
+\subsection{THE INDEX OF A POINT WITH RESPECT TO A CLOSED CURVE}
+
+\begin{lemma}
+    If the piecewise differentiable closed curve $\gamma$ does not pass through the point $a$, then the value of the integral
+    \[
+        \int_\gamma \frac{dz}{z - a}
+    \]
+    is a multiple of $2\pi i$
+\end{lemma}
+
+\begin{definition}[Index of a Point with respect to a Curve - Winding Number]
+    The index of point $a$ with respect to curve $\gamma$ is defined as
+    \[
+        n(\gamma, a) = \frac{1}{2 \pi i} \int_\gamma \frac{dz}{z - a}
+    \]
+\end{definition}
+
+\begin{lemma}
+    Let $z_1, z_2$ be two points on a closed curve $\gamma$ which does not pass through the origin. Denote the subarc from $z_1$ to $z_2$ in the direction of the curve by $\gamma_1$ and the subarc from $z_2$ to $z_1$ by $\gamma_2$. Suppose that $z_1$ lies in the lower half plane and $z_2$ in the upper half plane. If $\gamma_1$ does not meet the negative real axis and $\gamma_2$ does not meet the positive real axis, then $n(\gamma, 0) = 1$
+\end{lemma}
+
+\begin{theorem}[Jordan Curve Theorem]
+    Every Jordan curve \footnote{simple curve - a curve doesn't cut itself} in the plane determines exactly two regions
+\end{theorem}
+
+\subsection{THE INTEGRAL FORMULA}
+
+\begin{theorem}[Cauchy Integral Formula]
+    Suppose that $f(z)$ is analytic in an open disk $\Delta$ and let $\gamma$ be a closed curve in $\Delta$. For any point $a$ not in $\gamma$
+    \[
+        n(\gamma, a) f(a) = \frac{1}{2\pi i} \int_\gamma \frac{f(z)dz}{z-a}
+    \]
+\end{theorem}
+
+\subsection{HIGHER DERIVATIVES}
+
+\begin{lemma}
+    Suppose that $\phi(\zeta)$ is continuous on the arc $\gamma$. Then the function
+    \[
+        F_n(z) = \int_\gamma \frac{\phi(\zeta) d\zeta}{(\zeta - z)^n}
+    \]
+    is analytic and each of the regions determined by $\gamma$ and its derivatives is $F'_n(z) = nF_{n+1}(z)$
+\end{lemma}
+
+\begin{theorem}[Morena Theorem]
+    If $f(z)$ is defined and continuous in a region $\Omega$ and if $\int_\gamma f(z)dz = 0$ for all closed curves $\gamma$ in $\Omega$, then $f(z)$ is analytic in $\Omega$
+\end{theorem}
+
+\begin{theorem}[Liouville Theorem]
+    A function which is analytic and bounded in the whole plane must reduce to a constant
+\end{theorem}
+
+\section{LOCAL PROPERTIES OF ANALYTIC FUNCTION}
+
+\subsection{REMOVABLE SINGULARITIES - TAYLOR THEOREM}
+
+\begin{theorem}[Removable Singularities]
+    Suppose that $f(z)$ is analytic in the region $\Omega'$ obtained by omitting a point from a region $\Omega$. A necessary and sufficient condition that there exist an analytic function in $\Omega$ which coincides with $f(z)$ in $\Omega'$ is that $\lim_{z \to a} (z-a)f(z) = 0$. The extended function is uniquely determined. $a$ is said to be a removable singularity.
+\end{theorem}
+
+\begin{theorem}[Taylor Theorem]
+    If $f(z)$ is analytic in a region $\Omega$ containing $a$, it is possible to write
+    \[
+        f(z) = \bracket*{f(a) + \frac{f'(z)}{1!}(z-a) + \frac{f''(z)}{2!}(z-a)^2 + ... + \frac{f^{(n-1)}(z)}{(n-1))!}(z-a)^{n-1}} + f_n(z)(z-a)^n
+    \]
+\end{theorem}
+
+\subsection{ZEROS AND POLES}
+
+\begin{proposition}
+    If $f(z)$ is analytic in $\Omega$ and if $f(z) = 0$ on a set $A$ which has an accumulation point in $\Omega$ \footnote{$\overline{A} \cap \Omega \neq \emptyset$} then $f(z)$ is identically equal to $0$ on $\Omega$
+\end{proposition} 
+
+\begin{proposition}[Zeros]
+    Suppose $f(z)$ is not identically zero. Then if $f(a) = 0$, there exists a first derivative $f^{(h)}(a)$ which is different from zero. Then, $a$ is said to be a zero of order $h$. Furthermore, by Taylor Theorem,
+    \[
+        f(z) = (z - a)^h f_h(z) 
+    \]
+    where $f_h(z)$ is analytic and $f_h(a) \neq 0$
+\end{proposition}
+
+\begin{definition}[Isolated Singularity]
+    Let $f(z)$ be an analytic in a neighbourhood of $a$ except $a$, then $a$ is said to be an isolated singularity
+\end{definition}
+
+\begin{proposition}[Poles]
+    If $\lim_{z \to a} f(z) = \infty$, then $a$ is said to be a pole of $f(z)$. If $a$ is an isolated singularity, there exists $\delta > 0$ such that $f(z) \neq 0$ on $0 < |z - a| < \delta$. Then $g(z) = \frac{1}{f(z)}$ is defined and analytic $0 < |z - a| < \delta$ and $a$ is a removable singularity. Let $h$ be the order of the zero at $a$ of $g(z)$. $a$ is also said to be the pole of order $h$ of $f(z)$. Similarly, by Taylor Theorem,
+    \[
+        f(z) = (z - a)^{-h} f_h(z)
+    \]
+    where $f_h(z)$ is analytic and different from zero in $|z - a| < \delta$
+\end{proposition}
+
+\begin{definition}[Meromorphic]
+    An analytic function $f(z)$ in a region $\Omega$ except for poles is said to be meromorphic in $\Omega$
+\end{definition}
+
+\begin{proposition}[Algebraic Order]
+    Consider the conditions
+    \begin{enumerate}
+        \item $\lim_{z \to a} |z - a|^\alpha |f(z)| = 0$ \label{algebraic_order_cond_1}
+        \item $\lim_{z \to a} |z - a|^\alpha |f(z)| = \infty$ \label{algebraic_order_cond_2}
+    \end{enumerate}
+    If there exists an integer $h$ such that \ref{algebraic_order_cond_1} holds for all $\alpha > h$ and \ref{algebraic_order_cond_2} holds for all $\alpha < h$, then $h$ is said to be the algebraic order of $f(z)$ at $a$. It is positive in the case of pole, negative in the case of zero, and zero if $f(a) \neq 0$ and analytic at $a$
+\end{proposition}
+
+\begin{definition}[Essential Isolated Singularity]
+    An isolated singularity which is neither removable or pole
+\end{definition}
+
+\begin{theorem}[Casorati-Weierstrass Theorem]
+    An analytic function comes arbitrary close to any complex value in every neighbourhood of an essential singularity
+\end{theorem}
+
+\subsection{THE LOCAL MAPPING}
+
+\begin{theorem}
+    Let $z_j$ be the zeros of an analytic function $f(z)$ on a disk $\Delta$ and does not vanish identically, each zero be counted as many times as its order indicates. For every closed curve $\gamma$ in $\Delta$ which does not pass through a zero
+    \[
+        \sum_j n(\gamma, z_j) = \frac{1}{2 \pi i} \int_\gamma \frac{f'(z)}{f(z)} dz
+    \]
+    where the sum has only a finite number of nonzero terms
+\end{theorem}
+
+\begin{theorem}
+    Suppose that $f(z)$ is analytic at $z_0$, $f(z_0) = w_0$, and $f(z) - w_0$ has a zero of order $n$ at $z_0$. If $\epsilon > 0$ is sufficiently small, there exists $\delta > 0$ such that for all $a$ in $|a - w_0| < \delta$, the equation $f(z) = a$ has exactly $n$ roots in the disk $|z - z_0| < \epsilon$
+\end{theorem}
+
+\begin{corollary}
+    A nonconstant analytic function maps an open set to an open set
+\end{corollary}
+
+\begin{corollary}
+    If $f(z)$ is analytic at $z_0$ with $f'(z_0) \neq 0$, it maps a neighbourhood of $z_0$ conformally and topologically onto a region.
+\end{corollary}
+
+\subsection{THE MAXIMUM PRINCIPLE}
+
+\begin{theorem}[The Maximum Principle]
+    If $f(z)$ is analytic and nonconstant in a region $\Omega$, then its absolute value $|f(z)|$ has no maximum in $\Omega$
+\end{theorem}
+
+\begin{theorem}[The Maximum Principle]
+    If $f(z)$ is defined an continuous on a closed bounded set $E$ and analytic on the interior of $E$, then the maximum of $|f(z)|$ on $E$ is assumed on the boundary of $E$
+\end{theorem}
+
+\begin{theorem}
+    If $f(z)$ is analytic for $|z| < 1$ and satisfies the conditions $|f(z)| \leq 1$, $f(0) = 0$, then $|f(z)| \leq |z|$ and $|f'(0) \leq 1|$. If $|f(z)| = |z|$ for some $z \neq 0$ or if $|f'(0)| = 1$ then $f(z) = cz$ with the constant $c$ of absolute value $1$
+\end{theorem}
+
+\section{THE GENERAL FORM OF CAUCHY THEOREM}
+
+\subsection{CHAINS AND CYCLES}
+
+\begin{definition}[Chains]
+    Let $\gamma_1, \gamma_2, ..., \gamma_n$ form a subdivision of the arc $\gamma$. Then the sum $\gamma_1 + \gamma_2 + ... + \gamma_n$ is said to be a chain
+\end{definition}
+
+\subsection{SIMPLE CONNECTIVITY}
+
+\begin{definition}[Simply Connected]
+    A region is said to be simply connected if its complement with respect to the extended plane is connected.
+\end{definition}
+
+\begin{theorem}
+    A region $\Omega$ is simply connected if and only if $n(\gamma, a) = 0$ for all cycles $\gamma$ in $\Omega$ and all points $a$ belong to the complement of $\Omega$
+\end{theorem}
+
+\subsection{HOMOLOGY}
+
+\begin{definition}[Homologous]
+    A cycle $\gamma$ in an open set $\Omega$ is said to be homologous to zero with respect to $\Omega$ if $n(\gamma, a) = 0$ for all points $a$ in the complement of $\Omega$. Denoted by $\gamma \sim 0 \pmod{\Omega}$ \footnote{if $\Omega$ is simply connected, all cycle in $\Omega$ is homologous to zero}
+\end{definition}
+
+\subsection{THE GENERAL STATEMENT OF CAUCHY THEOREM}
+
+\begin{theorem}[Cauchy Theorem]
+    If $f(z)$ is analytic in $\Omega$, then
+    \[
+        \int_\gamma f(z) dz = 0
+    \]
+    for every cycle $\gamma$ which is homologous to zero in $\Omega$
+\end{theorem}
+
+\begin{corollary}
+    If $f(z)$ is analytic in a simply connected region $\Omega$, then $\int_\gamma f(z) dz = 0$ for all cycles in $\gamma$ in $\Omega$
+\end{corollary}
+
+\begin{corollary}
+    If $f(z)$ is analytic and nonzero in a simply connected region $\Omega$ then it is possible to define a single-value analytic branches of $\log f(z)$ and $\sqrt[n]{f(z)}$ in $\Omega$
+\end{corollary}
+
+\subsection{PROOF OF CAUCHY THEOREM}
+
+\subsection{LOCALLY EXACT DIFFERENTIALS}
+
+\begin{theorem}
+    A differential $pdx + qdy$ is said to be locally exact in $\Omega$ if it is exact in some neighbourhood of each point in $\Omega$
+    If $pdx + qdy$ is locally exact in $\Omega$, then
+    \[
+        \int_\gamma \tuple{pdx + qdy} = 0
+    \]
+    for every cycle $y \sim 0$ in $\Omega$
+\end{theorem}
+
+\subsection{MULTIPLY CONNECTION REGIONS}
+
+\begin{definition}[Multiply Connected]
+    A region which is not simply connected is said to be multiply connected. A region is said to have finite connectivity $n$ if its complement has exactly $n$ components.
+\end{definition}
+
+\begin{proposition}[Homology Basis - Modules of Periodicity]
+    Let $A_1, A_2, ..., A_n$ be the components of the complement of $\Omega$ and $\infty \in A_n$. If $\gamma$ is a cycle in $\Omega$, then $n(\gamma, a)$ only depends on which components $a$ belongs to, namely $n(\gamma, a) = c_i$ if $a \in A_i$, and $c_n = 0$. For each $A_i, i = 1, 2, ..., n-1$, we can find $\gamma_i$ such that $n(\gamma_i, a) = 1$ for $a \in A_i$ and $n(\gamma_i, a) = 0$ $a \in A_j, j \neq i$. Then 
+    \[
+        \gamma - (c_1 \gamma_1 + c_2 \gamma_2 + ... + c_{n-1} \gamma_{n-1}) \sim 0 \pmod{\Omega}
+    \]
+    or
+    \[
+        \gamma \sim c_1 \gamma_1 + c_2 \gamma_2 + ... + c_{n-1} \gamma_{n-1} \pmod{\Omega}
+    \]
+    That is, every cycle is homologous to a linear combination of $\gamma_1, \gamma_2, ..., \gamma_n$. The set $\set{\gamma_1, \gamma_2, ..., \gamma_n}$ is said to be the homology basis for $\Omega$
+    For any analytic function $f(z)$ on $\Omega$, then
+    \[
+        \int_\gamma f(z)dz = \sum_{i=1}^n \tuple*{c_i \int_{\gamma_i} f(z)dz}
+    \]
+    the values $\int_{\gamma_i} f(z)dz, i=1, 2, ..., n-1$ are said to be the modules of periodicity of the differential $f(z)dz$
+\end{proposition}
+
+\section{THE CALCULUS OF RESIDUES}
+
+\end{document}

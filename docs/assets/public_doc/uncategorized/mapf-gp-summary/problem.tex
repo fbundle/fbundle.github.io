@@ -1,0 +1,27 @@
+\chapter{Problem Decomposition}
+
+\section{Problem Statement}
+
+In the map of a specific location in Singapore, there are multiple points of interest. Our goal is to navigate multiple robots to go around these points for the patrolling task where several objective values and constraints need to be satisfied. The central objective is to minimize the total cost of all tours and balance between those tours. Additionally, some conflicts must not occur, for example, two robots must not go from two opposite directions in the same road since it would cause collision in the real world.
+
+We hence model the problem as a constrained optimization problem.
+
+\begin{problem}[Full Problem]
+Given a directed graph $G = (V, E)$ with corresponding cost function on each edge $c: E \to \mathbf{R_+}$ and a set of points of interest (POIs) $P \subseteq V$. Find $K$ tours that visit $V_P$ and minimize the maximum tour cost satisfy a set of predefined constraints.
+\label{prob:full}
+\end{problem}
+
+Let's begin tackle this problem by dropping all constraints and reduce the problem into a simpler version.
+
+\begin{problem}[Partial Problem]
+Given a directed graph $G_P = (V_P, E_P)$ with corresponding cost function on each edge $c_P: E_P \to \mathbf{R_+}$. Find $K$ tours that visit $V_P$ and minimize the maximum tour cost.
+\label{prob:partial}
+\end{problem}
+
+Each edge in $G_P$ from $p_1 \to p_2$ for $p_1, p_2 \in V_P$ is corresponding to the shortest path from $p_1$ to $p_2$. It is provable that if we drop all constraints, problem \ref{prob:full} and \ref{prob:partial} are equivalent.
+
+At the first glance, the problem \ref{prob:partial} appears to be a graph partitioning problem where we need to partition the node set into multiple subset then allocate each agent to go around a particular subset and find the shortest tour in each subset. We have tried out many different graph partitioning techniques. In the experiment for randomly generated 2D points, the general techniques seemed to work well. However, for the real work case (Marina Bay and Botanic Garden), the general techniques failed to partition the POIs set into multiple balanced tours. It suggests that the real networks exhibit a different geometry as compare to a random setup. Due to different in the objective function, we need to design an algorithm that specifically optimizes our objective.
+
+\section{Problem Decomposition}
+
+We decompose the problem into four steps.(\textbf{1. Partial Problem}) Reduce the instance of problem \ref{prob:full} without any constraints to an instance of problem \ref{prob:partial}.(\textbf{2. Partial Solution}) Find an partial solution to problem \ref{prob:partial}. (\textbf{3. Locally Optimized Partial Solution}) Locally optimize the partial solution. (\textbf{4. Constrained Solution}) Find the locally optimal solution that satisfies all constraints from the partial solution.

@@ -1,0 +1,452 @@
+\section{QUESTION 1}
+
+\subsection{Exercise 3.4.23}
+
+\begin{problem}[Exercise 3.4.23]
+	For two symmetric  $(0, 2)$-tensors $h, k$ define the \textit{Kulkarni-Nomizu product} as the $(0, 4)$-tensor
+	\begin{align*}
+		&(h \circ k)(v_1, v_2, v_3, v_4) \\
+		&= \frac{1}{2} h(v_1, v_4) \cdot k(v_2, v_3) + \frac{1}{2} h(v_2, v_3) \cdot k(v_1, v_4) - \frac{1}{2} h(v_1, v_3) \cdot k(v_2, v_4) - \frac{1}{2} h(v_2, v_4) k(v_1, v_3)
+	\end{align*}
+	
+	(5) Show that $\nabla_X (h \circ k) = (\nabla_X h) \circ k + h \circ (\nabla_X k)$
+	
+	(6) Show that $(M, g)$ has constant curvature $c$ if and only if the $(0, 4)$-curvature tensor satisfies $R = c \cdot (g \circ g)$
+\end{problem}
+
+\subsubsection{(5)}
+
+Let $a, b, c, d$ be vector fields. Let the $(0, 4)$-tensors $h * k$ and $h \star k$ be defined by
+\begin{align*}
+	(h * k) (a, b, c, d) &= h(a, d) \cdot k(b, c) + h(b, c)  \cdot k(a, d)  \\
+	(h \star k) (a, b, c, d) &= h(a, c) \cdot k(b, d) + h(b, d) \cdot k(a, c) = (h * k) (a, b, d, c)
+\end{align*}
+
+Then, we can write the \textit{Kulkarni-Nomizu product} as
+
+$$
+	h \circ k = \frac{1}{2} (h*k - h \star k)
+$$
+
+If we assume product rules for $h * k$ and $h \star k$, then
+$$
+	\nabla_X (h \circ k) = \frac{1}{2} ((\nabla_X h) * k + h * (\nabla_X k) - (\nabla_X h) \star k - h \star (\nabla_X k)) = (\nabla_X h) \circ k + h \circ (\nabla_X k)
+$$
+
+Hence, it suffices to prove the product rule for $h * k$ tensor. Hence, we can assume that
+$$
+	(h \circ k) (a, b, c, d) = h(a, d) \cdot k(b, c) + h(b, c)  \cdot k(a, d)
+$$
+
+Note that, the order of operations is as follows: $\nabla_X h(a, b) := \nabla_X(h(a, b)) = D_X (h(a, b))$. We have
+
+\begin{align*}
+	&(\nabla_X (h \circ k))(a, b, c, d) \\
+	&= \nabla_X ((h \circ k)(a, b, c, d)) \\ 
+	&\;\;\;\; - (h \circ k)(\nabla_X a, b, c, d) - (h \circ k)(a, \nabla_X b, c, d) - (h \circ k)(a, b, \nabla_X c, d) - (h \circ k)(a, b, c, \nabla_X d) \\
+	&= \nabla_X (h(a, d)  \cdot k(b, c)) + \nabla_X (h(b, c)  \cdot k(a, d)) \\ 
+	&\;\;\;\; - (h \circ k)(\nabla_X a, b, c, d) - (h \circ k)(a, \nabla_X b, c, d) - (h \circ k)(a, b, \nabla_X c, d) - (h \circ k)(a, b, c, \nabla_X d) \\
+	&= \nabla_X h(a, d) \cdot  k(b, c) + h(a, d) \cdot  \nabla_X k(b, c) + \nabla_X h(b, c) \cdot  k(a, d) + h(b, c)  \cdot \nabla_X k(a, d) \\ 
+	&\;\;\;\; - h(\nabla_X a, d)  \cdot  k(b, c) - h(b, c)  \cdot k (\nabla_X a, d)  - h(a, d)  \cdot k(\nabla_X b, c) - h(\nabla_X b, c)  \cdot k(a, d) \\
+	&\;\;\;\; - h(a, d)  \cdot k(b, \nabla_X c) - h(b, \nabla_X c)  \cdot k(a, d) - h(a, \nabla_X d)  \cdot k(b, c) - h(b, c)  \cdot k(a, \nabla_X d) \\
+	&= (\nabla_X h)(a, d)  \cdot k(b, c) + (\nabla_X h)(b, c)  \cdot k(a, d) + h(a, d)  \cdot (\nabla_X k)(b, c) + h(b, c) \cdot  (\nabla_X k)(a, d) \\
+	&= ((\nabla_X h) \circ k)(a, b, c, d) + (h \circ (\nabla_X k))(a, b, c, d)
+\end{align*}
+
+\subsubsection{(6)}
+
+Note that, the sectional curvature of the subspace spanned by $\set{u, v}$ is
+$$
+	\sec(v, w) = \frac{R(w, v, v, w)}{g(v, v) g(w, w) - g(v, w)^2}
+$$
+
+We have
+$$
+	(g \circ g)(w, v, v, w)
+	= g(w, w) \cdot g(v, v) - g(w, v) \cdot g(v, w)
+	= g(v, v) g(w, w) - g(v, w)^2
+$$
+
+Then, $R = c \cdot (g \circ g) \iff \sec(v, w) = c$. If $c$ is a constant, then $R = c \cdot (g \circ g) \iff$ $(M, g)$ has constant curvature
+
+\subsection{Exercise 3.4.24}
+
+\begin{problem}[Exercise 3.4.24]
+	Define the $(0, 2)$ \textit{Schouten tensor}
+	$$
+		P = \frac{2}{n-2} \Ric - \frac{\scal}{(n-1)(n-2)} \cdot g
+	$$
+	
+	for Riemannian manifolds of dimension $n > 2$
+	
+	(1) Show that if $P$ vanishes on $M$ then $\Ric = 0$
+	
+	(2) Show that the decomposition
+	$$
+		P = \frac{\scal}{n(n-1)} g + \frac{2}{n-2} \tuple*{\Ric - \frac{\scal}{n} g}
+	$$
+	of the \textit{Schouten tensor} is orthogonal
+	
+	(5) Show that $(M, g)$ has constant curvature when $n > 2$ if and only if
+	$$
+		R = P \circ g \text{ and } \Ric = \frac{\scal}{n} g
+	$$
+	
+	(6) Show that
+	$$
+		\Ric(X, Y) = \sum_{i=1}^n (P \circ g)(X, E_i, E_i, Y)
+	$$
+	for any orthonormal frame $E_i$
+\end{problem}
+
+\subsubsection{(1)}
+
+We have
+\begin{align*}
+	\tr P
+	&= \frac{2}{n-2} \tr \Ric - \frac{\scal}{(n-1)(n-2)} \cdot \tr g \\
+	&= \frac{2}{n-2} \scal - \frac{\scal}{(n-1)(n-2)} n \\
+	&= \frac{\scal}{n-1} 
+\end{align*}
+
+
+Then \textit{Schouten tensor} vanishes, that is $P = 0$, implies $\scal = 0$, so $\Ric = \frac{n-2}{2} P = 0$
+
+\subsubsection{(2)}
+
+Given two $(0, 2)$-tensors $T = T_{ij} \sigma^i \otimes \sigma^j$ and $S = S_{ij} \sigma^i \otimes \sigma^j$, then the pointwise inner product induced by metric $g$ is defined by the smooth function
+$$
+	\inner{T, S} = g^{ik} g^{jl} T_{ij} S_{kl}
+$$
+
+We want to show that
+$$
+	0 = \inner*{\frac{\scal}{n(n-1)} g, \frac{2}{n-2} \tuple*{\Ric - \frac{\scal}{n} g}} = \frac{2 \scal}{n(n-1)(n-2)} \inner*{g, \Ric - \frac{\scal}{n} g}
+$$
+
+That is equivalent to showing $\inner{g, \Ric} = \frac{\scal}{n} \inner{g, g}$, we have
+
+$$
+	\inner{g, \Ric} = g^{ik} g^{jl} g_{ij} \Ric_{kl}
+$$
+
+At every point, we can choose an orthonormal frame so that $g_{ij} = g^{ij} = \delta_{ij}$, hence
+$$
+	\inner{g, \Ric} = \Ric_{ii} = \tr \Ric = \scal
+$$
+
+On the other hand,
+$$
+	\inner{g, g} = g^{ik} g^{jl} g_{ij} g_{kl} = g_{ii} = \tr g = n
+$$
+
+Hence, the decomposition is orthogonal.
+
+
+\subsubsection{(5)}
+
+$$
+	P \circ g = \frac{2}{n-2} (\Ric \circ g) - \frac{\scal}{(n-1)(n-2)} (g \circ g)
+$$
+
+($\implies$) when $(M, g)$ has constant curvature, $R = c (g \circ g)$, then 
+\begin{align*}
+	\Ric(v, w)
+	&= \sum_i R(E_i, w, v, E_i) \\
+	&= c \sum_i (g \circ g)(E_i, w, v, E_i) \\
+	&= c \sum_i g(E_i, E_i) g(w, v) - g(E_i, v) g(w, E_i) \\
+	&= c \bracket*{\tuple*{\sum_i g(E_i, E_i) g(w, v)} - \tuple*{\sum_i g(E_i, v) g(w, E_i)}} \\
+	&= c (n g(w, v) - g(w, v))  \\
+	&= c(n-1) g(w, v)
+\end{align*}
+
+So, $\Ric = c(n-1) g$ and $\scal = c n (n-1)$, then
+$$
+	\Ric = \frac{\scal}{n} g
+$$
+
+Moreover,
+\begin{align*}
+	P \circ g
+	&= \frac{2}{n-2} (\Ric \circ g) - \frac{\scal}{(n-1)(n-2)} (g \circ g) \\
+	&= \frac{2}{n-2} c(n-1) (g \circ g) - \frac{c n (n-1)}{(n-1)(n-2)} (g \circ g) \\
+	&= c g \circ g = R
+\end{align*}
+
+($\impliedby$) when $\Ric = \frac{\scal}{n} g$, we have
+\begin{align*}
+	&R = P \circ g \\
+	&= \frac{2}{n-2} (\Ric \circ g) - \frac{\scal}{(n-1)(n-2)} (g \circ g) \\
+	&= \frac{2}{n-2} \frac{\scal}{n} (g \circ g) - \frac{\scal}{(n-1)(n-2)} (g \circ g) \\
+	&= \frac{\scal}{n(n-1)} (g \circ g) 
+\end{align*}
+
+We will show that $\scal$ is a constant function on $M$. The exterior dervative of a tensor $\omega$ satisfies
+$$
+(d \omega)(X_0, ..., X_k) = \sum_i (-1)^i \nabla_{X_i} \omega (X_0, ..., \hat{X}_i, ..., X_k)
+$$
+
+So
+$$
+(d \scal)(v) = \nabla_v \scal = (\nabla \scal)(v)
+$$
+
+On the other hand, by proposition 3.1.5 (the contracted Bianchi identity), we have
+$$
+	d \scal = -2 \nabla^* \Ric = - \frac{2}{n} \nabla^* (\scal g)
+$$
+
+where
+$$
+	(\nabla^* S)(X_2, ..., X_r) = - \sum_i (\nabla_{E_i} S)(E_i, X_2, ..., X_r)
+$$
+
+for any $(s, r)$-tensor $S$. Hence, for any vector field $v = v^i E_i$
+$$
+	(d \scal) (v) = - \frac{2}{n} (\nabla^* (\scal g))(v) = \frac{2}{n} (\nabla_{E_i} (\scal g))(E_i, v)
+$$
+
+Note that, Riemannian connection is compatible with metric, proposition 2.2.5 implies $\nabla g = 0$, we have
+\begin{align*}
+	(d \scal) (v)
+	&= \frac{2}{n}(\nabla_{E_i} \scal) g(E_i, v) + \frac{2}{n} \scal (\nabla_{E_i} g)(E_i, v) \\
+	&= \frac{2}{n}(\nabla_{E_i} \scal) g(E_i, v) \\
+	&= \frac{2}{n}v^i (\nabla \scal)(E_i) \\
+	&= \frac{2}{n} (\nabla \scal)(v) \\
+\end{align*}
+
+When $n \geq 3$, we have $\tuple*{1 - \frac{2}{n}} \nabla \scal = d \scal - d \scal = 0$, so $\scal$ is a constant function
+
+\subsubsection{(6)}
+
+Let $X = x^j E_j$, $Y = y^j E_j$, we have (where summands with index $i$ is a sum over $i=1, ..., n$, tensor $P(X, -)$ is $Y \mapsto P(X, Y)$)
+\begin{align*}
+	&2 (P \circ g)(X, E_i, E_i, Y) \\
+	&= P(X, Y) g(E_i, E_i) + P(E_i, E_i) g(X, Y) - P(X, E_i) g(E_i, Y) - P(E_i, Y) g(X, E_i) \\
+	&= P(X, Y) (\tr g) + (\tr P) g(X, Y) - y^i P(X, E_i) - x^i P(E_i, Y) \\
+	&= n P(X, Y) + (\tr P) g(X, Y) - y^i P(X, -)(E_i) - x^i P(-, Y)(E_i) \\
+	&= n P(X, Y) + (\tr P) g(X, Y) - P(X, Y) - P(X, Y) \\
+	&= (n - 2) P(X, Y) + (\tr P) g(X, Y)
+\end{align*}
+
+
+We have, $\tr P = \frac{\scal}{n-1}$, so
+\begin{align*}
+	&2 (P \circ g)(X, E_i, E_i, Y) \\
+	&=(n - 2) P(X, Y) + (\tr P) g(X, Y) \\
+	&= (n - 2) \tuple*{\frac{2}{n-2} \Ric(X, Y) - \frac{\scal}{(n-1)(n-2)} g(X, Y)} + \tuple*{\frac{\scal}{n-1}} g(X, Y) \\
+	&= 2 \Ric(X, Y)
+\end{align*}
+
+\subsection{Exercise 3.4.25}
+
+\begin{problem}[Exercise 3.4.25]
+	The \textit{Weyl tensor} $W$ is defined implicitly through
+	\begin{align*}
+		R &= \frac{\scal}{n(n-1)} (g \circ g) + \frac{2}{n-2} \tuple*{\Ric - \frac{\scal}{n} \cdot g} \circ g + W \\
+		&= P \circ g + W
+	\end{align*}
+	
+	(2) Show that
+	$$
+		\sum_{i=1}^n W(X, E_i, E_i, Y) = 0
+	$$
+	for any orthonormal frame $E_i$
+\end{problem}
+
+\subsubsection{(2)}
+
+From previous part, we have
+$$
+	(P \circ g)(X, E_i, E_i, Y) = \Ric(X, Y) = R(E_i, Y, X, E_i) = R(X, E_i, E_i, Y)
+$$
+
+Hence, 
+$$
+	W(X, E_i, E_i, Y) = R(X, E_i, E_i, Y) - (P \circ g)(X, E_i, E_i, Y) = 0
+$$
+
+
+\section{QUESTION 2}
+
+\subsection{Exercise 4.7.4}
+
+\begin{problem}[Exercise 4.7.4]
+	Assume that a Riemmanian manifold $(M, g)$ has a function $f$ such that
+	$$
+		\Hess f = \lambda(x) g + \mu(f) df^2 = \lambda g + (\mu \circ f) df^2
+	$$
+	
+	where $\lambda: M \to \R$ and $\mu: \R \to \R$. Show that the metric is locally a warped product
+\end{problem}
+
+For any smooth function $\phi: \R \to \R$, we have ($\circ$ denotes composition, $\cdot$ denotes pointwise multiplication)
+\begin{align*}
+	&\Hess (\phi \circ f) \\
+	&= (\phi'' \circ f) \cdot df^2 + (\phi' \circ f) \Hess f \\
+	&= (\phi'' \circ f) \cdot df^2 + (\phi' \circ f) (\lambda g + (\mu \circ f) df^2) \\
+	&= [(\phi'' \circ f) + (\phi' \circ f) \cdot (\mu \circ f)] df^2 + (\phi' \circ f) \cdot \lambda g
+\end{align*}
+
+For any $p \in M$, we choose function $\phi$ satisfying the ODE
+$$
+	\phi''(x) + \phi'(x) \cdot \mu(x) = 0
+$$
+
+locally around $x = f(p)$, then $\Hess (\phi \circ f) = (\phi' \circ f) \cdot \lambda g$ locally around $p$, by Brinkman, the Riemannian structure is locally a warped product.
+
+
+\subsection{Exercise 4.7.5}
+
+\begin{problem}[Exercise 4.7.5]
+	Show that if $\Hess f = \lambda g$ then $\lambda = \frac{\Delta f}{\dim M}$
+\end{problem}
+
+Taking contraction both sides gives
+$$
+	\Delta f = \tr (\Hess f) = \lambda \tr g = \lambda (\dim M)
+$$
+
+Hence, $\lambda = \frac{\Delta f}{\dim M}$
+
+\section{QUESTION 3}
+
+\subsection{Exercise 4.7.12}
+
+\begin{problem}[Exercise 4.7.12]
+	Let $(N^{n-1}, g_N)$ have constant curvature $c$ with $n > 2$. Consider the warped product metric $(M, g) = (I \times N, dr^2 + \rho^2(r) g_N)$ 
+
+	(1) Show that the curvature of $g$ is given by
+	\begin{align*}
+		R
+		&= \frac{c - \dot{\rho}^2}{\rho^2} g_r \circ g_r - 2 \frac{\ddot{\rho}}{\rho} dr^2 \circ g_r \\
+		&=  \frac{c - \dot{\rho}^2}{\rho^2} g \circ g - 2 \tuple*{\frac{\ddot{\rho}}{\rho} + \frac{c - \dot{\rho}^2}{\rho^2}} dr^2 \circ g
+	\end{align*}
+	
+	(2) Show that the \textit{Weyl tensor} vanishes
+\end{problem}
+
+\subsubsection{(1)}
+
+Since $r$ is a distance function, follow 4.2.3, we have $\Hess r = \frac{\dot{\rho}}{\rho} g_r$ and 
+$$
+	R(\cdot, \partial_r, \partial_r, \cdot) = - \frac{\ddot{\rho}}{\rho} g_r
+$$
+
+By Tangential Curvature Equation and Mixed Curvature Equation, if $X, Y, Z, W$ are tangent vector fields on $N$, then
+\begin{align*}
+	R(X, Y, Z, W) &= R^r(X, Y, Z, W) - \sff(X, W) \sff(Y, Z) + \sff(X, Z) \sff(Y, W) \\
+	R(X, Y, Z, \partial_r) &= - (\nabla_X \sff)(Y, Z) + (\nabla_Y \sff)(X, Z)
+\end{align*}
+
+Follow 4.2.3,  $R(X, Y, Z, \partial_r) = 0$. On the other hand, $g_r$ is a metric of constant curvature $\frac{c}{\rho^2}$, then
+
+$$
+	R^r(X, Y, Z, W) = \frac{c}{\rho^2} g_r(X \wedge Y, W \wedge Z)
+$$
+
+By proposition 3.2.1, $r$ is a distance function, $\sff = \Hess r = \frac{\dot{\rho}}{\rho} g_r$, so
+
+$$
+	R(X, Y, Z, W) = \frac{c - \dot{\rho}^2}{\rho^2} g_r(X \wedge Y, W \wedge Z) = \frac{c - \dot{\rho}^2}{\rho^2} (g_r \circ g_r)(X, Y, Z, W)
+$$
+
+The equality is proved by the following reductions:
+
+\begin{enumerate}
+	\item $R$ and $\frac{c - \dot{\rho}^2}{\rho^2} g_r \circ g_r - 2 \frac{\ddot{\rho}}{\rho} dr^2 \circ g_r$ are multilinear, it suffices to prove the equality for vector fields $\tilde{X}, \tilde{Y}, \tilde{Z}, \tilde{W}$ where each is either tangent to $N$ or orthogonal to $N$.
+	\item $R$ and $\frac{c - \dot{\rho}^2}{\rho^2} g_r \circ g_r - 2 \frac{\ddot{\rho}}{\rho} dr^2 \circ g_r$ have the same symmetries (permutation of parameters $S^4 \to \set{-1, +1}$), hence it suffices to prove the equality in any order of parameters.
+	\item $dr^2 \circ g_r$ is nonzero if and only if there are precisely two terms orthogonal to $N$. We already proved the equality when there is zero or one term orthogonal to $N$. If there are three or more terms orthogonal to $N$, both sides are zeros. The only case we need to consider is when there are exactly two terms orthogonal to $N$, that is $R(X, \partial_r, \partial_r, W)$
+\end{enumerate}
+
+We have
+
+\begin{align*}
+	R(X, \partial_r, \partial_r, W) 
+	&= - \frac{\ddot{\rho}}{\rho} g_r(X, W) \\
+	&= 2 \frac{\ddot{\rho}}{\rho} (dr^2 \circ g_r)(X, \partial_r, \partial_r, W) \\
+	&= \tuple*{\frac{c - \dot{\rho}^2}{\rho^2} g_r \circ g_r - 2 \frac{\ddot{\rho}}{\rho} dr^2 \circ g_r} (X, \partial_r, \partial_r, W)
+\end{align*}
+
+Therefore, 
+$$
+	R = \frac{c - \dot{\rho}^2}{\rho^2} g_r \circ g_r - 2 \frac{\ddot{\rho}}{\rho} dr^2 \circ g_r
+$$
+
+Now, we rewrite $R$ in terms of $g$ and $dr$. Note that, \textit{Kulkarni-Nomizu product} is bilinear and $dr^2 \circ dr^2 = 0$, so
+$$
+	g \circ g = (dr^2 + g_r) \circ (dr^2 + g_r) = g_r \circ g_r + 2 dr^2 \circ g_r
+$$
+
+Hence,
+$$
+	R = \frac{c - \dot{\rho}^2}{\rho^2} g \circ g - 2 \tuple*{\frac{\ddot{\rho}}{\rho} + \frac{c - \dot{\rho}^2}{\rho^2}} dr^2 \circ g
+$$
+
+
+\subsubsection{(2)}
+
+We will show that $P \circ g = R$, equivalently
+$$
+	P = \frac{2}{n-2} \Ric - \frac{\scal}{(n-1)(n-2)} \cdot g = \frac{c - \dot{\rho}^2}{\rho^2} g - 2 \tuple*{\frac{c - \dot{\rho}^2}{\rho^2}  + \frac{\ddot{\rho}}{\rho}} dr^2
+$$	
+
+First, we write $\Ric$ and $\scal$ in terms of $dr$ and $g$. Let $\set{E_i}_{i=1}^n$ be an orthonormal frame so that $E_1$ is parallel to $\partial_r$, then $E_2, ..., E_n$ are in $N$. Note that, $g_r(E_i, E_i) \neq 0$ if and only if $i \neq 1$, so $\tr g_r = n-1$, we have
+
+\begin{align*}
+	\tr (g_r \circ g_r)(Y, Z)
+	&= (g_r \circ g_r)(E_i, Y, Z, E_i) \\
+	&= g_r(E_i, E_i) g_r(Y, Z) - g_r(E_i, Z) g_r(Y, E_i) \\
+	&= (\tr g_r ) g_r(Y, Z) - g_r(Y, Z) \\
+	&= (n-2) g_r(Y, Z)
+\end{align*}
+
+Note that, $dr(E_i) \neq 0$ if and only if $i = 1$, so $dr(E_i) dr(Z) g_r(Y, E_i) = dr(Y) dr(E_i) g_r(E_i, Z) = 0$ and $dr(E_i)dr(E_i) = \tr dr^2 = 1$ we have
+
+\begin{align*}
+	\tr (dr^2 \circ g_r)
+	&= (dr^2 \circ g_r)(E_i, Y, Z, E_i) \\
+	&= \frac{1}{2} dr(E_i)dr(E_i) g_r(Y, Z) + \frac{1}{2} dr(Y) dr(Z) g_r(E_i, E_i) \\
+	&\;\;\;\; - \frac{1}{2} dr(E_i) dr(Z) g_r(Y, E_i) - \frac{1}{2} dr(Y) dr(E_i) g_r(E_i, Z) \\
+	&= \frac{1}{2} g_r(Y, Z) + \frac{1}{2} dr(Y) dr(Z) (\tr g_r) \\
+	&= \frac{1}{2} g_r (Y, Z) + \frac{1}{2} (n-1) dr^2(Y, Z)
+\end{align*}
+
+Hence, $\tr (g_r \circ g_r) = (n-2) g_r$ and $\tr (dr^2 \circ g_r) = \frac{1}{2} g_r + \frac{1}{2} (n-1) dr^2$, we have
+\begin{align*}
+	\Ric 
+	&= \frac{c - \dot{\rho}^2}{\rho^2} \tr(g_r \circ g_r ) - 2 \frac{\ddot{\rho}}{\rho} \tr(dr^2 \circ g_r) \\
+	&= \frac{(n-2)(c - \dot{\rho}^2)}{\rho^2}  g_r - \frac{\ddot{\rho}}{\rho} (g_r + (n-1) dr^2) \\
+	&= \tuple*{\frac{(n-2)(c - \dot{\rho}^2)}{\rho^2}  - \frac{\ddot{\rho}}{\rho}} g_r - (n-1) \frac{\ddot{\rho}}{\rho} dr^2 \\
+	&= \tuple*{\frac{(n-2)(c - \dot{\rho}^2)}{\rho^2}  - \frac{\ddot{\rho}}{\rho}} (g - dr^2) - (n-1) \frac{\ddot{\rho}}{\rho} dr^2 \\
+	&= \tuple*{\frac{(n-2)(c - \dot{\rho}^2)}{\rho^2}  - \frac{\ddot{\rho}}{\rho}} g - (n-2) \tuple*{\frac{c - \dot{\rho}^2}{\rho^2}  + \frac{\ddot{\rho}}{\rho}} dr^2
+\end{align*}
+
+
+
+\begin{align*}
+	\scal
+	&= \tr \Ric \\
+	&= \tuple*{\frac{(n-2)(c - \dot{\rho}^2)}{\rho^2}  - \frac{\ddot{\rho}}{\rho}} \tr g - (n-2) \tuple*{\frac{c - \dot{\rho}^2}{\rho^2}  + \frac{\ddot{\rho}}{\rho}} \tr dr^2 \\
+	&= n \tuple*{\frac{(n-2)(c - \dot{\rho}^2)}{\rho^2}  - \frac{\ddot{\rho}}{\rho}}- (n-2) \tuple*{\frac{c - \dot{\rho}^2}{\rho^2}  + \frac{\ddot{\rho}}{\rho}} \\
+	&= \frac{(n-1)(n-2)(c - \dot{\rho}^2)}{\rho^2} - \frac{2(n-1) \ddot{\rho}}{\rho}
+\end{align*}
+
+Now, we write $P$ in terms of $dr$ and $g$ 
+\begin{align*}
+	P
+	&= \frac{2}{n-2} \Ric - \frac{\scal}{(n-1)(n-2)} \cdot g \\
+	&= \frac{2}{n-2} \tuple*{\tuple*{\frac{(n-2)(c - \dot{\rho}^2)}{\rho^2}  - \frac{\ddot{\rho}}{\rho}} g - (n-2) \tuple*{\frac{c - \dot{\rho}^2}{\rho^2}  + \frac{\ddot{\rho}}{\rho}} dr^2} \\
+	&\;\;\;\; - \frac{1}{(n-1)(n-2)} \tuple*{\frac{(n-1)(n-2)(c - \dot{\rho}^2)}{\rho^2} - \frac{2(n-1) \ddot{\rho}}{\rho}} g \\
+	&= \frac{2(c - \dot{\rho}^2)}{\rho^2}g - \frac{2 \ddot{\rho}}{(n-2) \rho} g - 2 \tuple*{\frac{c - \dot{\rho}^2}{\rho^2}  + \frac{\ddot{\rho}}{\rho}} dr^2 \\
+	&\;\;\;\; - \frac{c - \dot{\rho}^2}{\rho^2} g + \frac{2 \ddot{\rho}}{(n-2)\rho} g \\
+	&= \frac{c - \dot{\rho}^2}{\rho^2} g - 2 \tuple*{\frac{c - \dot{\rho}^2}{\rho^2}  + \frac{\ddot{\rho}}{\rho}} dr^2
+\end{align*}
+
+
+Hence
+$$
+	R - P \circ g = W = 0
+$$
+
+

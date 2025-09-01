@@ -1,0 +1,273 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\input{header}
+
+\title{
+    MA4271 Homework 1
+}
+\author{Khanh Nguyen}
+\date{August 2023}
+
+\begin{document}
+
+\maketitle
+
+\begin{problem}
+    Let $\alpha: I \to \R^3$ be a parameterized smooth curve with $||\alpha(t)|| \neq 0$ and $||\alpha'(t)|| \neq 0$ for all $t \in I$. Prove that $||\alpha(t)||^2$ is a nonzero constant if and only if $\alpha(t)$ is orthogonal to $\alpha'(t)$ for all $t \in I$
+\end{problem}
+
+($\implies$) 
+
+Let $||\alpha(t)||^2 = c > 0$, we have
+
+$$
+    c = ||\alpha(t)||^2 = \alpha(t) \cdot \alpha(t)
+$$
+
+Take the derivative on both sides.
+
+\begin{align*}
+    0   &= \frac{d}{dt} ( \alpha(t) \cdot \alpha(t) )\\
+        &= \alpha(t) \cdot \alpha'(t) + \alpha'(t) \cdot \alpha(t) &\text{(property of dot product derivative)}\\
+        &= 2 (\alpha'(t) \cdot \alpha(t)) &\text{(symmetry of dot product)}
+\end{align*}
+
+
+The inner product between $\alpha'(t)$ and $\alpha(t)$ is zero; that is, they are orthogonal for all $t \in I$
+
+($\impliedby$)
+
+$$
+    0 = \alpha'(t) \cdot \alpha(t) = \frac{1}{2} \frac{d}{dt} ||\alpha(t)||^2
+$$
+
+$||\alpha(t)||^2$ is a real-valued function having derivative being $0$ for all $t \in I$, therefore, it is a constant
+
+
+\begin{problem}
+    Prove that the equation of a plane passing through three noncolinear \footnote{This means that $p_1, p_2, p_3$ cannot be covered by a single line} points $p_1 = (x_1, y_1, z_1), p_2 = (x_2, y_2, z_2), p_3 = (x_3, y_3, z_3)$ is given by
+    $$
+        (p - p_1) \times (p - p_2) \cdot (p - p_3) = 0
+    $$
+    where $p = (x, y, z)$ is an arbitrary point of the plane and $p - p_1$ is the vector $(x - x_1, y - y_1, z - z_1)$
+\end{problem}
+
+For any $3$ vectors in $\R^3$, $(u \times v) \cdot w = \det(u, v, w)$
+
+$(\implies)$
+
+$[(p - p_1) \times (p - p_2)] \cdot (p - p_3) = 0$ implies $\det (p - p_1, p - p_2, p - p_3) = 0$. So, $3$ vectors $p - p_1, p - p_2, p - p_3$ lie on a subspace of dimension $d < 3$. Since $p_1, p_2, p_3$ is noncolinear, $d > 1$. Therefore, $d = 2$; that is, the set of all $p$ lie on the plane containing $p_1, p_2, p_3$
+
+$(\impliedby)$
+
+Given $p$ on the plane containing $p_1, p_2, p_3$, the span of $p - p_1, p - p_2, p - p_3$ must be a proper subspace of $\R^3$; that is, $\det (p - p_1, p - p_2, p - p_3) = 0$. Hence, $[(p - p_1) \times (p - p_2)] \cdot (p - p_3) = 0$
+
+
+\begin{problem}
+    Let $u(s) = (u_1(s), u_2(s), u_3(s)), v(s) = (v_1(s), v_2(s), v_3(s))$ be smooth maps from interval $(a, b)$ into $\R^3$. If the derivative $u'(s)$ and $v'(s)$ satisfy the conditions
+    $$
+        u'(s) = c_1 u(s) + c_2 v(s), \;\; v'(s) = c_3 u(s) - c_1 v(s)
+    $$
+    where $c_1, c_2, c_3 \in \R$ are constants. Prove that $u(s) \times v(s)$ is a constant vector.
+\end{problem}
+
+\begin{align*}
+    \frac{d}{ds} (u \times v)
+        &= \frac{du}{ds} \times v + u \times \frac{dv}{dt} &\text{(property of vector product derivative)}\\
+        &= (c_1 u + c_2 v) \times v + u \times (c_3 u - c_1 v) &\text{(premise)}\\
+        &= c_1 u \times v + c_2 v \times v + c_3 u \times u - c_1 u \times v &\text{(linearity of vector product)}\\
+        &= c_1 u \times v - c_1 u \times v &\text{($u \times u = 0, v \times v = 0$)}\\
+        &= 0
+\end{align*}
+
+All $3$ components of $u \times v$ is a real-valued function having derivative being $0$ for all $s \in (a, b)$, therefore $u \times v$ is a constant vector.
+
+\begin{problem}
+    Let $\alpha: I \to \R^3$ be a smooth regular curve parameterized by arc length and $\alpha''(s) \neq 0$ for all $s \in I$. Prove that the torsion $\tau$ of $\alpha$ is given by
+    $$
+        \tau(s) = - \frac{\alpha'(s) \times \alpha''(s) \cdot \alpha'''(s)}{|\kappa(s)|^2}
+    $$
+\end{problem}
+
+$\alpha$ is parameterized by arc length, then 
+\begin{itemize}
+    \item tangent vector $\alpha'$ has norm $||\alpha'|| = 1$
+    \item normal vector $n = \frac{\alpha''}{||\alpha''||}$, curvature $\kappa = ||\alpha''||$
+    \item binormal vector $b = \alpha' \times n$
+\end{itemize}
+
+We have
+
+\begin{align*}
+    \tau n
+        &= b' \\
+        &= \frac{d}{ds}(\alpha' \times n) \\
+        &= \alpha'' \times \frac{\alpha''}{\kappa} + \alpha' \times \frac{dn}{ds} &\text{(property of vector product derivative)}\\
+        &= \alpha' \times \frac{dn}{ds} &\text{($\alpha'' \times \alpha'' = 0$)} \\
+        &= \alpha' \times \frac{d}{ds} \frac{\alpha''}{\kappa} \\
+        &= \alpha' \times \left(\frac{\alpha'''}{\kappa} + \gamma \alpha''\right) &\text{where $\gamma = \frac{d}{ds}\frac{1}{\kappa}$}\\
+        &= \frac{\alpha' \times \alpha'''}{\kappa} + \gamma (\alpha' \times \alpha'')\\
+        &= \frac{\alpha' \times \alpha'''}{\kappa} + \gamma \kappa (\alpha' \times n)\\
+        &= \frac{\alpha' \times \alpha'''}{\kappa} + \gamma \kappa b\\
+\end{align*}
+
+Dot product both sides by $n$
+
+$$
+    \tau = \tau (n \cdot n) = \frac{(\alpha' \times \alpha''') \cdot n}{\kappa} + \gamma \kappa (b \cdot n)
+$$
+
+$b \cdot n = 0$ implies
+
+\begin{align*}
+    \tau
+        &= \frac{(\alpha' \times \alpha''') \cdot n}{\kappa} \\
+        &= \frac{(\alpha' \times \alpha''') \cdot \alpha''}{\kappa^2} \\
+        &= \frac{\det (\alpha', \alpha''', \alpha'')}{\kappa^2} \\
+        &= - \frac{\det (\alpha', \alpha'', \alpha''')}{\kappa^2} &\text{(odd permutation $\to$ even permutation)}\\
+        &= - \frac{(\alpha' \times \alpha'') \cdot \alpha'''}{\kappa^2} \\
+\end{align*}
+
+
+
+
+\begin{problem}
+    Let $\alpha: I \to \R^3$ be a smooth regular curve parameterized by arc length. Assume that $\tau(s) \neq 0$ and $\kappa'(s) \neq 0$ for all $s \in I$. Prove that a necessary and sufficient condition for $\alpha(I)$ to lie on a sphere is that 
+    $$
+        (R(s))^2 + (R'(s))^2 (T(s))^2 = const
+    $$
+    where $R(s) = \frac{1}{\kappa(s)}, T(s) = \frac{1}{\tau(s)}$ and $R'(s)$ is the derivative of $R(s)$ relative to $s$
+\end{problem}
+
+
+
+In this proof, we will make an additional assumption $\kappa(s) \neq 0$ for all $s$. We have
+$$
+    (R(s))^2 + (R'(s))^2 (T(s))^2 = \left(\frac{1}{\kappa}\right)^2 + \left(\frac{\kappa'}{\tau \kappa^2}\right)^2
+$$
+
+\begin{lemma}
+    \label{s2}
+    A trajectory of a smooth regular curve $\alpha$ parameterized by arc length lies on a sphere centered at $c$ of radius $r > 0$ with $\tau(s) \neq 0$ and $\kappa(s) \neq 0, \kappa'(s) \neq 0$ for all $s$. Must have
+    \begin{align}
+        \alpha' \cdot (\alpha - c) &= 0 \\
+        n \cdot (\alpha - c) &= -\frac{1}{\kappa} \\
+        b \cdot (\alpha - c) &= - \frac{\kappa'}{\tau \kappa^2}
+    \end{align}
+    where $\kappa$ is curvature, $\tau$ is torsion, $n$ is normal vector, and $b$ is binormal vector.
+\end{lemma}
+
+\textbf{Main Proof}
+
+$(\implies)$
+
+Let $c$ be the center of the sphere with radius $r > 0$ where the trajectory of $\alpha$ lies on. Project $\alpha - c$ onto \emph{Frenet trihedron}
+
+\begin{align*}
+    \alpha - c &= (\alpha' \cdot (\alpha - c)) \alpha' + (n \cdot (\alpha - c)) n + (b \cdot (\alpha - c)) b \\
+    \alpha - c &= -\frac{1}{\kappa} n - \frac{\kappa'}{\tau \kappa^2} b \\
+\end{align*}
+
+Take the norm of both sides
+
+\begin{align*}
+    const = ||a - c|| = \left(\frac{1}{\kappa}\right)^2 + \left(\frac{\kappa'}{\tau \kappa^2}\right)^2
+\end{align*}
+
+$(\impliedby)$
+
+Let $\beta$ be defined by
+
+$$
+    \beta = \alpha + \frac{1}{\kappa} n + \frac{\kappa'}{\tau \kappa^2} b
+$$
+
+We will prove that $\beta$ is a constant w.r.t arc length $s$. Hence, the norm of $\alpha - \beta$ is
+
+$$
+    ||a - \beta|| = \left(\frac{1}{\kappa}\right)^2 + \left(\frac{\kappa'}{\tau \kappa^2}\right)^2 = const
+$$
+
+
+
+We will conclude that $\beta$ is the center of the sphere where the trajectory of $\alpha$ lies on.
+
+Take the derivative w.r.t $s$ of $\beta$
+
+\begin{align*}
+    \beta'
+    &= \alpha' + \left[ - \frac{\kappa'}{\kappa^2} n + \frac{1}{\kappa} (-\kappa \alpha' - \tau b) \right] + \left[ \frac{d}{ds}\left( \frac{\kappa'}{\tau \kappa^2} \right) b + \frac{\kappa'}{\tau \kappa^2} (\tau n) \right] \\
+    &= \alpha' + \left[\frac{1}{\kappa} (-\kappa \alpha' - \tau b) \right] + \left[ \frac{d}{ds}\left( \frac{\kappa'}{\tau \kappa^2} \right) b \right]  &\text{(remove $ - \frac{\kappa'}{\kappa^2} n$)}\\
+    &= \left[\frac{1}{\kappa} (- \tau b) \right] + \left[ \frac{d}{ds}\left( \frac{\kappa'}{\tau \kappa^2} \right) b \right]  &\text{(remove $\alpha'$)}\\
+    &= \left[ -\frac{\tau}{\kappa} + \frac{d}{ds}\left( \frac{\kappa'}{\tau \kappa^2} \right) \right] b \\
+\end{align*}
+
+On the other hand,
+
+$$
+    const = \left(\frac{1}{\kappa}\right)^2 + \left(\frac{\kappa'}{\tau \kappa^2}\right)^2
+$$
+
+Take the derivative w.r.t to $s$ on both sides
+
+\begin{align*}
+    0
+    &= \left[ 2 \frac{1}{\kappa} \frac{-\kappa'}{\kappa^2} \right] + \left[2 \frac{\kappa'}{\tau \kappa^2} \frac{d}{ds} \left(\frac{\kappa'}{\tau \kappa^2}\right) \right] \\
+    &= - \frac{\tau}{\kappa} + \frac{d}{ds} \left(\frac{\kappa'}{\tau \kappa^2}\right)  &\text{(divide both sides by $2 \frac{\kappa'}{\tau \kappa^2} $)}\\
+\end{align*}
+
+That implies $\beta' = 0$. As discussed earlier, $||a - \beta|| = const$. Therefore, the trajectory of $\alpha$ lies a sphere centered at $\beta$
+
+\textbf{Proof of Lemma \ref{s2}}
+We have
+$$
+    ||a - c||^2 = r^2
+$$
+
+Take the derivative w.r.t $s$ on both sides
+
+\begin{align*}
+    2 (\alpha - c)' \cdot (\alpha - c) &= 0 &\text{(derivative of dot product formula)}\\
+    \alpha' \cdot (\alpha - c) &= 0 \\
+\end{align*}
+
+We have the first equation
+
+$$
+    \alpha' \cdot (\alpha - c) = 0
+$$
+    
+Take the derivative w.r.t $s$ on both sides
+
+\begin{align*}
+    \alpha'' \cdot (\alpha - c) + \alpha' \cdot (\alpha - c)' &= 0 \\
+    \kappa n \cdot (\alpha - c) + \alpha' \cdot \alpha' &= 0 &\text{(definition of curvature)}\\
+    n \cdot (\alpha - c) &= -\frac{1}{\kappa}\\
+\end{align*}
+
+We have the second equation
+
+$$
+    n \cdot (\alpha - c) = -\frac{1}{\kappa}
+$$
+
+
+Take the derivative w.r.t $s$ on both sides
+
+\begin{align*}
+    n' \cdot (\alpha - c) + n \cdot (\alpha - c)' &= - (-1) \frac{\kappa'}{\kappa^2} \\
+    (-\kappa \alpha' - \tau b) \cdot (\alpha - c) + n \cdot \alpha' &= \frac{\kappa'}{\kappa^2} &\text{(\emph{Frenet formulas})} \\
+    (-\kappa \alpha' - \tau b) \cdot (\alpha - c) + 0 &= \frac{\kappa'}{\kappa^2} &\text{($n$ and $\alpha'$ are orthogonal)} \\
+    \kappa \alpha' \cdot (\alpha - c) + \tau b \cdot (\alpha - c) &= - \frac{\kappa'}{\kappa^2} &\text{(linearity of dot product)}\\
+    \tau b \cdot (\alpha - c) &= - \frac{\kappa'}{\kappa^2} &\text{($\alpha' \cdot (\alpha - c) = 0$)}\\
+    b \cdot (\alpha - c) &= - \frac{\kappa'}{\tau \kappa^2} \\
+\end{align*}
+
+We have the third equation
+
+$$
+    b \cdot (\alpha - c) = - \frac{\kappa'}{\tau \kappa^2}
+$$
+
+\end{document}

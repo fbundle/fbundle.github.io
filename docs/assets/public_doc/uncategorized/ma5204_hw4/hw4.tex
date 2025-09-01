@@ -1,0 +1,707 @@
+\section{PROBLEM 1 2 3}
+
+\begin{problem}[problem 1]
+	\label{problem1}
+	Let $P_\bullet$ and $Q_\bullet$ be projective  resolutions of $A$-modules $M$ and $N$, respectively. In class we proved that any $A$-module map $f: M \to N$ lifts to a chain complex map $\phi_\bullet: P_\bullet \to Q_\bullet$, but the lift depends on choices. Prove that any two lifts $\phi_\bullet, \psi_\bullet$ are homotopic.
+\end{problem}
+
+\begin{proof} 
+	
+	Note that, the proof only requires $P_\bullet$ to be projective chain complex and $Q_\bullet$ to be exact. Recall the construction of lifts of $f$. Let $K_n = \ker (d: Q_n \to Q_{n-1}) = \im (d: Q_{n+1} \to Q_n)$, then there is a map $\alpha_n: P_{n+1} \to K_n$. Since $P_{n+1}$ is projective, $\alpha_n$ lifts into $\phi_{n+1}: P_{n+1} \to Q_{n+1}$
+	
+	\begin{center}
+		\begin{tikzcd}
+			P_{n+2} \arrow[rrr, "d"] \arrow[rrdd, "\alpha_n", dashed] &  &                          & P_{n+1} \arrow[rrr, "d"] \arrow[ddd, "\phi_{n+1}", dashed] \arrow[rrdd, "\alpha_n"] &  &                      & P_n \arrow[ddd, "\phi_n"] \\
+			&  &                          &                                                                                     &  &                      &                           \\
+			&  & K_{n+1} \arrow[rd, hook] &                                                                                     &  & K_n \arrow[rd, hook] &                           \\
+			Q_{n+2} \arrow[rru, two heads] \arrow[rrr, "d"]           &  &                          & Q_{n+1} \arrow[rru, two heads] \arrow[rrr, "d"]                                     &  &                      & Q_n                      
+		\end{tikzcd}
+	\end{center}
+	
+	Now, the composition $P_{n+2} \to P_{n+1} \to Q_{n+1} \to Q_{n}$ equals $P_{n+2} \to P_{n+1} \to P_n \to Q_{n}$ equals zero. Hence the map $P_{n+2} \to P_{n+1} \to Q_{n+1}$ factors through $K_{n+1}$ by a map $\alpha_{n+1}: P_{n+2} \to Q_{n+1}$.
+	
+	Let $g_n = \phi_n - \psi_n$, then $g_\bullet$ is a chain map, we will show by induction that there exists a collection of maps $\set{h_i: P_{i-1} \to Q_i}_{i \in \N}$ so that
+	$$
+		g_i = h_i d + d h_{i+1}
+	$$
+	
+	where $d$ are the appropriate maps on exact sequences $P_\bullet$ and $Q_\bullet$. 
+	
+	\textbf{Induction case}: Suppose we have maps $h_n: P_{n-1} \to Q_n$ and $h_{n-1}: P_{n-2} \to Q_{n-1}$ for some $n -1 \geq 0$, so that
+	$$
+		g_{n-1} = h_{n-1} d + d h_n
+	$$
+	
+	We construct $h_{n+1}: P_{n+2} \to Q_{n+1}$ as follows: 
+	\begin{center}
+		\begin{tikzcd}
+			P_n \arrow[d, "g_n"'] \arrow[r, "d"] & P_{n-1} \arrow[ld, "h_n"] \\
+			Q_n \arrow[r, "d"']                      & Q_{n-1}                      
+		\end{tikzcd}
+	\end{center}
+	
+	Consider the map $\beta_n = g_n - h_n d: P_n \to Q_n$ and the composition $d \beta_n: P_n \to Q_{n-1}$, we have
+	\begin{align*}
+		d \beta_n
+		&=d (g_n - h_n d) \\
+		&= d g_n - d h_n d &\text{($A$-module is preadditive)}\\
+		&= d g_n - (g_{n-1} - h_{n-1} d) d &\text{(induction hypothesis)}\\
+		&= d g_n - g_{n-1} d + h_{n-1} d d &\text{($A$-module is preadditive)}\\
+		&= d g_n - g_{n-1} d &\text{(top sequence is a chain complex)}\\
+		&= 0 &\text{($g_\bullet$ is a chain map)}\\
+	\end{align*}
+	
+	Then, $\beta_n$ factors through $K_n$ by a map $P_n \to K_n$, since $P_n$ is projective, it factors through $Q_{n+1}$ by a map $h_{n+1}: P_n \to Q_{n+1}$
+	\begin{center}
+		\begin{tikzcd}
+			&                & P_n \arrow[ld, dashed] \arrow[dd, "\beta_n"] \arrow[lldd, "h_{n+1}"', dashed, bend right] &  &         \\
+			& K_n \arrow[rd] &                                                                                           &  &         \\
+			Q_{n+1} \arrow[ru, two heads] \arrow[rr, "d"'] &                & Q_n \arrow[rr, "d"']                                                                      &  & Q_{n-1}
+		\end{tikzcd}
+	\end{center}
+	
+	Precisely, we have $\beta_n = d h_{n+1}$. Hence, $g_n = h_n d + d h_{n+1}$
+	
+	\textbf{Case case}: We construct $h_0: 0 \to Q_0$ and $h_1: P_0 \to Q_1$ as follows:
+		
+	\begin{center}
+		\begin{tikzcd}
+			& P_0 \arrow[r] \arrow[ld, "h_1"'] \arrow[d, "g_0"] & 0 \arrow[ld, "h_0"] \\
+			Q_1 \arrow[r, "d"', two heads] & Q_0 \arrow[r]                                     & 0                  
+		\end{tikzcd}
+	\end{center}
+	
+	$h_0 = 0$ is the unique zero map. $P_0$ is projective, so $g_0 = \phi_0 - \psi_0$ factors through $Q_1$ by a map $h_1: P_0 \to Q_1$, then $g_0 = d h_1 = d h_1 + h_0 d$
+\end{proof}
+
+\begin{problem}[problem 2]
+	Let $P_\bullet$ and $Q_\bullet$ be projective resolution of an $A$-module $M$. Prove that they are homotopy equivalent
+\end{problem}
+
+\begin{proof}
+	The lifting from a map in $A$-modules into chain complexes of $A$-modules is a functor, that is if $f_\bullet, g_\bullet$ are lifts of $f, g$, then $g_\bullet \circ f_\bullet$ is a lift of $g \circ f$
+	\begin{center}
+		\begin{tikzcd}
+			L \arrow[r, "f"'] \arrow[rr, "g \circ f", bend left]                                         & M \arrow[r, "g"']                & N         \\
+			P_\bullet \arrow[r, "f_\bullet"] \arrow[rr, "g_\bullet \circ f_\bullet"', bend right] & Q_\bullet \arrow[r, "g_\bullet"] & R_\bullet
+		\end{tikzcd}
+	\end{center}
+	
+	Hence, the identity map $1_M: M \to M$ lifts into 2 chain maps $f_\bullet : P_\bullet \to Q_\bullet$, $g_\bullet : Q_\bullet \to P_\bullet$ as in the diagram below
+	\begin{center}
+		\begin{tikzcd}
+			M \arrow[r, "1_M"'] \arrow[rr, "1_M", bend left]                                      & M \arrow[r, "1_M"']              & M         \\
+			P_\bullet \arrow[r, "f_\bullet"] \arrow[rr, "g_\bullet \circ f_\bullet"', bend right] & Q_\bullet \arrow[r, "g_\bullet"] & P_\bullet
+		\end{tikzcd}
+	\end{center}
+	
+	Then, $g_\bullet \circ f_\bullet$ is also lift of $1_M: M \to M$. On the other hand, the identity chain map $1_{P_\bullet}: P_\bullet \to P_\bullet$ is also a lift of $1_M: M \to M$, by Problem \ref{problem1}, $g_\bullet \circ f_\bullet \sim 1_{P_\bullet}$. Using the same argument, $f_\bullet \circ g_\bullet \sim 1_{Q_\bullet}$, hence $P_\bullet$ and $Q_\bullet$ are homotopy equivalent.
+	
+\end{proof}
+
+\begin{problem} [problem 3]
+	\label{problem3}
+	If $0 \to L \to M \to N \to 0$ is a short exact sequence of $A$-modules, prove that we can find a compatible short exact sequence of projective resolutions $0 \to P_\bullet \to Q_\bullet \to R_\bullet \to 0$
+\end{problem}
+
+\begin{proof}
+	Pick arbitrary projective resolutions $P_\bullet$ and $R_\bullet$ of $L$ and $N$ respectively. We will show by induction that there exists a projective resolution $Q_\bullet$ of $M$ so that $0 \to P_\bullet \to Q_\bullet \to R_\bullet \to 0$ is a short exact sequence.
+	
+	Let $Q_n = P_n \oplus R_n$ and the canonical maps $f_n: P_n \hookrightarrow Q_n$ and $g_n: Q_n \twoheadrightarrow R_n$, we will construct maps $Q_0 \to M$ and $Q_{n+1} \to Q_n$ so that $Q_\bullet$ is a projective resolution of $M$. Note that, since both $P_n$ and $R_n$ are projective, $Q_n$ is also projective.
+	
+	\textbf{Induction case}: For any $n \geq 0$, suppose we have a commutative diagram as follows (does not include dash arrows), all rows are exact, all columns split
+	
+	
+	
+	\begin{center}
+		\begin{tikzcd}
+			& 0 \arrow[d]                                                                      & 0 \arrow[d]                                                    & 0 \arrow[d]                                                       &     \\
+			... \arrow[r]         & P_{n+1} \arrow[r, "d"] \arrow[d, "f_{n+1}", hook]                                & P_n \arrow[r, "d"] \arrow[d, "f_n", hook]                      & P_{n-1} \arrow[r] \arrow[d, "f_{n-1}", hook]                      & ... \\
+			... \arrow[r, dashed] & Q_{n+1} \arrow[d, "g_{n+1}", two heads] \arrow[r, "f_n d \oplus r_n d", dashed] & Q_n \arrow[d, "g_n", two heads] \arrow[r, "h"]                 & Q_{n-1} \arrow[r] \arrow[d, "g_{n-1}", two heads]                 & ... \\
+			... \arrow[r]         & R_{n+1} \arrow[r, "d"'] \arrow[d] \arrow[u, "r_{n+1}", hook, bend left]          & R_n \arrow[d] \arrow[r, "d"] \arrow[u, "r_n", hook, bend left] & R_{n-1} \arrow[r] \arrow[d] \arrow[u, "r_{n-1}", hook, bend left] & ... \\
+			& 0                                                                                & 0                                                              & 0                                                                 &    
+		\end{tikzcd}
+	\end{center}
+	
+	Let the map $Q_{n+1} \to Q_n$ be $f_n d \oplus r_n d$. The sequence $Q_\bullet$ is exact at $Q_n$ since 
+	\begin{align*}
+		&\im (f_n d \oplus r_n d) \\
+		&= \im (d: P_{n+1} \to P_n) \oplus \im (d: R_{n+1} \to R_n) \\
+		&=  \ker (d: P_n \to P_{n-1}) \oplus \ker (d: R_n \to R_{n-1}) \\
+		&= \ker h
+	\end{align*}
+
+	
+	\textbf{Base case}: Since $M \twoheadrightarrow N$ is surjective and $R_0$ is projective, there is a map $\phi: R_0 \to M$ lifted from $\eta: R_0 \to N$. Let the map $Q_0 \to M$ be $f \epsilon \oplus \phi$
+	
+	
+	\begin{center}
+		\begin{tikzcd}
+			& 0 \arrow[d]                                                                                & 0 \arrow[d]                      &   \\
+			... \arrow[r]         & P_0 \arrow[r, "\epsilon", two heads] \arrow[d, hook]                                       & L \arrow[r] \arrow[d, "f", hook] & 0 \\
+			... \arrow[r, dashed] & P_0 \oplus R_0 \arrow[d, two heads] \arrow[r, "f \epsilon \oplus \phi", two heads, dashed] & M \arrow[d, two heads] \arrow[r] & 0 \\
+			... \arrow[r]         & R_0 \arrow[r, "\eta"', two heads] \arrow[d] \arrow[ru, "\phi"', dashed]                  & N \arrow[d] \arrow[r]            & 0 \\
+			& 0                                                                                          & 0                                &  
+		\end{tikzcd}
+	\end{center}
+	
+	It remains to show that $f \epsilon \oplus \phi$ is surjective. By snake lemma, 
+	$$
+		0 = \coker \epsilon \to \coker (f \epsilon \oplus \phi) \to \coker \eta = 0
+	$$
+
+	is exact. Hence, $\coker (f \epsilon \oplus \phi) = 0$, $f \epsilon \oplus \phi$ is surjective.
+	
+\end{proof}
+
+\section{PROBLEM 4}
+
+\begin{lemma}
+	\label{lemma4}
+	Some basic facts about $\Tor$
+	\begin{enumerate}
+		\item If $L$ is a flat $A$-module, then $\Tor_n^A(-, L) = 0$ for $n \geq 1$
+		\item If $P$ is a projective $A$-module, then $\Tor_n^A(P, -) = 0$ for $n \geq 1$.
+		\item If $P$ is a projective $A$-module, then $P$ is flat. Hence, $\Tor_n^A(-, P) = 0$ for $n \geq 1$.
+	\end{enumerate}
+\end{lemma}
+
+\begin{longproof}
+	($\Tor_n(-, L) = 0$ for $n \geq 1$) Let $... \to Q_2 \to Q_1 \to Q_0 \to 0$ be a projective resolution of $N$, since $L$ is flat, $... \to Q_2 \otimes L \to Q_1 \otimes L \to Q_0 \otimes L \to 0$ is exact at every $Q_{n} \otimes L$ for $n \geq 1$. Hence, $\Tor_n(-, L) = 0$ for $n \geq 1$
+	
+	($\Tor_n(P, -) = 0$ for $n \geq 1$) A projective resolution for $P$ is $0 \to P \to P \to 0$
+	
+	($P$ is flat) Let $Q \oplus P$ be a free module, hence also flat. Given any injection $M \hookrightarrow N$. In the diagram below, all columns split and the middle sequence is exact
+	\begin{center}
+		\begin{tikzcd}
+			& 0 \arrow[d]                                      & 0 \arrow[d]                      \\
+			& M \otimes P \arrow[d] \arrow[r]                  & N \otimes P \arrow[d]            \\
+			0 \arrow[r] & M \otimes (P \oplus Q) \arrow[d] \arrow[r, hook] & N \otimes (P \oplus Q) \arrow[d] \\
+			& M \otimes Q \arrow[d] \arrow[r]                  & N \otimes Q \arrow[d]            \\
+			& 0                                                & 0                               
+		\end{tikzcd}
+	\end{center}
+	
+	By snake lemma, $0 \to \ker (M \otimes P \to N \otimes P) \to 0$ is exact. So, $(- \otimes P)$ preserves injection
+	
+	
+\end{longproof}
+
+\begin{lemma}
+	\label{lemma5}
+	If $0 \to M \to N \to P \to 0$ is a short exact sequence of $A$-modules with $P$ being projective, then for any $A$-modules, the sequence 
+	$$
+		0 \to M \otimes J \to N \otimes J \to P \otimes J \to 0
+	$$
+	is also exact
+\end{lemma}
+
+\begin{proof}
+	$P$ being projective, so $1_P: P \to P$ factors through $N$, that is, the sequence $0 \to M \to N \to P \to 0$ splits. $N = M \oplus P$. So 
+	$$
+		N \otimes J  = (M \otimes J) \oplus (P \otimes J)
+	$$
+	
+	The induced maps $M \otimes J \to N \otimes J$ and $N \otimes J \to P \otimes J$ from $(- \otimes J)$ are precisely the canonical injection and canonical projection
+
+	\begin{center}
+		\begin{tikzcd}
+			M \arrow[r, "f"]                                & N \arrow[r, "g"]                                                                       & P             \\
+			m \arrow[r, "f", maps to]                       & {(m, 0)}                                                                               &               \\
+			& {(m,p)} \arrow[r, "g", maps to]                                                        & p             \\
+			M \otimes J \arrow[r, "f \otimes 1"]            & N \otimes J \arrow[r, "g \otimes 1"]                                                   & P \otimes J   \\
+			m \otimes j_1 \arrow[r, "f \otimes 1", maps to] & {(m, 0) \otimes j_1 = (m \otimes j_1, 0)}                                              &               \\
+			& {(m \otimes j_2, p \otimes j_2) = (m,p) \otimes j_2} \arrow[r, "g \otimes 1", maps to] & p \otimes j_2
+		\end{tikzcd}
+	\end{center}
+	
+	Hence, $0 \to M \otimes J \to N \otimes J \to P \otimes J \to 0$ also splits
+\end{proof}
+
+\begin{lemma}
+	\label{lemma6}
+	Tensor product preserves chain complex and chain homotopy, that is
+	\begin{enumerate}
+		\item If $C_\bullet$ is a chain complex then $C_\bullet \otimes J$
+		$$
+		... \to C_{n+1} \otimes J \to C_n \otimes J \to C_{n-1} \otimes J \to ...
+		$$
+		is also a chain complex for any $A$-module $J$. 
+		\item If $f_\bullet, g_\bullet: C_\bullet \to D_\bullet$ are chain homotopic by a chain homotopy $h_\bullet$, then 
+		\begin{center}
+			\begin{tikzcd}
+				& C_n \arrow[r, "d"] \arrow[ld, "h_{n+1}"'] & C_{n-1} \arrow[ld, "h_n"] &                                   & C_n \otimes J \arrow[ld, "F h_{n+1}"'] \arrow[r, "Fd"] & C_{n-1} \otimes J \arrow[ld, "F h_n"] \\
+				D_{n+1} \arrow[r, "d"] & D_n                                       &                           & D_{n+1} \otimes J \arrow[r, "Fd"] & D_n \otimes J                                          &                                      
+			\end{tikzcd}
+		\end{center}
+		
+		$F h_\bullet$ is also a chain homotopy where $F(-)$ denotes the tensor product $(- \otimes J)$ functor
+	\end{enumerate} 
+\end{lemma}
+
+\begin{proof}
+	We write $F(-)$ for the functor $(- \otimes J)$
+	
+	(Tensor product preserves chain complex) 
+	$$
+		(Fd)(Fd) = F(dd) = 0
+	$$
+	
+	(Tensor product preserves chain homotopy) 
+	\begin{align*}
+		&(F d) (F h_{n+1}) + (F h_n) (F d) \\
+		&= F(d h_{n+1}) + F(h_n d) &\text{($F$ is a functor)} \\
+		&= F(d h_{n+1} + h_n d) &\text{($F$ is additive)} \\
+		&= F(f_n - g_n) &\text{($f_\bullet \sim g_\bullet$ by $h_\bullet$)} \\
+		&= F(f_n) - F(g_n) &\text{($F$ is a functor)}
+	\end{align*}
+	
+\end{proof}
+
+\begin{lemma}
+	\label{lemma7}
+	Let $0 \to L \to M \to N \to 0$ be a short exact sequence of $A$-modules, then 
+	\begin{enumerate}
+		\item (version 1) there exists a natural long exact sequence of $A$-modules
+		\begin{center}
+			\begin{tikzcd}
+				& ... \arrow[r]            & {\Tor_2(J, N)} \arrow[lld] &   \\
+				{\Tor_1(J, L)} \arrow[r] & {\Tor_1(J, M)} \arrow[r] & {\Tor_1(J, N)} \arrow[lld] &   \\
+				J \otimes L \arrow[r]    & J \otimes M \arrow[r]    & J \otimes N \arrow[r]      & 0
+			\end{tikzcd}
+		\end{center}
+		\item (version 2) there exists a natural long exact sequence of $A$-modules
+		\begin{center}
+			\begin{tikzcd}
+				& ... \arrow[r]            & {\Tor_2(N, J)} \arrow[lld] &   \\
+				{\Tor_1(L, J)} \arrow[r] & {\Tor_1(M, J)} \arrow[r] & {\Tor_1(N, J)} \arrow[lld] &   \\
+				L \otimes J \arrow[r]    & M \otimes J \arrow[r]    & N \otimes J \arrow[r]      & 0
+			\end{tikzcd}
+		\end{center}
+	\end{enumerate}
+\end{lemma}
+ 
+\begin{longproof}
+	(version 1) Let $P_\bullet$ be a projective resolution of $J$, by Lemma \ref{lemma4} each $P_n$ is flat, hence
+	$$
+		0 \to P_\bullet \otimes L \to P_\bullet \otimes M \to P_\bullet \otimes N \to 0
+	$$
+	
+	is a short exact sequence of chain complexes (rows are exact by Lemma \ref{lemma4}, columns are chain complexes by Lemma \ref{lemma6}). By fundamental lemma of homological algebra, there is a natual long exact sequence
+	\begin{center}
+		\begin{tikzcd}
+			& ... \arrow[r]                      & H_2(P_\bullet \otimes N) \arrow[lld] &   \\
+			H_1(P_\bullet \otimes L) \arrow[r] & H_1(P_\bullet \otimes M) \arrow[r] & H_1(P_\bullet \otimes N) \arrow[lld] &   \\
+			H_0(P_\bullet \otimes L) \arrow[r] & H_0(P_\bullet \otimes M) \arrow[r] & H_0(P_\bullet \otimes N) \arrow[r]   & 0
+		\end{tikzcd}
+	\end{center}
+	
+	Since $(- \otimes L)$ and $(- \otimes M)$ are right exact, the rows in bottom diagram are exact.
+	\begin{center}
+		\begin{tikzcd}
+			&                                   & L \arrow[d, "f"]                               &   \\
+			&                                   & M                                              &   \\
+			P_1 \otimes L \arrow[r] \arrow[d] & P_0 \otimes L \arrow[r] \arrow[d] & J \otimes L \arrow[r] \arrow[d, "1 \otimes f"] & 0 \\
+			P_1 \otimes M \arrow[r]           & P_0 \otimes M \arrow[r]           & J \otimes M \arrow[r]                          & 0
+		\end{tikzcd}
+	\end{center}
+	
+	Hence,
+	$$
+		H_0(P_\bullet \otimes L) = \frac{\ker (P_0 \otimes L \to 0)}{\im (P_1 \otimes L \to P_0 \otimes L)} = \frac{P_0 \otimes L}{\im (d: P_1 \otimes L \to P_0 \otimes L)} = \coker (P_1 \otimes L \to P_0 \otimes L) = J \otimes L
+	$$
+	
+	and the map $1 \otimes f: J \otimes L \to J \otimes M$ is precisely the induced map from $P_0 \otimes L \to P_0 \otimes M$ into its map in homology.
+	
+	(version 2) Let $P_\bullet, Q_\bullet, R_\bullet$ be projective resolutions of $M, N, L$ in Problem \ref{problem3}, then
+	$$
+		0 \to P_\bullet \otimes J \to Q_\bullet \otimes J \to R_\bullet \otimes J \to 0
+	$$
+	is also a short exact sequence of chain complexes (rows are exact by Lemma \ref{lemma5}, columns are chain complexes by Lemma \ref{lemma6}). By fundamental lemma of homological algebra, there is a natual long exact sequence
+	\begin{center}
+		\begin{tikzcd}
+			& ... \arrow[r]                      & H_2(R_\bullet \otimes J) \arrow[lld] &   \\
+			H_1(P_\bullet \otimes J) \arrow[r] & H_1(Q_\bullet \otimes J) \arrow[r] & H_1(R_\bullet \otimes J) \arrow[lld] &   \\
+			H_0(P_\bullet \otimes J) \arrow[r] & H_0(Q_\bullet \otimes J) \arrow[r] & H_0(R_\bullet \otimes J) \arrow[r]   & 0
+		\end{tikzcd}
+	\end{center}
+	
+	Since $(- \otimes J)$ is right exact, the rows in bottom diagram are exact
+	\begin{center}
+		\begin{tikzcd}
+			P_1 \arrow[r] \arrow[d]           & P_0 \arrow[r] \arrow[d]           & L \arrow[r] \arrow[d, "f"]                     & 0 \\
+			Q_1 \arrow[r]                     & Q_0 \arrow[r]                     & M \arrow[r]                                    & 0 \\
+			P_1 \otimes J \arrow[r] \arrow[d] & P_0 \otimes J \arrow[r] \arrow[d] & L \otimes J \arrow[r] \arrow[d, "f \otimes 1"] & 0 \\
+			Q_1 \otimes J \arrow[r]           & Q_0 \otimes J \arrow[r]           & M \otimes J \arrow[r]                          & 0
+		\end{tikzcd}
+	\end{center}
+	
+	Hence, 
+	$$
+		H_0(P_\bullet \otimes J) = \frac{\ker (P_0 \otimes J \to 0)}{\im (P_1 \otimes J \to P_0 \otimes J)} = \frac{P_0 \otimes J}{\im (P_1 \otimes J \to P_0 \otimes J)} = \coker (P_1 \otimes J \to P_0 \otimes J) = L \otimes J
+	$$
+	
+	and the map $(f \otimes 1): L \otimes J \to M \otimes J$ is precisely the induced map from $P_0 \otimes J \to Q_0 \otimes J$ into its map in homology.
+\end{longproof}
+
+\begin{problem}[problem 4]
+	For $A$-modules $M$ and $N$, we define $\Tor_i^A(M, N) = H_i(P_\bullet \otimes_A N)$ where $P_\bullet$ is a projective resolution of $M$. Prove that $\Tor_i^A(M, N) \cong \Tor_i^A(N, M)$
+\end{problem}
+
+\begin{proof}
+	Let $... \to P_2 \to P_1 \to P_0 \to M \to 0$ be a projective resolution of $M$, we have the following diagonal short exact sequences
+	\begin{center}
+		\begin{tikzcd}
+			0 \arrow[rd]   &                      &                                           &                                 & 0 \arrow[rd]                              &                                 & 0                                                &              &             &   \\
+			& K_3 \arrow[rd, hook] &                                           &                                 &                                           & K_1 \arrow[rd, hook] \arrow[ru] &                                                  &              &             &   \\
+			... \arrow[rr] &                      & P_2 \arrow[rr, "d"] \arrow[rd, two heads] &                                 & P_1 \arrow[ru, two heads] \arrow[rr, "d"] &                                 & P_0 \arrow[rd, two heads] \arrow[rr, "\epsilon"] &              & M \arrow[r] & 0 \\
+			&                      &                                           & K_2 \arrow[ru, hook] \arrow[rd] &                                           &                                 &                                                  & M \arrow[rd] &             &   \\
+			&                      & 0 \arrow[ru]                              &                                 & 0                                         &                                 &                                                  &              & 0           &  
+		\end{tikzcd}
+	\end{center}
+	
+	where $K_1 = \ker (\epsilon: P_0 \to M)$ and $K_n = \ker (d: P_{n-1} \to P_{n-2})$. For any $n \geq 1$, the map $P_n \to K_n$ is lifted from $d: P_n \to P_{n-1}$ since the composition $P_n \to P_{n-1} \to P_{n-2}$  is zero\footnote{$P_{-1} = M$}. Since $K_n = \im (d: P_n \to P_{n-1})$, $P_n \to K_n$ is surjective, hence every diagonal sequence is exact.
+	
+	From $0 \to K_1 \to P_0 \to M \to 0$, for any $n \geq 0$, by Lemma \ref{lemma7} we have two exact sequences
+	\begin{center}
+		\begin{tikzcd}
+			{0 = \Tor_{n+1}(P_0, N)} \arrow[r] & { \Tor_{n+1}(M, N)} \arrow[r] & {\Tor_n(K_1, N)} \arrow[r] & {\Tor_n(P_0, N) = 0} \\
+			{0 = \Tor_{n+1}(N, P_0)} \arrow[r] & { \Tor_{n+1}(N, M)} \arrow[r] & {\Tor_n(N, K_1)} \arrow[r] & {\Tor_n(N, P_0) = 0}
+		\end{tikzcd}
+	\end{center}
+	Hence, $\Tor_{n+1}(M, N) = \Tor_n(K_1, N)$ and $\Tor_{n+1}(N, M) = \Tor_n(N, K_1)$
+	
+	From $0 \to K_2 \to P_1 \to K_1 \to 0$, for any $n \geq 0$, by Lemma \ref{lemma7} we have two exact sequences
+	\begin{center}
+		\begin{tikzcd}
+			{0 = \Tor_{n+1}(P_1, N)} \arrow[r] & {\Tor_{n+1}(K_1, N)} \arrow[r] & {\Tor_n(K_2, N)} \arrow[r] & {\Tor_n(P_1, N) = 0} \\
+			{0 = \Tor_{n+1}(N, P_1)} \arrow[r] & {\Tor_{n+1}(N, K_1)} \arrow[r] & {\Tor_n(N, K_2)} \arrow[r] & {\Tor_n(N, P_1) = 0}
+		\end{tikzcd}
+	\end{center}
+	Similarly, we have $\Tor_{n+1}(K_1, N) = \Tor_n(K_2, N)$ and $\Tor_{n+1}(N, K_1) = \Tor_n(K_2, N)$. Hence
+	\begin{align*}
+		&\Tor_{n+1}(M, N) = \Tor_n(K_1, N) = \Tor_{n-1}(K_2, N) = ... = \Tor_1(K_n, N) \\
+		&\Tor_{n+1}(N, M) = \Tor_n(N, K_1) = \Tor_{n-1}(N, K_2) = ... = \Tor_1(N, K_n)
+	\end{align*}
+	
+	From $0 \to K_{n+1} \to P_n \to K_n \to 0$, for any $n \geq 0$, by Lemma \ref{lemma4} and Lemma \ref{lemma7} we have two exact sequences
+	\begin{center}
+		\begin{tikzcd}
+			{0 = \Tor_1(P_n, N)} \arrow[r] \arrow[d, "\sim"] & {\Tor_1(K_n, N)} \arrow[r] \arrow[d, dashed] & K_{n+1} \otimes N \arrow[r] \arrow[d, "\sim"] & P_n \otimes N \arrow[r] \arrow[d, "\sim"] & K_n \otimes N \arrow[r] & 0 \\
+			{0 = \Tor_1(N, P_n)} \arrow[r]                   & {\Tor_1(N, K_n)} \arrow[r]                   & N \otimes K_{n+1} \arrow[r]                   & N \otimes P_n \arrow[r]                   & N \otimes K_n \arrow[r] & 0
+		\end{tikzcd}
+	\end{center}
+	
+	By five lemma, there is an isomorphism $\Tor_1(K_n, N) \xrightarrow{\sim} \Tor_1(N, K_n)$ completing the squares. Hence
+	$$
+		\Tor_{n+1}(M, N) \cong \Tor_{n+1}(N, M)
+	$$
+	for any $n \geq 0$. In Lemma \ref{lemma7}, we showed that $\Tor_0(M, N) = M \otimes N$. So $\Tor_n(M, N) \cong \Tor_n(N, M)$ for any $n \geq 0$.
+\end{proof}
+
+\begin{remark}[dimension shifting]
+	\label{dimshift1}
+	The technique is called \textit{dimension shifting}, one can realize it in a different way. The exact sequence $... \to P_{n+1} \to P_n \to P_{n-1} \to K_{n-1} \to 0$ is a projective resolution of $K_n$, tensoring with $N$ and taking homology gives
+	$$
+	\Tor_1(K_{n-1}, N) = \Tor_n(M, N)
+	$$
+	
+	since $... \to P_{n+1} \to P_n \to P_{n-1} \to 0$ is an subsequence of $... \to P_2 \to P_1 \to P_0 \to 0$ but shifted by $n$ positions.
+	
+	More generally, let $L_n F$ be a left derived functor of a covariant functor, we have
+	$$
+		(L_n F)(M) = (L_{n-1} F)(K_0) = ... = (L_1 F)(K_{n-1})
+	$$
+	
+	Similarly, we also have a version for right derived functor.
+\end{remark}
+
+\section{PROBLEM 5}
+
+\begin{problem}[problem 5]
+	Let $N$ be an $A$-module, then the following are equivalent
+	\begin{enumerate}
+		\item $\Tor_i^A(-, N) = 0$ for any $i \geq 1$
+		\item $\Tor_1^A(-, N) = 0$
+		\item $N$ is flat
+	\end{enumerate}
+\end{problem}
+
+\begin{longproof}
+	($3 \implies 1$) Lemma \ref{lemma4}
+	
+	($1 \implies 2$) clear
+	
+	($2 \implies 3$) Let $f: M \hookrightarrow L$ be an injective map, then the short exact sequence $0 \to M \to L \to \coker f \to 0$ induces an exact sequence
+	$$
+		0 = \Tor_1(\coker f, N) \to M \otimes N \to L \otimes N
+	$$
+	
+	$\Tor_1(\coker f, N) = 0$ implies $(- \otimes N)$ preserves injective map.
+\end{longproof}
+
+\section{PROBLEM 6}
+
+In this section, we will denote $\Ext_r$ for the version of $\Ext$ calculated using injective resolution and $\Ext_l$ for the version of $\Ext$ calculated using projective resolution
+
+\begin{problem}[problem 6]
+	Prove that $\Ext_A^i(M, N)$ can be computed using either projective resolution of $M$ or an injective resolution of $N$
+\end{problem}
+
+\begin{proof}
+	Let $0 \to N \to I^0 \to I^1 \to I^2 \to ...$ be a injective resolution of $N$, we have the following diagonal short exact sequences
+	\begin{center}
+		\begin{tikzcd}
+			&                                &                    & 0 \arrow[rd]                              &                                 & 0                                         &                                 &                                           &                & 0   \\
+			&                                &                    &                                           & C^1 \arrow[ru] \arrow[rd, hook] &                                           &                                 &                                           & C^3 \arrow[ru] &     \\
+			0 \arrow[r] & N \arrow[rr, "\epsilon", hook] &                    & I^0 \arrow[rr, "d"] \arrow[ru, two heads] &                                 & I^1 \arrow[rr, "d"] \arrow[rd, two heads] &                                 & I^2 \arrow[rr, "d"] \arrow[ru, two heads] &                & ... \\
+			&                                & N \arrow[ru, hook] &                                           &                                 &                                           & C^2 \arrow[rd] \arrow[ru, hook] &                                           &                &     \\
+			& 0 \arrow[ru]                   &                    &                                           &                                 & 0 \arrow[ru]                              &                                 & 0                                         &                &    
+		\end{tikzcd}
+	\end{center}
+	
+	where $C^1 = \coker(\epsilon: N \to I^0)$ and $C^n = \coker (d: I^{n-2} \to I^{n-1})$. For any $n \geq 1$, the map $C^n \to I^n$ lifted from $d: I^{n-1} \to I^n$ since the composition $I^{n-2} \to I^{n-1} \to I^n$ is zero \footnote{$I^{-1} = N$}. Since 
+	$$
+		C^n  = \frac{I^{n-1}}{\im (d: I^{n-2} \to I^{n-1})} = \frac{I^{n-1}}{\ker (d: I^{n-1} \to I^n)} = \im (d: I^{n-1} \to I^n) = \ker (d: I^n \to I^{n+1}) \hookrightarrow I^n
+	$$
+	
+	$C^n \to I^n$ is injective. Hence, every diagonal sequence is exact.
+	
+	Dimension shifting \ref{dimshift1} for right derived functor $\Ext_r(M, -)$
+	$$
+		\Ext^{n+1}_r(M, N) = \Ext^n_r(M, C^1) = ... = \Ext^1_r(M, C^n)
+	$$
+	
+	From $0 \to N \to I^0 \to C^1 \to 0$ and $0 \to C^1 \to I^1 \to C^2$, we have
+	\begin{center}
+		\begin{tikzcd}
+			{0 = \Ext^n_l(M, I^0)} \arrow[r]     & {\Ext^n_l(M, C^1)} \arrow[r]     & {\Ext^{n+1}_l(M, N)} \arrow[r] & {\Ext^{n+1}_l(M, I^0) = 0} \\
+			{0 = \Ext^{n-1}_l(M, I^1)} \arrow[r] & {\Ext^{n-1}_l(M, C^2)} \arrow[r] & {\Ext^n_l(M, C^1)} \arrow[r]   & {\Ext^n_l(M, I^1) = 0}    
+		\end{tikzcd}
+	\end{center}
+	
+	Hence, we have the same formula for $\Ext_l$
+	$$
+		\Ext^{n+1}_l(M, N) = \Ext^n_l(M, C^1) = ... = \Ext^1_l(M, C^n)
+	$$
+	
+	From the exact sequence $0 \to C^n \to I^n \to C^{n+1}$, we have
+	\begin{center}
+		\begin{tikzcd}
+			{\Hom(M, I^n)} \arrow[r] \arrow[d, "\sim"] & {\Hom(M, C^{n+1})} \arrow[r] \arrow[d, "\sim"] & {\Ext^1_r(M, C^n)} \arrow[r] \arrow[d, dashed] & {\Ext^1_r(M, I^n) = 0} \arrow[d, "\sim"] \\
+			{\Hom(M, C^{n+1})} \arrow[r]               & {\Hom(M, C^{n+1})} \arrow[r]                   & {\Ext^1_l(K_n, N)} \arrow[r]                   & {\Ext^1_l(P_n, N) = 0}                  
+		\end{tikzcd}
+	\end{center}
+	
+	By five lemma, $\Ext^{n+1}_r(M, N) = \Ext^{n+1}_l(M, N)$. 
+\end{proof}
+
+\begin{remark}[some notes on dimension shifting solution]
+	\label{dimshift2}
+	Given a short exact sequence $0 \to A \to B \to C \to 0$. In the above proof, we used the following results
+	\begin{enumerate}
+		\item Consider $\Ext_l^i(-, -)$ computed using projective resolution, we have
+		\begin{enumerate}
+			\item a variant of \textit{dimension shifting} using in the proof
+			\item $\Ext_l^i(M, I) = 0$ for any injective module $I$
+			\item the two long exact sequences mentioned in class
+			\begin{align*}
+				&0 \to \Hom(M, A) \to \Hom(M, B) \to \Hom(M, C) \to \Ext^1_l(M, A) \to \Ext^1_l(M, B) \to \Ext^1_l(M, C) \to ... \\
+				&0 \to \Hom(C, N) \to \Hom(B, N) \to \Hom(A, N) \to \Ext^1_l(C, N) \to \Ext^1_l(B, N) \to \Ext^1_l(A, N) \to ...
+			\end{align*}
+		\end{enumerate}
+		
+		\item Consider $R^i F = \Ext_r^i(M, -)$ computed using injective resolution as a right derived functor of the covariant functor $F = \Hom(M, -)$, we have
+		\begin{enumerate}
+			\item a mirror version of dimension shifting in \ref{dimshift1} for $\Ext_r$ since if $0 \to N \to I^0 \to I^1 \to ...$ is an injective resolution for $N$ then $0 \to C^n \to I^n \to I^{n+1} \to ...$ is an shifted injective resolution for $C^n$, hence
+			$$
+				\Ext^{n+1}_r(M, N) = \Ext^n_r(M, C^1) = ... = \Ext^1_r(M, C^n)
+			$$
+			\item $\Ext_r^i(M, I) = 0$ for any injective module $I$ since $0 \to I \to I \to 0$ is an injective resolution for $I$
+			\item the long exact sequence for right derived functor 
+			$$
+				0 \to \Hom(M, A) \to \Hom(M, B) \to \Hom(M, C) \to \Ext^1_r(M, A) \to \Ext^1_r(M, B) \to \Ext^1_r(M, C) \to  ...
+			$$
+		\end{enumerate}
+	\end{enumerate}	
+	
+	
+	
+\end{remark}
+
+
+\begin{proof}[An alternative solution]
+	
+	Since $\Hom(P, -)$ is exact for every projective module $P$ and $\Hom(-, I)$ is exact for every injective module $I$, we have the double complex $\Hom(P_\bullet, I^\bullet)$ \footnote{$P_{-1} = M, I^{-1} = N$} where every column except $\Hom(M, I^\bullet)$ is exact and every row except $\Hom(P_\bullet, N)$ is exact. We can construct a map 
+	$$
+		\phi: \ker (\Hom(M, I^n) \to \Hom(M, I^{n+1})) \to \ker (\Hom(P_n, N) \to \Hom(P_{n+1}, N))
+	$$
+	
+	as follows: for $i + j = n$,
+	\begin{align*}
+		&\Hom(M, I^n) \to \Hom(P_0, I^n) \to ... \\
+		&... \to \Hom(P_i, I^j) \to \Hom(P_{i+1}, I^j) \to \Hom(P_{i+1}, I^{j-1}) \to ... \\
+		&... \to \Hom(P_n, I^0) \to \Hom(P_n, N)
+	\end{align*}
+	
+	Informally, the path zig-zags on the \textbf{top right} squares of the diagonal $i + j = n$
+	
+	In the first square, let $x \in \ker (\Hom(M, I^n) \to \Hom(M, I^{n+1}))$, then $bax = 0$, then $cdx = 0$, then $dx \in \ker (\Hom(P_0, I^n) \to \Hom(P_0, I^{n+1}))$, then there is a lift $y$ of $dx$ in $\Hom(P_0, I^{n-1})$
+	\begin{center}
+		\begin{tikzcd}
+			{\Hom(M, I^{n+1})} \arrow[r, "b"]            & {\Hom(P_0, I^{n+1})}                \\
+			{\Hom(M, I^n)} \arrow[r, "d"] \arrow[u, "a"] & {\Hom(P_0, I^n)} \arrow[u, "c"]     \\
+			& {\Hom(P_0, I^{n-1})} \arrow[u, "e"]
+		\end{tikzcd}
+	\end{center}
+	
+	In any intermediate square ($i + j = n$) and the last square ($i=n, j = 0$)
+	\begin{center}
+		\begin{tikzcd}
+			{\Hom(P_{i-1}, I^{j+1})} \arrow[r, "a"] & {\Hom(P_i, I^{j+1})} \arrow[r, "b"]            & {\Hom(P_{i+1}, I^{j+1})}                \\
+			& {\Hom(P_i, I^j)} \arrow[r, "e"] \arrow[u, "c"] & {\Hom(P_{i+1}, I^j)} \arrow[u, "d"]     \\
+			&                                                & {\Hom(P_{i+1}, I^{j-1})} \arrow[u, "f"]
+		\end{tikzcd}
+	\end{center}
+	Let $y \in \Hom(P_i, I^j)$ be a lift of $x \in \Hom(P_{i-1}, I^{j+1})$ . Since $bax = 0$, then $bcy = 0$, then $dey = 0$, hence $ey \in \ker d$, so there exists a lift $z \in \Hom(P_{i+1}, I^{j-1})$ so that $fz = ey$
+	
+	In the last square, let $y \in \Hom(P_n, N)$ be a lift of $x \in \Hom(P_{n-1}, I^0)$. Since $bax = 0$, then $bcy = 0$, then $dey = 0$. Since $d$ is injective, $ey = 0$, hence $y \in \ker (\Hom(P_n, N) \to \Hom(P_{n+1}, N))$. The map $\phi$ is well-defined.
+	\begin{center}
+		\begin{tikzcd}
+			{\Hom(P_{n-1}, I^0)} \arrow[r, "a"] & {\Hom(P_n, I^0)} \arrow[r, "b"]                    & {\Hom(P_{n+1}, I^0)}                    \\
+			& {\Hom(P_n, N)} \arrow[u, "c", hook] \arrow[r, "e"] & {\Hom(P_{n+1}, N)} \arrow[u, "d", hook] \\
+			& 0 \arrow[u]                                        & 0 \arrow[u]                            
+		\end{tikzcd}
+	\end{center}
+
+	Now we construct another map
+	$$
+		\phi_0: \im (\Hom(M, I^{n-1}) \to \Hom(M, I^n)) \to \im(\Hom(P_{n-1} \to N) \to \Hom(P_n \to N))
+	$$
+	
+	as follows: for $i + j = n$
+	\begin{align*}
+		&\Hom(M, I^n) \to \Hom(P_0, I^n) \to ... \\
+		&... \to \Hom(P_i, I^j) \to \Hom(P_i, I^{j-1}) \to \Hom(P_{i+1}, I^{j-1}) \to ... \\
+		&... \to \Hom(P_n, I^0) \to \Hom(P_n, N)
+	\end{align*}
+	
+	Informally, the path zig-zags on the \textbf{top right} and \textbf{bottom left} squares of the diagonal $i + j = n$
+	
+	In the first square, let $x \in \im(\Hom(M, I^{n-1}) \to \Hom(M, I^n))$, let $z \in \Hom(M, I^{n-1})$ so that $az = x$. Let $y = bz$
+	\begin{center}
+		\begin{tikzcd}
+			& {\Hom(P_0, I^{n+1})}                \\
+			{\Hom(M, I^n)} \arrow[r, "d"]                    & {\Hom(P_0, I^n)} \arrow[u]          \\
+			{\Hom(M, I^{n-1})} \arrow[r, "b"] \arrow[u, "a"] & {\Hom(P_0, I^{n-1})} \arrow[u, "e"]
+		\end{tikzcd}
+	\end{center}
+	
+	In any intermediate square ($i + j = n$) and the last square ($i=n, j = 0$)
+	\begin{center}
+		\begin{tikzcd}
+			{\Hom(P_{i-2}, I^{j+1})} \arrow[r, dashed] & {\Hom(P_{i-1}, I^{j+1})} \arrow[r, "a"]                  & {\Hom(P_i, I^{j+1})} \arrow[r, "b"]                      & {\Hom(P_{i+1}, I^{j+1})}                \\
+			& {\Hom(P_{i-1}, I^j)} \arrow[r, dashed] \arrow[u, dashed] & {\Hom(P_i, I^j)} \arrow[r, "e"] \arrow[u, "c"]           & {\Hom(P_{i+1}, I^j)} \arrow[u, "d"]     \\
+			&                                                          & {\Hom(P_i, I^{j-1})} \arrow[u, dashed] \arrow[r, dashed] & {\Hom(P_{i+1}, I^{j-1})} \arrow[u, "f"]
+		\end{tikzcd}
+	\end{center}
+	Let $y \in \Hom(P_i, I^j)$ be a lift of $x \in \Hom(P_{i-1}, I^{j+1})$. Using exactly the same argument, we can construct $z \in \Hom(P_{i+1}, I^{j-1})$. However, this time, we also have $\tilde{x} \in \Hom(P_{i-2}, I^{j+1})$, $\tilde{y} \in \Hom(P_{i-1}, I^j)$ so that $\tilde{x}, \tilde{y}$ are mapped into $x, y$ respectively, using the same argument, we can construct $\tilde{z} \in \Hom(P_i, I^{j-1})$ so that $\tilde{z}$ is mapped into $z$.
+	Hence, the map $\phi_0$ is well-defined.
+	
+	Similarly, we can construct
+	$$
+		\psi: \ker (\Hom(M, I^n) \to \Hom(M, I^{n+1})) \leftarrow \ker (\Hom(P_n, N) \to \Hom(P_{n+1}, N))
+	$$
+	
+	For any $x \in \ker (\Hom(M, I^n) \to \Hom(M, I^{n+1}))$, $x$ and $\psi \phi x$ differ by an element in $\im (\Hom(M, I^{n-1}) \to \Hom(M, I^n))$. Hence, $\psi \phi$ and $\phi \psi$ are identity maps in the level of cohomology. Hence
+	$$
+		H^n(\Hom(M, I^\bullet)) = H^n(\Hom(P_\bullet, N))
+	$$
+\end{proof}
+
+\section{PROBLEM 7}
+
+\begin{problem}[problem 7]
+	If $M$ is flat $A$-module and $N$ is an injective $A$-module, prove that $\Hom_A(M, N)$ is an injective $A$-module
+\end{problem}
+
+\begin{proof}
+	Let 
+	$$
+		0 \to X \to Y
+	$$
+	be exact. Since $M$ is flat module, the covariant functor $(- \otimes M)$ is exact, so 
+	
+	$$
+		0 \to X \otimes M \to Y \otimes M
+	$$
+	is exact. Since $N$ is injective module, the contravariant functor $\Hom(-, N)$ is exact, so
+	
+	$$
+		\Hom(Y \otimes M, N) \to \Hom(X \otimes M, N) \to 0
+	$$
+	is exact. By tensor-hom adjunction
+	$$
+		\Hom(Y, \Hom(M, N)) \to \Hom(X, \Hom(M, N)) \to 0
+	$$
+	is exact. Hence, the contravariant function $\Hom(-, \Hom(M, N))$ is exact. So, $\Hom(M, N)$ is injective.
+\end{proof}
+
+\section{PROBLEM 8}
+
+\begin{lemma}[Baer's criterion]
+	An $A$-module $M$ is injective if and only if every map $I \to M$ from an ideal $I$ of $A$ can be extended into a map $R \to M$. In particular, if $A$ is a PID, $M$ is injective if and only if it is divisible, that is, for every nonzero $a \in A$ and every $m \in M$, there exists $n \in M$ so that $an = m$
+\end{lemma}
+
+\begin{longproof}
+	(divisible $\implies$ injective) If $M$ is divisible, for any ideal $(a) \in A$ and any map $\phi: (a) \to M$, let $m = \phi(a)$ and let $n \in M$ so that $an = m$. The extension is defined by
+	\begin{align*}
+		\tilde{\phi}: A &\to M \\
+							b &\mapsto bn
+	\end{align*}
+	
+	(divisible $\impliedby$ injective) If $M$ is injective, then for any $a \in A$, $m \in M$, define
+	\begin{align*}
+		\phi: (a) &\to M \\
+				a &\mapsto m
+	\end{align*}
+	
+	Then, the extension gives $n = \tilde{\phi}(1) \in M$ so that $an = m$
+\end{longproof}
+
+\begin{problem}[problem 8]
+	For a field $k$, consider the $k[x]$-module $M = k[x, x^{-1}] / x k[x]$. Prove that $M$ is an injective $k[x]$-module
+\end{problem}
+
+\begin{proof}
+	We have
+	$$
+		M = \frac{k[x, x^{-1}]}{x k[x]} =  \set*{\sum_{i \in \Z} a_i x^i: a_i \in k \text{ and all } a_i \text{ but finitely many of nonpositive indices are zeros}}
+	$$
+	
+	Any element of $M$ can be written as
+	$$
+		m(x) = a_0 + a_1 x^{-1} + ... + a_n x^{-n}
+	$$
+	for some $a_0, ..., a_n \in k$ and $a_n \neq 0$. We will show that $M$ is divisible. For any nonzero polynomial $f(x) \in k[x]$
+	$$
+		f(x) = b_0 + b_1 x + ... + b_m x^m
+	$$
+	
+	for some $b_0, ..., b_m \in k$ and $b_m \neq 0$. If $b_0 = 0$, then $f(x) = x^r g(x)$ with $g(x)$ having nonzero constant term. Hence, finding $n(x) \in M$ so that $m(x) = f(x) n(x) = x^r g(x) n(x)$ is equivalent to finding $n(x)$ so that $g(x) n(x) = x^{-r} m(x)$. Hence, we can assume that $b_0 \neq 0$. Let 
+	$$
+		n(x) = c_0 + c_1 x^{-1} + ... \in M
+	$$
+	
+	for some $c_0, c_1, ... \in k$. We have the following system of equations
+	\begin{align*}
+		a_0 &= b_0 c_0 + b_1 c_1 + ... + b_m c_m \\
+		a_1 &= b_0 c_1 + b_1 c_2 + ... + b_m c_{m+1} \\
+				&... \\
+		a_n &= b_0 c_n + b_1 c_{n+1} + ... + b_m c_{m+n}
+	\end{align*}
+	
+	Pick $c_{n+1}, ..., c_{m+n}$ arbitrarily. Using the last equation, we can solve uniquely for $c_n$. And from bottom to top we can solve for unique $c_{n-1}, ..., c_0$ iteratively. Hence, $M$ is divisible, so injective.
+	
+	
+\end{proof}

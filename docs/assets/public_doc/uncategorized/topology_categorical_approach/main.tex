@@ -1,0 +1,61 @@
+\documentclass{report}
+\usepackage{graphicx} % Required for inserting images
+
+\input{header}
+
+
+\title{topology - a categorical approach}
+\author{Khanh Nguyen}
+\date{June 2024}
+
+\begin{document}
+
+\maketitle
+
+\chapter{FOUR CONSTRUCTIONS OF TOPOLOGY}
+
+Categorical definitions of some common topologies
+
+\begin{definition}[subspace topology]
+    Let $(X, \Tau_X)$ be a topological space and $i: A \to X$ be a monomorphism in $\Set$. The subspace topology $\Tau_A$ on $A$ is defined as the coarsest topology such that the map $i: A \to X$ is continuous. Equivalently, the subset topology on $A$ is characterized by universal property as follows: for any morphism $(Y, \Tau_Y) \to (X, \Tau_X)$ in $\Top$, if there is a lift $Y \to X$ in $\Set$ then there is also a lift $(Y, \Tau_Y) \to (A, \Tau_A)$ in $\Top$ such that the diagram below commutes
+    \begin{center}
+\begin{tikzcd}
+                       & Y \arrow[d] \arrow[ld, dashed] &                                    & {(Y, \Tau_Y)} \arrow[d] \arrow[ld, dashed] \\
+A \arrow[r, "i", hook] & X                              & {(A, \Tau_A)} \arrow[r, "i", hook] & {(X, \Tau_X)}                             
+\end{tikzcd}
+    \end{center}
+\end{definition}
+
+\begin{definition}[quotient topology]
+    Let $(X, \Tau_X)$ be a topological space and $p: X \to B$ be an epimorphism in $\Set$. The quotient topology $\Tau_B$ on $B$ is defined as the finest topology such that the map $p: X \to B$ is continuous. Equivalently, the quotient topology on $B$ is characterized by universal property as follows: for any morphism $(X, \Tau_X) \to (Y, \Tau_Y)$, if there is a lift $B \to Y$ in $\Set$ then there is also a lift $(B, \Tau_B) \to (Y, \Tau_Y)$ in $\Top$ such that the diagram below commutes
+    \begin{center}
+\begin{tikzcd}
+X \arrow[r, "p", two heads] \arrow[d] & B \arrow[ld, dashed] & {(X, \Tau_X)} \arrow[r, "p", two heads] \arrow[d] & {(B, \Tau_B)} \arrow[ld, dashed] \\
+Y                                     &                      & {(Y, \Tau_Y)}                                     &                                 
+\end{tikzcd}
+    \end{center}
+\end{definition}
+
+\begin{definition}[product topology]
+    Let $\set{(X_\alpha, \Tau_\alpha)}_\alpha$ be an arbitrary collection of topological spaces, $X = \prod_\alpha X_\alpha$, and $p_\alpha: X \to X_\alpha$ be the natural projection. The product topology $\Tau_X$ on $X$ is defined as the coarsest topology such that every $p_\alpha: X \to X_\alpha$ is continuous. Equivalently, the product topology is characterized by universal property as follows: for any collection of morphisms $\set{(Y, \Tau_Y) \to (X_\alpha, \Tau_\alpha)}_\alpha$, if there is a lift $Y \to X$ in $\Set$ then there is also a lift $(Y, \Tau_Y) \to (X, \Tau_X)$ in $\Top$ such that the diagram below commutes
+    \begin{center}
+\begin{tikzcd}
+                                   & Y \arrow[d] \arrow[ld, dashed] &                                              & {(Y, \Tau_Y)} \arrow[d] \arrow[ld, dashed] \\
+X \arrow[r, "p_\alpha", two heads] & X_\alpha                       & {(X, \Tau)} \arrow[r, "p_\alpha", two heads] & {(X_\alpha, \Tau_\alpha)}                 
+\end{tikzcd}
+    \end{center}
+\end{definition}
+
+\begin{definition}[coproduct topology]
+    Let $\set{(X_\alpha, \Tau_\alpha)}_\alpha$ be an arbitrary collection of topological spaces, $X = \coprod_\alpha X_\alpha$, and $i_\alpha: X_\alpha \to X$ be the natural inclusion. The coproduct topology $\Tau_X$ on $X$ is defined as the finest topology such that every $i_\alpha: X_\alpha \to$ is continuous. Equivalently, the coproduct topology is characterized by universal property as follows: for any collection of morphisms $\set{(X_\alpha, \Tau_\alpha) \to (Y, \Tau_Y)}_\alpha$, if there is a lift $X \to Y$ in $\Set$ then there is also a lift $(X, \Tau_X) \to (Y, \Tau_Y)$ in $\Top$ such that the diagram below commutes
+    \begin{center}
+\begin{tikzcd}
+X_\alpha \arrow[d] \arrow[r, "i_\alpha", hook] & X \arrow[ld, dashed] & {(X_\alpha, \Tau_\alpha)} \arrow[r, "i_\alpha", hook] \arrow[d] & {(X, \Tau_X)} \arrow[ld, dashed] \\
+Y                                              &                      & {(Y, \Tau_Y)}                                                   &                                 
+\end{tikzcd}
+    \end{center}
+\end{definition}
+
+testing birtual keybaord
+ 
+\end{document}

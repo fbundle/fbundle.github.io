@@ -1,0 +1,306 @@
+\chapter{Almost Complex Manifolds}
+
+\section{Almost Complex Manifold}
+
+\begin{proposition}[complex structure on manifold]
+	Let $X$ be a holomorphic manifold of dimension $n$, then $X$ is also a real smooth manifold of dimension $2n$, let $X_0$ denoted the corresponding real manifold. Let $T_x(X)$ be the complex tangent space at $x \in X$ and $T_x(X_0)$ be the real tangent space at $x \in X_0$. Then,
+	\begin{enumerate}
+		\item The real tangent space $T_x(X_0)$ is canonically isomorphic to the underlying real vector space of complex tangent space $T_x(X)$
+		
+		\item Complex multiplication by $i$ on $T_x(X)$ induces a complex structure $J_x$ on the real tangent space $T_x(X_0)$
+	\end{enumerate}
+	\begin{longproof}
+		Let $x \in U$ and $\phi: U \to U' \subseteq \C^n$ be a chart containing $x$. Let the canonical map $h: U' \to U'' \subseteq \R^{2n}$ defined by
+		$$
+		(x_1 + i y_1, ..., x_n + i y_n) \mapsto (x_1, y_1, ..., x_n, y_n)
+		$$
+		
+		Then, $h \phi: U \to U'' \subseteq \R^{2n}$ is the chart that makes $X_0$ to be a real smooth manifold. The bases on $T_x(X)$ and $T_x(X_0)$ are induced from the Jacobian of the $\Str$-isomorphism from $\phi: U \to U'$ and $h \phi: U \to U''$ respectively.
+		\begin{center}
+			\begin{tikzcd}
+				T_x(X) \arrow[r, "d\phi_x"] & T_{\phi(x)}(U') & T_{h \phi(x)}(U'') & T_x(X_0) \arrow[l, "d(h\phi)_x"']
+			\end{tikzcd}
+		\end{center}
+		
+		where 
+		\begin{align*}
+			T_{\phi(x)}(U') &= \C-\Span\set*{\frac{\partial}{\partial z_1}\bigg\vert_{\phi(x)}, ..., \frac{\partial}{\partial z_n}\bigg\vert_{\phi(x)}} \\
+			T_{h \phi(x)}(U'') &= \R-\Span\set*{\frac{\partial}{\partial x_1}\bigg\vert_{h \phi(x)}, \frac{\partial}{\partial y_1}\bigg\vert_{h \phi(x)}, ..., \frac{\partial}{\partial x_n}\bigg\vert_{h \phi(x)}, \frac{\partial}{\partial y_n}\bigg\vert_{h \phi(x)}}
+		\end{align*}
+		
+		Define $\R$-linear invertible map $T_{\phi(x)}(U') \to T_{h \phi(x)}(U'')$ as follows:
+		$$
+		(a + ib) \frac{\partial}{\partial z_j}\bigg\vert_{\phi(x)} \mapsto \frac{1}{2} \tuple*{ a \frac{\partial}{\partial x_j}\bigg\vert_{h \phi(x)} + b \frac{\partial}{\partial y_j}\bigg\vert_{h \phi(x)}}
+		$$
+		
+		That induces a $\R$-linear invertible map $T_x(X) \to T_x(X_0)$, the complex structure $J_x$ on $T_x(X_0)$ is induced naturally
+		\begin{center}
+			\begin{tikzcd}
+				T_x(X) \arrow[d, "\cong"'] \arrow[r, "v \mapsto iv"] & T_x(X) \arrow[d, "\cong"] \\
+				T_x(X_0) \arrow[r, "J_x", dashed]                    & T_x(X_0)                 
+			\end{tikzcd}
+		\end{center}
+		
+		Note that, $J_x: T_x(X_0) \to T_x(X_0)$ does not depend on the choice of chart $\phi: U \to U'$
+		
+	\end{longproof}
+\end{proposition}
+
+\begin{definition}[almost complex manifold]
+	Let $X$ be a real smooth manifold of dimension $2n$. Suppose that $J$ is a smooth vector bundle isomorphism (automorphism on tangent bundle $T(X) \to T(X)$)
+	$$
+	J: T(X) \to T(X)
+	$$
+	
+	such that $J_x: T_x(X) \to T_x(X)$ is a complex structure for $T_x(X)$, that is, $J_x^2 = -1$. $J$ is called an almost complex structure for smooth manifold $X$. If $X$ is equipped with an almost complex structure, then $(X, J)$ is called an almost complex manifold.
+\end{definition}
+
+\begin{proposition}
+	A holomorphic manifold $X$ induces an almost complex structure on its underlying smooth manifold $X_0$
+	\begin{proof}
+		\note{TODO - the map from each point $x$ to its complex structure induced by multiplication by $i$ on complex tangent space is an almost complex structure}
+	\end{proof}
+\end{proposition}
+
+\section{Complex-Valued Differential Forms of Type $(p, q)$ \\ $\E^r(X)_\C = \E(X, \wedge^r T^*(X)_\C)$}
+
+\subsection{Complex-Valued Differential Forms and Complex-Valued Exterior Derivative}
+
+\begin{definition}[complex-valued differential forms and exterior derivative $d: \E^r(X)_\C \to \E^{r+1}(X)_\C$] 
+	
+	Let $X$ be a smooth manifold of dimension $m$, the complexification of cotangent bundle is
+	$$
+		\E^r(X)_\C = \E \tuple*{ X, \wedge^r T^*(X)_\C } = \E \tuple*{ X, \coprod_{x \in X} \wedge^r T_x^*(X)_\C } = \E \tuple*{ X, \coprod_{x \in X} \wedge^r T_x^*(X) \otimes_\R \C }
+	$$
+	
+	Sections in $\E^r(X)_\C$ are called the complex-valued smooth differential $r$-forms. The complex-valued exterior derivative $d: \E^r(X)_\C \to \E^{r+1}(X)_\C$ is defined as follows: let $f \in \E^r(X)_\C$, then for $x \in X$
+	$$
+		f(x) \in \wedge^r T_x^*(X) \otimes_\R \C \cong \wedge^r T_x^*(X) \oplus \wedge^r T_x^*(X)
+	$$
+		
+	 then we can write $f = f_{\real} + i f_{\imag}$ where $f_{\real}, f_{\imag} \in \E^r(X) = \E(X, \wedge^r T^*(X))$. We define $d: \E^r(X)_\C \to \E^{r+1}(X)_\C$ by
+	$$
+		df = d f_{\real} + i d f_{\imag}
+	$$
+\end{definition}
+
+\subsection{Complex-Valued Differential Forms of Type $(p, q)$}
+
+\begin{definition}[bundle $T(X)^{1,0}$, $T(X)^{0,1}$]
+	Let $(X, J)$ be an almost complex manifold. Then, $J$ extends into a $\C$-linear bundle isomorphism on $T(X)_\C = \coprod_{x \in X} T_x(X)_\C$
+	$$
+	J_x: T_x(X)_\C \to T_x(X)_\C
+	$$
+	
+	satisfying $J_x^2 = -1$. Let $T_x(X)^{1,0}$ and $T_x(X)^{0,1}$ be the $+i$ and $-i$ eigenspaces of $J_x$, then
+	$$
+	T_x(X)_\C = T_x(X)^{1,0} \oplus T_x(X)^{0,1}
+	$$
+	
+	We set
+	\begin{align*}
+		T(X)^{1,0} &= \coprod_{x \in X} T_x(X)^{1,0} \\
+		T(X)^{0,1} &= \coprod_{x \in X} T_x(X)^{0,1}
+	\end{align*}
+	
+	That are smooth bundles over $X$. Moreover, there is an $\C$-linear isomorphism $Q_x: T_x(X)^{1,0} \to T_x(X)^{0,1}$ which extends into an isomorphism of smooth vector bundles over $X$
+	\begin{align*}
+		Q&: T(X)_\C \to T(X)_\C \\
+		Q&: T(X)^{1,0} \to T(X)^{0,1} \\
+	\end{align*}
+	
+	Similarly, as $J$ makes $T_x(X)$ into a complex vector space denoted by $T_x(X)_J$, there is an $\C$-linear isomorphism $T_x(X)_J \to T_x(X)^{1,0}$ which extends into an isomorphism of smooth vector bundles over $X$
+	$$
+	T(X)_J \to T(X)^{1,0}
+	$$
+	\begin{proof}
+		\note{TODO}
+	\end{proof}
+\end{definition}
+
+\begin{definition}[complex-valued differential forms of type $(p,q)$]
+	When $(X, J)$ is an almost complex manifold, we also have the decomposition for complexification of cotangent space
+	$$
+		T_x^*(X)_\C = T_x^*(X)^{1,0} \oplus T_x^*(X)^{0,1}
+	$$
+	
+	Define
+	$$
+		\wedge^{p,q} T_x^*(X)_\C = \tuple*{\wedge^p T_x^*(X)^{1,0}_\C} \wedge \tuple*{\wedge^q T_x^*(X)^{0,1}_\C}
+	$$
+	
+	which extend into a smooth bundles over $X$
+	
+	$$
+		\wedge^{p,q} T^*(X)_\C = \coprod_{x \in X} \wedge^{p,q} T_x^*(X)_\C
+	$$
+	
+	We denote the section
+	$$
+	\E^{p,q}(X)_\C = \E\tuple*{X, \wedge^{p, q} T^*(X)_\C}
+	$$
+	
+	A section $f \in \E^{p, q}(X)_\C$ is called complex-valued smooth differential $(p, q)$-form
+\end{definition}
+
+
+\begin{proposition}
+	$$
+		\E^r(X)_\C = \E\tuple*{X, \wedge^r T^*(X)_\C} = \bigoplus_{p+q=r} \E^{p, q}(X)_\C
+	$$
+	\begin{proof}
+		proof in the next section.
+	\end{proof}
+\end{proposition}
+
+ \subsection{Complex-Valued Exterior Derivative of Type $(p, q)$}
+
+\begin{definition}[local representation of exterior derivative of type $(p, q)$]
+	Let $(X, J)$ be an almost complex manifold of dimension $n$, let $\set{w_1, w_2, ..., w_n}$ be a frame over an open subset $U \subseteq X$ for $T^*(X)^{1,0} \subseteq T^*(X)_\C$. Then, $\set{\overline{w}_1, \overline{w}_2, ..., \overline{w}_n}$	is a frame over $U$ for $T^*(X)^{0,1} \subseteq T^*(X)_\C$. A frame for $\wedge^{p,q} T^*(X)$ is given by \footnote{recall that $w^{\set{1, 3, 4}} = w_1 \wedge w_3 \wedge w_4$}
+	$$
+		\set{w^I \wedge \overline{w}^J: I, J \subseteq [n], |I| = p, |J| = q}
+	$$
+	
+	So that, a section $s \in \E^{p,q}(U)_\C \subseteq \E^r(U)_\C$ can be written as
+	$$
+		s = \sum_{I, J} a_{IJ} w^I \wedge \overline{w}^J
+	$$
+	
+	where each $a_{IJ} \in \E(U)_\C = \E(U, \C) = \E^0(U, \C)$, then
+	$$
+		ds = \sum_{I, J} d a_{IJ} \wedge w^I \wedge \overline{w}^J + a_{IJ} d(w^I \wedge \overline{w}^J)
+	$$
+
+	\note{TODO - note that $d(w^I \wedge \overline{w}^J)$ might not be zero}
+\end{definition}
+
+\begin{definition}[$\partial$, $\overline{\partial}$]
+	Note that, a frame for $\wedge^r T^*(X)$ is given by ($r = p+q$)
+	$$
+		\set{w^I \wedge \overline{w}^J: I, J \subseteq [n], |I| + |J| = r}
+	$$
+	
+	Then, $\E^r(X)_\C = \bigoplus_{p, q: p + q = r} \E^{p, q}(X)_\C$. Let 
+	$$
+		\pi_{p,q}: \E^r(X)_\C \to \E^{p,q}(X)_\C
+	$$
+	
+	be the canonical projection, then there is a restriction from complex-valued exterior derivative
+	$$
+		d: \E^{p,q}(X)_\C \to \E^{p+q+1}(X)_\C = \bigoplus_{r+s = p+q+1} \E^{r, s}(X)_\C
+	$$
+	
+	Define $\partial: \E^{p,q}(X)_\C \to \E^{p+1,q}(X)_\C$ and  $\overline{\partial}: \E^{p,q}(X)_\C \to \E^{p,q+1}(X)_\C$ as follows
+	\begin{center}
+		\begin{tikzcd}
+			{\E^{p,q}(X)_\C} \arrow[r, "d"'] \arrow[rr, "\partial", bend left]             & \E^{p+q+1}(X)_\C \arrow[r, "{\pi_{p+1, q}}"'] & {\E^{p+1,q}(X)_\C} \\
+			{\E^{p,q}(X)_\C} \arrow[r, "d"] \arrow[rr, "\overline{\partial}"', bend right] & \E^{p+q+1}(X)_\C \arrow[r, "{\pi_{p, q+1}}"]  & {\E^{p,q+1}(X)_\C}
+		\end{tikzcd}
+	\end{center}
+	
+	Let $\E^*(X)_\C = \bigoplus_{r=0}^m \E^r(X)_\C$, we extend the above operators to
+	\begin{align*}
+		\partial&: \E^*(X)_\C \to \E^*(X)_\C \\
+		\overline{\partial}&: \E^*(X)_\C \to \E^*(X)_\C
+	\end{align*}
+\end{definition}
+
+\begin{definition}[integrable almost complex manifold]
+	If $d = \partial + \overline{\partial}$, then we call $(X, J)$ integrable
+\end{definition}
+
+\begin{proposition}
+	When $(X, J)$ is integrable, then $\partial^2 =\overline{\partial}^2 = 0$
+	\begin{proof}
+		$$
+			0  = d^2 = \partial^2 + \partial \overline{\partial} + \overline{\partial} \partial + \overline{\partial}^2
+		$$
+		
+ 		Each term on the right is at different summand of $\E^{p+q+2}(X)$. Then each of them is zero.
+	\end{proof}
+\end{proposition}
+
+\begin{theorem}
+	The induced almost complex structure on a complex manifold is integrable.
+	\begin{proof}
+		(sketch proof)
+		reduce the problem into the case where $U \subseteq X = \C^n$, $X_0 = \R^{2n}$, then construct a basis for $T^*(X_0)_\C$, $T^*(X_0)^{1,0}$, and $T^*(X_0)^{0,1}$. That is,
+		\begin{align*}
+			T_x(X_0)_\C &= \C - \Span \set*{\frac{\partial}{\partial x_i}, \frac{\partial}{\partial y_i}: i = 1, 2, ..., n} \\
+			T_x(X_0)^{1,0} &= \C - \Span \set*{\frac{\partial}{\partial z_i}: i = 1, 2, ..., n} \\
+			T_x(X_0)^{0,1} &= \C - \Span \set*{\frac{\partial}{\partial \overline{z}_i}: i = 1, 2, ..., n}
+		\end{align*}
+		
+		where $\frac{\partial}{\partial z_i} = \frac{1}{2}\tuple*{\frac{\partial}{\partial x_i}  -\sqrt{-1} \frac{\partial}{\partial y_i}}$, $\frac{\partial}{\partial \overline{z}_i} = \frac{1}{2}\tuple*{\frac{\partial}{\partial x_i}  + \sqrt{-1} \frac{\partial}{\partial y_i}}$, then one can write
+		\begin{align*}
+			\partial = \sum_{i=1}^n \frac{\partial}{\partial z_i} dz_i \\
+			\overline{\partial} = \sum_{i=1}^n \frac{\partial}{\partial \overline{z}_i} d\overline{z}_i
+		\end{align*}
+		
+		Then, $d = \partial + \overline{\partial}$. \note{Moreover, from to Cauchy Riemann equation, $\overline{\partial}$ applied on $\mathcal{O}^0(X) \subseteq \E^0(X_0)$ (holomorphic function) yields $0$}
+	\end{proof}
+\end{theorem}
+
+\begin{theorem}[Newlander, Nirenberg]
+	Let $(X,J)$ be an integrable almost complex manifold. Then there exists a unique complex structure $O_X$ on $X$ (holomorphic manifold) which induces the almost complex structure $J$.
+\end{theorem}
+
+\subsection{Complex-Valued Differential Forms with Coefficients}
+
+\begin{definition}[complex-valued differential forms with coefficients]
+	Let $E \to X$ be a complex smooth vector bundle over a real manifold, let
+	$$
+	\E^p(X, E) = \E \tuple*{X, \wedge^p T^*(X)_\C \otimes E}
+	$$
+	
+	$\E^p(X, E)$ is called the complex-valued differential $p$-forms with coefficients in $E$ on $X$. When $E = \C$, we recover the complex-valued differential form of degree $p$
+	$$
+	\E^p(X) = \E^p(X, \C) = \E \tuple*{X, \wedge^p T^*(X)_\C \otimes \C} = \E \tuple*{X, \wedge^p T^*(X)_\C}
+	$$
+\end{definition}
+
+
+\begin{proposition}[isomorphism of sheaves]
+	(\note{refer sheaf in chapter 4})
+	The sheaf of vector bundle $\wedge^p T^*(X) \otimes E \to X$ is denoted by $\E^p(E)$, the sheaf of vector bundle $\wedge^p T^*(X) \to X$ is denoted by $\E^p$, then there is an isomorphism of sheaves
+	$$
+	\tau: \E^p \otimes_\E \E(E) \to \E^p(E)
+	$$
+	
+	That induces a map of sections on $U \subseteq X$
+	\begin{align*}
+		\E^p(U) \otimes_{\E(U)} \E(U, E) &\to \E^p(U, E) \\
+		\phi \otimes \xi &\mapsto \phi \cdot \xi 
+	\end{align*}
+	
+	where $\phi \in \E^p(U)$, $\xi \in \E(U, E)$, and $\phi \cdot \xi \in \E^p(U, E)$.
+	
+	\begin{proof}
+		Proved in chapter 4
+	\end{proof}
+\end{proposition}
+
+\begin{remark}[local representation of $\E^p(U, E)$]
+	Let $f = (e_1, e_2, ..., e_r) \in M_r[\E(U, E)]$ be a frame for $E$ over $U$, then for each $\xi \in \E^p(U, E) \cong \E^p(U) \otimes_{\E(U)} \E(U, E)$, we can write
+	$$
+	\xi = \xi^1(f) \cdot e_1 + \xi^2(f) \cdot e_2 + ... + \xi^r(f) \cdot e_r
+	$$
+	
+	where each $\xi^\rho(f) \in \E^p(U)$. In this way we have local representation 
+	\begin{align*}
+		\E^p(U, E) &\to M_r[\E^p(U)] \\
+		\xi &\mapsto \xi(f) = (\xi^1(f), \xi^2(f), ..., \xi^r(f))
+	\end{align*}
+\end{remark}
+
+\begin{proposition}[local representation of $\E^p(U, E)$ on change of frame]
+	Let $g$ be a change of frame on $E \to U$, then
+	$$
+	\xi(fg) = g^{-1} \cdot \xi(f)
+	$$
+	
+	where $\xi(f), \xi(fg) \in M_r[\E^p(U)]$, $g \in M_{r \times r}[\E(U)]$
+	\begin{proof}
+		\note{TODO - does not look easy}
+	\end{proof}
+\end{proposition}

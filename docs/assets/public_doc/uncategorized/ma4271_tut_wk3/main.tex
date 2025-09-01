@@ -1,0 +1,65 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\input{header}
+
+\title{
+    MA4271 Tutorial Week 3
+}
+\author{Nguyen Ngoc Khanh - A0275047B}
+\date{August 2023}
+
+\begin{document}
+
+\maketitle
+
+\begin{problem}
+    Let $u, v, w \in \R^3$ be three linearly independent vectors. Prove that 
+    $$
+        ((u \times v) \cdot w)^2 =
+    \begin{vmatrix}
+    u \cdot u & u \cdot v & u \cdot w \\ 
+    v \cdot u & v \cdot v & v \cdot w \\ 
+    w \cdot u & w \cdot v & w \cdot w \\ 
+    \end{vmatrix}
+    $$
+\end{problem}
+
+Let $z_1 = (u_1, v_1, v_1)$, $z_2 = (u_2, v_2, v_2)$, $z_3 = (u_3, v_3, v_3)$, we have $\det(z_1, z_2, z_3) = \det(u, v, w)$
+
+\begin{align*}
+A
+    &= \begin{vmatrix}
+    u \cdot u & u \cdot v & u \cdot w \\ 
+    v \cdot u & v \cdot v & v \cdot w \\ 
+    w \cdot u & w \cdot v & w \cdot w \\ 
+    \end{vmatrix} \\
+    &= \det(u_1 z_1 + u_2 z_2 + u_3 z_3, v_1 z_1 + v_2 z_2 + v_3 z_3, w_1 z_1 + w_2 z_2 + w_3 z_3) \\
+\end{align*}
+
+By multi-additivity of determinant and $\det$ is $0$ if two columns/rows are linearly dependent,
+
+\begin{multline*}
+    A = \\
+            \det(u_1 z_1, v_2 z_2, w_3 z_3) + \det(u_1 z_1, v_3 z_3, w_2 z_2) + \\
+            \det(u_2 z_2, v_3 z_3, w_1 z_1) + \det(u_2 z_2, v_1 z_1, w_3 z_3) + \\
+            \det(u_3 z_3, v_1 z_1, w_2 z_2) + \det(u_3 z_3, v_2 z_2, w_1 z_1)\\
+\end{multline*}
+
+By multi-homogeneity of determinant,
+\begin{multline*}
+    A = \\
+            u_1 u_2 w_3\det(z_1, z_2, z_3) + u_1 v_3 w_2 \det(z_1, z_3, z_2) + \\
+            u_2 v_3 w_1 \det(z_2, z_3, z_1) + u_2 v_1 w_3 \det(z_2, z_1, z_3) + \\
+            u_3 v_1 w_2 \det(z_3, z_1, z_2) + u_3 v_2 w_1 \det(z_3, z_2, z_1)\\
+\end{multline*}
+
+Perform swap on determinant.
+\begin{align*}
+    A 
+    &= (u_1 u_2 w_3 - u_1 v_3 w_2 + u_2 v_3 w_1 - u_2 v_1 w_3 + u_3 v_1 w_2 - u_3 v_2 w_1) \det(z_1, z_2, z_3) \\
+    &= \det(u, v, w)^2\\
+    &= ((u \times v) \cdot w)^2
+\end{align*}
+
+\end{document}

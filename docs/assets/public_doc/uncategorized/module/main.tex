@@ -1,0 +1,54 @@
+\documentclass{report}
+
+
+\usepackage{../../latex_styles/color_template}
+\usepackage{../../latex_styles/symbol_def}
+
+
+\title{
+	Some words on commutative algebra from the perspective of smooth manifold and vector bundle
+}
+\author{Nguyen Ngoc Khanh}
+
+\begin{document}
+
+\maketitle
+
+Let $X$ be a smooth manifold. Let $\E$ be the canonical sheaf of rings of smooth functions. In particular, for each open set $U$ on $X$, $\E(U)$ is a ring of smooth functions on $U$, that is, each smooth function on $U$ is an element of the ring $\E(U)$
+
+Let $x$ be a point on $X$, then the set of smooth functions $\mf{m}_x$ that vanish at $x$ is a maximal ideal of $\E(X)$
+
+$$
+	\mf{m}_x = \set{f \in \E(X): f(x) = 0}
+$$
+
+Each element of the residue field $k_x = \E(X) / \mf{m}_x$ is a equivalence class of smooth functions in which $f \sim g$ if and only if $(f - g)(x) = 0$. That is, the evaluation function $\Ev_x: \E(X) \to \R$ at $x$ defines an $\R$-linear isomorphism
+\begin{align*}
+	k_x &\xrightarrow{\sim} \R \\
+	\bar{f} &\mapsto \Ev_x(f) = f(x)
+\end{align*}
+
+Quotient at the maximal ideal at a point $x$ gives the field of $X$. On the other hand, $\mf{m}_x$ is prime, localizing $\E(X)$ at $\mf{m}_x$ gives the ring
+
+$$
+	\E(X)_{\mf{m}_x} = \E(X) \times (\E(X) - \mf{m}_x) / \sim
+$$
+
+where $(f_1, g_1) \sim (f_2, g_2)$ if and only if there exists $t \in \E(X) - \mf{m}_x$ such that $t(g_1 f_2 - g_2 f_1) = 0$. Since $t$ is nonzero at $x$, then it is necessary that $g_1(x) f_2(x) - g_2(x) f_1(x) = 0$. By smoothness$g_1 f_2 - g_2 f_1$ must be zero on a neighbourhood of $x$. On the other hand, given any neighbourhood of $x$, we can choose $t$ so that it is zero outside of that neighbourhood. Hence, the localization of $\E(X)$ on a maximal ideal $\mf{m}_x$ gives the germs of smooth functions at $x$.
+
+Let $\pi: E \to X$ be a smooth bundle. Let $\E(-, E)$ be the canonical sheaf of $\E$-module of smooth sections. In particular, for each open set $U$ on $X$, $\E(U, E)$ is an $\E(U)$-module of smooth sections on $U$, that is, each smooth section on $U$ is an element of the $\E(U)$-module $\E(U, E)$
+
+Let $x$ be a point on $X$, let $E_x = \pi^{-1}(x)$ be the fiber at $x$, the base change of $\E(X, E)$ by the map $\phi_x: \E(X) \to k_x$ is
+$$
+	k_x \otimes_{\E(X)} \E(X, E) \cong \frac{\E(X, E)}{\mf{m}_x \E(X, E)}
+$$
+
+where $\mf{m}_x \E(X, E) = \set{f \in \E(X, E): f(x) = 0}$ is the submodule of smooth sections that vanishes at $x$. Again the evaluation function $\Ev_x: \E(X, E) \to E_x$ at $x$ defines an $\R$-linear isomorphism 
+\begin{align*}
+	 \frac{\E(X, E)}{\mf{m}_x \E(X, E)} &\xrightarrow{\sim} E_x \\
+	 \bar{f} &\mapsto \Ev_x(f) = f(x)
+\end{align*}
+
+Base change by the residue field at $x$ gives the fiber at $x$.
+
+\end{document}

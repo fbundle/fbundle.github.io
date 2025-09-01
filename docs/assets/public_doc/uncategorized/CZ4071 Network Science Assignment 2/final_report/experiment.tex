@@ -1,0 +1,273 @@
+\chapter{Previous Work: LADIES}
+\section{Independent Layer-wise Sampling Framework}
+
+% Recall the Independent Layer-wise Sampling. 
+Let $S_l = \{i_k^{(l)}\}_{k = 1, 2, ..., s_l}$ where $s_l = |S_l|$ and $i_k^{(l)} \in V$ be the set of sampled nodes at the $l$-th layer. Hence,  The value of matrix production $PH^{(l)}$ can be estimated in equation \ref{eqn:value_matrix_production}:
+
+\begin{equation}
+    PH^{(l)} \approx PS^{(l)}H^{(l)}
+    \label{eqn:value_matrix_production}
+\end{equation}
+
+where $S^{(l)} = \mathbb{R} ^{|V|\times|V|}$ is a diagonal matrix defined by the sampling distribution adopted $p_1^{(l)}, p_2^{(l)}, ..., p_{|V|}^{(l)}$ to all nodes in $V$, which is defined as
+
+\begin{equation}
+    S_{i,i}^{(l)} = \left\{
+    \begin{array}{ll}
+        \frac{1}{s_l p_i^{(l)}}, \;\;\; i \in S_l\\
+        0, \;\;\; otherwise
+    \end{array}
+\right.
+\end{equation}
+
+Define the row selection matrix $Q^{(l)} \in \mathbb{R}^{s_l \times |V|}$ as:
+
+\begin{equation}
+    Q_{r, c}^{(l)} = \left\{
+        \begin{array}{ll}
+            1, \;\;\; (r, c) = (k, i_k^{(l)})\\
+            0, \;\;\; otherwise
+        \end{array}
+    \right.
+\end{equation}
+
+Then the forward process of GCN with layer-wise sampling can be approximated by:
+
+\begin{equation}
+    \Tilde{Z}^{(l+1)} = \Tilde{P}^{(l)}\Tilde{H}^{(l)}W^{(l)},\;\;\; \Tilde{H}^{(l)} = \sigma{\Tilde{Z}^{(l)}}
+\end{equation}
+
+where $\Tilde{Z}^{(l)} \in \mathbb{R}^{s_l \times d^{(l)}}$ denotes the approximated intermediate embedding for sampled nodes at $l$-layer and equation \ref{eqn:mod_laplacian_matrix} serves as a modified Laplacian matrix.
+
+\begin{equation}
+    \Tilde{P}^{(l)} = Q^{(l+1)}PS^{(l)}Q^{(l)T} \in \mathbb{R}^{s_{l+1} \times s_l}
+    \label{eqn:mod_laplacian_matrix}
+\end{equation}
+
+\section{Layer-dependent Importance Sampling}
+
+\textbf{Sampling Distribution:} The sampling distribution at $l$-th layer is defined in equation \ref{eqn:sampling_distrib_th}:
+
+\begin{equation}
+    p_i^{(l)} = \frac{||Q^{(l+1)}P_{*, i}||_2^2}{||Q^{(l+1)}P||_F^2}
+    \label{eqn:sampling_distrib_th}
+\end{equation}
+
+where $||\mathbf{M}||_2$ and $||\mathbf{M}||_F$ are respectively L2 Norm and Frobenius Norm.
+
+\textbf{Normalisation:} Normalised $\Tilde{P}^{(l)}$\\
+Normalisation operation is essential since it  maintains the scale of embedding in the forward process and avoid exploding and vanishing gradient. The proposed normalisation of $\Tilde{P}^{(l)}$ is stated in equation \ref{eqn:normalisation}:
+
+\begin{equation}
+    \Tilde{P}^{(l)} \xleftarrow{} \mathbf{D}_{\Tilde{P}^{(l)}}^{-1} \Tilde{P}^{(l)}
+    \label{eqn:normalisation}
+\end{equation}
+
+\begin{algorithm}[H]
+	\caption{Sampling Procedure of LADIES}
+	\begin{algorithmic}[1]
+        \State \textbf{Require:} \texttt{Normalised Laplacian Matrix $P$; Batch Size $b$, Sample Number $n$. Randomly sample a batch of $b$ output nodes  as $Q^L$}
+        \For {$l$ = $L-1$ to $0$}
+            \State \texttt{Get layer-dependent laplacian matrix $Q^{(l+1)}P$. Calculate sampling probability for each node using $p_i^{(l)} = \frac{||Q^{(l+1)}P_{*, i}||_2^2}{||Q^{(l+1)}P||_F^2}$, and organize them into a random diagonal matrix $S^{(l)}$}
+            \State \texttt{Sample $n$ nodes in $l$ layer using $p^{(l)}$. The sampled nodes formulate $Q^{(l)}$}
+            \State \texttt{Reconstruct sampled laplacian matrix between sampled nodes in layer $l$ and $l+1$ by $\Tilde{P}^{(l)} = Q^{(l+1)}PS^{(l)}Q^{(l)T}$, then normalise it by $\Tilde{P}^{(l)} \xleftarrow{} \mathbf{D}_{\Tilde{P}^{(l)}}^{-1} \Tilde{P}^{(l)}$}
+        \EndFor
+        \State \Return \texttt{Modified Laplacian Matrices $\{\Tilde{P}^{(l)}\}_{l= 1, ..., L}$ and Sample Node at Input Layer $Q^0$}
+    \end{algorithmic}
+\end{algorithm}
+
+
+\chapter{Experiment}
+
+\section{Implementation}
+We managed to fix many bugs in the original code and finally produced the correct version according to the paper. Sampling Procedure is described as follow in algorithm \ref{alg:ladies_pseudo}, and the code can be found in listing \ref{ls:ladies_code}.
+
+\begin{algorithm}[H]
+	\caption{LADIES Pseudo-code}
+	\begin{algorithmic}[1]
+        \For{For layer from last to first}
+        \State Calculate L2 Norm of Q(l)P*, i and Frobenius Norm of Q(l)P from squared normalized laplacian matrix using row-selection (Note that QM is equivalent to row-selection operator)
+        \State Calculate sampling probabilities p
+        \State Fix number of sampled nodes in case p is negative. (This has no effect on the code since all norms are non-negative but it is included in the original code since they wrongly used laplacian matrix instead of the square.)
+        \State Random sample nodes and add the nodes of next layers.
+        \State Conduct the unbiased sampling by dividing the to sampling probabilities
+        \State Row-normalization to avoid explosion of feature vectors.
+        \EndFor
+    \end{algorithmic}
+    \label{alg:ladies_pseudo}
+\end{algorithm}
+
+\begin{lstlisting}[language=Python, caption= LADIES code, label=ls:ladies_code]
+def sampler(batch_nodes: np.ndarray, samp_num_list: np.ndarray, num_nodes: int, lap_matrix: sparse.csr_matrix, lap2_matrix: sparse.csr_matrix, num_layers: int) -> SimpleNamespace:
+   ##### INPUT ######################################################
+F = \text{row-F = \text{row-permutation}(I_N)
+
+permutation}(I_N)
+   # samp_num_list: array of number of sampled nodes at all layers
+   # num_nodes : number of graph nodes
+   # lap_matrix : row-normalized laplacian matrix
+   # lap2_matrix : squared lap_matrix (precomputed)
+   # num_layers : len(samp_num_list)
+   ##### OUTPUT #####################################################
+   # adjs : P matrix
+   # input_nodes: sampled nodes at input
+   # output_nodes : batch_nodes
+  ###################################################################
+def full_sampler(batch_nodes: np.ndarray, samp_num_list: np.ndarray, num_nodes: int, lap_matrix: sparse.csr_matrix, lap2_matrix: sparse.csr_matrix, num_layers: int) -> SimpleNamespace:
+   # simply sample the full lap_matrix for every layers
+   sample = SimpleNamespace(
+       adjs= [lap_matrix for _ in range(num_layers)],
+       input_nodes= np.arange(num_nodes),
+       output_nodes= batch_nodes,
+   )
+   return s
+def ladies_sampler(batch_nodes: np.ndarray, samp_num_list: np.ndarray, num_nodes: int, lap_matrix: sparse.csr_matrix, lap2_matrix: sparse.csr_matrix, num_layers: int) -> SimpleNamespace:
+   '''
+       LADIES_Sampler: Sample a fixed number of nodes per layer. The sampling probability (importance)
+                        is computed adaptively according to the nodes sampled in the upper layer.
+   '''
+   previous_nodes = batch_nodes
+   adjs  = []
+   '''
+       Sample nodes from top to bottom, based on the probability computed adaptively (layer-dependent).
+   '''
+   for d in range(num_layers):
+       # row-select the lap2_matrix (U2) by previously sampled nodes
+       U2 = lap2_matrix[previous_nodes , :]
+       # calculate sampling probabilities
+       pi = np.sum(U2, axis=0)
+       p = pi / np.sum(pi)
+       # get number of sampled nodes
+       s_num = np.min([np.sum(p > 0), samp_num_list[d]])
+       p = p.view(np.ndarray).flatten()
+       # sample the next layer's nodes based on the adaptively probability (p).
+       after_nodes = np.random.choice(num_nodes, s_num, p = p, replace = False)
+       # Add output nodes for self-loop
+       after_nodes = np.unique(np.concatenate((after_nodes, batch_nodes)))
+       # row-select and col-select the lap_matrix (U), and then divided by the sampled probability for unbiased-sampling.
+       adj = lap_matrix[previous_nodes, :][:, after_nodes]
+       adj = adj.multiply(1/ p[after_nodes])
+       # conduct row-normalization to avoid value explosion.     
+       adj = row_normalize(adj)
+       # fill the sub-matrix into the original
+       adj = sparse_fill(lap_matrix.shape, adj, previous_nodes, after_nodes)
+       adjs.append(adj)
+       # turn the sampled nodes as previous_nodes, recursively conduct sampling.
+       previous_nodes = after_nodes
+   # Reverse the sampled probability from bottom to top. Only require input how the lastly sampled nodes.
+   adjs.reverse()
+ 
+   sample = SimpleNamespace(
+       adjs= adjs,
+       input_nodes= previous_nodes,
+       output_nodes= batch_nodes,
+   )
+   return sample
+
+\end{lstlisting}
+
+\section{Experiment}
+Due to the limitation of computing power, we decided to use random block model with two same-sized clusters with connection probability as follow in equation \ref{eqn:connect_prob}.
+
+\begin{equation}
+    P = \begin{bmatrix}
+    \frac{log(N)}{N}, \frac{log(N)}{N^2}\\
+    \frac{log(N)}{N^2}, \frac{log(N)}{N}
+    \end{bmatrix}
+    \label{eqn:connect_prob}
+\end{equation}
+
+where $P_{i, j}$ is the connection probability between nodes in cluster i and cluster j.
+
+The feature vector is taken as an random row-permutation of Identity matrix where feature vector is represented in equation \ref{eqn:feature_vector}.
+
+\begin{equation}
+    F = \text{row-permutation}(I_N)
+    \label{eqn:feature_vector}
+\end{equation}
+
+The neural network consists of 5 GCN layers of 64 hidden layer dimensions and a Linear layer at the end works as a classifier. All layers were implemented with a dropout probability of 0.5
+
+We used cross-entropy loss with log\_softmax with Adam Optimizer, the learning rate was set to 1e-3.
+
+For each run, the model was trained in 80 epochs with two sampling modes: Full-batch and ladies.
+The execution time, loss and f1 score was recorded in table \ref{tab:model_80}. The plots obtained by the experiment can be referred to in in Appendix \ref{experiment_plots}.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        \multirow{2}{*}{Number of Nodes} & \multicolumn{2}{c|}{Runtime for 80 epochs} \\ \cline{2-3} & Full-Batch & LADIES  \\ \hline
+        64              & 2.6       & 8.82    \\ \hline
+        128             & 6.63       & 30.71   \\ \hline
+        256             & 22.80      & 101.91  \\ \hline
+        512             & 98.51      & 315.95  \\ \hline
+        1024            & 384.68     & 1020.65 \\ \hline
+    \end{tabular}
+    \caption{Model runtime for 80 epochs}
+    \label{tab:model_80}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        \multirow{2}{*}{Number of Nodes} & \multicolumn{2}{c|}{Convergence Epochs} \\ \cline{2-3} 
+             & Full-Batch & LADIES \\ \hline
+        64   & 35         & 50     \\ \hline
+        128  & 40         & 36     \\ \hline
+        256  & 40         & 20     \\ \hline
+        512  & 30         & 18     \\ \hline
+        1024 & 16         & 15     \\ \hline
+    \end{tabular}
+    \caption{Number of Epochs for convergence}
+    \label{tab:converge_epoch}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        \multirow{2}{*}{Number of Nodes} & \multicolumn{2}{c|}{Updates per epoch} \\ \cline{2-3} & Full-Batch & LADIES \\ \hline
+        64              & 1          & 1      \\ \hline
+        128             & 1          & 2      \\ \hline
+        256             & 1          & 4      \\ \hline
+        512             & 1          & 8      \\ \hline
+        1024            & 1          & 16     \\ \hline
+    \end{tabular}
+    \caption{Number of updates per epoch}
+    \label{tab:update_epoch}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        \multirow{2}{*}{Number of Nodes} & \multicolumn{2}{c|}{Updates for convergence} \\ \cline{2-3} 
+             & Full-Batch & LADIES \\ \hline
+        64   & 35         & 50     \\ \hline
+        128  & 40         & 72     \\ \hline
+        256  & 40         & 80     \\ \hline
+        512  & 30         & 144    \\ \hline
+        1024 & 16         & 240    \\ \hline
+    \end{tabular}
+    \caption{Number of updates to convergence}
+    \label{tab:update_convergence}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        \multirow{2}{*}{Number of Nodes} & \multicolumn{2}{c|}{Convergence time} \\ \cline{2-3} & Full-Batch & LADIES \\ \hline
+        64              & 1.3        & 5.8    \\ \hline
+        128             & 3.5        & 15     \\ \hline
+        256             & 12.5       & 25     \\ \hline
+        512             & 38         & 65     \\ \hline
+        1024            & 85         & 140    \\ \hline
+    \end{tabular}
+    \caption{Convergence time}
+    \label{tab:converge_time}
+\end{table}
+
+As such, the observation from the results in table \ref{tab:converge_epoch} is that LADIES converges much faster than Full-Batch w.r.t epochs especially for large graphs due to the nature of stochastic gradient descent. LADIES sparse matrix implementation can be improved further.

@@ -1,0 +1,51 @@
+\documentclass{article}
+
+\usepackage{float} % Allows using [H] to force figure placement
+
+\usepackage{../../latex_styles/color_template}
+\usepackage{../../latex_styles/symbol_def}
+
+\usepackage{listings}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{magenta},
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\ttfamily\footnotesize,
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                 
+	numbers=left,                    
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\usepackage{pdfpages}
+
+\title{
+	MA5232 Assignment 3
+}
+\author{Nguyen Ngoc Khanh - A0275047B}
+
+\begin{document}
+	
+\maketitle
+
+\tableofcontents
+
+\include{a3}
+	
+	
+\end{document}

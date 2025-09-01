@@ -1,0 +1,48 @@
+\documentclass{report}
+\usepackage[utf8]{inputenc}
+
+\title{mapf-gp-summary}
+\author{nguyenngockhanh.pbc }
+\date{March 2021}
+
+\usepackage{natbib}
+\usepackage{graphicx}
+
+% Bold 
+\usepackage{dsfont}
+
+% argmax
+\usepackage{amsmath}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+% definition
+\usepackage{amsthm}
+\newtheorem{problem}{Problem}
+\newtheorem{theorem}{Theorem}
+\newtheorem{reduction}{Reduction}
+\newtheorem{definition}{Definition}
+\newtheorem{lemma}{Lemma}
+% symbol
+\usepackage{amssymb}
+
+% arrow
+\usepackage{amsmath}
+% algorithm
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\input{problem}
+\input{methods}
+\input{appendix}
+
+\bibliographystyle{plain}
+\bibliography{references}
+\end{document}

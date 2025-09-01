@@ -1,0 +1,1023 @@
+%! TEX program = pdflatex
+\documentclass{article}
+\usepackage{geometry}
+\geometry{
+a4paper,
+total={170mm,257mm},
+left=20mm,
+top=20mm,
+}
+
+
+\usepackage{graphicx}
+\usepackage{unicode-math-input}
+
+\InputIfFileExists{local.tex}{}{}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+%% math package
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{tikz-cd}
+\usepackage{mathtools}
+\usepackage{comment}
+\usepackage{mathrsfs}
+
+
+
+%% operator
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\grad}{grad}
+\DeclareMathOperator{\curl}{curl}
+\DeclareMathOperator{\Div}{div}
+\DeclareMathOperator{\diam}{diam}
+\DeclareMathOperator{\vol}{vol}
+\DeclareMathOperator{\supp}{supp}
+\DeclarePairedDelimiter{\inner}{\langle}{\rangle}
+\DeclarePairedDelimiter{\tuple}{(}{)}
+\DeclarePairedDelimiter{\bracket}{[}{]}
+\DeclarePairedDelimiter{\set}{\{}{\}}
+\DeclarePairedDelimiter{\norm}{‖}{‖}
+\newcommand\abs[1]{\left|#1\right|}
+
+\renewcommand{\Re}{\operatorname{Re}}
+\renewcommand{\Im}{\operatorname{Im}}
+
+%% theorems
+\newtheorem{axiom}{Axiom}
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{lemma}{Lemma}
+\newtheorem{remark}{Remark}
+\newtheorem{claim}{Claim}
+\newtheorem{problem}{Problem}
+
+%% empty set
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+% mathcal symbols
+\newcommand\Tau{\mathcal{T}}
+\newcommand\Ball{\mathcal{B}}
+\newcommand\bigO{\mathcal{O}}
+
+% mathbb symbols
+\newcommand\N{\mathbb{N}}
+\newcommand\Z{\mathbb{Z}}
+\newcommand\Q{\mathbb{Q}}
+\newcommand\R{\mathbb{R}}
+
+% mathrsfs symbols
+\newcommand\Borel{\mathscr{B}}
+
+\newcommand\xx{\mathbf{x}}
+
+\title{MA5205 Homework 3}
+\author{Bui Hong Duc (A0236460J) \and Nguyen Ngoc Khanh (A0275047B) \and Nigel Lim (A0154379U)}
+%\date{\today}
+
+\allowdisplaybreaks
+
+\usepackage{hyperref}
+\usepackage{cleveref}
+
+\umiDeclareMathChar{ˆ}{\hat}
+\begin{document}
+
+\let\smallsetminus\setminus
+
+\ifdefined\LOCAL
+\typstmathinputenable{\$}
+\typstmathinputprepare[\LOCALoutputfile]{\$}
+\else
+\input{typstmathinput-prepared.tex}
+\fi
+\typstmathinputdisable{\$}
+
+\hfuzz=10pt
+
+\maketitle
+
+\section{Chapter 7} 
+
+\subsection{Exercise 1} % khanh
+% reviewed by Hong Duc, need minor changes
+Let $f$ be measurable in $\R^n$ and different from zero in some set of positive measure. Show that there is a positive constant $c$ such that $f^*(x) \geq c \abs{x}^{-n}$ for $\abs{x} \geq 1$.
+
+\textbf{Proof}
+
+We will prove a more general statement regarding Hardy-Littlewood function for balls in any metric in $\R^n$ such that all balls are measurable.
+
+\begin{lemma}
+    \label{lemma_7.1.1}
+    Define a metric in $\R^n$, given any $r_1, r_2 > 0$, then there exists a constant $c_1$ such that $\Ball_{c_1\norm{x}}(x) \supseteq \Ball_{r_2}(0)$ for all $x \in \R^n \setminus \Ball_{r_1}(0)$ where $\norm{x}$ denotes $d(x, 0)$
+\end{lemma}
+Put $c_1 = \max \set*{2, 1 + \frac{r_2}{r_1} }$.
+\begin{itemize}
+    \item If $\norm{x} \geq r_2$, then $\Ball_{c_1 \norm{x}}(x) \supseteq \Ball_{2 \norm{x}}(x) \supseteq \Ball_{r_2 + \norm{x}}(x) \supseteq \Ball_{r_2}(0)$
+    \item If $r_1 \leq \norm{x} < r_2$, then $\Ball_{c_1 \norm{x}}(x) \supseteq \Ball_{\tuple*{1 + \frac{r_2}{r_1}} \norm{x}}(x) \supseteq \Ball_{\tuple*{1 + \frac{r_2}{\norm{x}}} \norm{x}}(x) = \Ball_{\norm{x} + r_2}(x) \supseteq \Ball_{r_2}(0)$
+\end{itemize}
+
+\begin{lemma}
+    \label{claim_7.1.2}
+    If $f \in L$ and $\int \abs{f} > 0$, given any $0 < c_2 < \int \abs{f}$, there exists $r_2 > 0$ such that $\int_{\Ball_{r_2}(0)} \abs{f} \geq c_2$.
+\end{lemma}
+
+The sequence $\tuple*{ \int_{\Ball_r(0)} \abs{f} }_{r \in \N}$ monotone increases and converges to $\int \abs{f}$, then there exists $r_2 \in \N$ such that $\int_{\Ball_{r_2}(0)} \abs{f} \geq c_2$
+
+\begin{theorem}
+    Define a metric in $\R^n$ such that all balls are measurable. If $f$ is measurable in $\R^n$ and different from zero in a set of positive measure, given any $r_1 > 0$, there exist constants $c_1, c_2 > 0$ such that for all $x \in \R^n \setminus \Ball_{r_1}(0)$,
+\[
+    f^*(x) = \sup_{r > 0} \frac{1}{|\Ball_r(x)|} \int_{\Ball_r(x)} \abs{f}  \geq \frac{c_2}{|\Ball_{c_1 \norm{x}}(x)|}
+\]
+
+where $|\cdot|$ denotes Lebesgue measure and $\norm{x} = d(x, 0)$
+\end{theorem}
+
+Let any $r_1 > 0$. By Lemma \ref{claim_7.1.2}, pick $c_2, r_2 > 0$ such that $\int_{\Ball_{r_2}(0)} \abs{f} \geq c_2$. By Lemma \ref{lemma_7.1.1}, pick $c_1 > 0$ such that $\Ball_{c_1\norm{x}}(x) \supseteq \Ball_{r_2}(0)$ for all $x \in \R^n \setminus \Ball_{r_1}(0)$. Then, all $x \in \R^n \setminus \Ball_{r_1}(0)$,
+\[
+    f^*(x) \geq \frac{1}{|\Ball_{c_1 \norm{x}}(x)|} \int_{\Ball_{c_1 \norm{x}}(x)} \abs{f} \geq \frac{1}{|\Ball_{c_1 \norm{x}}(x)|} \int_{\Ball_{r_2}(0)} \abs{f} \geq \frac{c_2}{|\Ball_{c_1 \norm{x}}(x)|}
+\]
+
+\textbf{Main Proof}
+
+Now, in order to prove the original statement where the Hardy-Littlewood function is defined on cubes, the corresponding metric is induced by $L^{\infty}$ norm in $\R^n$. Let $\Ball^{(p)}_r(x)$ denote the ball of radius $r$ centered at $x$ in $L^p$ norm.
+
+In $\R^n$, there exists a $L^{(\infty)}$ ball contained in any $L^2$ ball having the same center, pick $r_1$ small enough such that $\Ball^{(\infty)}_{r_1}(0) \subseteq \Ball^{(2)}_1(0) = \set{x \in \R^n: |x| < 1}$.
+
+We further have $\abs{\Ball^{(\infty)}_{c_1 \norm{x}^{(\infty)}}(x)} = (2 c_1 \norm{x}^{(\infty)})^n$, and $\norm{x}^{(\infty)} \leq \norm{x}^{(2)} = \abs{x}$. Then, 
+\[
+    f^*(x)
+    \geq \frac{c_2}{\abs{\Ball^{(\infty)}_{c_1 \norm{x}^{(\infty)}}(x)}}
+    = \frac{c_2}{(2 c_1 \norm{x}^{(\infty)})^n}
+    \geq \frac{c_2}{(2c_1)^n \abs{x}^n}
+\]
+
+for all $x \in \tuple*{\R^n \setminus \Ball^{(\infty)}_{r_1}(0)} \supseteq \set{x \in \R^n: |x| \geq 1}$
+
+
+\subsection{Exercise 4} %Nigel
+%reviewed by Hong Duc, approved
+As in the proof of Lemma 3.37, we have intervals $I_{1}$ for $E_{1}$ and $I_{2}$ for $E_{2}$ such that $\abs{I_{1}} \leq (1 + \epsilon) \abs{E_{1} \cap I_{1}}$ and $\abs{I_{2}} \leq (1 + \epsilon) \abs{E_{2} \cap I_{2}}$. Thus we may further assume $E_{1} \subset I_{1}$ and $E_{2} \subset I_{2}$ as proving the theorem in this case will imply it is true for $E'_{1} = E_{1} \cap I_{1}$ and $E'_{2} = E_{2} \cap I_{2}$ for general $E_{1}, E_{2}$, and so also $E_{1}, E_{2}$ themselves. Put $\epsilon = 1/3$, so that $E_{1} \subset I_{1}$ and $\abs{E_{1}} \geq \frac{3}{4}\abs{I_{1}}$, and likewise $E_{2} \subset I_{2}$ and $\abs{E_{2}} \geq \frac{3}{4}\abs{I_{2}}$.
+% TODO idea is not wrong, but some explanation is needed for why we only need to consider the case E₁ ⊆ I₁ etc.
+% Nigel - added line about assuming E_{1} \subset I_{1} and E_{2} \subset I_{2}
+
+Since $\abs{E_{1}} \geq \frac{3}{4}\abs{I_{1}}$ and $\abs{E_{2}} \geq \frac{3}{4}\abs{I_{2}}$, we may choose points $x_{1} \in E_{1}, x_{2} \in E_{2}$ at most $\frac{1}{8}\abs{I_{1}} + \delta$ and $\frac{1}{8}\abs{I_{2}} + \delta$ away from the centers of $I_{1}$ and $I_{2}$, respectively (where $\delta > 0$ may be made arbitrarily small). We may translate $E_{2}$ by $r = x_{1} - x_{2}$; denote $E_{2}' = E_{2} + r$ and $I_{2}' = I_{2} + r$. Since $E_{1}$ and $E_{2}'$ have a common point $x_{1} = x_{2} + r$ of distance at most $\frac{1}{8}\abs{I_{1}} + \delta$ from the center of $I_{1}$ and at most $\frac{1}{8}\abs{I_{2}'}
+%TODO ' should be inside abs
+% Nigel - fixed
+%(although it can be simplified a bit by saying we can first consider the case where the center is near, then when the center is not near we can reduce to the case where the center is near by shifting etc.)
+%(although it's also possible to solve the problem without shifting at all)
+% Nigel - hmm maybe, but I think there is a limit to shifting due to the need to control the length of the union interval
++ \delta$ from the center of $I_{2}'$, the interval $I = I_{1} \cup I_{2}'$ (which contains $E_{1} \cup E_{2}'$) satisfies 
+\begin{equation*}
+	\abs{I} \leq \frac{5}{8}(\abs{I_{1}} + \abs{I_{2}}) + 2\delta.
+\end{equation*}
+
+Now we seek $R > 0$ such that for $\abs{d} < R$, $\abs{E_{1}} + \abs{E_{2}' + d} > \abs{I} + \abs{d}$. This will imply that for $\abs{d} < R$, $E_{1} \cap (E_{2}' + d) \neq \emptyset$, since $E_{1} \cup (E_{2}' + d)$ is contained in an interval of length $\abs{I} + \abs{d}$. This would conclude the proof since then there is an interval of length $2R$ contained in the set $\{ x \mid x = x_{1} - x_{2}, x_{1} \in E_{1}, x_{2} \in E_{2}\}$.
+
+By the bound on $\abs{I}$ and since $\abs{E_{2}' + d} = \abs{E_{2}}$, it suffices to have 
+\begin{equation*}
+	\abs{E_{1}} + \abs{E_{2}} > \frac{5}{8}(\abs{I_{1}} + \abs{I_{2}}) + 2\delta + \abs{d}. 
+\end{equation*}
+Due to $\abs{E_{1}} \geq \frac{3}{4}\abs{I_{1}}$ and $\abs{E_{2}} \geq \frac{3}{4}\abs{I_{2}}$, the RHS is at most 
+\begin{equation*}
+	\frac{5}{8}\left(\frac{4}{3}\right)(\abs{E_{1}} + \abs{E_{2}}) + 2\delta + \abs{d} = \frac{5}{6}(\abs{E_{1}} + \abs{E_{2}}) + 2\delta + \abs{d}.
+\end{equation*}
+Thus putting $\delta$ sufficiently small, we can put $R = \frac{5}{6}(\abs{E_{1}} + \abs{E_{2}}) - 2\delta > 0$, so that $\abs{d} < R$ satisfies the required inequality.
+% TODO (not important) to be fair to make it easier to read may as well "magically" derive the value n = 3 at the start of the proof
+% Nigel - ok magicked
+
+
+\subsection{Exercise 5}%Hong Duc
+% reviewed by khanh - approved
+\typstmathinputenable{\$}
+
+
+Note that $g$ is absolutely continuous so of bounded variation, so $∫_a^b φ dif g$ exists.
+
+Then $h=f-g$ is also of bounded variation, so $∫_a^b φ dif h$ also exists.
+
+We have:
+$
+∫_a^b φ dif f
+&= ∫_a^b φ dif (g+h) \
+&= ∫_a^b φ dif g +  ∫_a^b φ dif h \ 
+&= ∫_a^b φ g' dif x +  ∫_a^b φ dif h quad "(integration by parts)"\
+&= ∫_a^b φ (f-h)' dif x +  ∫_a^b φ dif h \
+&= ∫_a^b φ f' dif x +  ∫_a^b φ dif h. quad "("h'=0" almost everywhere)"
+$
+\typstmathinputdisable{\$}
+
+
+\subsection{Exercise 11} % khanh
+%reviewed by Hong Duc, okay
+Prove the following result concerning \textit{changes of variable}. Let $g(t)$ be monotone increasing and absolutely continuous on $[\alpha, \beta]$ and let $f$ be integrable on $[a, b]$, $a = g(\alpha), b = g(\beta)$. Then $f(g(t)) g'(t)$ is measurable and integrable on $[\alpha, \beta]$, and
+\[
+    \int_a^b f(x) dx = \int_\alpha^\beta f(g(t)) g'(t) dt
+\]
+
+\textbf{Proof}
+
+As $g$ is absolutely continuous, then $g'(t)$ is defined a.e, define $g'(t) = 0$ whenever the derivative of $g$ is not defined. As $g$ is monotone increasing, $g'(t) \geq 0$
+for all $t \in [\alpha, \beta]$
+
+\subsubsection{Part 1} ($f(g(t)) g'(t)$ is measurable)
+
+As $f(g(t)) g'(t) = f^+(g(t)) g'(t) - f^-(g(t)) g'(t)$, if $f(g(t)) g'(t)$ is measurable for all $f \geq 0$ functions, we immediately have the conclusion for arbitrary integrable function.
+
+Consider the case $f \geq 0$. As $f$ is integrable, $f$ can be written as the limit of a sequence of simple functions $f_k = \sum_{i=1}^N a_i \chi_{E_i}$ where $E_i$ are pairwise disjoint and measurable such that $f_k(g(t)) g'(t) \to f(g(t)) g'(t)$ pointwise. If each $f_k(g(t)) g'(t)$ is measurable then by MCT, the limit $f(g(t)) g'(t)$ is measurable. We can decompose 
+\[
+    f_k(g(t)) g'(t) = \sum_{i=1}^N a_i \chi_{E_i}(g(t)) g'(t) = \sum_{i=1}^N a_i \chi_{g^{-1} E_i)}(t) g'(t)
+\]
+
+If each $\chi_{g^{-1} E_i)} g'$ is measurable, then the sum is measurable. Now we will prove that $\chi_{g^{-1} E} g'$ measurable for every measurable set $E$ in $[a, b]$
+
+\vspace{0.2cm}\textbf{Case 1:} $E$ is a Borel set in $[a, b]$
+
+$\chi_{g^{-1} E} g'$ is a product of two measurable functions. First, $g'$ is integrable due to $g$ being absolutely continuous. Second, $\chi_{g^{-1} E}$ is a Borel measurable due to $g^{-1} E$ being a Borel measurable set, that is a pre-image of a Borel set under a continuous function.
+
+\vspace{0.2cm}\textbf{Case 2:} $|E| = 0$ in $[a, b]$
+
+We will prove $\chi_{g^{-1} E} g' = 0$ a.e by going through a sequence of subcases
+\begin{enumerate}
+    \item \label{subcase_7.11.2.1} $[c, d] \subseteq [a, b]$, then $\int_a^b \chi_{g^{-1} [c, d]} g' = |[c, d]|$
+    \item \label{subcase_7.11.2.2} $G$ open in $\R$, then $\int_a^b \chi_{g^{-1} G} g' \leq |G|$
+    \item \label{subcase_7.11.2.3} A sequence of open sets $G_k \searrow G$ such that $|G_k| = 1/k$ and $G_k \supseteq E$, then $\chi_{g^{-1} G} g' = 0$ a.e and $\chi_{g^{-1} E} g' = 0$ a.e
+\end{enumerate}
+
+Subcase \ref{subcase_7.11.2.1}: Let $[c, d] \subseteq [a, b]$. Because $g$ is continuous and monotone increasing, the set $g^{-1}[c, d]$ is an interval, denoted by $[\gamma, \delta] \subseteq [\alpha, \beta]$ with $g(\gamma) = c$ and $g(\delta) = d$. Since $[c, d]$ is a Borel set, then $\chi_{g^{-1}[c, d]} g'$ is measurable, and
+
+\begin{align*}
+    \int_\alpha^\beta \chi_{g^{-1}[c, d]} g'
+    &= \int_\alpha^\beta \chi_{[\gamma, \delta]} g'\\
+    &= \int_\gamma^\delta  g' &\text{($[\gamma, \delta] \subseteq [\alpha, \beta]$)} \\
+    &= g(\delta) - g(\gamma) &\text{($g$ is absolutely continuous)} \\
+    &= d - c = |[c, d]|
+\end{align*}
+
+Subcase \ref{subcase_7.11.2.2}: For any open set $G \subseteq \R$, write $G$ as a countable union of disjoint open intervals. In each open interval $O_k$, let $I_k$ be a closed interval contained in $O_k$ having the same center and $|I_k| \geq |O_k| - \frac{\epsilon}{2^k}$. Let $F = \bigcup_{k \in \N} I_k$ be a countable union of disjoint closed intervals, then $|G| - \epsilon \leq |F| \leq |G|$. Furthermore, $F$ is Borel, then $\chi_{g^{-1} F} g'$ is measurable, and
+
+\begin{align*}
+    \int_\alpha^\beta \chi_{g^{-1} F} g'
+    &= \int_\alpha^\beta \sum_{k \in \N} \chi_{g^{-1} I_k} g' &\text{($g^{-1} I_k$ disjoint)}\\
+    &= \sum_{k \in \N} \int_\alpha^\beta \chi_{g^{-1} I_k} g' &\text{(Tonelli theorem)}\\
+    &= \sum_{k \in \N} \int_\alpha^\beta \chi_{g^{-1}(I_k \cap [a, b])} g' &\text{($g^{-1} I_k = g^{-1}(I_k \cap [a, b])$)} \\
+    &= \sum_{k \in \N} |I_k \cap [a, b]| &\text{(closed interval $I_k \cap [a, b] \subseteq [a, b]$)} \\
+    &= |F \cap [a, b]| \leq |F| \leq |G|
+\end{align*}
+
+Push $\epsilon \to 0^+$, by the choice of $I_k$ (having the same center with $O_k$), $\chi_{g^{-1} F} g'$ is a sequence of monotone increasing functions and converges to a measurable function $\chi_{g^{-1} G} g'$. By MCT,
+\[
+    \int_\alpha^\beta \chi_{g^{-1} G} g' \leq |G|
+\]
+
+Subcase \ref{subcase_7.11.2.3}:Let sequence of open sets $G_k \searrow G$ with $G_k \supseteq E$ and $|G_k| < 1/k$, then $|G| = 0$ and $G \supseteq E$. As $G$ is Borel, $\chi_{g^{-1}G} g'$ is measurable. $g^{-1} G \subseteq g^{-1} G_k$ implies $\chi_{g^{-1} G} g' \leq \chi_{g^{-1} G_k} g'$, then
+
+\[
+    \int_\alpha^\beta \chi_{g^{-1} G} g' \leq \int_\alpha^\beta \chi_{g^{-1} G_k} g' \leq |G_k| = \frac{1}{k} 
+\]
+
+for all $k \in \N$. Therefore, $\int_\alpha^\beta \chi_{g^{-1} G} g' = 0$. As $\chi_{g^{-1} G} g' \geq 0$, $\chi_{g^{-1} G} g' = 0$ for a.e $t \in [\alpha, \beta]$. Furthermore, $g^{-1} E \subseteq g^{-1} G$ implies $\chi_{g^{-1} E} g' \leq \chi_{g^{-1} G} g'$, then $\chi_{g^{-1} E} g' = 0$ for a.e $t \in [\alpha, \beta]$. Therefore, $\chi_{g^{-1} E} g'$ is measurable.
+
+\vspace{0.2cm}\textbf{Case 3:} $E$ is a countable union of $E_i$ and each $\chi_{g^{-1} E_i} g'$ is measurable.
+
+\[
+    \chi_{g^{-1} E} g' = \chi_{g^{-1} \bigcup_{i \in \N} E_i} g' = \chi_{\bigcup_{i \in \N} g^{-1} E_i} g' = \max_{i \in \N} (\chi_{g^{-1} E_i} g')
+\]
+
+Maximum of a countable collection of measurable functions is measurable (Theorem 4.11)
+
+
+As every measurable set $E$ can be written as a union of a $F_\sigma$ set (which is a Borel set) and a measure zero set, by Case 1, 2, 3, $\chi_{g^{-1} E} g'$ measurable.
+
+\subsubsection{Part 2} ($\int_a^b f(x) dx = \int_\alpha^\beta f(g(t)) g'(t) dt$)
+
+Without confusion of notation, define $F(x) = \int_a^x f(z) dz, z \in [a, b]$
+and $G(t) = \int_\alpha^t f(g(z)) g'(z) dz, z \in [\alpha, \beta]$. By LDT, $F'(x) = f(x)$ for a.e $x \in [a, b]$ and $G'(t) = f(g(t)) g'(t)$ for a.e $t \in [\alpha, \beta]$. Therefore, for a.e $t \in [\alpha, \beta]$
+\[
+    (F \circ g)'(t) = F'(g(t)) g'(t) = f(g(t)) g'(t) = G'(t)
+\]
+
+Note that $(F \circ g)(t) = \int_a^{g(t)} f(z) dz$ is absolutely continuous, due to $g$ being monotone increasing and absolutely continuous. And the sum
+of two absolutely continuous functions is absolutely continuous. Then, the absolutely continuous $F \circ g - G$ has derivative being $0$. Hence, $F \circ g - G$ is a constant. Put $t = \alpha$, then $(F \circ g - G)(a) = 0$. Therefore,
+
+\[
+    \int_a^b f(x) dx = \int_\alpha^\beta f(g(t)) g'(t) dt
+\]
+
+
+
+
+
+
+\subsection{Exercise 17} % Nigel
+% reviewed by Hong Duc, approved
+Suppose $\int_{0}^{1} \abs{f - f_{k}} \rightarrow 0$. Then, for any $\epsilon > 0$, we can choose $K \in \mathbb{Z}^{+}$ such that for $k > K$, $\int_{0}^{1} \abs{f - f_{k}} < \epsilon / 2$. By absolute continuity of $\int_{E} \abs{f}$, we can also choose $\delta_{1} > 0$ such that if $E$ satisfies $\abs{E} < \delta_{1}$, $\int_{E} \abs{f} < \epsilon / 2$. Then for all $k > K$, 
+\begin{align*}
+	\int_{E} \abs{f_{k}} &\leq \int_{E} \abs{f - f_{k}} + \int_{E} \abs{f} \\
+	&< \epsilon / 2 + \epsilon / 2 \\
+	&= \epsilon.
+\end{align*}
+By absolute continuity of $\int_{E} \abs{f_{k}}$ for each $k$, we can also choose $\delta_{2} > 0$ such that if $E$ satisfies $\abs{E} < \delta_{2}$, $\int_{E} \abs{f_{k}} < \epsilon$ for $k \leq K$. Then for $\delta = \min(\delta_{1}, \delta_{2})$, if $E$ satisfies $\abs{E} < \delta$, $\int_{E} \abs{f_{k}} < \epsilon$ for all $k$; the indefinite integrals of the $f_{k}$ are uniformly absolutely continuous.
+
+Now to prove the converse, we show first that $\{ \int_{E} \abs{f_{k}} \}$ is uniformly absolutely continuous. Observe $\int_{E} f_{k}^{+} = \int_{E \cap \{ f_{k} > 0 \}} f_{k}$ and $ \int_{E} f_{k}^{-} = -\int_{E \cap \{ f_{k} < 0 \}} f_{k}$ respectively. For $\epsilon > 0$, choose by uniform absolute continuity of $\{f_k\}$
+%TODO consider adding "of $\{f_k\}$"
+% Nigel - added
+$\delta > 0$ such that if $\abs{E} < \delta$, then for all $k$, $ \abs{\int_{E} f_{k}} < \epsilon / 2$. Then since for any such $E$ and all $k$, $\abs{E \cap \{ f_{k} > 0 \}} < \delta$ and $\abs{E \cap \{ f_{k} < 0 \}} < \delta$ as well, this gives that $\int_{E} f_{k}^{+} < \epsilon / 2$ and $\int_{E} f_{k}^{-} < \epsilon / 2$, so $\int_{E} \abs{f_{k}} = \int_{E} f_{k}^{+} + \int_{E} f_{k}^{-} < \epsilon$ for all such $E$ and all $k$.
+
+Next we show $\{ \int_{E} \abs{f_{k} - f} \}$ is also uniformly absolutely continuous: $\int_{E} \abs{f_{k} - f} \leq \int_{E} \abs{f_{k}} + \int_{E} \abs{f}$, and we can choose $\delta > 0$ such that if $\abs{E} < \delta$, then for all $k$, $\int_{E} \abs{f_{k}} < \epsilon / 2$ and $\int_{E} \abs{f} < \epsilon / 2$ (by uniform absolute continuity of $\{ \int_{E} \abs{f_{k}} \}$ and absolute continuity of $\{ \int_{E} \abs{f} \}$). Now taking $\delta > 0$ such that if $\abs{E} < \delta$ then $\int_{E} \abs{f_{k}} < \epsilon / 2$ for all $k$ and $\int_{E} \abs{f} < \epsilon / 2$, we get $\int_{E} \abs{f_{k} - f} < \epsilon$ for all such $E$ and all $k$.
+
+Fix $\epsilon > 0$. By uniform absolute continuity of $\{ \int_{E} \abs{f_{k} - f} \}$, there exists $\delta > 0$ such that if $\abs{E} < \delta$, then $\int_{E} \abs{f_{k} - f} < \epsilon / 2$. Put $E_{k} = \bigcap_{m=k}^{\infty} \{ \abs{f_{m} - f} < \epsilon / 2 \}$. Then since $f_{m} \rightarrow f$ pointwise a.e., $f_{m} \rightarrow f$ in measure, so we may choose $K$ such that $E_{K} > 1 - \delta$. Then for $k \geq K$, 
+% TODO this selection of E_K can be shortened a bit by saying fₘ → f pointwise ⟹ fₘ → f in measure (theorem 4.21)
+% Nigel - tweaked
+\begin{align*}
+	\int_{0}^{1} \abs{f - f_{k}} &= \int_{E_{K}} \abs{f - f_{k}} + \int_{(0, 1) \setminus E_{K}} \abs{f - f_{k}} \\
+	&< \int_{E_{K}} \epsilon / 2 + \epsilon / 2 \\
+	&\leq \epsilon / 2 + \epsilon / 2 \\
+	&= \epsilon, 
+\end{align*}
+where proceeding from the first to the second line we use that $\abs{f - f_{k}} < \epsilon / 2$ on $E_{K}$ for $k \geq K$ and that $\abs{(0, 1) \setminus E_{K}} < \delta$ (alongside uniform absolute continuity of $\{\int_{E} \abs{f - f_{k}}\}$).
+
+\section{Chapter 8}
+\subsection{Exercise 12}%Hong Duc
+% reviewed by khanh - approved
+
+\typstmathinputenable{\$}
+\paragraph{Forward direction.} For the first point (forward direction),
+\begin{itemize}
+    \item if $p ≥ 1$, then 
+        $ abs(‖f_k‖_p - ‖f‖_p) ≤ ‖f-f_k‖_p $
+        by triangle inequality,
+        the right hand side $→ 0$, so the left hand side, being nonnegative, is also $→ 0$.
+    \item if $0<p<1$, then $abs( ‖f_k‖_p^p - ‖f‖_p^p ) ≤ ‖f-f_k‖_p^p$, because $‖f-f_k‖_p→ 0$ then $‖f-f_k‖_p^p→ 0$, then again left hand side being nonnegative is also $→ 0$, so $‖f_k‖_p^p → ‖f‖_p^p$, because the function $x ↦ x^p$ is continuous on $[0,+∞)$ then we have $‖f_k‖_p → ‖f‖_p$ as well.
+\end{itemize}
+
+\paragraph{Converse direction.} For the second point (converse direction),
+we have $|f-f_k| → 0$ pointwise almost everywhere.
+
+
+Observe that $|f-f_k|^p ≤ (|f|+|f_k|)^p$ (triangle inequality) $≤ (2 max(|f|,|f_k|))^p = 2^p max(|f|^p,|f_k|^p) ≤ 2^p (|f|^p+|f_k|^p)$.
+
+We use the following result, seen in chapter 5 exercise 23:
+\begin{theorem}[Sequential Version of the Lebesgue Dominated Convergence Theorem]
+    Let ${f_k}$ and ${φ_k}$ be sequences of measurable functions on $E$ satisfying $f_k → f$ almost everywhere, $φ_k → φ$ almost everywhere, and $|f_k|≤ φ_k$ almost everywhere. If $φ ∈ L(E)$ and $∫_E φ_k → ∫_E φ$, then $∫_E |f_k-f|→ 0$.
+\end{theorem}
+To use it, set $φ_k = 2^p (|f|^p+|f_k|^p)$. Then, because $f, f_k ∈ L^p$, then $|f|^p$ and $|f_k|^p$ are both in $L^1$, so is $φ_k$. Furthermore, $‖f_k‖_p →‖f‖_p$ implies $‖f_k‖_p^p →‖f‖_p^p ⟺ ∫ |f_k|^p → ∫ |f|^p$, so $∫ φ_k → 2^p (|f|^p+|f|^p)$, setting $φ = 2^p ⋅ 2 ⋅ |f|^p$ then all conditions in the hypothesis are satisfied.
+
+So, by sequential version of Lebesgue dominated convergence theorem, $∫ |f-f_k|^p →0$, so raising both sides to power $1/p$ we're done.
+
+\paragraph{Case \(p=∞\).} Now, we show the converse may fail for $p=∞$:
+we let $f_k = χ_((-k,+∞))$ and $f(x)=1$, then as $k →+∞$ then $f_k → f$ pointwise, and note that $‖f_k‖_∞ =‖f‖_∞ = 1$ for all $k$. However, the conclusion $‖f-f_k‖_∞ → 0$ does not hold, because $f-f_k = χ_((-∞,-k])$ is $1$ on a positive-measure subset.
+
+\typstmathinputdisable{\$}
+
+
+\subsection{Exercise 13} % khanh
+% reviewed by Hong Duc, okay
+Suppose $f_k \to f$ a.e and that $f_k, f \in L^p, 1 < p \leq \infty$. If $\norm{f_k}_p \leq M < +\infty$, show that $\int f_k g \to \int f g$ for all $g \in L^q, 1/p + 1/q = 1$. Show that the result is false if $p=1$
+
+\textbf{Proof}
+
+As $f_k \to f$ a.e, $|f_k|^p \to |f|^p$ a.e, By Fatou lemma, 
+\[
+    \norm{f}_p^p = \int |f|^p \leq \liminf_{k \to \infty} \int |f_k|^p = \liminf_{k \to \infty} \norm{f_k}_p^p \leq M
+\]
+
+\begin{claim}
+    \label{claim_8.13.1}
+    Given measurable set $E \subseteq \R^n$ with $\abs{E} < +\infty$, $\lim_{k \to \infty} \int_E \abs{(f_k - f)g} = 0$
+\end{claim}
+
+
+Given any $\epsilon > 0$, as $g \in L^q$, $u(A) = \int_A \abs{g}^q$ is an absolutely continuous set function, there exists $\delta > 0$ such that $|A| < \delta \implies \int_A \abs{g}^q < \epsilon^q$.
+
+As $q > 1$ and $|E| < +\infty$, $g \in L^q$ implies $g \in L^1$, then $g$ is finite a.e. As $f_k \to f$ a.e , $\abs{(f_k - f)g} \to 0$ a.e. By Egorov theorem, there exists a closed set $F \subseteq E$ with $|E \setminus F| < \delta$ and $\abs{(f_k - f)g}$ converges a.e to $0$ uniformly on $F$, that is, there is $N \in \N$ such that for all $k > N$, $|(f_k(x) - f(x))g(x)| < \epsilon$ for all $x \in F$. If $k > N$, we have
+
+\begin{align*}
+    \int_E \abs{(f_k - f)g} 
+    &= \int_{E \setminus F} \abs{(f_k - f)g} + \int_F \abs{(f_k - f)g} \\
+    &\leq \int_{E \setminus F} \abs{(f_k - f)g} + \epsilon |F| &\text{(pick $k$ large enough)} \\
+    &\leq \int_{E \setminus F} \abs{(f_k - f)g} + \epsilon \abs{E} &\text{($F \subseteq E$)}\\
+    &= \int_{E \setminus F} \abs{f_k - f}\abs{g} + \epsilon \abs{E} \\
+    &\leq \tuple*{\int_{E \setminus F} \abs{f_k - f}^p}^{1/p} \tuple*{\int_{E \setminus F} \abs{g}^q}^{1/q} + \epsilon \abs{E} &\text{(Hölder inequality)}\\
+    &< \epsilon \norm{f_k - f}_p \norm{g}_q + \epsilon \abs{E} &\text{($E \setminus F \subseteq \R^n$ and $|E \setminus F| < \delta$)}\\
+    &\leq \epsilon (\norm{f_k}_p + \norm{f}_p) \norm{g}_q + \epsilon \abs{E}) &\text{(Minkowski inequality)} \\
+    &\leq \epsilon (2 M \norm{g}_q + \abs{E})
+\end{align*}
+
+Therefore, $\lim_{k \to \infty} \int_E \abs{(f_k - f)g} \leq \epsilon (2 M \norm{g}_q + \abs{E})$. Sending $\epsilon \to 0^+$ gives $\lim_{k \to \infty} \int_E \abs{(f_k - f)g} = 0$
+
+
+\textbf{Main Proof}
+
+Given any $\epsilon > 0$, the sequence $\tuple{ \int_{B_r(0)} \abs{g}^q }_{r \in \N}$ monotone increases and converges to $\int \abs{g}^q < +\infty$, then there exists $R \in \N$ such that $\int_{\R^n \setminus B_r(0)} \abs{g}^q < \epsilon^q$ for all $r > R$.
+
+Given any $\epsilon > 0$, by Claim \ref{claim_8.13.1}, for all $r \in \N$, there exists $K \in \N$ such that $\int_{B_r(0)} \abs{(f_k - f)g} < \epsilon$ for all $k > K$
+
+Therefore, given $\epsilon > 0$, for all $r > R$ and $k > K$, we have
+
+\begin{align*}
+    \int \abs{(f_k - f)g}
+    &= \int_{\R^n \setminus B_r(0)} \abs{(f_k - f)g} + \int_{B_r(0)} \abs{(f_k - f)g} \\
+    &\leq \int_{\R^n \setminus B_r(0)} \abs{(f_k - f)g} + \epsilon &\text{(Claim \ref{claim_8.13.1})}\\
+    &\leq \tuple*{\int_{\R^n \setminus B_r(0)} \abs{f_k - f}^p}^{1/p} \tuple*{\int_{\R^n \setminus B_r(0)} \abs{g}^q}^{1/q} + \epsilon &\text{(Hölder inequality)}\\
+    &\leq \epsilon \norm{f_k - f}_p \norm{g}_q + \epsilon &\text{($\R^n \setminus B_r(0) \subseteq \R^n$ and $r > R$)}\\
+    &\leq \epsilon (2M \norm{g}_q + 1)
+\end{align*}
+
+Therefore, $\lim_{k \to \infty} \int \abs{(f_k - f)g} \leq \epsilon (2 M \norm{g}_q + 1)$. Sending $\epsilon \to 0^+$ gives $\lim_{k \to \infty} \int \abs{(f_k - f)g} = 0$. Therefore, $\int f_k g \to \int f g$
+
+When $p=1, q=+\infty$, take $g = 1$ and $f_k = k \chi_{[0, 1/k]}$, then $f_k \to 0$ a.e. 
+$\int f_k g = 1$ for all $k$
+and $\int f g = 0$
+
+
+
+\subsection{Exercise 15} % Nigel
+% reviewed by Hong Duc, mostly approved (with some changes)
+
+Put $C_{k}(x) = \cos(kx)$. We show $\langle C_{k_{1}}, C_{k_{2}} \rangle = 0$ for positive integers $k_{1} \neq k_{2}$: 
+% TODO what are ranges of k₁ and k₂? Positive integers? (note that if k₁+k₂=0 statement is also false)
+% Nigel - added "positive integers"
+\begin{align*}
+	\langle C_{k_{1}}, C_{k_{2}} \rangle &= \int_{0}^{2\pi} \cos(k_{1}x) \cos(k_{2}x) dx \\
+	&= \int_{0}^{2\pi} \frac{1}{2}
+    %TODO add ( here
+    \left( \cos((k_{1} + k_{2})x) + \cos((k_{1} - k_{2})x) \right)
+    %TODO add ) here
+    % Nigel - added
+    dx 
+    \\
+	&= 0.
+\end{align*}
+Likewise put $S_{k}(x) = \sin(kx)$, then $\langle S_{k_{1}}, S_{k_{2}} \rangle = 0$ for positive integers $k_{1} \neq k_{2}$: 
+\begin{align*}
+	\langle S_{k_{1}}, S_{k_{2}} \rangle &= \int_{0}^{2\pi} \sin(k_{1}x) \sin(k_{2}x) dx \\
+	&= \int_{0}^{2\pi} \frac{1}{2} \left( \cos((k_{1} - k_{2})x) - \cos((k_{1} + k_{2})x) \right) dx \\  % TODO add parentheses here too
+    % Nigel - added
+	&= 0.
+\end{align*}
+We compute $\norm{C_{k}}$ and $\norm{S_{k}}$:
+\begin{align*}
+	\norm{C_{k}}_{L^{2}} &= \left( \int_{0}^{2\pi} \cos^{2}(kx) \right)^{1/2} \\
+	&= \left( \int_{0}^{2\pi} \frac{1}{2}(\cos(2kx) + 1) \right)^{1/2} \\
+	&= \sqrt{\pi}, \\
+	\norm{S_{k}}_{L^{2}} &= \left( \int_{0}^{2\pi} \sin^{2}(kx) \right)^{1/2} \\
+	&= \left( \int_{0}^{2\pi} \frac{1}{2}(1 - \cos(2kx)) \right)^{1/2} \\
+	&= \sqrt{\pi}.
+\end{align*}
+Thus $\{ C_{k} / \sqrt{\pi} \}$ and $\{ S_{k} / \sqrt{\pi} \}$ are orthonormal systems in $L^{2}$. By Theorem 8.27 (Bessel's inequality), the tails $\sum_{k=N}^{\infty} \abs{c_{k}}^{2} \rightarrow 0$ as $N \rightarrow \infty$, for Fourier coefficients $c_{k}$ with respect to both orthonormal systems, and so the $c_{k} \rightarrow 0$ as $k \rightarrow \infty$. Since the integrals in question are just the Fourier coefficients with respect to these systems multiplied by $\sqrt{\pi}$, they tend to $0$. This proves the result for $f \in L^{2}$.
+
+For $f \in L^{1}(0, 2\pi)$, we first recall the following result (stated in the remarks in Chapter 8.1).
+
+% TODO use \begin{lemma} \end{lemma} \begin{proof} \end{proof}
+% Nigel - added
+\begin{lemma}
+Any function bounded on $E$ that belongs to $L^{p_{1}}(E)$ also belongs to $L^{p_{2}}(E)$, for $p_{2} > p_{1}$.
+\end{lemma}
+
+\begin{proof}
+The statement is trivial when $p_{2} = \infty$. Suppose $0 < p_{1} < p_{2} < \infty$. Then if $\abs{f} \leq M$ on $E$, 
+\begin{equation*}
+	\int_{E} \abs{f}^{p_{2}} \leq M^{p_{2} - p_{1}} \int_{E} \abs{f}^{p_{1}} < \infty.
+\end{equation*}
+% TODO that having said there's a better way to prove this -- ∀ 0 ≤ y ≤ M, y^p₂ ≤ y^p₁ ⋅ M^(p₂-p₁).
+% Nigel - thanks, I changed to this
+\end{proof}
+
+We claim that the set of bounded $L^{1}$ functions is dense in $L^{1}$. Indeed, for any $f \in L^{1}$, the sequence $\{f_{k}\}$ defined by 
+\[ f_{k}(x) = \begin{cases*}
+                    f(x) & if $\abs{f(x)} \leq k$  \\
+                     0 & if $\abs{f(x)} > k$
+                 \end{cases*} \]%
+converges to $f$ pointwise wherever $f$ is finite (thus a.e.). Further, $\abs{f_{k}}$ is dominated by $\abs{f}$, so by the dominated convergence theorem, $\norm{f_{k}}_{L^{1}} \rightarrow \norm{f}_{L^{1}}$. By Exercise 8.12, $\norm{f - f_{k}}_{L^{1}} \rightarrow 0$.
+
+Since the set of bounded $L^{1}$ functions is in $L^{2}$ by the lemma, $L^{2}$ is dense in $L^{1}$ (we note $L^{2}(0, 2\pi) \subset L^{1}(0, 2\pi)$ since $\abs{(0, 2\pi)} < \infty$). Thus we can take a sequence of $L^{2}(0, 2\pi)$ functions $\{f_{j}\}$ converging (in $\norm{\cdot}_{L^{1}}$) to any $f \in L^{1}(0, 2\pi)$. Then 
+\begin{equation*}
+	\int_{0}^{2\pi} f(x) \cos(kx) dx = \int_{0}^{2\pi} \left( f(x) - f_{j}(x) \right) \cos(kx) dx + \int_{0}^{2\pi} f_{j}(x) \cos(kx) dx. 
+\end{equation*}
+The first term is bounded for each $j$ by $\norm{f - f_{j}}_{L^{1}}$ (since $\cos(kx) \leq 1$), so tends to $0$ as $j \rightarrow \infty$, and the second term tends to $0$ for any $j$ as $k \rightarrow \infty$ by the result for $L^{2}$ functions. This completes the proof for $f \in L^{1}$.
+
+\subsection{Exercise 16}%Hong Duc
+% reviewed by khanh - approved
+
+\typstmathinputenable{\$}
+
+Because $f, f_k ∈ L^p$ and $g ∈ L^p'$, then all of $f, f_k, g$ are finite almost everywhere.
+
+If $f_k → f$ in $L^p$ norm, then $‖f_k-f‖_p → 0$, then for any $g ∈ L^p'$ then $‖f_k-f‖_p ⋅ ‖g‖_p' → 0$, then because $0 ≤ ∫ |(f_k-f) g| ≤ ‖f_k-f‖_p ⋅‖g‖_p'$ by Hölder's inequality, then $∫ |(f_k-f) g|→ 0$.
+
+Note that $f ∈ L^p$ and $g ∈ L^p'$, so $∫ |f g|<∞$, so $∫ f g$ also finite. Similarly $∫ f_k g$ is also finite.
+
+So, $∫ (f_k-f) g → 0 ⟺ ∫ f_k g - ∫ f g → 0 ⟺ ∫ f_k g → ∫ f g$.
+
+\typstmathinputdisable{\$}
+\subsection{Exercise 21} % khanh
+% reviewed by Hong Duc, approved
+If $f \in L^p(\R^n), 0 < p < \infty$, show that
+\[
+    \lim_{Q \searrow
+    x} \frac{1}{|Q|} \int_Q |f(y) - f(x)|^p dy = 0 \text{ a.e}
+\]
+
+\textbf{Proof}
+
+
+\begin{lemma}
+    \label{lemma_8.21.1}
+    Given $0 < p < +\infty$, there exists a constant $C$ such that for all $a, b \in \R$,
+    \[
+        |a + b|^p \leq C(|a|^p + |b|^p)
+    \]
+\end{lemma}
+
+\begin{align*}
+    |a+b|^p
+    &\leq (|a| + |b|)^p \\
+    &\leq (2 \max \{|a|, |b| \})^p \\
+    &= 2^p \max \{|a|^p, |b|^p \} &\text{(monotonicity of $x \mapsto x^p$)} \\
+    &\leq 2^p (|a|^p + |b|^p)
+\end{align*}
+
+\textbf{Main Proof}
+
+For each $r_k \in \Q$, we have 
+\begin{align*}
+    \frac{1}{|Q|} \int_Q |f(y) - f(x)|^p
+    &\leq C \tuple*{\frac{1}{|Q|} \int_Q |f(y) - r_k|^p dy + \frac{1}{|Q|} \int_Q |r_k - f(x)|^p dy } \\
+    &= \tuple*{C \frac{1}{|Q|} \int_Q |f(y) - r_k|^p dy} + C|f(x) - r_k|^p
+\end{align*}
+
+Furthermore, by Lemma \ref{lemma_8.21.1}, given any compact set $K$,
+\begin{align*}
+    \int_K |f(y) - r_k|^p dy
+    &\leq \int_K C (|f(y)|^p + |r_k|^p) dy \\
+    &= C ||f||_p^p + C |K| |r_k|^p < +\infty 
+\end{align*}
+
+Therefore, $|f(y) - r_k|^p$ is locally integrable, by LDT, there exists $Z_k \subseteq \R^n$ with $|Z_k| = 0$ such that for all $x \in \R^n \setminus Z_k$,
+\[
+    \lim_{Q \searrow x} \frac{1}{|Q|} \int_Q |f(y) - r_k|^p = |f(x) - r_k|^p
+\]
+
+Put $Z = \bigcup_{k \in \N} Z_k$, then for each $x \in \R^n \setminus Z$ and any rational number $r$
+\[
+    \lim_{Q \searrow x} \frac{1}{|Q|} \int_Q |f(y) - r|^p = |f(x) - r|^p
+\]
+
+Hence, 
+\[
+    \lim_{Q \searrow x} \frac{1}{|Q|} \int_Q |f(y) - f(x)|^p \leq 2C |f(x) - r|^p
+\]
+
+As $\Q$ is dense in $\R$, we can choose $r$ such that $|f(x) - r|$ is arbitrary small. Hence,
+
+\[
+    \lim_{Q \searrow x} \frac{1}{|Q|} \int_Q |f(y) - f(x)|^p = 0
+\]
+
+\subsection{Exercise 22} % Nigel
+% reviewed by Hong Duc, okay (fixed a typo)
+For $c = \norm{m}_{l^{\infty}}$, $\norm{Tf}_{2} \leq c\norm{f}_{2}$ for all $f \in L^{2}$: 
+\begin{align*}
+	\norm{Tf}_{2} &= \left(\sum \abs{m_{k}}^{2} \abs{c_{k}}^{2} \right)^{1/2} \\
+	&\leq \norm{m}_{l^{\infty}} % ← I just fixed a typo ‖m‖^l^∞ → ‖m‖_l^∞ -- Hong Duc
+ % Nigel - thanks
+    \left(\sum \abs{c_{k}}^{2} \right)^{1/2} \\
+	&= c\norm{f}_{2}.
+\end{align*}
+Suppose $c < \norm{m}_{l^{\infty}}$. Then for some $k$, $\abs{m_{k}} > c$. Fixing such a $k$, put $f = \phi_{k}$. Then 
+\begin{align*}
+	\norm{Tf}_{2} &= (\abs{m_{k}}^{2})^{1/2} \\
+	&= \abs{m_{k}} \\
+	&> c \\
+	&= c\norm{f}_{2}.
+\end{align*}
+
+\section{Chapter 9}
+\subsection{Exercise 4}%Hong Duc
+% reviewed by khanh - approved with minor changes
+\typstmathinputenable{\$}
+
+\subsubsection{Part a.}
+Clearly $h$ is continuously differentiable arbitrarily many times at all points $x ≠ 0$.
+
+First, we prove a lemma, which will be useful to show $h$ is infinitely differentiable.
+\begin{lemma}
+    For all integer $d ≥ -1$, then $lim_(x → 0⁺) x^(-d) e^(-x⁻²) =0$.
+\end{lemma}
+\begin{proof}
+    We use induction. For $d ≤ 0$, statement is clear.
+
+    Let $d ≥ 1$, assume by induction hypothesis that $lim_(x → 0⁺) x^(-d+2) e^(-x⁻²) =0$.
+    Then, consider the limit $lim_(x → 0⁺) x^(-d) e^(-x⁻²)=lim_(x → 0⁺) x^(-d)/e^(x⁻²)$, note that both the numerator and denominator $→ +∞$ as $x → 0⁺$, apply L'Hospital rule, the limit is equal to $lim_(x → 0⁺) (-d x^(-d-1))/(-2 x⁻³ e^(x⁻²)) = lim_(x → 0⁺) d/2 ⋅ (x^(-(d-2)))/e^(x⁻²)$, by induction hypothesis this is $0$ so we're done.
+\end{proof}
+
+Next, we prove the following lemma about the behavior of $h$ at points $x>0$.
+\begin{lemma}
+    For all integer $n ≥ 0$ and real $x>0$, then $h^((n))(x)=f(x)/x^(3n) e^(-x⁻²)$ for some polynomial $f(x)$, $f(0) ≠ 0$.
+\end{lemma}
+\begin{proof}
+We use induction. If $n=0$, pick $f(x)=1$ satisfies.
+
+For $n>0$, assume $h^((n-1))(x) = f(x)/x^(3n) e^(-x⁻²)$. Then
+$h^((n))(x) = (
+f'(x) x³-f(x) ⋅ 3n x² + 2f(x)
+)/x^(3(n+1)) e^(-x⁻²)$.
+We have
+$f'(x) x³-f(x) ⋅ 3n x² + 2f(x)$ is a polynomial in $x$, whose value at $0$ is $2 f(0)$, so we're done.
+\end{proof}
+
+% TODO - just write h is differentiable for all n because left-hand derivative = right-hand derivative. left hand and right hand are defined as \delta > 0 or \delta < 0
+% TODO no induction needed
+
+Finally we can prove $h^((n))(x)$ exists and is $0$ for all integer $n ≥ 0$: for $n=0$ it's obvious, for some $n>0$, assume $h^((n-1))(0)=0$, because $lim_(x → 0⁺) (h^((n-1))(x))/x = 0$ by the 2 lemmas above (clearly the limit from the left is $0$), then $h^((n-1))$ is differentiable at $0$ with $h^((n))(0)=0$, so we're done.
+
+
+\subsubsection{Part b.}
+Observe that for $x ∈ ℝ$, then $h(x) ≠ 0 ⟺ x>0$.
+
+Clearly $g(x)∈ C^∞$. Now, the support of $g(x)$ is the closure of ${x: g(x) ≠ 0}$, note that $g(x) ≠ 0 ⟺ h(x-a) h(b-x) ≠ 0 ⟺ h(x-a) ≠ 0 ∧ h(b-x) ≠ 0 ⟺ x-a>0 ∧ b-x>0 ⟺ a<x<b$, so the support of $g(x)$ is $overline((a, b))=[a, b]$.
+\subsubsection{Part c.}
+%TODO \textcolor{red}{Overcomplicated?}
+
+First, for constant $a$ and $b$ such that $a<b$, we construct a function $k(x)=h(h(b-a)-h(x-a))/h(h(b-a))$. This function has the following properties:
+\begin{itemize}
+    \item It's in $C^∞$, and is monotonically decreasing.
+    \item $k(x)=0 ⟺ h(b-a) ≤ h(x-a) ⟺ b-a ≤ x-a$ (because $b-a>0$ and $h$ is strictly increasing in $[0, ∞)$) $⟺ b≤x$.
+    \item $k(x)=1 ⟺ h(b-a)-h(x-a)=h(b-a) ⟺ h(x-a)=0 ⟺ x-a ≤ 0 ⟺ x ≤ a$.
+\end{itemize}
+
+\paragraph{Function with support a ball.} Let $r>0$, we construct a $C₀^∞(ℝ^n)$ function with support $overline(B_r (boldzero))$.
+
+We claim $f(xx)=k(|xx|)$ with constant $a=r/2, b=r$ satisfies the condition.
+
+First, ${f(xx)≠ 0}={xx: |xx|<b}=B_b (xx)=B_r (xx)$, so the support of $f$ is $overline(B_r (boldzero))$ as needed.
+
+Then, we need to show $f(xx)$ is smooth -- clearly $f$ is smooth at every point $xx ≠ boldzero$, and note that for all $xx$ such that $|xx|≤ a=r/2$ then $f(xx)=1$, thus $f$ is smooth at $boldzero$.
+
+\paragraph{Function with support an interval.} Consider the (finite, positive measure) interval $[l₁, r₁] × ⋯ ×[lₙ, rₙ] ⊆ ℝ^n$ where for each $i$ then $l_i<r_i$.
+
+For convenience, we will write $g_(a, b)(x)$ for the function $g(x)$ constructed in part (b) with support $[a, b]$.
+
+We construct $f(xx) = f(x₁, …, xₙ) = ∏_(i=1)^n g_(lᵢ, rᵢ)(xᵢ)$.
+
+Then ${xx: f(xx) ≠ 0}
+= {(x₁, …, x_n): g_(lᵢ, rᵢ)(xᵢ) ≠ 0 ∀i ∈{1, …, n}}
+= {(x₁, …, x_n): lᵢ<x_i< rᵢ ∀i ∈{1, …, n}}
+= (l₁, r₁)×(l₂, r₂) × ⋯ ×(lₙ, rₙ)$, whose closure is the desired interval.
+
+\typstmathinputdisable{\$}
+\subsection{Exercise 5} % khanh
+%reviewed by Hong Duc, need some changes
+Let $G$ and $G_1$ be bounded open subsets of $\R^n$ such that $\overline{G_1} \subseteq G$. Construct a function $h \in C_0^\infty$ such that $h_1$ in $G_1$ and $h=0$ outside $G$
+
+\textbf{Proof}
+
+\begin{lemma}[Chapter 1 exercise 1 (l)]
+    \label{lemma_9.5.1}
+    Let $F$ be a closed and and $K$ be a compact set. There exists a positive number $\delta$ such that given any $x \in F$, $y \in K$ then $d(x, y) > \delta$. Consequently, every closed ball of radius $\delta$ centered in $K$ does not intersect $F$, and every closed ball of radius $\delta$ centered in $F$ does not intersect $K$.
+\end{lemma}
+
+For each $x \in K$, construct a open ball $\Ball_{\delta_x}(x) \subseteq F^c$. As $K$ is compact, the collection $\set{\Ball_{\delta_x / 3}(x)}, x \in K$ covers $K$, pick a finite subcollection $\set{\Ball_{\delta_{x_k} / 3}(x_k)}$ and let $\delta = \min \{ \delta_{x_k} / 3\}$
+
+For each $x \in K$, $y \in F$, $x$ is covered by a ball in the finite subcollection, namely $\Ball_{\delta_{x_k} / 3}(x_k)$. We also have $\Ball_{\delta_{x_k}(x_k)} \subseteq F^c$, then
+\[
+    d(y, x) \geq d(y, x_k) - d(x, x_k) \geq \delta_{x_k} - \delta_{x_k} / 3 > \delta_{x_k} / 3 \geq \delta
+\]
+
+\begin{lemma}[Chapter 9 exercise 4 (c)]
+    \label{lemma_9.5.2}
+    Given any $\epsilon > 0$, there exists a $C^\infty$ function $K$ with $\supp K \subseteq \Ball_\epsilon(0)$ and $\int K = 1$
+\end{lemma}
+
+\textbf{Main Proof}
+
+As $\R^n$ is normal, $A = \overline{G_1}$ and $B = \R^n \setminus G$ are disjoint closed sets. There exists $U_A, U_B$ disjoint open sets such that $A \subseteq U_A$ and $B \subseteq U_B$. Put $G_2 = U_A$. Then $\overline{G_1} \subseteq G_2$ and as $\R^n \setminus U_B$ closed and $G_2 \subseteq \R^n \setminus U_B$, then $\overline{G_2} \subseteq \R^n \setminus U_B \subseteq \R^n \setminus B = G$.
+
+On $\overline{G_1}$ compact and $\R^n \setminus G_2$ closed, let $\delta_1 > 0$ from Lemma \ref{lemma_9.5.1}. On $\overline{G_2}$ compact and $\R^n \setminus G$ closed, let $\delta_2 > 0$ from Lemma \ref{lemma_9.5.1}. Let $\delta = \min \set{\delta_1, \delta_2}$.
+
+By Lemma \ref{lemma_9.5.2}, there exists a $C_0^\infty$ function $K$ with $\supp K \subseteq \Ball_\delta(0)$
+
+Let $h = \chi_{G_2} * K$, by Theorem 9.3, $K \in C_0^\infty$ implies $h = \chi_{G_2} * K \in C^\infty$ . Moreover,
+
+\[
+    h(x) = \int \chi_{G_2}(x-t) K(t) dt = \int_{\supp K} \chi_{G_2}(x-t) K(t) dt = \int_{B_\delta(0)} \chi_{G_2}(x-t) K(t) dt
+\]
+
+If $x \in G_1$, then $\set{ x - t: t \in \Ball_\delta(0) } = \Ball_\delta(x) \subseteq G_2$. Therefore,
+\[
+    h(x) = \int_{B_\delta(0)} K(t) dt = 1
+\]
+
+If $x \in \R^n \setminus G$, then $\set{ x - t: t \in \Ball_\delta(0)} = \Ball_\delta(x) \subseteq \R^n \setminus G_2$, Therefore
+
+\[
+    h(x) = \int_{B_\delta(0)} 0 dt = 0
+\]
+
+
+\subsection{Exercise 7} % Nigel
+% reviewing by Hong Duc
+We recall the Poisson kernel is 
+\begin{equation*}
+	P_{y}(x) = \frac{1}{y} P \left( \frac{x}{y} \right) = \frac{1}{\pi}\frac{y}{y^{2} + x^{2}}.
+\end{equation*}
+The Poisson integral is 
+\begin{equation*}
+	f(x, y) = \int_{-\infty}^{+\infty} f(t) P_{y}(x) = \frac{1}{\pi} \int_{-\infty}^{+\infty} f(t) \frac{y}{y^{2} + (x - t)^{2}} dt.
+\end{equation*}
+We recall that $P_{y}(x)$ is harmonic on the upper half-plane $y > 0$ as it is the imaginary part of a holomorphic function on that domain. Thus as suggested, we will show that 
+\begin{equation*}
+	\left(\frac{\partial^{2}}{\partial x^{2}} + \frac{\partial^{2}}{\partial y^{2}}\right) f(x, y) = \int_{-\infty}^{+\infty} f(t) \left(\frac{\partial^{2}}{\partial x^{2}} + \frac{\partial^{2}}{\partial y^{2}}\right) P_{y}(x - t) dt, 
+\end{equation*}
+and the integrand in the RHS equals $0$ identically on $y > 0$, giving the result.
+
+We compute 
+\begin{align*}
+	\int_{-\infty}^{+\infty} f(t) \frac{\partial}{\partial x} P_{y}(x - t) dt &= \int_{-\infty}^{+\infty} f(t) \frac{1}{\pi} \lim_{d \rightarrow 0} \frac{1}{h} \left( \frac{y}{y^{2} + (x + d - t)^{2}} - \frac{y}{y^{2} + (x - t)^{2}} \right) dt \\
+	&= \int_{-\infty}^{+\infty} f(t) \frac{1}{\pi} \lim_{k \rightarrow \infty} \frac{1}{d_{k}} \left( \frac{y}{y^{2} + (x + d_{k} - t)^{2}} - \frac{y}{y^{2} + (x - t)^{2}} \right) dt \\
+	&= \int_{-\infty}^{+\infty} f(t) \frac{1}{\pi} \lim_{k \rightarrow \infty} \frac{-2(x + c_{k} - t)y}{(y^{2} + (x + c_{k} - t)^{2})^{2}} dt
+\end{align*}
+for any sequence $\{d_{k}\} \rightarrow 0$ (which we may take to be within $(-1, 1)$), and some corresponding sequence $\{c_{k}\} \rightarrow 0$ where each $c_{k}$ is between $d_{k}$ and $0$, by the MVT. Since 
+\begin{equation*}
+	\abs{2(x + c_{k} - t)y} \leq y^{2} + (x + c_{k} - t)^{2}, 
+\end{equation*}
+we see that for
+\begin{equation*}
+	h_{k}(t) = \frac{-2(x + c_{k} - t)y}{(y^{2} + (x + c_{k} - t)^{2})^{2}}, 
+\end{equation*}
+we have 
+\begin{equation*}
+	\abs{h_{k}(t)} \leq \frac{1}{y^{2} + (x + c_{k} - t)^{2}}.
+\end{equation*}
+
+For given $x, y$, put $g_{k}(t) = (y^{2} + (x + c_{k} - t)^{2})^{-1}$. Then since each $\abs{c_{k}} \leq \abs{d_{k}} < 1$ and the $g_{k}$ have a single local maximum of $1/y^{2}$ at $t = x + c_{k}$, the $g_{k}$ are dominated by the function
+\[ g(t) = \begin{cases*}
+		(y^{2} + (x + 1 - t)^{2})^{-1} & if $t \geq x + 1$  \\
+		(y^{2} + (x - 1 - t)^{2})^{-1} & if $t \leq x - 1$  \\
+                     y^{-2} & if $x - 1 < t < x + 1$.
+                 \end{cases*} \]
+Since $g(t) \leq y^{-2}$, $g$ is bounded, and since $\int_{-\infty}^{+\infty} (y^{2} + (x + 1 - t)^{2})^{-1} dt < \infty$ and $\int_{-\infty}^{+\infty} (y^{2} + (x - 1 - t)^{2})^{-1} dt < \infty$, $g \in L^{1}$. Thus by Exercise 5.24(c), $g \in L^{q}$ for $1 < q < \infty$. In particular, for $q$ the Hölder conjugate of $p$, we see $\norm{fg}_{1} \leq \norm{f}_{p} \norm{g}_{q} < \infty$. As $h_{k} \rightarrow h$ pointwise, $h$ defined by
+\begin{equation*}
+	h(t) = \frac{-2(x - t)y}{(y^{2} + (x - t)^{2})^{2}}, 
+\end{equation*}
+we have by dominated convergence that 
+\begin{align*}
+	\int_{-\infty}^{+\infty} f(t) \frac{\partial}{\partial x} P_{y}(x - t) dt &= \lim_{k \rightarrow \infty} \int_{-\infty}^{+\infty} f(t) \frac{1}{\pi} \frac{-2(x + c_{k} - t)y}{(y^{2} + (x + c_{k} - t)^{2})^{2}} dt \\
+	&= \lim_{k \rightarrow \infty} \int_{-\infty}^{+\infty} f(t) \frac{1}{\pi} \frac{1}{d_{k}} \left( \frac{y}{y^{2} + (x + d_{k} - t)^{2}} - \frac{y}{y^{2} + (x - t)^{2}} \right) dt \\
+	&= \frac{\partial}{\partial x} \int_{-\infty}^{+\infty} f(t) P_{y}(x - t) dt \\
+	&= \frac{\partial}{\partial x} f(x, y), 
+\end{align*}
+as $\{ d_{k} \} \rightarrow 0$ was an arbitrary sequence less than distance $1$ from $0$.
+
+We may apply a similar procedure to show that 
+\begin{align*}
+	\frac{\partial^{2}}{\partial x^{2}} f(x, y) &= \int_{-\infty}^{+\infty} f(t) \frac{\partial^{2}}{\partial x^{2}} P_{y}(x - t) dt, \\
+	\frac{\partial}{\partial y} f(x, y) &= \int_{-\infty}^{+\infty} f(t) \frac{\partial}{\partial y} P_{y}(x - t) dt, \\
+	\frac{\partial^{2}}{\partial y^{2}} f(x, y) &= \int_{-\infty}^{+\infty} f(t) \frac{\partial^{2}}{\partial y^{2}} P_{y}(x - t) dt.
+\end{align*}
+The steps are similar to the above, except to show what functions the derivatives are dominated by after application of the MVT, and that these functions are bounded and in $L^{1}$.
+
+We have 
+\begin{align*}
+	\abs{\frac{\partial^{2}}{\partial x^{2}} P_{y}(x + c_{k} - t)} &= \frac{1}{\pi} \abs{\frac{-2y(y^{2} + (x + c_{k} - t)^{2}) + 8y(x + c_{k} - t)^{2}}{(y^{2} + (x + c_{k} - t)^{2})^{3}}} \\
+	&\leq \frac{1}{\pi} \left( \frac{2y}{(y^{2} + (x + c_{k} - t)^{2})^{2}} + \frac{8y(x + c_{k} - t)^{2}}{(y^{2} + (x + c_{k} - t)^{2})^{3}} \right) \\
+	&\leq \frac{1}{\pi} \left( \frac{2y}{(y^{2} + (x + c_{k} - t)^{2})^{2}} + \abs{\frac{4(x + c_{k} - t)}{(y^{2} + (x + c_{k} - t)^{2})^{2}}} \right) \\
+	&\leq \frac{1}{\pi} \left( 2y \cdot \frac{1}{(y^{2} + (x + c_{k} - t)^{2})^{2}} + \frac{1}{y} \abs{\frac{4y(x + c_{k} - t)}{(y^{2} + (x + c_{k} - t)^{2})^{2}}} \right) \\
+	&\leq \frac{1}{\pi} \left( 2y \cdot \frac{1}{(y^{2} + (x + c_{k} - t)^{2})^{2}} + \frac{1}{y} \cdot \frac{2}{y^{2} + (x + c_{k} - t)^{2}} \right).
+\end{align*}
+The second term is dominated by $(2 / y) \cdot g$, $g$ being the previously defined bounded $L^{1}$ function. The first is dominated by $2y \cdot g^{2}$, which is bounded and in $L^{1}$ due to Hölder's inequality: $\norm{g^{2}}_{1} \leq \norm{g}_{1} \norm{g}_{\infty}$.
+
+Next, we show the derivatives with respect to $y$ are dominated.
+% TODO you mean P_y?
+% Nigel - I meant "with respect to" y
+We restrict now the $\{d_{k}\}$ in the procedure to $(-y/2, y/2)$ for each $y$, so that $\{c_{k}\}$ is likewise restricted.
+\begin{align*}
+	\abs{\frac{\partial}{\partial y} P_{y + c_{k}}(x - t)} &= \frac{1}{\pi} \abs{\frac{(y + c_{k})^{2} + (x - t)^{2} - 2(y + c_{k})^{2}}{((y + c_{k})^{2} + (x - t)^{2})^{2}}} \\
+	&= \frac{1}{\pi} \abs{\frac{(x - t)^{2} - (y + c_{k})^{2}}{((y + c_{k})^{2} + (x - t)^{2})^{2}}} \\
+	&\leq \frac{1}{\pi} \cdot \frac{1}{((y + c_{k})^{2} + (x - t)^{2})}.
+\end{align*}
+Since $\abs{c_{k}} < y/2$, $y + c_{k} > y/2$, so (ignoring $\pi^{-1}$) this is dominated by the function 
+\begin{equation*}
+	g_{1}(t) = \frac{1}{(y/2)^{2} + (x - t)^{2}}, 
+\end{equation*}
+which is in $L^{1}$ and bounded by $(y/2)^{-2}$.
+
+Finally, 
+\begin{align*}
+	\abs{\frac{\partial^{2}}{\partial^{2} y} P_{y + c_{k}}(x - t)} &= \frac{1}{\pi}\abs{\frac{\partial}{\partial y} \left( \frac{-1}{((y + c_{k})^{2} + (x - t)^{2})} + \frac{2(x - t)^{2}}{((y + c_{k})^{2} + (x - t)^{2})^{2}} \right)} \\
+	&= \frac{1}{\pi} \abs{\frac{(y + c_{k})^{2} - (x - t)^{2}}{((y + c_{k})^{2} + (x - t)^{2})^{2}} + \frac{-8(x - t)^{2}(y + c_{k})((y + c_{k})^{2} + (x - t)^{2})}{((y + c_{k})^{2} + (x - t)^{2})^{4}}} \\
+	&\leq \frac{1}{\pi} \left( \abs{\frac{(x - t)^{2} - (y + c_{k})^{2}}{((y + c_{k})^{2} + (x - t)^{2})^{2}}} + \frac{8(x - t)^{2}(y + c_{k})}{((y + c_{k})^{2} + (x - t)^{2})^{3}} \right) \\
+	&\leq \frac{1}{\pi} \left( g_{1}(t) + \abs{\frac{4(x - t)}{((y + c_{k})^{2} + (x - t)^{2})^{2}}} \right) \\
+	&= \frac{1}{\pi} \left( g_{1}(t) + \frac{1}{y + c_{k}}\abs{\frac{4(x - t)(y + c_{k})}{((y + c_{k})^{2} + (x - t)^{2})^{2}}} \right) \\
+	&\leq \frac{1}{\pi} \left( g_{1}(t) + \frac{1}{y + c_{k}} \cdot \frac{2}{((y + c_{k})^{2} + (x - t)^{2})} \right) \\
+	&\leq \frac{1}{\pi} \left( g_{1}(t) + \frac{2}{y + c_{k}} g_{1}(t) \right), 
+\end{align*}
+which is bounded $L^{1}$. This completes the proof.
+
+\subsection{Exercise 8}%Hong Duc
+% reviewed by khanh - approved
+
+\typstmathinputenable{\$}
+%TODO any idea what Schur's lemma is about? It's not about irreducible group etc.?
+
+We have
+$
+(T f)(s) 
+&= ∫_0^∞ f(t) K(s, t) dif t \
+&= ∫_0^∞ f(t) s⁻¹ K(1, t/s) dif t.
+$
+Do a linear change of variable $ˆt = t/s$, then $(dif ˆt)/(dif t) = 1/s$.
+Then,
+$
+(T f)(s)
+&= ∫_0^∞ f(ˆt s) s⁻¹ K(1, ˆt) ⋅ s dif ˆt \
+&= ∫_0^∞ f(ˆt s) K(1, ˆt) dif ˆt \
+⟹ ‖T f‖_p
+&= (∫_0^∞ (∫_0^∞ f(t s) K(1, t) dif t)^p dif s)^(1\/p) \
+&≤ ∫_0^∞ (∫_0^∞ f(t s)^p dif s)^(1\/p) K(1, t) dif t.
+$
+Here we used Minkowski's integral inequality (we don't need $|⋅|$ because $f≥ 0$ and $k ≥ 0$).
+
+Now we consider the expression $(∫_0^∞ f(t s)^p dif s)^(1\/p)$, use a linear change of variable $ˆs = t s$ we get
+the expression is equal to $
+(∫_0^∞ f(ˆs)^p t⁻¹ dif ˆs)^(1\/p) = t^(-1\/p) ‖f‖_p$.
+
+Finally, $‖T f‖_p ≤ 
+∫_0^∞ t^(-1\/p) K(1, t) ⋅ ‖f‖^p dif t = γ ‖f‖^p$ as needed.
+
+\typstmathinputdisable{\$}
+
+
+\subsection{Exercise 13} % khanh
+%reviewed by Hong Duc, mostly okay
+Let $f \in L^p(0, 1), 1 \leq p < +\infty$ and for each $k=1, 2, ...$ define a function $f_k$ on $(0, 1)$ by letting $I_{k, j} = \set{x: (j-1) 2^{-k} \leq x < j 2^{-k}}, j = 1, 2, ..., 2^k$ and setting $f_k(x)$ equal to $|I_{k, j}|^{-1} \int_{I_{k, j}} f$ for $x \in I_{k, j}$. Prove that $f_k \to f$ in $L^p(0, 1)$ norm.
+
+\textbf{Proof}
+
+By construction of $I_{k, j}$, $\set{I_{k+1, j}}_{j=1}^{2^{k+1}}$ is a refinement of $\set{I_{k, j}}_{j=1}^{2^k}$, then for each $x \in (0, 1)$, there is a sequence of $I_{k, j} \searrow x$ that \textit{shrinks regularly}. As $1 \leq p < +\infty$, $f$ is defined on a finite measure set, then it is integrable.
+By LDT, $f_k \to f$ for a.e $x \in (0, 1)$
+
+We have
+
+\begin{align*}
+    \int |f_k|^p
+    &= \sum_{j=1}^{2^k} \int_{I_{k, j}} |f_k|^p \\
+    &= \sum_{j=1}^{2^k} \int_{I_{k, j}} \abs{\frac{1}{|I_{k, j}|} \int_{I_{k, j}} f(y) dy}^p dx \\
+    &= \sum_{j=1}^{2^k} |I_{k, j}| \abs{\frac{1}{|I_{k, j}|} \int_{I_{k, j}} f(y) dy}^p \\
+    &\leq \sum_{j=1}^{2^k} |I_{k, j}| \tuple*{\frac{\int_{I_{k, j}} |f(y)| dy}{|I_{k, j}|}}^p \\
+    &\leq \sum_{j=1}^{2^k} |I_{k, j}| \frac{\int_{I_{k, j}} |f(y)|^p dy}{|I_{k, j}|} &\text{(convexity of $x \mapsto x^p$)} \\
+    &= \int |f|^p
+\end{align*}
+
+Furthermore, by Fatou Lemma,
+\[
+    \int |f|^p \leq \liminf_{k \to \infty} \int |f_k|^p \leq \int |f|^p
+\]
+
+Then, $||f_k||_p = ||f||_p$.
+
+\begin{lemma}[Chapter 8 exercise 12]
+    \label{lemma_9.13.1}
+    If $f_k \to f$ a.e and $||f_k||_p \to ||f||_p, 0 < p < \infty$, then $||f_k - f||_p \to 0$
+\end{lemma}
+
+
+By Lemma \ref{lemma_9.13.1}, $||f_k - f||_p \to 0$
+
+
+\subsection{Exercise 17} % Nigel
+% reviewed by Hong Duc, mostly approved (but why can we assume f ≥ 0?)
+
+The modified statement of Lemma 9.14 is as follows: Suppose $f(\xx)$ is integrable over a spherical shell $a \leq \abs{\xx} \leq b$. Define $F(\rho) = \int_{a \leq \abs{\xx} \leq \rho} f(\xx) dx$ for $a \leq \rho \leq b$. Suppose $\phi(\rho)$ is such that $\int_{a}^{b} \phi(\rho) dF(\rho)$ exists, $0 \leq a < b < +\infty$. Then, 
+\begin{equation*}
+	\int_{a \leq \abs{\xx} \leq b} f(\xx) \phi(\abs{\xx}) dx = \int_{a}^{b} \phi(\rho) dF(\rho), 
+\end{equation*}
+the RHS a Riemann-Stieltjes integral.
+
+\iffalse
+\typstmathinputenable{\$}
+First we prove a lemma, this is needed to reduce to the case where $f≥ 0$.
+\begin{lemma}
+    If $∫ φ dif F$ exists, $F$ bounded variation, let $F=P-N$ be its Jordan decomposition where $P$ and $N$ are monotonically increasing, then $∫ φ dif P$ exists.
+\end{lemma}
+\begin{proof}
+    We will prove the existence of $∫ φ dif P$  using the Cauchy criterion.
+
+    Given any $ε>0$, we prove there exist $Γ$ such that for any partitions $Γ₁, Γ₂$ finer than $Γ$, then $|R_Γ₁[φ, P]-R_Γ₂[φ, P]|<ε$.
+
+    To do that, because $∫ φ dif F$ exists, we can pick $Γ$ such that for any partitions
+    $Γ₃, Γ₄$ finer than $Γ$, then $|R_Γ₃[φ, F]-R_Γ₄[φ, F]|<ε/2$.
+
+    Note that $R_Γ₃[φ, F] = P_Γ₃[φ, F] - N_Γ₃[φ, F]$ where
+    $R_Γ₃[φ, F] = ∑ φ(ξ_i) (f(x_i)-f(x_(i-1)))$ is the usual Riemann-Stieltjes sum,
+    $P_Γ₃[φ, F] = ∑ φ(ξ_i) (f(x_i)-f(x_(i-1)))⁺$
+    and
+    $N_Γ₃[φ, F] = ∑ φ(ξ_i) (f(x_i)-f(x_(i-1)))⁻$.
+
+    Specializing the above to the case $Γ₄=Γ₃=Γ$, we get that %for any partition $Γ₃$ finer than $Γ$, then
+    $|R_Γ[φ, F]-R'_Γ[φ, F]|<ε/2$ for any two choices ${ξ_i},{ξ'_i}$.
+    
+    Taking the $sup$ over all choices of $ξ_i$, this means $∑ |sup φ(ξ_i) - inf φ(ξ_i)| ⋅ |f(x_i)-f(x_(i-1))| ≤ ε/2$.
+    Which implies $∑ |sup φ(ξ_i) - inf φ(ξ_i)| ⋅ (f(x_i)-f(x_(i-1)))⁺ ≤ ε/2$.
+
+    \iffalse
+    So, for any partition $Γ₃$ finer than $Γ$,
+    $|P_Γ₃[φ, F] - P'_Γ₃[φ, F]| ≤ ε/2$, where $P$ and $P'$ are across two different ways of choosing $ξ$.
+    \fi
+
+    Thus, for any two partitions $Γ₃$ and $Γ₄$ finer than $Γ$, 
+    %picking $Γ₃$ being a common refinement of $Γ₄$ and $Γ₅$ and apply the argument above
+    we have
+    $|P_Γ₃[φ, F] - P_Γ₄[φ, F]| ≤ ε/2 < ε$, so we're done.
+\end{proof}
+\typstmathinputdisable{\$}
+\fi
+
+
+By considering positive and negative parts of $f$, we may assume $f \geq 0$.
+Put $I = \int_{a}^{b} \phi(\rho) dF(\rho)$. Then as $F$ is monotone (since $f \geq 0$), taking a partition $P = \{ a = \rho_{0}, \rho_{1}, \dots, \rho_{k} = b\}$, $I = \sum_{i=1}^{k} \int_{\rho_{i-1}}^{\rho_{i}} \phi(\rho) dF(\rho)$, 
+\begin{equation*}
+	\sum_{i=1}^{k} m_{i}(\phi)(F(\rho_{i}) - F(\rho_{i-1})) \leq I \leq \sum_{i=1}^{k} M_{i}(\phi)(F(\rho_{i}) - F(\rho_{i-1})), 
+\end{equation*}
+where $m_{i}(\phi)$ and $M_{i}(\phi)$ are the infimum and supremum of $\phi$ in $[\rho_{i-1}, \rho_{i}]$.
+(swapping the role of $m$ and $M$ on the segments where $F(ρ_i) > F(ρ_{i-1})$ if needed for the inequality to hold) % TODO modified
+Fix $\epsilon > 0$, and choose the above to be a partition $P_{\epsilon}$ such that for any refinement of $P_{\epsilon}$, the difference between the RHS and LHS above is less than $\epsilon$. We note this forces $F(\rho_{i}) - F(\rho_{i-1}) = 0$ when $M_{i}(\phi) = \infty$ since $I$ is finite, so $f = 0$ a.e. on $\{ \rho_{i-1} \leq \abs{\xx} \leq \rho_{i} \}$. Define $E_{i} = \{ \rho_{i-1} \leq \abs{\xx} \leq \rho_{i} \}$. Then the above is 
+\begin{equation*}
+	\sum_{i=1}^{k} m_{i}(\phi)\int_{E_{i}} f(\xx) dx \leq I \leq \sum_{i=1}^{k} M_{i}(\phi)\int_{E_{i}} f(\xx) dx,
+\end{equation*}
+or 
+\begin{equation*}
+	\int_{a \leq \abs{\xx} \leq b} \sum_{i=1}^{k} m_{i}(\phi) f(\xx) \chi_{E_{i}} dx \leq I \leq \int_{a \leq \abs{\xx} \leq b} \sum_{i=1}^{k} M_{i}(\phi) f(\xx) \chi_{E_{i}} dx.
+\end{equation*}
+Now take a sequence of partitions $P_{j}$ such that for $P_{j}$, the last inequalities above hold with a difference of at most $1/j$ between the RHS and LHS. Denote by $g_{j}$ and $h_{j}$ the integrands of the LHS and RHS, resp. 
+Then $\int_{a \leq \abs{\xx} \leq b} g_{j} \leq I \leq \int_{a \leq \abs{\xx} \leq b} h_{j}$
+and $\int_{a \leq \abs{\xx} \leq b} |h_{j} - g_{j}| \rightarrow 0$,
+so $h_{j} - g_{j} \rightarrow 0$ a.e., and
+since
+$
+\max(g_j(\xx), h_{j}(\xx))
+\geq f(\xx)\phi(\abs{\xx}) 
+\geq 
+\min(g_j(\xx), h_{j}(\xx))
+$, this implies $h_{j}(\xx) \rightarrow f(\xx)\phi(\abs{\xx})$ a.e., and thus $\int_{a \leq \abs{\xx} \leq b} f(\xx) \phi(\abs{\xx})dx$ exists and equals $I$.
+
+Now when $\phi$ is monotone and finite on $[a, b]$, then it is of bounded variation, and since $f$ is integrable over its domain, $F(E) = \int_{E} f(\xx) dx$ is absolutely continuous, and thus $F(\rho) = F(\{ a \leq \abs{\xx} \leq \rho \})$ is continuous. Thus $\int_{a}^{b} F d\phi$ exists, and thus so does $\int_{a}^{b} \phi dF$, so the lemma applies when $\phi$ is monotone and finite on $[a, b]$.
+
+\subsection{Exercise 22}%Hong Duc
+% reviewed by khanh - approved
+
+\typstmathinputenable{\$}
+
+Let $ω(α)=|{xx ∈ E: f^*(xx)>α}|$ be the distribution function of $f^*$ on $E$.
+
+Then $∫_E f^* dif xx = ∫_0^∞ ω(α) dif α = ∫_0^2 ω(α) dif α + ∫_2^∞ ω(α) dif α$.
+
+For the first term on the right, note that $∫_0^2 ω(α) dif α ≤ ∫_0^2 |E| dif α = 2 |E|$.
+
+For the second term on the right, we have $ω(α) ≤ |{xx ∈ ℝ^n: f^*(xx)>α}|$.
+By the proof of theorem 9.16, there exist constant $C$ (only depends on $n$) such that $|{xx ∈ ℝ^n: f^*(xx)>α}| ≤ C α⁻¹ ∫_{|f|>α\/2} |f(xx)| dif xx$. We can take constant $C ≥ 2$ (because if $C<2$, then picking a larger $C$ will still make the inequality hold).
+
+So, $ω(α) ≤ |{xx ∈ ℝ^n: f^*(xx)>α}| ≤ C α⁻¹ ∫_{|f|>α\/2} |f(xx)| dif xx$. Integrating both sides for $α ∈(2, ∞)$ we get
+$
+∫_2^∞ ω(α) dif α 
+&≤ ∫_2^∞ C α⁻¹ (∫_{|f|>α\/2} |f(xx)| dif xx) dif α  \
+&= C ∫_{|f|>1} |f(xx)| (∫_2^(2|f(xx)|) α⁻¹ dif α) dif xx \
+&= C ∫_{|f|>1} |f(xx)| (log (2|f(xx)|) - log(2)) dif xx \
+&= C ∫_{|f|>1} |f(xx)| log    |f(xx)| dif xx \
+&= C ∫_{|f|>1} |f(xx)| log^+  |f(xx)| dif xx \
+&≤ C ∫_(ℝ^n) |f(xx)|    log^+ |f(xx)| dif xx.
+$
+
+Note that the interchanging of the order of integration
+$
+∫_2^∞ C α⁻¹ (∫_{|f|>α\/2} |f(xx)| dif xx) dif α  
+= C ∫_{|f|>1} |f(xx)| (∫_2^(2|f(xx)|) α⁻¹ dif α) dif xx 
+$
+is justified as follows:
+
+Let $g: ℝ^n × ℝ → ℝ$, $g(xx, α) = χ_{2<α<2 |f(xx)|} ⋅ C α⁻¹ |f(xx)|$. Then $g ≥ 0$ and $g$ is measurable, so by Tonelli's theorem,
+$ ∫_ℝ ∫_(ℝ^n) g(xx, a) dif xx dif α = ∫_(ℝ^n) ∫_ℝ g(xx, a) dif α dif xx. $
+
+The left hand side is equal to
+$ ∫_ℝ ∫_(ℝ^n) g(xx, a) dif xx dif α 
+&= ∫_ℝ ∫_(ℝ^n) χ_{2<α<2 |f(xx)|} ⋅ C α⁻¹ |f(xx)| dif xx dif α \
+&= ∫_2^∞ ∫_{|f|>α\/2}  C α⁻¹ |f(xx)| dif xx dif α, $ and the right hand side is equal to
+$ ∫_(ℝ^n) ∫_ℝ g(xx, a) dif α dif xx
+&= ∫_(ℝ^n) ∫_ℝ χ_{2<α<2 |f(xx)|} ⋅ C α⁻¹ |f(xx)| dif xx dif α 
+\ &= ∫_{|f(xx)>1|} ∫_2^(2 |f(xx)|) C α⁻¹ |f(xx)| dif xx dif α. $
+
+In summary we have $∫_E f^*dif xx ≤ 2|E| + C ∫_(ℝ^n) |f|log⁺|f|dif xx ≤ C(|E|+∫_(ℝ^n) |f|log⁺|f|dif xx)$.
+
+\typstmathinputdisable{\$}
+
+\end{document}

@@ -1,0 +1,962 @@
+\chapter{MODULES AND VECTOR SPACES}
+
+\section{INTRODUCTION TO MODULE THEORY}
+
+\subsection{BASIC DEFINITIONS AND EXAMPLES}
+
+\begin{definition}[left module over ring]
+	Let $R$ be a nonunital ring, a left $R$-modue or a left module over $R$ is an (additive) abelian group $M$ together with a scalar multiplication map (action) $\cdot: R \times M \to M$ such that if $r, s \in R$, $m, n \in M$, then
+	\begin{align*}
+		(r + s)m &= rm + sm \\
+		(rs) m &= r(sm) \\
+		r (m + n) &= rm + rn
+	\end{align*}
+	
+	If $R$ is unital, then $1m = m$ for $m \in M$
+\end{definition}
+
+\begin{remark}[right module over ring, (two sided) module over commutative ring]
+	Right module is defined by the scalar multiplication map $M \times R \to M$ analogously. If $R$ is commutatitive, we can make a left module $M$ over $R$ into a right module by defining $mr = rm$ for $r \in R$, $m \in M$, then $M$ is called an $R$-module or a module over $R$. When $R$ is not commutative, this definition does not satisfy the condition $m (rs) = (m r) s$.
+\end{remark}
+
+\begin{remark}
+	From now on, assume all modules to be unital, that is, $R$ is unital.
+\end{remark}
+
+\begin{remark}[vector space]
+	If $F$ is a field, an module over $F$ is a vector space over $F$
+\end{remark}
+
+\begin{definition}[submodule]
+	Let $R$ be a ring and $M$ be an $R$-module, a $R$-submodule of $M$ is a subgroup $N$ of $M$ which is closed under the action of ring elements, that is, $rn \in N$ for $r \in R, n \in N$
+\end{definition}
+
+\begin{remark}
+	Some examples of modules
+	
+	\begin{enumerate}
+		\item $\Z$-module is an abelian group, sub-$\Z$-module is an abelian subgroup where $\Z \times M \to M$ is defined by
+		$$
+		n m = m + m + ... + m \text{ ($m$ times)}
+		$$
+		
+		\item $F[x]-module$. Let $F$ be a field and $V$ be a vector space over $F$, fix a linear map $T: V \to V$ , define an action of $F[x]$ on $V$ by
+		\begin{align*}
+			\times_T :F[x] \times V &\to V \\
+			(p(x), v) &\mapsto p(T)(v)
+		\end{align*}
+		
+		The action makes $V$ into an $F[x]$-module. Moreover, this construction describes all $F[x]$-modules. That is, an $F[x]$-module on an abelian group $V$ defines a $F$-vector space structure on $V$ and a linear map $T: V \to V$ and on the other hand, a $F$-vector space $V$ and a linear map $T: V \to V$ define an $F[x]$-module. Moreover, the $F[x]$-submodules of $V$ are precisely the $T$-stable subspaces of $V$ ($U \subseteq V$ is a $T$-stable subspace of $V$ if $T(U) \subseteq U$)
+		
+		\item $\E(U)$-module. Let $U \subseteq M$ be an open set on a smooth manifold, then the collection of differential $p$-forms $\E^p(U)$ on $U$ is an $\E(U)$-module.
+	\end{enumerate}
+\end{remark}
+
+\begin{proposition}[submodule criterion]
+	Let $R$ be a ring and $M$ be an $R$-module. A subset $N \subseteq M$ is a submodule of $M$ if and only if
+	\begin{enumerate}
+		\item $N \neq \emptyset$
+		\item $x  + ry \in N$  for all $r \in R$ and $x, y \in N$
+	\end{enumerate}
+\end{proposition}
+
+\begin{definition}[algebra over commutative ring]
+	Let $R$ be a commutative unital ring, an algebra over $R$ or $R$-algbera is a unital ring $A$ together with a ring homomorphism $f: R \to A$ such that the subring $\im f$ of $A$ is contained in the center of $A$. 
+\end{definition}
+
+\begin{remark}[alternative definition of algebra]
+	Let $R$ be a commutative unital ring, an $R$-algebra is an $R$-module structure on a unital ring $A$ and
+	$$
+		r (ab) = (ra) b = a (rb)
+	$$
+	
+	where $r \in R$, $a, b \in A$
+\end{remark}
+
+\begin{proof}
+	$R$-module structure of $A$ induced from $f: R \to A$ as follows:
+	$$
+		r a = f(r) a = a f(r) = a r
+	$$
+	where the middle equality is due to $\im f$ is contained is the center of $A$. map $f: R \to A$ induced from $R$-module structure of $A$ as follows:
+	$$
+		f(r) = r 1_A
+	$$
+	
+	$\im f$ is in the center of $A$ as required
+\end{proof}
+
+
+\begin{definition}[$R$-algebra homomorphism]
+	If $A$ and $B$ are two $R$-algebras, an $R$-algebra homomorphism $f: A \to B$ is a ring homomorphism and it respects the $R$-algebra structure
+	$$
+		\phi(ra)  =r \phi(a)
+	$$
+	
+	for $r \in R$, $a \in A$
+\end{definition}
+
+\subsection{QUOTIENT MODULES AND MODULE HOMOMORPHISMS}
+
+\begin{definition}[$R$-module homomorphism, $R$-linear]
+	Let $M, N$ be $R$-modules
+	\begin{enumerate}
+		\item A mao $\phi: M \to N$ is an $R$-module homomorphism (or $R$-linear) if it is a group homomorphism and it respect the $R$-module structure, that is
+		$$
+			\phi(r x) = r \phi(x)
+		$$
+		
+		\item An $R$-module homomorphism $M \to N$ is an isomorphism if it is bijective. $M$ and $N$ are called isomorphic and write $M \cong N$
+		
+		\item Denote the set of all $R$-module homorphism from $M$ to $N$ by $\Hom_R(M, N)$.
+	\end{enumerate}
+\end{definition}
+
+\begin{proposition}[$R$-module homomorphism criterion]
+	A map $\phi: M \to N$ is an $R$-module homomorphism if and only if
+	$$
+		\phi(r x + y) = r \phi(x) + \phi(y)
+	$$
+	
+	for all $r \in R$ and $x, y \in M$
+\end{proposition}
+
+\begin{proposition}[the structure of $\Hom_R(M, N)$]
+	Let $\phi, \psi \in \Hom_R(M, N)$, define the addition on $ \Hom_R(M, N)$ by
+	$$
+		(\phi + \psi)(x) = \phi(x) + \psi(x) 
+	$$
+	
+	for $x \in M$. The addition makes $\Hom_R(M, N)$ into an abelian group. If $R$ is commutative, then for $r \in R$, define action of $R$ on $\Hom_R(M, N)$ by
+	$$
+		(r \phi)(x) = r \phi(x)
+	$$
+	
+	for $x \in M$. This action makes $\Hom_R(M, N)$ into an $R$-module. If $\phi \in \Hom_R(M, N)$ and $\psi \in \Hom_R(N, L)$, then the composition is $\phi \psi \in \Hom_R(L, N)$. The composition in $\Hom_R(M, M)$ defines a multiplication on $\Hom_R(M, M)$ and makes it into an $R$-algebra.
+
+	 \note{this makes the category of $R$-modules $\RMod$ an preadditive category (or $\Ab$-enriched category), that is, the $\Hom$ set in $\RMod$ is itself an object of $\RMod$, has the structure of abelian group and composition of morphisms is bilinear}
+\end{proposition}
+
+\begin{definition}
+	The ring $\Hom_R(M, M)$ is called the endomorphism ring of $M$ and be denoted by $\End_R(M)$. Elements of $\End_R(M)$ are called endomorphisms.
+\end{definition}
+
+\begin{proposition}
+	Let $M$ be an $R$-module and $N$ be a submodule of $M$. The additive abelian quotient group $M/N$ can be made into an $R$-module by defining an action by
+	$$
+		r(x + N) = rx + N
+	$$
+	
+	for $r \in R$ and $x + N \in M / N$. The natural projection $\pi: M \to M / N$ defined by $\pi(x) = x + N$ is an $R$-module homomorphism with kernel $N$
+\end{proposition}
+
+\begin{definition}[sum of submodules]
+	Let $A, B$ be submodules of $R$-module $M$. The sum of $A$ and $B$ s the set
+	$$
+		A + B = \set{a + b: a \in A, b \in B}
+	$$
+	
+	The sum of two submodules is a submodule and is the smallest submodule which contains both $A$ and $B$
+\end{definition}
+
+\begin{theorem}[isomorphism theorems]
+	Isomorphism theorems for modules
+	\begin{enumerate}
+		\item (first isomorphism theorem) Let $M, N$ be $R$-modules, and $\phi: M \to N$ be module homomorphism. Then $\ker \phi$ is a submodule of $M$ and 
+		$$
+			\frac{M}{\ker \phi} \cong \im \phi
+		$$
+		
+		\item (second isomorphism theorem) Let $A, B$ be submodules of the $R$-module $M$, then 
+		$$
+			\frac{A + B}{B} \cong \frac{A}{A \cap B}
+		$$
+		
+		\item (third isomorphism theorem) Let $A, B$ be submodules of the $R$-module $M$ with $A \subseteq B$, then
+		$$
+			\frac{M / A}{B / A} \cong \frac{M}{B}
+		$$
+		
+		\item (fourth isomorphism theorem) Let $N$ be a submodule of the $R$-module $M$. There is a bijection between the submodules of $M$ containing $N$ and the submodules of $M / N$. The correspondence is given by $A \mapsto A / N$ with $A \supseteq N$.
+		
+		Moreover, this correspondence commutes with sum and intersection, \note{that is, this is an isomorphism between the lattice of submodules of $M/N$ and the lattice of submodules of $M$ containing $N$}
+	\end{enumerate}
+\end{theorem}
+
+\subsection{GENERATION OF MODULES, DIRECT SUMS, AND FREE MODULES}
+
+\begin{remark}
+	Let $R$ be a unital ring and module means left module
+\end{remark}
+
+\begin{definition}[sum, submodule generated by a subset, finitely generated submodule, cyclic submodule]
+	Let $M$ be an $R$-module
+	\begin{enumerate}
+		\item Let $N_1, N_2, ..., N_n$ be submodules of $M$, the sum of $N_1, N_2, ..., N_n$ is the set of all finite sums of elements from $N_i$
+		$$
+			N_1 + N_2 + ... + N_n = \set{a_1 + a_2 + ... + a_n: a_i \in N_i}
+		$$
+		
+		\item For any subset $A \subseteq M$, let
+		$$
+			RA = \set{r_1 a_1 + r_2 a_2 + ... + r_m a_m: r_i \in R, a_i \in A, m \in \N}
+		$$
+		
+		where by convention $A = \emptyset$, $RA = \set{0}$. $RA$ is a submodule of $M$ and called the submodule generated by $A$. $A$ is called set of generators or generating set and $RA$ is generated by $A$
+		
+		\item A submodule $N \subseteq M$ is called finitely generated if there is a finite subset $A \subseteq M$ such that $N = RA$
+		
+		\item A submodule $N \subseteq M$ is called cyclic if it is generated by a single element.
+	\end{enumerate}
+	
+	\note{if $R$ is unital, then $A \subseteq RA$. Moreover, $RA$ is the smallest submodule containing $A$}
+	
+	\note{In vector space theory, $RA$ is like taking the span of set of vectors $A$. In category theory, $R$ in $RA$ is (probably) a functor from $\Set \to \RMod$}
+\end{definition}
+
+\begin{definition}[direct product, external direct sum]
+	Let $M_1, M_2, ..., M_k$ be a collection of $R$-modules, the direct product (or external direct sum) of $M_1, M_2, ..., M_k$ is defined by
+	$$
+		M_1 \oplus M_2 \oplus ... \oplus M_k = \set{(m_1, m_2, ..., m_k): m_i \in M_i}
+	$$
+	
+	with addition and scalar multiplication defined component-wise. In Dummit-Foote, the authors also denoted direct product (or external direct sum) by
+	$$
+		M_1 \times M_2 \times ... \times M_k
+	$$
+\end{definition}
+
+\begin{proposition}
+	Let $N_1, N_2, ..., N_k$ be submodules of $R$-module $M$, the following are equivalent
+	\begin{enumerate}
+		\item the map $\pi: N_1 \times N_2 \times ... \times N_k \to N_1 + N_2 + ... + N_k$ defined by
+		$$
+			\pi(a_1, a_2, ..., a_k) = a_1 + a_2 + ... + a_k
+		$$
+		
+		is an module isomorphism.
+		
+		\item for $j \in \set{1, 2, ..., k}$
+		$$
+			N_j \cap (N_1 + N_2 + ... + N_{j-1} + N_{j+1} + ... + N_k) = \set{0}
+		$$
+		
+		\item Every element $x \in N_1 + N_2 + ... + N_k$ can be written uniquely in the form $a_1 + a_2 + ... + a_k$ where $a_i \in N_i$
+	\end{enumerate}
+	
+	\note{the condition in analogous to being orthogonal in vector space}
+\end{proposition}
+
+\begin{remark}[internal direct sum]
+	the modules are submodules of a module and it satisfies the above condition, the sum is called internal direct sum
+\end{remark}
+
+\begin{definition}[free module, basis, rank]
+	An $R$-module $F$ is called free on the subset $A \subseteq F$ if for every nonzero element of $x \in F$, there exist unique $r_1, r_2, ..., r_n \in R$ and $a_1, a_2, ..., a_n \in A$ such that
+	$$
+		x = r_1 a_1 + r_2 a_2 + ... + r_n a_n
+	$$
+	
+	for some $n \in \N$. $A$ is called basis or set of free generators of $F$. If $R$ is commutative, then the cardinality of $A$ is called rank of $F$.
+\end{definition}
+
+\begin{remark}
+	note that, the uniqueness condition of free module requires both $r_i$ and $a_i$ to be unique. Hence,  $\Z / 2\Z \oplus \Z / 2\Z$ is not a free $\Z$-module on the set $\set{(0, 1), (1, 0)}$ since
+	$$
+		(0, 1) = 1 (0, 1) = 3 (0, 1)
+	$$
+\end{remark}
+
+\begin{theorem}[free module functor]
+	Let $U: \RMod \to \Set$ be the forgetful function, there exists a left adjoint functor of $U$, namely the free module functor $F: \Set \to \RMod$, that is
+	$$
+		\Hom_{\RMod} (FA, M) \cong \Hom_{\Set} (A, UM)
+	$$
+	
+	where $M$ is an $R$-module. Moreover, for any set $A$, there is a monomorphism $A \hookrightarrow UFA$ such that for any $R$-module $M$ and map $f: A \to UM$, the adjunction induces a map $g: FA \to M$ and the diagram below commutes
+	
+	\begin{center}
+		\begin{tikzcd}
+			A \arrow[rd, "f"'] \arrow[r, hook] & UFA \arrow[d, "Ug", dashed] & FA \arrow[d, "g", dashed] \\
+			& UM                          & M                        
+		\end{tikzcd}
+	\end{center}
+\end{theorem}
+
+\begin{corollary}
+	Any two free modules on the same set are isomorphic. 
+\end{corollary}
+
+\subsection{TENSOR PRODUCT OF MODULES}
+
+A motivation for tensor product
+
+Let $R \subseteq S$ be a subring and $N$ be an $S$-module then $S$ is also an $R$-module. More generally, if there is a ring morphsim $f: R \to S$. An $S$-module $N$ can be extended to an $R$-module by defining 
+\begin{align*}
+	R \times N &\to N \\
+	(r, n) &\mapsto f(r) n
+\end{align*}
+
+In this case, $S$ can be considered as an extension of the ring $R$ and the resulting $R$-module is said to obtained from $N$ by \textbf{restricting} of scalars from $S$ to $R$. \note{maybe $f: R \to S$ defines a functor from $S$-Mod to $R$-Mod}
+
+
+Now, let  $N$ be an $R$-module, consider the problem of \textbf{extending} $N$ into an $S$-module. This is not always possible. In particular, let $R = \Z$, $S = \Q$
+\begin{enumerate}
+	\item If $N = \Q$ be an $\Z$-module, it is also a $\Q$-module.
+	
+	\item If $N = \Z$, then it is not a $\Q$-module since if $\Z$ is a $\Q$-module, then let $z = \frac{1}{2} \cdot 1 \in \Z$, then $z + z = 1$. However, $\Z$ can be embedded into $\Q$ by the canonical inclusion $\Z \hookrightarrow \Q$
+	
+	\item If $N$ is a finite order $\Z$-module which is an abelian group, then the (additive) order of every element in $N$ is finite. While for any $\Q$-module $M$, it is a vector space, every non-zero element in $\Q$ is of infinite order. Hence, every group morphism $N \to M$ must be zero, hence there is no embedding of $\Z$-module of finite additive order into a $\Q$-module.
+\end{enumerate}
+
+In the case $N = \Z$, it is not possible to make $N$ to be a $\Q$-module but it is possible to \textbf{embed} into a $\Q$-module. 
+
+Consider the problem of embedding an $R$-module $N$ into and $S$-module $M$ where $S$ is a subring of $R$. We have to define the scalar multiplication $S \times M \to M$. It is natural to consider $M$ as a quotient group of the free $\Z$-module (abelian group) of the set $S \times N$. For $(s, n) \in S \times N$, let $[s, n]$ denote the class of $(s, n)$. Let the inclusion $N \to M$ be defined by $n \mapsto [1, n]$, and the scalar multiplcation is defined by
+
+\begin{align*}
+	S \times M &\to M\\
+	(r, [s, n]) &\mapsto [rs, n]
+\end{align*}
+
+Then, the class of $(s, n)$ must satisfy for $m, n \in N$, then
+\begin{align*}
+	[s_1 + s_2, n] &= [s_1, n] + [s_2, n] &\text{(for $s_1, s_2 \in S$)} \\
+	[s, m + n] &= [s, m] + [s, n] &\text{(for $s \in S$)} \\
+	[sr, n] &= [s, rn] &\text{(for $s \in S$, $r \in R$)}
+\end{align*}
+
+The resulting quotient group is the tensor product $S \otimes_R N$ and called the left $S$-module obtained by extension of scalars from the left $R$-module $N$
+
+\begin{definition}[tensor product of right module and left module]
+	Let $M$ be a right $R$-module, $N$ be a left $R$-module, the tensor product $M \otimes_R N$ is the quotient of the free $\Z$-module on the set $M \times N$, denoted by $F(M \times N)$ by the subgroup generated by all elements of the form
+	\begin{align*}
+		&(m_1 + m_2, n) - (m_1, n) - (m_2, n) \\
+		&(m, n_1 + n_2) - (m, n_1) - (m, n_2) \\
+		&(mr, n) - (m, rn)
+	\end{align*}
+	
+	for $m, m_1, m_2 \in M$, $n, n_1, n_2 \in N$. Elements of $M \otimes_R N$ are called tensors. The class of $(m, n)$ is denoted by $m \otimes n$ and called simple tensor. We have the following relations for simple tensors
+	\begin{align*}
+		(m_1 + m_2) \otimes n &= m_1 \otimes n + m_2 \otimes n \\
+		m \otimes (n_1 + n_2) &= m \otimes n_1 + m \otimes n_2 \\
+		mr \otimes n &= m \otimes rn
+	\end{align*}
+	
+	Tensors can be written as a finite sum (non-uniquely) of simple tensors
+\end{definition}
+
+\begin{proposition}[extension of scalars]
+	Let $R$ be a subring of $S$ and $N$ be a left $R$-module, there exist unique $S$-module $S \otimes_R N$ and an inclusion map $i: N \to S \otimes_R N$ given by
+	\begin{align*}
+		i: N &\to S \otimes_R N \\
+			n &\mapsto 1 \otimes n
+	\end{align*}
+	
+	so that $i$ commutes with the $R$-module operations in $N$. That is
+	\begin{align*}
+		i (n_1 + n_2) &= i n_1 + i n_2 \\
+		i (r n) &= r i(n)
+	\end{align*}
+	
+	The left $S$-module $S \otimes_R N$ is called the left $S$-module obtained by extension of scalars from the left $R$-module $N$
+	
+	\note{analogous to complexification $V \hookrightarrow V \otimes_\R \C$ where $V$ is a real vector space}
+\end{proposition}
+
+\begin{definition}[$R$-balanced map]
+	Let $M$ be a right $R$-module, $N$ be a left $R$-module and $L$ be an additive abelian group. A map $phi: M \times N \to L$ is called $R$-balanced if
+	\begin{align*}
+		\phi(m_1 + m_2, n) &= \phi(m_1, n) + \phi(m_2, n) \\
+		\phi(m, n_1 + n_2) &= \phi(m, n_1) + \phi(m, n_2) \\
+		\phi(m, rn) &= \phi(mr, n)
+	\end{align*}
+\end{definition}
+
+\begin{theorem}[tensor product of right module and left module]
+	Let $R$ be a unital ring, $M$ be a right $R$-module and $N$ be a left $R$-module. Then, there exists a unique (up to isomorphism) abelian group $M \otimes_R N$ and an $R$-balanced inclusion map $i: M \times N \hookrightarrow M \otimes_R N$ such that any $R$-balanced map $\phi: M \times N \to L$ factors through $i$ by a group morphism $\Phi: M \otimes_R N \to L$
+	\begin{center}
+		\begin{tikzcd}
+			M \times N \arrow[rd, "\phi"'] \arrow[r, "i", hook] & M \otimes_R N \arrow[d, "\Phi", dashed] \\
+			& L                                      
+		\end{tikzcd}
+	\end{center}
+	
+	On the other hand, given any group morphism $\Phi: M \otimes_R N \to L$, the composition $\Phi i$ is an $R$-balanced map. In other words, this is an isomorphism from the set of $R$-balanced map $M \times N \to L$ into the set of group morphism $M \otimes_R N \to L$
+\end{theorem}
+
+\begin{definition}[bimodule]
+	Let $R, S$ be any unital rings. An abelian group $M$ is called an $(S, R)$-bimodule if $M$ is a left $S$-module, a right $R$-module, and $s(mr) = (sm)r$ for all $s \in S$, $r \in R$, $m \in M$
+\end{definition}
+
+\begin{definition}[module over a commutative ring]
+	Let $M$ be a left (or right) module over a commutative unital ring $R$, then the $(R, R)$-bimodule structure on $M$ by defining the left and right scalar multiplication coincide, that is $rm = mr$ for $r \in R$, $m \in M$. The $(R, R)$-bimodule structure is called the (standard) $R$-module structure.
+\end{definition}
+
+
+\begin{definition}[bilinear over a commutative ring]
+	Let $R$ be a commutative unital ring and $M, N, L$ be $R$-modules. A map $\phi: M \times N \to L$ is called $R$-bilinear if it is $R$-linear in each factor , that is
+	\begin{align*}
+		\phi(r_1 m_1 + r_2 m_2, n) &= r_1 \phi(m_1, n) + r_2 \phi(m_2, n) \\
+		\phi(m, r_1 n_1 + r_2 n_2) &= r_1 \phi(m, n_1) + r_2 \phi(m, n_2)
+	\end{align*}
+	
+	for all $r_1, r_2 \in R$, $m, m_1, m_2 \in M$, $n, n_1, n_2 \in N$
+\end{definition}
+
+\begin{theorem}[tensor product of $R$-modules]
+	Let $R$ be a commutative unital ring, $M, N$ be $R$-modules. Then there exists a unique (up to isomorphism) $R$-module $M \otimes_R N$ and an $R$-bilinear inclusion map $i: M \times N \hookrightarrow M \otimes_R N$ such that any $R$-blinear map $\phi: M \times N \to L$ factors through $i$ by an $R$-linear ($R$-module morphism) map $\Phi: M \otimes_R N \to L$.
+	\begin{center}
+		\begin{tikzcd}
+			M \times N \arrow[rd, "\phi"'] \arrow[r, "i", hook] & M \otimes_R N \arrow[d, "\Phi", dashed] \\
+			& L                                      
+		\end{tikzcd}
+	\end{center}
+	
+	On the other hand, given any $R$-linear map $\Phi: M \otimes_R N \to L$, the composition $\Phi i$ is $R$-bilinear. In other words, this is an isomorphism from the set of $R$-bilinear map $M \times N \to L$ into the set of $R$-linear map $M \otimes_R N \to L$
+\end{theorem}
+
+\begin{theorem}[tensor product of two $R$-module homomorphisms]
+	Let $M, M_1$ be right $R$-modules, $N, N_1$ be left $R$-modules, let $\phi: M \to M_1$ and $\psi: N \to N_1$ be left and right $R$-module homomorphisms
+	\begin{enumerate}
+		\item there exists a unique group homomorphism denoted by $\phi \otimes \psi: M \otimes_R N \to M_1 \otimes_R N_1$ such that for all $m \in M$, $n \in N$, $(\phi \otimes \psi) (m \otimes n) = \phi(m) \otimes \psi(n)$
+		\begin{center}
+			\begin{tikzcd}
+				M \times N \arrow[r, "\phi \times \psi"] \arrow[d, "\otimes_R"'] & M_1 \times N_1 \arrow[d, "\otimes_R"] \\
+				M \otimes_R N \arrow[r, "\phi \otimes \psi"', dashed]            & M_1 \otimes_R N_1                    
+			\end{tikzcd}
+		\end{center}
+		
+		\item If $M, M_1$ are also $(S, R)$-bimodules for some ring $S$ and $\phi: M \to M_1$ is also an $S$-module homomorphism, then $\phi \otimes \psi$ is a homomorphsim of left $S$-modules. In particular, if $R$ is commutative, then $\phi \otimes \psi$ is an $R$-module homomorphism.
+		
+		\item If $\lambda: M_1 \to M_2$ and $\mu: N_1 \to N_2$ are left and right $R$-module homomophisms, then $(\lambda \otimes \mu) (\phi \otimes \psi) = (\lambda \phi) \otimes (\mu \psi)$
+		\begin{center}
+			\begin{tikzcd}
+				M \times N \arrow[r, "\phi \times \psi"'] \arrow[d, "\otimes_R"'] \arrow[rr, "(\lambda \times \mu)(\phi \times \psi) = (\lambda \phi) \times (\mu \psi)", bend left] & M_1 \times N_1 \arrow[d, "\otimes_R"] \arrow[r, "\lambda \times \mu"'] & M_2 \times N_2 \arrow[d, "\otimes_R"] \\
+				M \otimes_R N \arrow[r, "\phi \otimes \psi", dashed] \arrow[rr, "(\lambda \otimes \mu)(\phi \otimes \psi) = (\lambda \phi) \otimes (\mu \psi)"', dashed, bend right] & M_1 \otimes_R N_1 \arrow[r, "\lambda \otimes \mu", dashed]             & M_2 \times N_2                       
+			\end{tikzcd}
+		\end{center}
+	\end{enumerate}
+\end{theorem}
+
+\begin{theorem}[associativity of tensor product]
+	Let $M$ be a right $R$-module, $N$ be a $(R, T)$-bimodule, $L$ be a left $T$-module, then there is a unique isomorphism \note{possibly natural}
+	\begin{align*}
+		(M \otimes_R N) \otimes_T L &\to M \otimes_R (N \otimes_T L) \\
+		(m \otimes n) \otimes l &\mapsto m \otimes (n \otimes l)
+	\end{align*}
+	
+	of groups for $m \in M$, $n \in N$, $l \in L$. If $M$ is an $(S, R)$-bimodule, then this is an isomorphism of left $S$-modules.
+\end{theorem}
+
+\begin{corollary}
+	If $R$ is commutative, and $M, N, L$ are left $R$-modules. Then
+	$$
+		(M \otimes N) \otimes L \cong M \otimes (N \otimes L)
+	$$
+	
+	as $R$-modules
+\end{corollary}
+
+
+\begin{definition}[multilinear over a commutative ring]
+	Let $R$ be a commutative unital ring and $M_1, M_2, ..., M_n$ and $L$ be $R$-modules. A map $\phi: M_1 \times M_2 \times ... \times M_n \to L$ is called $n$-multilinear over $R$ if it is $R$-linear in each component.
+\end{definition}
+
+\begin{corollary}[tensor product of $n$ modules]
+	Let $R$ be a commutative unital ring and $M_1, M_2, ..., M_n$ and $L$ be $R$-modules. There exists a unique (up to isomorphism) $R$-module $M_1 \otimes M_2 \otimes ... \otimes M_n$ and an $R$-multilinear inclusion map $i: M_1 \times M_2 \times ... \times M_n \hookrightarrow M_1 \otimes M_2 \otimes ... \otimes M_n$ such that any $R$-multilinear map $\phi: M_1 \times M_2 \times ... \times M_n \to L$ factors through $i$ by an $R$-linear map $\Phi: M_1 \otimes M_2 \otimes ... \otimes M_n \to L$
+	\begin{center}
+		\begin{tikzcd}
+			M_1 \times M_2 \times ... \times M_n \arrow[rd, "\phi"'] \arrow[r, "i", hook] & M_1 \otimes M_2 \otimes ... \otimes M_n \arrow[d, "\Phi", dashed] \\
+			& L                                      
+		\end{tikzcd}
+	\end{center}
+	
+	On the other hand, given any $R$-linear map $\Phi: M_1 \otimes M_2 \otimes ... \otimes M_n \to L$, the composition $\Phi i$ is $R$-multilinear. In other words, this is an isomorphism from the set of $R$-multilinear map $M_1 \times M_2 \times ... \times M_n \to L$ into the set of $R$-linear map $M_1 \otimes M_2 \otimes ... \otimes M_n \to L$
+\end{corollary}
+
+\begin{theorem}[tensor product of direct sum]
+	Let $M, M_1$ be right $R$-modules and $N, N_1$ be left $R$-modules. Then there are unique group isomorphisms
+	\begin{align*}
+		(M \oplus M_1) \otimes N &\to (M \otimes N) \oplus (M_1 \otimes N) \\
+		(m, m_1) \otimes n &\mapsto (m \otimes n, m_1 \otimes n)
+	\end{align*}
+	\begin{align*}
+		M \otimes (N \oplus N_1) &\to (M \otimes N) \oplus (M \otimes N_1) \\
+		m \otimes (n, n_1) &\mapsto (m \otimes n, m \otimes n_1)
+	\end{align*}
+
+	If $M, M_1$ are also $(S, R)$-bimodule, then these isomorphisms are left $S$-module isomorphisms. In particular, if $R$ is commutative then these are $R$-module isomorphisms
+\end{theorem}
+
+\begin{corollary}[extension of scalars for free modules]
+	The module obtained from the free module $R^n$ by extension of scalars from $R$ to $S$ is the free module $S^n$. That is,
+	$$
+		S \otimes_R R^n \cong S^n
+	$$
+	
+	as left $S$-modules
+\end{corollary}
+
+\begin{corollary}
+	Let $R$ be a commutative ring, then 
+	$$
+		R^s \otimes_R R^t \cong R^{st}
+	$$
+	
+	if $\set{m_1, m_2, ..., m_s}$ is a basis for $R^s$ and $\set{n_1, n_2, ..., n_t}$ is a basis for $R^t$, then a basis for $R^s \otimes_R R^t$ is
+	$$
+		\set{m_i \otimes n_j: 1 \leq i \leq s, 1 \leq j \leq t}
+	$$
+\end{corollary}
+
+\begin{proposition}
+	Suppose $R$ is a commutative ring and $M, N$ are $R$-modules, then there is a unique $R$-module isomorphism
+	\begin{align*}
+		M \otimes N &\to N \otimes M \\
+		m \otimes n &\mapsto n \otimes m
+	\end{align*}
+\end{proposition}
+
+\begin{proposition}
+	Let $R$ be a commutative ring and $A, B$ be $R$-algebras, then the multiplication below is well-defined
+	\begin{align*}
+		(A \otimes B) \times (A \otimes B) &\to A \otimes B \\
+		(a \otimes b, a_1 \otimes b_1) &\mapsto a a_1 \otimes b b_1
+	\end{align*}
+	
+	The multiplication makes $A \otimes B$ into an $R$-algebra.
+\end{proposition}
+
+\subsection{EXACT SEQUENCES \\ PROJECTIVE, INJECTIVE, FLAT MODULES}
+
+Some motivation for exactness: extension problem
+
+Consider whether given two $R$-modules $A$ and $B$, there exists a module $B$ such that $B$ contains $A$ as a submodule and $B / A = C$. In this case, $B$ is said to be the extension of $C$ by $A$. (\note{analogous to multiply $C$ by $A$ times})
+
+\begin{definition}[exact, exact sequence]
+	Let $A, B, C$, $A_n$ be left $R$-modules 
+	\begin{enumerate}
+		\item The pair of homomorphisms 
+		\begin{center}
+			\begin{tikzcd}
+				A \arrow[r, "\alpha"] & B \arrow[r, "\beta"] & C
+			\end{tikzcd}
+		\end{center}
+		is said to be exact at $B$ if $\im \alpha = \ker \beta$
+		
+		\item A sequence of homomorphisms
+		\begin{center}
+			\begin{tikzcd}
+				... \arrow[r] & A_{n-1} \arrow[r] & A_n \arrow[r] & A_{n+1} \arrow[r] & ...
+			\end{tikzcd}
+		\end{center}
+		
+		is said to be exact of it is exact at every $A_n$
+	\end{enumerate}
+\end{definition}
+
+\begin{remark}
+	Let $A, B, C$ be left $R$-modules
+	\begin{enumerate}
+		\item \begin{tikzcd} 0 \arrow[r] & B \arrow[r, "\beta"] & C \end{tikzcd} is exact at $B$ if and only if $\beta$ is injective.
+		\item \begin{tikzcd} A \arrow[r, "\alpha"] & B \arrow[r] & 0 \end{tikzcd} is exact at $B$ if and only if $\alpha$ is surjective.
+	\end{enumerate}
+\end{remark}
+
+\begin{definition}[short exact sequence]
+	The sequence
+	\begin{center}
+		\begin{tikzcd}
+			0 \arrow[r] & A \arrow[r, "i", hook] & B \arrow[r, "p", two heads] & C \arrow[r] & 0
+		\end{tikzcd}
+	\end{center}
+	
+	is exact if and only if $i$ is injective, $p$ is surjective and $\im i = \ker p$. If that sequence is exact, it is called short exact sequence.
+\end{definition}
+
+\begin{remark}
+	Some remarks on short exact sequence
+	\begin{enumerate}
+		\item splitting short exact sequence
+		
+		Given two $R$-modules $A, C$, the sequence below is exact
+			\begin{center}
+			\begin{tikzcd}
+				0 \arrow[r] & A \arrow[r, "i", hook] & A \oplus C \arrow[r, "p", two heads] & C \arrow[r] & 0
+			\end{tikzcd}
+		\end{center}
+		
+		where $i: A \to A \oplus C$ and $p: A \oplus C \to C$ are the canonical inclusion and canonical projection.
+		
+		\item  exactness induces a short exact sequence
+		
+		A sequence \begin{tikzcd} A \arrow[r, "\alpha"] & B \arrow[r, "\beta"] & C \end{tikzcd} is exact at $B$ if and only if the sequence 
+		\begin{center}
+			\begin{tikzcd}
+				0 \arrow[r] & \im \alpha \arrow[r, hook] & Y \arrow[r, two heads] & Y / \ker \beta \arrow[r] & 0
+			\end{tikzcd}
+		\end{center}
+		
+		is short exact.
+		
+		\item homomorphism induces a short exact sequence
+		
+		If $\phi: B \to C$ is an $R$-module homomorphism, then
+		\begin{center}
+			\begin{tikzcd}
+				0 \arrow[r] & \ker \phi \arrow[r, "i", hook] & B \arrow[r, "\phi", two heads] & \im \phi \arrow[r] & 0
+			\end{tikzcd}
+		\end{center}
+		
+		is exact where $i: \ker \phi \to B$ is the canonical inclusion map.
+		
+		\item homomorphism induces a short exact sequence
+		
+		In particular, if $M$ is an $R$-module generated by a set $S$ and $FS$ be the free $R$-module on $S$, then
+		\begin{center}
+			\begin{tikzcd}
+				0 \arrow[r] & \ker \phi \arrow[r, "i", hook] & FS \arrow[r, "\phi", two heads] & M \arrow[r] & 0
+			\end{tikzcd}
+		\end{center}
+		
+		is exact where $\phi$ is the composition $S \to FS \to M$. The short exact sequence describes a presentation of $M$ (\note{read this})
+	\end{enumerate}
+\end{remark}
+
+\begin{definition}[homomorphism of short exact sequences, equivalent]
+	Let $0 \to A \to B \to C \to 0$ and $0 \to A_1 \to B_1 \to C_1 \to 0$ be short exact sequences of $R$-modules
+	\begin{enumerate}
+		\item A homomorphism of short exact sequences is a triple $\alpha, \beta, \gamma$ of module homomorphisms so that the diagram below commutes
+		\begin{center}
+			\begin{tikzcd}
+				0 \arrow[r] & A \arrow[r, hook] \arrow[d, "\alpha"] & B \arrow[r, two heads] \arrow[d, "\beta"] & C \arrow[r] \arrow[d, "\gamma"] & 0 \\
+				0 \arrow[r] & A_1 \arrow[r, hook]                   & B_1 \arrow[r, two heads]                  & C_1 \arrow[r]                   & 0
+			\end{tikzcd}
+		\end{center}
+		
+		This is called an isomorphism if the triplets are isomorphisms of $R$-modules, in that case, $B$ and $B_1$ are called isomorphic extensions.
+		
+		\item Two short exact sequences are called equivalent if $\alpha: A \to A_1$ and $\gamma: C \to C_1$ are identities ($A = A_1$ and $C = C_1$), in that case, $B$ and $B_1$ are called equivalent extensions.
+	\end{enumerate}
+\end{definition}
+
+\begin{remark}
+	Some remarks on homomorphism of short exact sequences
+	\begin{enumerate}
+		\item If $B$ and $B_1$ are isomorphism extensions then there is an $R$-module isomorphism $B \to B_1$ that restricts to an isomorphism $A \to A_1$ and induces an isomorphism $C \to C_1$
+		
+		\item If $B$ and $B_1$ are equivalent extensions then there is an $R$-module isomorphism $B \to B_1$ that restricts to the identity map $A \to A_1$ and induces the identity map $C \to C_1$
+		
+		\item The notion of equivalent extensions measures how many different extensions of $C$ by $A$ and the notion of isomorphism extensions measure how many different extensions of $C$ by $A$ allowing $C$ and $A$ changed by isomorphisms.
+		
+		\item (the category of short exact sequences of $R$-modules) homomorphism of short exact sequences makes it a category, namely the category of short exact sequences of $R$-modules, that is, composition of homomorphisms of short exact sequences is also a homomorphism. Isomorphism of short exact sequence is isomorphism in that category.
+		
+		\end{enumerate}
+\end{remark}
+
+
+\begin{remark}
+	Some examples of short exact sequences
+	\begin{enumerate}
+		\item the diagram below represents a homomorphism of short exact sequences
+		\begin{center}
+			\begin{tikzcd}
+				0 \arrow[r] & \Z \arrow[r, "3", hook] \arrow[d, "\alpha"', two heads] & \Z \arrow[r, "\pi", two heads] \arrow[d, "\beta"', two heads] & \Z/3\Z \arrow[r] \arrow[d, "\cong"]          & 0 \\
+				0 \arrow[r] & \Z/2\Z \arrow[r, "i", hook]                             & \Z/6\Z \arrow[r, "\pi'", two heads]                           & (\Z / 6\Z) / (3\Z / 6\Z) \arrow[r] & 0
+			\end{tikzcd}
+		\end{center}
+		
+		where $\pi: \Z \to \Z / 3\Z$, $\pi': \Z / 6\Z \to (\Z / 6\Z) / (3\Z / 6\Z)$, $\alpha: \Z \to \Z / 2\Z$, $\beta: \Z \to \Z / 6\Z$ are the natural projections, and $i: \Z / 2\Z \to \Z / 6\Z$ is the natural inclusion.
+		
+		\item \note{TODO}
+	\end{enumerate}
+\end{remark}
+
+\begin{proposition}[the short five lemma]
+	Let $(\alpha, \beta, \gamma)$ be a homomorphism of short exact sequences \note{in the book, these are SES of groups but it should be true to any $R$-module}
+	\begin{center}
+		\begin{tikzcd}
+			0 \arrow[r] & A \arrow[r, hook] \arrow[d, "\alpha"] & B \arrow[r, two heads] \arrow[d, "\beta"] & C \arrow[r] \arrow[d, "\gamma"] & 0 \\
+			0 \arrow[r] & A_1 \arrow[r, hook]                   & B_1 \arrow[r, two heads]                  & C_1 \arrow[r]                   & 0
+		\end{tikzcd}
+	\end{center}
+	
+	\begin{enumerate}
+		\item $\alpha, \gamma$ being injective implies $\beta$ being injective 
+		\item $\alpha, \gamma$ being surjective implies $\beta$ being surjective
+	\end{enumerate}
+\end{proposition}
+
+\begin{definition}[split short exact sequence]
+	Let $R$ be a ring, a short exact sequence \begin{tikzcd}0 \arrow[r] & A \arrow[r, "i", hook] & B \arrow[r, "p", two heads] & C \arrow[r] & 0\end{tikzcd} is called split if there exists a map $\rho: A \oplus C \to B$ such that the diagram below commutes
+	\begin{center}
+		\begin{tikzcd}
+			&                                          & A \oplus C \arrow[rd, two heads] \arrow[dd, "\rho", dashed] &             &   \\
+			0 \arrow[r] & A \arrow[rd, "i", hook] \arrow[ru, hook] &                                                             & C \arrow[r] & 0 \\
+			&                                          & B \arrow[ru, "p", two heads]                                &             &  
+		\end{tikzcd}
+	\end{center}
+
+	where the map $A \to A \oplus C$ is the natural inclusion and the map $A \oplus C \to C$ is the natural projection.
+\end{definition}
+
+\begin{remark}[split short exact sequence]
+	Some remarks on short exact sequence being split
+	\begin{enumerate}
+		\item By the short five lemma, the map $\rho: A \oplus C \to B$ is an isomorphism. Hence, $B$ and $A \oplus C$ are both isomorphism extensions and equivalent extensions.
+		
+		\item Two other equivalent characterizations of short exact sequence: Let $R$ be a ring, a short exact sequence \begin{tikzcd}0 \arrow[r] & A \arrow[r, "i", hook] & B \arrow[r, "p", two heads] & C \arrow[r] & 0\end{tikzcd} is called split if one of the following is true
+		\begin{enumerate}
+			\item there exists a map $\eps: B \to A$ such that $\eps i = 1_A$
+			\begin{center}
+				\begin{tikzcd}
+					0 \arrow[r] & A \arrow[r, "i", hook] & B \arrow[r, "p", two heads] \arrow[l, "\eps",  two heads, bend left] & C \arrow[r] & 0
+				\end{tikzcd}
+			\end{center}
+			
+			\item there exists a map $\sigma: C \to B$ such that $p \sigma = 1_C$
+			\begin{center}
+				\begin{tikzcd}
+					0 \arrow[r] & A \arrow[r, "i", hook] & B \arrow[r, "p", two heads] & C \arrow[r] \arrow[l, "\sigma", hook, bend left] & 0
+				\end{tikzcd}
+			\end{center}
+		\end{enumerate}
+	\end{enumerate}
+\end{remark}
+
+
+\begin{proposition}
+	Let \begin{tikzcd}0 \arrow[r] & A \arrow[r, "\psi", hook] & B \arrow[r, "\phi", two heads] & C \arrow[r] & 0\end{tikzcd} be a short exact sequence of $R$-modules then $B = \psi A \oplus C'$ for some submodule $C'$ of $B$ with $\phi C' \cong C$ if and only if there is a homomorphism $\lambda: B \to A$ such that $\lambda \psi = 1_A$, that is, the short exact sequence is split.
+	\note{this seems redundant with my definition}
+\end{proposition}
+
+\begin{remark}[$\Hom_R(M, N)$ is an $R$-module]
+	Let $M, N$ be $R$-modules then $\Hom_R(M, N)$ admits an $R$-module structure defined by
+	\begin{align*}
+		(f + g)(x) &\mapsto f(m) + f(n) \\
+		(r f)(x) &\mapsto r f(x)
+	\end{align*}
+	
+	for every $f, g \in \Hom_R(M, N)$, $r \in R$
+\end{remark}
+
+\begin{proposition}
+	Let $D, L, N$ be $R$-modules, then
+	\begin{align*}
+		\Hom_R(D, L \oplus N) &\cong \Hom_R(D, L) \oplus \Hom_R(D, N) \\
+		\Hom_R(L \oplus N, D) &\cong \Hom_R(L, D) \oplus \Hom_R(N, D)
+	\end{align*}
+\end{proposition}
+
+\subsubsection{PROJECTIVE MODULES AND $\Hom_R(D, -)$} 
+
+\begin{proposition}[$\Hom_R(D, -)$ is a covariant functor]
+	Let $D, L, M$ be $R$-modules and $\psi: L \to M$ be an $R$-module be an $R$-module homomorphism, then $\psi$ induces an $R$-module homomorphism
+	\begin{align*}
+		\psi^*: \Hom_R(D, L) &\to \Hom_R(D, M) \\
+		f &\mapsto \psi f
+	\end{align*}
+	
+	Moreover if $\psi$ is injective then $\psi^*$ is injective
+\end{proposition}
+
+\begin{theorem}[$\Hom_R(D, -)$ is a left exact functor]
+	Let $D, L, M, N$ be $R$-modules. If
+	\begin{center}
+		\begin{tikzcd}
+			0 \arrow[r] & L \arrow[r, "\psi", hook] & M \arrow[r, "\phi", two heads] & N \arrow[r] & 0
+		\end{tikzcd}
+	\end{center}
+	
+	is exact then the following sequence is also exact
+	\begin{center}
+		\begin{tikzcd}
+			0 \arrow[r] & {\Hom_R(D, L)} \arrow[r, "\psi^*", hook] & {\Hom_R(D, M)} \arrow[r, "\phi^*"] & {\Hom_R(D, N)}
+		\end{tikzcd}
+	\end{center}
+\end{theorem}
+
+\begin{definition}[projective module]
+	An $R$-module $P$ is called projective if it satisfies one of the following equivalent conditions
+	\begin{enumerate}
+		\item For any $R$-modules $L, M, N$ if
+		\begin{center}
+			\begin{tikzcd}
+				0 \arrow[r] & L \arrow[r, "\psi", hook] & M \arrow[r, "\phi", two heads] & N \arrow[r] & 0
+			\end{tikzcd}
+		\end{center}
+		
+		exact then
+		\begin{center}
+			\begin{tikzcd}
+				0 \arrow[r] & \Hom_R(P, L) \arrow[r, "\psi^*", hook] & \Hom_R(P, M) \arrow[r, "\phi^*", two heads] & \Hom_R(P, N) \arrow[r] & 0
+			\end{tikzcd}
+		\end{center}
+		
+		is also exact.
+		
+		\item For any $R$-modules $M, N$, if $\psi: M \to N$ is surjective, then every $R$-module homomorphism $f: P \to N$ factors through $\psi$ by an $R$-module homomorphism $F: P \to M$
+		\begin{center}
+			\begin{tikzcd}
+				& P \arrow[d, "f"] \arrow[ld, "F"', dashed] &   \\
+				M \arrow[r, "\psi"', two heads] & N \arrow[r]                               & 0
+			\end{tikzcd}
+		\end{center}
+		
+		\item If $P$ is a quotient of the $R$-module $M$, then $P$ isomorphic to a direct summand of $M$, that is, every short exact sequence 
+		\begin{center}
+			\begin{tikzcd}
+				0 \arrow[r] & L \arrow[r, hook] & M \arrow[r, two heads] & P \arrow[r] & 0
+			\end{tikzcd}
+		\end{center}
+		
+		splits
+		
+		\item $P$ is a direct summand of a free $R$-module, that is, there exists a free $R$-module $M$ such that 
+		$$
+			M = P \oplus Q
+		$$
+	\end{enumerate}
+\end{definition}
+
+\begin{corollary}
+	Free modules are projective. A finitely generated module is projective if and only if it is a direct summand of a finitely generated free module. Every module is a quotient of a projective module.
+\end{corollary}
+
+\begin{remark}[left exact functor, exact functor]
+	Let $F: C \to D$ be a functor from an abelian category to an abelian category (\note{e.g. the category of $R$-modules}), for any short exact sequence
+	\begin{center}
+		\begin{tikzcd}
+			0 \arrow[r] & A \arrow[r, hook] & B \arrow[r, two heads] & C \arrow[r] & 0
+		\end{tikzcd}
+	\end{center}
+	
+	$F$ is called left exact if the induced sequence is exact
+	\begin{center}
+		\begin{tikzcd}
+			0 \arrow[r] & F(A) \arrow[r, hook] & F(B) \arrow[r] & F(C)
+		\end{tikzcd}
+	\end{center}
+	
+	$F$ is called exact if the induced sequence is exact
+	\begin{center}
+		\begin{tikzcd}
+			0 \arrow[r] & F(A) \arrow[r, hook] & F(B) \arrow[r, two heads] & F(C) \arrow[r] & 0
+		\end{tikzcd}
+	\end{center}
+\end{remark}
+
+\begin{remark}[functor, left exact functor, exact functor]
+	Some remarks on $\Hom_R(D, -)$
+	\begin{enumerate}
+		\item $\Hom_R(D, -)$ is a functor from $\RMod$ to $\RMod$
+		\item $\Hom_R(D, -)$ is left exact and it is exact if and only if $D$ is projective.
+	\end{enumerate}
+\end{remark}
+
+\subsubsection{INJECTIVE MODULES AND $\Hom_R(-, D)$} 
+
+\begin{proposition}[$\Hom_R(-, D)$ is a contravariant functor]
+	Let $D, M, N$ be $R$-modules and $\phi: M \to N$ be an $R$-module be an $R$-module homomorphism, then $\phi$ induces an $R$-module homomorphism
+	\begin{align*}
+		\phi^*: \Hom_R(N, D) &\to \Hom_R(M, D) \\
+		f &\mapsto f \phi
+	\end{align*}
+	
+	Moreover if $\phi$ is surjective then $\phi^*$ is injective.
+\end{proposition}
+
+\begin{theorem}[$\Hom_R(-, D)$ is right exact]
+	Let $D, L, M, N$ be $R$-modules, if
+	\begin{center}
+		\begin{tikzcd}
+			0 \arrow[r] & L \arrow[r, "\psi", hook] & M \arrow[r, "\phi", two heads] & N \arrow[r] & 0
+		\end{tikzcd}
+	\end{center}
+	
+	is exact then the following sequence is also exact
+	\begin{center}
+		\begin{tikzcd}
+			{\Hom_R(L, D)} & {\Hom_R(M, D)} \arrow[l, "\psi^*"'] & {\Hom_R(N, D)} \arrow[l, "\phi^*"', hook] & 0 \arrow[l]
+		\end{tikzcd}
+	\end{center}
+\end{theorem}
+
+\begin{definition}[injective module]
+	An $R$-module $Q$ is called injective if it satisfies one of the following equivalent conditions
+	\begin{enumerate}
+		\item For any $R$-modules $L, M, N$ if 
+		\begin{center}
+			\begin{tikzcd}
+				0 \arrow[r] & L \arrow[r, "\psi", hook] & M \arrow[r, "\phi", two heads] & N \arrow[r] & 0
+			\end{tikzcd}
+		\end{center}
+		
+		exact then
+		\begin{center}
+			\begin{tikzcd}
+				0 & \arrow[l] \Hom_R(L, Q) & \arrow[l, "\psi^*"', two heads] \Hom_R(M, Q) & \arrow[l, "\phi^*"', hook] \Hom_R(N, Q) & \arrow[l] 0
+			\end{tikzcd}
+		\end{center}
+		
+		\item For any $R$-module $L, M$, if $\psi: L \to M$ is injective, then every $R$-module homomorphism $f: L \to Q$ factors through $\psi$ by an $R$-module homomorphism $F: M \to Q$
+		\begin{center}
+			\begin{tikzcd}
+				0 \arrow[r] & L \arrow[r, "\psi", hook] \arrow[d, "f"'] & M \arrow[ld, "F", dashed] \\
+				& Q                                         &                          
+			\end{tikzcd}
+		\end{center}
+		
+		\item If $Q$ is a submodule of the $R$-module $M$ then $Q$ is a direct summand of $M$, that is, every short exact sequence
+				\begin{center}
+			\begin{tikzcd}
+				0 \arrow[r] & Q \arrow[r, hook] & M \arrow[r, two heads] & N \arrow[r] & 0
+			\end{tikzcd}
+		\end{center}
+		splits
+	\end{enumerate}
+\end{definition}
+
+\begin{remark}[left exact functor, exact functor]
+	Let $F: C \to D$ be a \textbf{contravariant} functor from an abelian category to an abelian category (\note{e.g. the category of $R$-modules}), for any short exact sequence
+	\begin{center}
+		\begin{tikzcd}
+			0 \arrow[r] & A \arrow[r, hook] & B \arrow[r, two heads] & C \arrow[r] & 0
+		\end{tikzcd}
+	\end{center}
+	
+	$F$ is called left exact if the induced sequence is exact
+	\begin{center}
+		\begin{tikzcd}
+			F(A) & \arrow[l] F(B) & \arrow[l, hook] F(C) & \arrow[l] 0
+		\end{tikzcd}
+	\end{center}
+	
+	$F$ is called exact if the induced sequence is exact
+	\begin{center}
+		\begin{tikzcd}
+			0 & \arrow[l] F(A) & \arrow[l, two heads] F(B) & \arrow[l, hook] F(C) & \arrow[l] 0
+		\end{tikzcd}
+	\end{center}
+\end{remark}
+
+\begin{remark}[functor, left exact functor, exact functor]
+	Some remarks on $\Hom_R(-, D)$
+	\begin{enumerate}
+		\item $\Hom_R(-, D)$ is a \textbf{contravariant} functor from $\RMod$ to $\RMod$
+		\item $\Hom_R(-, D)$ is left exact and it is exact if and only if $D$ is injective.
+	\end{enumerate}
+\end{remark}
+
+\begin{proposition}
+	Let $Q$ be an $R$-module
+	\begin{enumerate}
+		\item (Baer Criterion)
+	\end{enumerate}
+\end{proposition}
+
+\note{TODO}
+
+\subsubsection{FLAT MODULES AND $D \otimes_R -$}
+
+

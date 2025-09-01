@@ -1,0 +1,14 @@
+\section{Lower bound}
+
+A lower bound on problem \ref{prob:problem3} can be derived using a minimum assignment problem. 
+
+\begin{problem}[Minimum assignment]:
+
+Given a set of $m$ agents and $n$ tasks. The cost matrix $M \in \mathbb{R}_+^{m \times n}$ is given such that each entry $M_{ij}$ is the non-negative cost of the assignment agent i to task j. Each agent is assigned to at most one task and each task is assigned to at most one agent.
+
+Find $min\{m, n\}$ assignments $A$ ($A \subset [m] \times [n]$, $|A| = min\{m, n\}$) that minimize $\sum_{(i, j) \in A} M_{ij}$
+
+\label{prob:assignment}
+\end{problem}
+
+Let $A \in \mathbb{R}_+^{|V_P| \times |V_P|}$ be the $G_P$ adjacency matrix where each entry $A_{ij}$ is the non-negative edge length from node $i$ to node $j$. Define $A_{ii} = 0$. The lower bound on the total cost of k cycles can be obtained from the solution of problem \ref{prob:assignment} by treating $A$ as the cost matrix.

@@ -1,0 +1,137 @@
+\documentclass{article}
+
+\usepackage{../../latex_styles/color_template}
+\usepackage{../../latex_styles/symbol_def}
+
+
+\title{paxos-algorithm}
+\author{Nguyen Ngoc Khanh}
+\date{January 2022 - revisit June 2025}
+
+\begin{document}
+
+\maketitle
+
+\section{The Paxos Algorithm}
+
+In Paxos algorithm, there are two main roles: \textbf{proposer} and \textbf{acceptor}. Let there be $Q$ acceptors and $P$ proposers. The goal of Paxos is to make the $Q$ acceptors agree on a single value $v \in V$ through unreliable communication
+
+The algorithm below describes the simple version of Paxos algorithm 
+    
+\subsection{PROPOSER}
+    
+Let's label each proposer by an integer $p \in [0, |P|-1]$
+\label{algorithm:proposer}
+    
+\subsubsection{phase 1: prepare}\label{algorithm:proposer:prepare}
+    
+	\fbox{\begin{minipage}{50em}
+	
+	\textbf{input:} a value $v \in V$ and a round number $r \in \N$
+	
+	\textbf{1} choose the proposal number $n := r |P| + p$
+	
+	\textbf{2} broadcast the prepare message to all acceptors
+	
+	\begin{center}
+	PREPARE\_REQUEST $\tuple{n}$
+	\end{center}
+	
+	\textbf{3} if it receives responses from a majority of acceptors, do \textbf{phase 2}
+	
+	\end{minipage}}
+    
+\subsubsection{phase 2: accept}\label{algorithm:proposer:accept}
+    
+	\fbox{\begin{minipage}{50em}
+	
+	\textbf{4} receives 
+	
+	\begin{center}
+	PREPARE\_RESPONSE $\set{(n_q, v_q)}_{q \in J \subseteq Q}$
+	\end{center}
+	
+	\textbf{5} if all $v_q = \mathrm{null}$, pick  $w := v$. otherwise, pick the non-null value $w := v_q$ corresponds to the highest $n_q$
+	
+	\textbf{6} broadcast the accept message to all acceptors
+	
+	\begin{center}
+	ACCEPT\_REQUEST $\tuple{n, w}$
+	\end{center}
+	
+	\textbf{7} (optional) if proposer receives the responses from majority of acceptors then it knows that the consensus has reached to value $w$
+	
+	\end{minipage}}
+
+\subsection{ACCEPTOR} \label{algorithm:acceptor}
+    
+an acceptor $q$ holds two values $(n_q, v_q) \in \N \times (V \cap \set{\mathrm{null}})$ in its stable storage. Initially, $(n_q, v_q) = (0, \mathrm{null})$
+    
+\subsubsection{on receiving prepare request} \label{algorithm:acceptor:prepare}
+    
+	\fbox{\begin{minipage}{50em}
+	
+	\textbf{input:} PREPARE\_REQUEST $\tuple{n}$, acceptor state $(n_q, v_q)$
+	
+	\textbf{1} if $n_q < n$, then set its state into $(n, v_q)$ and reply
+	
+	\begin{center}
+	PREPARE\_RESPONSE $\tuple{n_q, v_q}$
+	\end{center}
+	
+	\end{minipage}}
+    
+\subsubsection{on receiving accept request} \label{algorithm:acceptor:accept}
+    
+	\fbox{\begin{minipage}{50em}
+	
+	\textbf{input:} ACCEPT\_REQUEST $\tuple{n, w}$, acceptor state $(n_q, v_q)$
+	
+	\textbf{1} if $n_j \leq n$, the set its state into $(n, w)$ and reply
+	\begin{center}
+	ACCEPT\_RESPONSE
+	\end{center}
+	
+	\end{minipage}}
+
+\section{PROOF}
+
+
+\begin{theorem}
+	\label{theorem:1}
+	If an accept request $(m, u)$ is accepted majority of acceptors, then any accept request $(n, v)$ with $m < n$ satisfies $v = u$.
+\end{theorem}
+
+\begin{proof}
+	We will prove by induction
+	
+	\textbf{induction step:} Suppose that for every $k = m, ..., n-1$, any accept request $(k, v)$ satisfies $v = u$.
+	
+	Let $A$ be the majority set of acceptors that accepted $(m, u)$. Let accept request $(n, v)$ be sent by proposer $p$.
+	
+	\begin{enumerate}
+		\item The prepare request $n$ must be acknowledged from some majority set of acceptors, namely $B$
+		
+		\item Let $q_1 \in A \cap B$ be an acceptor, since $m < n$, then $q_1$ accepts $(m, u)$ \textbf{before} receiving prepare request $n$
+		
+		\item Up receiving prepare request $n$, $q_1$ reply prepare response $(k_1, u_1)$ for some $k_1 \in [m, n)$.
+		
+		\item By induction hypothesis, $(k_1, u_1)$ satisfies $u_1 = u$
+		
+		\item \textbf{After} receiving reponse for prepare request $n$, at proposer $p$, let $(k_2, u_2)$ be the prepare response with non-null value and highest proposer number.
+		
+		\item Then, $k_1 \leq k_2$ since $(k_1, u)$ is one of the prepare responses with non-null value.
+		
+		\item On the other hand, $k_2 < n$ since $(k_2, u_2)$ is from an acceptor $q_2 \in B$ replying to a prepare request $n$. 
+		
+		\item By induction hypothesis, $k_2 \in [m, n)$ implies $(k_2, u_2)$ satisfies $u_2 = u$
+		
+		\item The accept request $(n, u_2)$ sent by $p$ must satisfies $u_2 = u$
+	\end{enumerate}
+\end{proof}
+
+\begin{corollary}
+	If an accept request $(m, u)$ is accepted majority of acceptors, then acceptors reach consensus at value $u$
+\end{corollary}
+
+\end{document}

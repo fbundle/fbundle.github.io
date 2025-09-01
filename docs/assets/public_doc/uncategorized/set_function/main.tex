@@ -1,0 +1,180 @@
+\documentclass{article}
+\input{header}
+
+\title{
+    On the set function in $\R^n$ \\
+    \large \textit{the ideas of these proofs below are from MA5205 Graduate Analysis I instructed by Dr. Chua Seng Kee at National University of Singapore}
+}
+\author{Nguyen Ngoc Khanh}
+\date{October 2023}
+
+\begin{document}
+
+\maketitle
+
+In $\R^n$, let $u$ be a set function on $\R^n$ which is a non-negative function on a subcollection of the collection of all subsets of $\R^n$, i.e. $u: \mathcal{U} \to [0, +\infty]$, $\mathcal{U} \subseteq \Power(\R^n)$. 
+
+We will construct the smallest set of assumptions on $u$ such that the following limit converges for almost every $x$ in a bounded outer measure $X$, i.e. $|X| < +\infty$
+\[
+    Du(x) = \lim_{B \searrow x} \frac{u(B)}{|B|} 
+\]
+where $B \searrow x$ denotes the contraction of $B$ into a singleton $x$, and $|B|$ denotes the Lebesgue measure of $B$.
+
+\begin{assumption}[Closed balls]
+    $\overline{\Ball_r(x)} \in \mathcal{U}$ for all $x \in \R^n$ and $r > 0$
+\end{assumption}
+
+Consider a simpler version where $B$ is a closed ball of radius $r > 0$ centered at $x$, i.e. $B = \overline{\Ball_r(x)}$. Define $\limsup$, $\liminf$ as follows
+\begin{itemize}
+    \item $\overline{D}u(x) = \limsup_{B \searrow x} \frac{u(B)}{|B|} = \lim_{r \to 0^+} \left( \sup_{t \in (0, r)} \frac{u(B_t(x))} {|B_t(x)|} \right)$
+    \item $\underline{D}u(x) = \liminf_{B \searrow x} \frac{u(B)}{|B|} = \lim_{r \to 0^+} \left( \inf_{t \in (0, r)} \frac{u(B_t(x))} {|B_t(x)|} \right)$
+\end{itemize}
+
+The necessary and sufficient condition for the existence of $Du(x)$ is $\overline{D}u(x) = \underline{D}u(x)$. If $\overline{D}u(x) > \underline{D}u(x)$, let $\alpha, \beta \in \Q$ such that $\overline{D}u(x) > \alpha > \beta > \underline{D}u(x) \geq 0$. Then $Du(x)$ exists for almost every $x \in X$ if 
+\[
+    A_{\alpha \beta} = \{x \in X: \overline{D}u(x) > \alpha > \beta > \underline{D}u(x)\}
+\]
+has measure zero for all $\alpha, \beta \in \Q$. If $x \in A_{\alpha \beta}$, then given any $\delta > 0$, there exist balls $B^{(\alpha)}, B^{(\beta)}$ centered at $x$ with radius less than $\delta$ such that $\frac{u(B^{(\alpha)})}{|B^{(\alpha)}|} > \alpha > \beta > \frac{u(B^{(\beta)})}{|B^{(\beta)}|}$. That is, the collections $\{B^{(\alpha)}\}$ and $\{B^{(\beta)}\}$ each cover $A_{\alpha \beta}$ finely.
+
+\begin{lemma}[Vitali Covering Theorem for Lebesgue measure]
+    A collection $\mathcal{V}$ of closed balls is said to cover a set $E$ finely if for every $x \in E$ and $\eta > 0$, there is a ball $B$ containing $x$ whose radius is less than $\eta$. Suppose $E$ is covered finely by a collection $\mathcal{V}$ of balls such that $0 < \mu_e(E) < +\infty$ \footnote{if $\mu_e(E) = 0$, the result is immediate}. Then, given any $\epsilon > 0$, there is a countable collection $M$ of disjoint balls such that
+    \[
+        \mu\left(E \setminus \bigcup_{B_k \in M} B_k \right) = 0 \text{ and } \sum_{B_k \in M} \mu(B_k) < \mu_e(E) + \epsilon
+    \]
+\end{lemma}
+
+\begin{claim}
+\label{claim:1}
+Given any open ball $U$ contains a subset $E \subseteq A_{\alpha \beta}$, the $u(\overline{U}) \geq \alpha |E|_e$
+\end{claim}
+
+Given any open ball $U$ contains a subset $E \subseteq A_{\alpha \beta}$, since $U$ is open, for each $x \in E$, we can find a subcollection of balls $\{B^{(\alpha)}_U\} \subseteq \{B^{(\alpha)} \}$ that finely covers $E$ and is contained in $U$. By Vitali Covering Theorem for Lebesgue measure on finite outer measure $E$ with $\{B^{(\alpha)}_U \}$, given any $\eta > 0$, there exists a finite collection of pairwise disjoint balls $\{B_i\}_{i=1}^N$ contained in $U$ such that $\left|E \setminus \bigcup_{i=1}^N B_i \right|_e < \eta / \alpha$ and $u(B_i) > \alpha |B_i|$
+
+\begin{assumption}[Additivity]
+    $A, B \in \mathcal{U} \text{ and } A \cap B = \emptyset \implies A \cup B \in \mathcal{U} \text{ and } u(A \cup B) = u(A) + u(B)$
+\end{assumption}
+
+\begin{assumption}[Subset]
+    $A, B \in \mathcal{U} \text{ and } A \subseteq B \implies u(A) \leq u(B)$  
+\end{assumption}
+
+Then,
+\begin{align*}
+    u(\overline{U})
+    &\geq u \left(\bigcup_{i=1}^N B_i \right) &\text{(subset)} \\
+    &= \sum_{i=1}^N u(B_i) &\text{(additivity)} \\
+    &> \alpha \sum_{i=1}^N |B_i| &\text{($B_i \in \{B^{(\alpha)}_U\} \subseteq \{B^{(\alpha)} \}$)}\\
+    &= \alpha \left| \bigcup_{i=1}^N B_i \right| &\text{(additivity of Lebesgue measure)} \\
+    &= \alpha \left| E \cap \bigcup_{i=1}^N B_i \right|_e &\text{(subset of Lebesgue measure)}\\
+    &= \alpha \left( |E|_e - \left| E \setminus \bigcup_{i=1}^N B_i \right|_e \right) &\text{(Caratheodory condition)}\\
+    &= \alpha |E|_e - \eta &\text{(Vitali Covering Theorem for Lebesgue measure)}\\
+\end{align*}
+
+As the inequality is true for all $\eta > 0$, $u(\overline{U}) \geq \alpha|E|_e$
+
+
+By Vitali Covering Theorem for Lebesgue measure on finite outer measure $A_{\alpha \beta}$ ($|A_{\alpha \beta}|_e \leq |X|_e < +\infty$) with $\{B^{(\beta)} \}$, given any $\epsilon > 0$, there exists a finite collection of pairwise disjoint balls $\{B_i \}_{i=1}^N$ such that $\left| A_{\alpha \beta} \setminus \bigcup_{i=1}^N B_i \right|_e < \epsilon$, $\sum_{i=1}^N |B_i| < |A_{\alpha \beta}|_e + \epsilon$, and $u(B_i) < \beta|B_i|$
+
+Then
+\begin{align*}
+    |A_{\alpha \beta}|_e + \epsilon
+    &> \sum_{i=1}^N |B_i| &\text{(Vitali Covering Theorem for Lebesgue measure)}\\
+    &> \frac{1}{\beta} \sum_{i=1}^N \mu(B_i) &\text{($B_i \in \{B^{(\beta)}_U\} \subseteq \{B^{(\beta)} \}$)}\\
+    &\geq \frac{\alpha}{\beta} \sum_{i=1}^N |B_i^o \cap A_{\alpha \beta}|_e &\text{(by claim $\ref{claim:1}$ as open ball $B_i^o$ contains $B_i^o \cap A_{\alpha \beta} \subseteq A_{\alpha \beta}$)} \\
+    &\geq \frac{\alpha}{\beta} \left| A_{\alpha \beta} \cap \bigcup_{i=1}^N B_i^o\right|_e &\text{(subadditivity of Lebesgue outer measure)} \\
+    &\geq \frac{\alpha}{\beta} \left| A_{\alpha \beta} \cap \bigcup_{i=1}^N B_i\right|_e &\text{($|A \cap B|_e \leq |A \cap B^o|_e + |A \cap B^b|_e$ \footnote{$B^b$ denotes the boundary of $B$})} \\
+    &\geq \frac{\alpha}{\beta} \left( |A_{\alpha \beta}|_e -  \left| A_{\alpha \beta} \setminus \bigcup_{i=1}^N B_i\right|_e \right) &\text{(Caratheodory condition)} \\
+    &> \frac{\alpha}{\beta} |A_{\alpha \beta}|_e - \frac{\alpha}{\beta}\epsilon &\text{(Vitali Covering Theorem for Lebesgue measure)}\\
+\end{align*}
+
+Send $\epsilon$ to $0^+$ implies $|A_{\alpha \beta}| \geq \frac{\alpha}{\beta} |A_{\alpha \beta}|$. Hence $|A_{\alpha \beta}| = 0$
+
+\begin{theorem}
+    \label{theorem:1}
+    Given a set function $u: \mathcal{U} \to [0, +\infty]$ defined for all closed balls $\overline{\Ball_r(x)}, r > 0$ that is equipped with (1) additivity and (2) subset, Then
+    \[
+        Du(x) = \lim_{B \searrow x} \frac{u(B)}{|B|} 
+    \]
+    is defined for almost every $x \in X$ where $X \subseteq \R^n$ is any finite outer measure set and $B \searrow x$ denotes the contraction of closed balls $\overline{\Ball_r(x)}, r > 0$ into a singleton $x$
+\end{theorem}
+
+Theorem \ref{theorem:1} is true for every $X_r = \Ball_r(0), r \in \N$, then it is also true for $\R^n$.
+
+\begin{corollary}
+    Given a set function $u: \mathcal{U} \to [0, +\infty]$ defined for all closed balls $\overline{\Ball_r(x)}, r > 0$ that is equipped with (1) additivity and (2) subset, Then
+    \[
+        Du(x) = \lim_{B \searrow x} \frac{u(B)}{|B|} 
+    \]
+    is defined for almost every $x \in \R^n$ set where $B \searrow x$ denotes the contraction of closed balls $\overline{\Ball_r(x)}, r > 0$ into a singleton $x$
+\end{corollary}
+
+\begin{remark}
+    Some remarks
+    \begin{itemize}
+        \item If $u$ is the Lebesgue measure, then $Du(x) = 1$ everywhere.
+        \item If $u$ is any positive measure on $\R^n$, $Du(x)$ is defined everywhere.
+        \item If $f: \R^n \to [0, +\infty]$ is Lebesgue measurable, let $u(E) = \int_E f$, then we have the Lebesgue Differentiation Theorem
+    \end{itemize}
+\end{remark}
+
+\begin{definition}[Absolute Continuous Set Function]
+    A set function $u: \mathcal{U} \to [0, +\infty]$ is defined to be absolute continous if given any $\epsilon > 0$, there exists a $\delta > 0$ such that if $E \in \mathcal{U}$, $|E| < \delta$, then $u(E) < \epsilon$
+\end{definition}
+
+\begin{lemma}[Theorem 7.28]
+    If $u: \mathcal{U} \to [0, +\infty]$ is an absolute continuous set function, $E \in \mathcal{U}$ with $|E| < +\infty$ and $\lim_{B \searrow x} \frac{u(B)}{|B|} = 0$ for every $x \in E$, then $u(E) = 0$
+\end{lemma}
+
+$u: \mathcal{U} \to [0, +\infty]$ is absolute continous, that is, given any $\epsilon > 0$, there exists a $\delta > 0$ such that $E \in \mathcal{U}, |E| < \delta$ then $u(E) < \epsilon$
+
+For each $x \in E$, $\lim_{B \searrow x} \frac{u(B)}{|B|} = 0$, that is, given any $\epsilon > 0$, then there exists a $\delta > 0$ such that for all ball $B$ with radius less than $\delta$, i.e. $r(B) < \delta$, then $u(B) < \epsilon |B|$. Fix $\epsilon > 0$, there is a collection of balls $\{B^{(\epsilon)} \}$ that finely covers $E$ and $u(B) < \epsilon |B|$ for all $B \in \{B^{(\epsilon)} \}$. By Vitali Covering Theorem for Lebesgue measure on finite measure $E$ with $\{B^{(\epsilon)} \}$, given any $\epsilon, \delta > 0$, there exists a finite collection of pairwise disjoint balls $\{B_i \}_{i=1}^N$ such that $|E \setminus \bigcup_{i=1}^N B_i| < \delta$ and $\sum_{i=1}^N |B_i| < |E| + \epsilon$. Hence,
+
+\begin{align*}
+    u(E)
+    &= u\left(E \setminus \bigcup_{i=1}^N B_i \right) + u\left(E \cap \bigcup_{i=1}^N B_i \right) &\text{$\left( \text{additivity, suppose } E \setminus \bigcup_{i=1}^N B_i, E \cap \bigcup_{i=1}^N B_i \in \mathcal{U} \right)$} \\
+    &\leq \epsilon + u\left(E \cap \bigcup_{i=1}^N B_i \right) &\text{(Vitali Covering Theorem for Lebesgue measure, absolute continuous)}\\
+    &\leq \epsilon + u\left(\bigcup_{i=1}^N B_i \right) &\text{(subset)}\\
+    &= \epsilon + \sum_{i=1}^N u(B_i) &\text{(additivity)} \\
+    &\leq \epsilon + \epsilon \sum_{i=1}^N |B_i| &\text{($B_i \in \{B^{(\epsilon)} \}$)} \\
+    &\leq \epsilon + \epsilon (|E| + \epsilon) &\text{(Vitali Covering Theorem for Lebesgue measure)}
+\end{align*}
+
+As $|E| < +\infty$, send $\epsilon$ to $0^+$ implies $u(E) = 0$
+
+\begin{remark}
+    Put $u([a, b]) = |f(b) - f(a)|$, $\lim_{B \searrow x} \frac{u(B)}{|B|} = 0$ implies $f$ being singular, recover \textbf{Theorem 7.28}    
+\end{remark}
+
+
+\begin{corollary}
+    \label{corollary:2}
+    If $u: \mathcal{U} \to [0, +\infty]$ is an absolute continuous set function, $E \in \mathcal{U}$ with $|E| < +\infty$ and $\lim_{B \searrow x} \frac{u(B)}{|B|} = 0$ for \textbf{almost} every $x \in E$, then $u(E) = 0$
+\end{corollary}
+
+Let $F \subseteq E$ with $|F| = 0$ and $\lim_{B \searrow x} \frac{u(B)}{|B|} = 0$ in $E \setminus F$. $u(E) = u(E \setminus F) + u(F) = u(F)$. By absolute continuity of $u$, $u(E) = u(F) = 0$
+
+
+
+
+
+\begin{theorem}[Theorem 7.29]
+    If $u: \mathcal{U} \to [0, +\infty]$ is an absolute continuous set function. Given $E \in \mathcal{U}$ with $|E|_e < +\infty$, given necessary conditions (additivity, subset) then $u'(x) = \lim_{B \searrow x} \frac{u(B)}{|B|}$ is defined almost every $x \in E$. Furthermore,
+    \[
+        u(E) = \int_E u'
+    \]
+    for all $E \in \mathcal{U} \cap \mathcal{M}(\R^n)$.
+\end{theorem}
+
+$u'$ is defined almost every $x$ in a finite outer measure $E$ is immediate from theorem \ref{theorem:1}. For the second part, let $v(E) = u(E) - \int_E u'$ for all $E \in \mathcal{U} \cap \mathcal{M}(\R^n)$, then 
+
+\[
+    \lim_{B \searrow x} \frac{v(E)}{|E|} = \lim_{B \searrow x} \frac{u(E) - \int_E u'}{|E|} = \lim_{B \searrow x} \frac{u(E)}{|E|} - \lim_{B \searrow x} \frac{\int_E u'}{|E|} = 0 \text{ for almost every $x \in E$}
+\]
+
+By corollary \ref{corollary:2}, $v(E) = 0$ almost every where.
+
+\begin{remark}
+    Put $u([a, b]) = |f(b) - f(a)|$, $f' = u' = \lim_{B \searrow x} \frac{u(B)}{|B|}$, recover \textbf{Theorem 7.29}    
+\end{remark}
+
+\end{document}

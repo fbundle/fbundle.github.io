@@ -1,0 +1,50 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\input{header}
+
+\title{Zorn's Lemma}
+\author{Nguyen Ngoc Khanh}
+\date{October 2023}
+
+\begin{document}
+
+\maketitle
+
+
+
+\includegraphics{spanning_tree.png}
+
+
+\begin{definition}[Partially Order Set]
+    A partial order on a set $X$ is a binary relation, denoted by $\leq$ such that
+    \begin{enumerate}
+        \item reflexivity: $x \leq x$ for all $x \in X$
+        \item anti-symmetry: $x = y$ if $x \leq y$ and $y \leq x$ for all $x, y \in X$
+        \item transitivity: $x \leq z$ if $x \leq y$ and $y \leq z$ for all $x, y, z \in X$
+    \end{enumerate}
+    A set $X$ equipped with a partial order $\leq$ is said to be a partially ordered set, denoted by $(X, \leq)$
+\end{definition}
+
+\begin{definition}[Linearly Ordered Set]
+    A partially ordered set $(X, \leq)$ is said to be a linearly ordered set if every two elements are comparable, that is, $x \leq y$ or $y \leq x$ for all $x, y \in X$. The order $\leq$ is said to be a linear order.
+\end{definition}
+
+\begin{definition}[Upper Bound]
+    Given a partially ordered set $(X, \leq)$, an element $t \in X$ is said to be an upper bound of a subset $Y \subseteq X$ if $y \leq t$ for all $y \in Y$
+\end{definition}
+
+\begin{definition}[Maximal]
+    Given a partially ordered set $(X, \leq)$, an element $w \in X$ is said to be maximal if $x \in X$ and $w \leq x$, then $x = w$
+\end{definition}
+
+
+
+
+
+\begin{axiom}[Zorn's Lemma]
+    Let $(X, \leq)$ be a non-empty partially ordered set in which every linearly ordered subset has an upper bound. Then, $(X, \leq)$ has a maximal element.
+\end{axiom}
+
+
+\end{document}

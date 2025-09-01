@@ -1,0 +1,244 @@
+\section{QUESTION 1: GAUSSIAN MEASURES}
+
+\begin{problem}[question 1: Gaussian measures]
+	Let $\Omega = \R^d$, cost function $c(x, y) = \norm{x - y}^2$, and two Gaussian measures $\mu = \mc{N}(m_\mu, \Sigma_\mu)$ and $\nu = \mc{N}(m_\nu, \Sigma_\nu)$
+	\begin{enumerate}[label=(\alph*)]
+		\item Prove that the map 
+		$$
+			T: x \mapsto m_\nu + A(x - m_\mu)
+		$$
+		is optimal, that is, $T_{\#} \mu = \nu$ where $A = \Sigma_\mu^{-1/2}(\Sigma_\mu^{1/2} \Sigma_\nu \Sigma_\mu^{1/2})^{1/2} \Sigma_\mu^{-1/2}$
+		
+		\item Prove that
+		$$
+			W_2^2(\mu, \nu) = \norm{m_\mu - m_\nu}^2 + B(\Sigma_\mu, \Sigma_\nu)^2
+		$$
+		
+		where $B$ is the Bures metric
+		$$
+			B(\Sigma_\mu, \Sigma_\nu)^2 = \tr(\Sigma_\mu + \Sigma_\nu - 2(\Sigma_\mu^{1/2} \Sigma_\nu \Sigma_\mu^{1/2})^{1/2})
+		$$
+	\end{enumerate}
+\end{problem}
+
+\begin{lemma}
+	If $X$ is a random variable on $\R^d$, then for any linear map $A: \R^d \to \R^d$
+	$$
+		\Cov(AX) = A \Cov(X) A^T
+	$$
+\end{lemma}
+
+\subsection{1.a}
+
+\textbf{$\nu$ is the push-forward measure of $\mu$ under the map $T: \Omega \to \Omega$}
+
+Let $X \sim \mu$ and $Y = T(X)$, since $T$ is affine, the distribution of $Y$ is also Gaussian, we have 
+
+$$
+	\Exp[Y] = m_\nu + A (\Exp[X] - m_\mu) = m_\nu
+$$
+
+On the other hand, note that $A$ is symmetric, hence
+
+\begin{align*}
+	\Cov(Y)
+	&= A \Cov(X - m_\mu) A^T\\
+	&= A \Sigma_\mu A^T \\
+	&= A \Sigma_\mu A \\
+	&= \Sigma_\mu^{-1/2}(\Sigma_\mu^{1/2} \Sigma_\nu \Sigma_\mu^{1/2})^{1/2} \Sigma_\mu^{-1/2} \Sigma_\mu \Sigma_\mu^{-1/2}(\Sigma_\mu^{1/2} \Sigma_\nu \Sigma_\mu^{1/2})^{1/2} \Sigma_\mu^{-1/2} \\
+	&= \Sigma_\nu
+\end{align*}
+
+Hence, $T_{\#} \mu = \nu$
+
+\textbf{$T: \Omega \to \Omega$ is optimal}
+
+Let the convex function $\phi: \Omega \to \R$ be defined by
+$$
+	\phi(x) = m_\nu^T x + \frac{1}{2} (x - m_\mu)^T A (x - m_\mu)
+$$
+
+We have that $(\nabla \phi)_{\#} \mu = \nu$ and $T = \nabla \phi$. By Brenier theorem, $T$ is the unique optimal map.
+
+
+
+\subsection{1.b}
+
+Let $X \sim \mu$ and $Z = X - m_\mu$, since $T$ is optimal, we have
+
+\begin{align*}
+	W_2^2 (\mu, \nu)
+	&= \Exp[\norm{X - T(X)}^2] \\
+	&= \Exp[\norm{X - m_\nu - A(X - m_\mu)}^2] \\
+	&= \Exp[\norm{(m_\mu - m_\nu) + (I - A)Z}^2] \\
+	&= \Exp \bracket{\norm{m_\mu - m_\nu}^2 + \norm{(I - A)Z}^2 + \inner{m_\mu - m_\nu, (I - A)Z}} \\
+	&= \norm{m_\mu - m_\nu}^2 + \Exp[\norm{(I - A)Z}^2] + \Exp[\inner{m_\mu - m_\nu, (I - A)Z}]
+\end{align*}
+
+Since $Z$ is of Gaussian with mean zero, so is $(I - A) Z$, then
+$$
+	\Exp[\inner{m_\mu - m_\nu, (I - A)Z}] = \inner{m_\mu - m_\nu, \Exp[(I - A) Z]} = 0
+$$
+
+Since $(I - A)Z$ is of mean zero and $A$ is symmetric, then
+
+\begin{align*}
+	\Exp[\norm{(I - A)Z}^2] 
+	&= \tr \Cov((I - A)Z) \\
+	&= \tr((I-A) \Sigma_\mu (I-A)^T) \\
+	&= \tr((I-A) \Sigma_\mu (I-A)) \\
+	&= \tr((I-A)^2 \Sigma_\mu) \\
+	&= \tr \Sigma_\mu + \tr(A^2 \Sigma_\mu) - 2 \tr (A\Sigma_\mu) \\
+	&= \tr \Sigma_\mu + \tr(A \Sigma_\mu A^T) - 2 \tr (A\Sigma_\mu) \\
+	&= \tr \Sigma_\mu + \tr \Sigma_\nu - 2 \tr (A\Sigma_\mu) &\text{(from previous part)}
+\end{align*}
+
+We have
+\begin{align*}
+	\tr(A \Sigma_\mu)
+	&= \tr (\Sigma_\mu^{-1/2}(\Sigma_\mu^{1/2} \Sigma_\nu \Sigma_\mu^{1/2})^{1/2} \Sigma_\mu^{-1/2} \Sigma_\mu) \\
+	&= \tr ((\Sigma_\mu^{1/2} \Sigma_\nu \Sigma_\mu^{1/2})^{1/2} \Sigma_\mu^{-1/2} \Sigma_\mu \Sigma_\mu^{-1/2}) \\
+	&= \tr (\Sigma_\mu^{1/2} \Sigma_\nu \Sigma_\mu^{1/2})^{1/2}
+\end{align*}
+
+Hence, 
+$$
+	W_2^2(\mu, \nu) = \norm{m_\mu - m_\nu}^2 + B(\Sigma_\mu, \Sigma_\nu)^2
+$$
+
+\section{QUESTION 2: NON-UNIQUENESS	}
+
+\begin{problem}[question 2: non-uniqueness]
+	Find two distribution $P$ and $Q$ such that the optimal transport map between $P$ and $Q$ is not unique
+\end{problem}
+
+In $\R^4$, let $A = (1, 0, 0, 0)$, $B = (0, 1, 0, 0)$, $C = (0, 0, 1, 0)$, $D = (0, 0, 0, 1)$, then $\norm{A - C} = \norm{A - D} = \norm{B - C} = \norm{B - D} = \sqrt{2}$, let
+\begin{align*}
+	P = \frac{1}{2}(\delta_A + \delta_B) \\
+	Q = \frac{1}{2}(\delta_C + \delta_D)
+\end{align*}
+
+Then, under the cost $c(x, y) = \norm{x - y}^2$, then there are two maps transporting $P$ to $Q$ as follows:
+\begin{align*}
+	&T_1: A \mapsto C, B \mapsto D \\
+	&T_2: A \mapsto D, B \mapsto C
+\end{align*}
+
+Both are optimal and of the same cost.
+
+\section{QUESTION 3: OPTIMAL OR NOT}
+
+\begin{problem}[question 3: optimal or not]
+	Assume that $X, Y \in \R^2$ such that
+	$$
+		X \sim \mc{N}_2 \tuple*{\begin{bmatrix}
+			0 \\
+			0
+		\end{bmatrix}, \begin{bmatrix}
+			1 & 0 \\
+			0 & 1 
+	\end{bmatrix}} \text{ and } 
+	Y \sim \mc{N}_2 \tuple*{\begin{bmatrix}
+			-1 \\
+			1
+		\end{bmatrix}, \begin{bmatrix}
+			5 & 3 \\
+			3 & 2 
+	\end{bmatrix}}
+	$$
+	
+	For each of the following maps, say whether it is (or not) an optimal transport between $X$ and $Y$ and why
+	\begin{enumerate}[label=(\alph*)]
+		\item $T_1: \R^2 \to \R^2$ given by
+		$$
+			T_1(x) = \begin{bmatrix}
+				-1 \\
+				1
+			\end{bmatrix} + \begin{bmatrix}
+				2 & 1 \\
+				1 & 1
+			\end{bmatrix} \cdot x
+		$$
+		
+		\item $T_2: \R^2 \to \R^2$ given by
+		$$
+		T_2(x) =\begin{bmatrix}
+			2 & 1 \\
+			1 & 1
+		\end{bmatrix} \cdot x
+		$$
+		
+		\item $T_3: \R^2 \to \R^2$ given by
+		$$
+		T_3(x) = \begin{bmatrix}
+			-1 \\
+			1
+		\end{bmatrix}
+		$$
+		
+		\item $T_4: \R^2 \to \R^2$ given by
+		$$
+		T_4(x) = \begin{bmatrix}
+			-1 \\
+			1
+		\end{bmatrix} + \frac{1}{\sqrt{2}}\begin{bmatrix}
+			3 & -1 \\
+			1 & -1
+		\end{bmatrix} \cdot x
+		$$
+	\end{enumerate}
+\end{problem}
+
+\subsection{NECESSARY CONDITION}
+
+A necessary condition for a map $T(x) = b + Ax$ being optimal is $T_\# \mu = \nu$. Since both $X$ and $Y$ are Gaussians, it sufficient to check that $Y = \Exp[T(X)]$ and $\Cov(Y) = \Cov(T(X))$, we have 
+\begin{align*}
+	&\begin{bmatrix}
+		-1 \\
+		1
+	\end{bmatrix} = \Exp[Y] = \Exp[T(X)] = b + A \Exp[X] = b \\
+	&\begin{bmatrix}
+		5 & 3 \\
+		3 & 2
+	\end{bmatrix} = \Cov(Y) = \Cov(T(X)) = A \Cov(X) A^T = AA^T
+\end{align*}
+
+We can easily see that $T_1$ is the only map satisfying the necessary condition.
+
+\subsection{SUFFICIENT CONDITION}
+
+Assuming the cost function is $c(x, y) = \norm{x - y}^2$, the unique optimal transport map from $\mc{N}(m_\mu, \Sigma_\mu)$ into $\mc{N}(m_\nu, \Sigma_\nu)$ is $T: \R^2 \to \R^2$
+$$
+	T(x) = m_\nu + A(x - m_\mu) = (m_\nu - A m_\mu) + Ax
+$$
+
+where $A = \Sigma_\mu^{-1/2}(\Sigma_\mu^{1/2} \Sigma_\nu \Sigma_\mu^{1/2})^{1/2} \Sigma_\mu^{-1/2}$. When $\mu$ and $\nu$ are as in the question, we have
+
+$$
+	A = I^{-1/2}(I^{1/2} \Sigma_\nu I^{1/2})^{1/2} I^{-1/2} = (\Sigma_\nu)^{1/2} = \begin{bmatrix}
+		2 & 1 \\
+		1 & 1
+	\end{bmatrix}
+$$
+
+Hence,
+$$
+	T(x) = (m_\nu - A m_\mu) + Ax = m_\nu + A x = \begin{bmatrix}
+		-1 \\
+		1
+	\end{bmatrix} + \begin{bmatrix}
+	2 & 1 \\
+	1 & 1
+	\end{bmatrix} x = T_1(x)
+$$
+
+Hence, $T_1$ is optimal with respect to the cost function $c(x, y) = \norm{x - y}^2$
+
+
+
+
+\section{QUESTION 4: BASICS OF THE POT LIBRARY, CODING}
+
+See next page
+
+\includepdf[pages=-]{code.pdf}

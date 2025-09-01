@@ -1,0 +1,391 @@
+\chapter{HOMOLOGICAL ALGEBRA}
+
+\section{BASIC HOMOLOGICAL ALGEBRA}
+Concrete version of Homological Algebra
+
+\begin{definition}[(co)chain complex]
+	\note{TODO}
+	
+	Note that, the category of (co)chain complexes is also abelian
+\end{definition}
+
+\begin{definition}[(co)homology]
+	For any $n \in \Z$, homology $H_n(-)$ is a functor in the category of chain complexes defined by
+	$$
+		H_n(C_\bullet) = \frac{\ker (d: C_n \to C_{n-1})}{\im (d: C_{n+1} \to C_n)}
+	$$
+	
+	Similar definition for cohomology
+\end{definition}
+
+\begin{definition}[category of (co)chain complexes, short exact sequence]
+	\note{TODO}
+\end{definition}
+
+\begin{lemma}[fundamental lemma of homological algebra]
+	A short exact sequence of (co)chain complexes $0 \to L_\bullet \to M_\bullet \to N_\bullet \to 0$ induces a natural long exact sequence in (co)homology
+	\begin{center}
+		\begin{tikzcd}
+			& ... \arrow[r]            & H_{n+1}(N_\bullet) \arrow[lld] \\
+			H_n(L_\bullet) \arrow[r]     & H_n(M_\bullet) \arrow[r] & H_n(N_\bullet) \arrow[lld]     \\
+			H_{n-1}(L_\bullet) \arrow[r] & ...                      &                               
+		\end{tikzcd}
+	\end{center}
+\end{lemma}
+
+\begin{definition}[(co)chain homotopy]
+	\note{TODO}
+\end{definition}
+
+\begin{proposition}
+	homotopic (co)chain maps induce the same map in (co)homology
+\end{proposition}
+
+\begin{definition}[projective module and projective resolution]
+	An $A$-module $P$ is projective if one of the following
+	\begin{enumerate}
+		\item $P$ is a summand of a free $A$-module
+		\item $\Hom(P, -)$ is exact
+		\item for every diagram, there exists a unique map $P \to M$ making it commutes
+		\begin{center}
+			\begin{tikzcd}
+				& P \arrow[d] \arrow[ld, dashed] \\
+				M \arrow[r, two heads] & N                             
+			\end{tikzcd}
+		\end{center}
+	\end{enumerate}
+	
+	Given any $A$-module $M$, there exists an exact sequence
+	$$
+		... \to P_2 \to P_1 \to P_0 \to M \to 0
+	$$
+	
+	where $P_0, P_1, ...$ are projective. Then the sequence
+	$$
+		... \to P_2 \to P_1 \to P_0 \to 0
+	$$
+	
+	is called a projective resolution for $M$
+\end{definition}
+
+\begin{remark}
+	We can break the projective resolution into short exact sequences
+	\begin{align*}
+		0 \to K_1 \to &P_0 \to M \to 0 \\
+		0 \to K_2 \to &P_1 \to K_1 \to 0 \\
+		0 \to K_3 \to &P_2 \to K_2 \to 0 \\
+		&...
+	\end{align*}
+	
+	where $K_1 = \ker (P_0 \to M)$ and $K_i = \ker (P_{i+1} \to P_i)$ for $i \geq 1$
+\end{remark}
+
+\begin{proof}
+	\note{TODO - fill up}
+\end{proof}
+
+\begin{remark}
+	If $A$ is Noetherian and $M$ is finitely generated then there exists a free resolution $P_\bullet$ so that each $P_n$ is finitely generated.
+	
+	\note{pseudo-coherent $A$-module}
+\end{remark}
+
+
+\begin{definition}[$\Tor$]
+	Define $\Tor_{n}^A(-, N)$ by the left derived functor of $(- \otimes_A N)$
+\end{definition}
+
+\begin{proposition}[properties of $\Tor$]
+	Some other properties for $\Tor$
+	\begin{enumerate}
+		\item $\Tor_n^A(M, N) = \Tor_n^A(N, M)$
+		\item $\Tor_n^A(M, -) = 0$ for every $n \geq 1$ $\iff$  $\Tor_1^A(M, -) = 0 \iff M$ is flat
+		\item $\Tor_0^A(M, N) = M \otimes_A N$
+		\item $M$ is projective $\implies M$ is flat
+		\item (left derived functor) given a short exact sequence $0 \to A \to B \to C \to 0$, then there exists a long exact sequence
+		\begin{center}
+			\begin{tikzcd}
+				& ... \arrow[r]            & {\Tor_2(C, N)} \arrow[lld] &   \\
+				{\Tor_1(A, N)} \arrow[r] & {\Tor_1(B, N)} \arrow[r] & {\Tor_1(C, N)} \arrow[lld] &   \\
+				A \otimes N \arrow[r]    & B \otimes N \arrow[r]    & C \otimes N \arrow[r]      & 0
+			\end{tikzcd}
+		\end{center}
+	\end{enumerate}
+\end{proposition}
+
+Why $\Tor$? (read why left derived functor)
+
+Let $x \in A$ be a nonzero divisor and any $A$-module $M$, then the SES $0 \to A \xrightarrow{x} A \to A/x \to 0$ induces a LES
+
+$$
+	\Tor_1^A(A/x, M) \to A \otimes M \xrightarrow{x \otimes 1} A \otimes M \to A / x \otimes M \to 0
+$$
+
+Hence, $\Tor_1(A/x, M) = \ker (x \otimes 1) = \set{m \in M: xm = 0}$ which is the torsion-submodule of $M$
+
+\begin{theorem}
+	Let $M$ be an $A$-module, the following are equivalent
+	\begin{enumerate}
+		\item $M$ is flat
+		\item for every injective map $0 \to N \to N_1$ such that $N_1 / N$ is finitely generated, then $0 \to N \otimes M \to N_1 \otimes M$ is exact
+		\item for every ideal $I$ in $A$, $\Tor_1(A / I, M) = 0$
+		\item for every ideal $I$ in $A$, the map $I \otimes M \to A \otimes M \cong M$  induced from $I \hookrightarrow A$ is injective 
+	\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+	\note{TODO} 
+\end{proof}
+
+\begin{definition}[injective module and injective resolution]
+	An $A$-module $I$ is injective if one of the following
+	\begin{enumerate}
+		\item $\Hom(-, I)$ is exact
+		\item for every diagram, there exists a unique map $N \to I$ making it commutes
+		\begin{center}
+			\begin{tikzcd}
+				P                           &                      \\
+				M \arrow[u] \arrow[r, hook] & N \arrow[lu, dashed]
+			\end{tikzcd}
+		\end{center}
+	\end{enumerate}
+	
+	Given any $A$-module $N$, there exists an exact sequence
+	$$
+		0 \to N \to I_0 \to I_1 \to I_2 \to  ...
+	$$
+	where $I_0, I_1, ...$ are projective. Then the sequence
+	$$
+		0 \to I_0 \to I_1 \to I_2 \to  ...
+	$$	
+	is called an injective resolution for $N$
+\end{definition}
+
+\begin{remark}
+	$\Q / \Z$ is an injective $\Z$-module
+\end{remark}
+
+\begin{definition}[Ext]
+	Define $\Ext_A^n(-, N)$ by the left derived functor of $\Hom(-, N)$.
+	
+	Define $\Ext_A^n(M, -)$ by the right derived functor of $\Hom(M, -)$
+\end{definition}
+
+\begin{proposition}[properties of $\Ext$]
+	Some other properties for $\Ext$
+	\begin{enumerate}
+		\item $M$ is projective $\implies$ $\Ext^n_A(M, -) = 0$ for every $n \geq 1$
+		\item (right derived functor) given a short exact sequence $0 \to A \to B \to C \to 0$, then there exists a long exact sequence
+		\begin{center}
+			\begin{tikzcd}
+				0 \arrow[r] & {\Hom(M, A)} \arrow[r]   & {\Hom(M, B)} \arrow[r]   & {\Hom(M, C)} \arrow[lld]   \\
+				& {\Ext^1(M, A)} \arrow[r] & {\Ext^1(M, B)} \arrow[r] & {\Ext^1(M, C)} \arrow[lld] \\
+				& {\Ext^2(M, A)} \arrow[r] & ...                      &                           
+			\end{tikzcd}
+		\end{center}
+		\item (left derived functor) there exists a long exact sequence
+		\begin{center}
+			\begin{tikzcd}
+				0 \arrow[r] & {\Hom(C, N)} \arrow[r]   & {\Hom(B, N)} \arrow[r]   & {\Hom(A, N)} \arrow[lld]   \\
+				& {\Ext^1(C, N)} \arrow[r] & {\Ext^1(B, N)} \arrow[r] & {\Ext^1(A, N)} \arrow[lld] \\
+				& {\Ext^2(C, N)} \arrow[r] & ...                      &                           
+			\end{tikzcd}
+		\end{center}
+		
+		\item (Baer criterion)
+		An $A$-module $M$ is injective if and only every map $I \to M$ from an ideal $I$ can be extended into a map $M \to A$. In particular, if $A$ is a PID, $M$ is injective if and only if it is divisible, that is, for every nonzero $a \in A$ and every $m \in M$, there exists $n \in M$ so that $an= m$
+	\end{enumerate}
+\end{proposition}
+
+\section{COMOLOGICAL INVARIANT OF MODULES}
+
+\begin{definition}[projective dimension]
+	Given an $A$-module $M$, define
+	$$
+		\projdim_A M = \min \set{d \in \Z_{\geq 0}: \text{ there exists a projective resolution } 0 \to P_d \to ... \to P_0 \to M \to 0}
+	$$
+	if there is no finite length projective resolution for $M$, define $\projdim_A M = +\infty$
+\end{definition}
+
+\begin{remark}
+	Some remarks
+	\begin{enumerate}
+		\item $M$ is projective $\iff \projdim_A M = 0$
+		\item let $A = k[x]$ for some field $k$ and $M = A / (x)$, then $\projdim_A M = 1$ with the projective resolution
+		$$
+			0 \to k[x] \xrightarrow{x} k[x] \to M \to 0
+		$$
+		
+		\item let $A = k[x] / (x^2)$ for some field $k$ and $M = A / (x)$, then $\projdim_A M = +\infty$
+		
+		\item let $A = \C[x, y, z]$ and $M = \Frac(A)$, then
+		$$
+			\projdim_A M = \begin{cases}
+				2 &\text{if CH is true} \\
+				3 &\text{if CH is false}
+			\end{cases}
+		$$
+	\end{enumerate}
+\end{remark}
+
+\begin{proposition}
+	Let $M$ be an $A$-module, then the following are equivalent
+	\begin{enumerate}
+		\item $\projdim_A M \leq d$
+		\item $\Ext^i_A(M, -) = 0$ for all $i \geq d+1$
+		\item $\Ext^{d+1}_A(M, -) = 0$
+	\end{enumerate}
+\end{proposition}
+
+\begin{remark}
+	there is a similar notion for injective dimension $\injdim$ and similar proposition with $\Ext(-, N)$
+\end{remark}
+
+\begin{corollary}
+	Given a short exact sequence $0 \to M \to P \to N \to 0$, and $P$ is projective
+	\begin{enumerate}
+		\item if $N$ is projective then $\projdim_A M = 0$
+		\item if $N$ is not projective, then
+		$$
+			\projdim_A M = \projdim_A N - 1
+		$$
+	\end{enumerate}
+\end{corollary}
+
+
+Given a Noetherian local ring $(A, \mf{m}, k)$, and a map $\phi: M \to N$ of finitely generated $A$-modules, then $\bar{\phi}: M \otimes k \to N \otimes k$ is a map of $k$-vector spaces, then by Nakayama lemma
+\begin{enumerate}
+	\item $\phi$ is surjective if and only if $\bar{\phi}$ is surjective
+	\item $\phi$ is an isomorphism if and only if $\bar{\phi}$ is surjective and $\ker \phi \subseteq \mf{m} M$
+\end{enumerate}
+
+If $M$ and $N$ are free (if and only if projective in Noetherian local ring), then 
+\begin{enumerate}
+	\item if $\bar{\phi}$ is an isomorphism then $M$ and $N$ has the same rank as $A$-modules
+	\item if $\phi$ is surjective, then $\phi$ is an isomorphism
+\end{enumerate}
+
+\begin{definition}[minimal free resolution]
+	Given a Noetherian local ring $(A, \mf{m}, k)$ and an $A$-module $M$, a minimal free resolution of $M$ is an exact sequence
+	$$
+		... \to L_2 \xrightarrow{d_2} L_1 \xrightarrow{d_1} L_0 \xrightarrow{\epsilon} M \to 0
+	$$
+	so that
+	\begin{enumerate}
+		\item each $L_i$ is a finitely generated free $A$-module
+		\item each $\bar{d_i}: L_{i+1} \otimes k \to L_i \otimes k$ is zero, or equivalently $\im d_i \subseteq \mf{m} L_{i-1}$
+		\item $\bar{\epsilon}: L_0 \otimes k \to M \otimes k$ is an isomorphism
+	\end{enumerate}
+\end{definition}
+
+\begin{remark}
+	We can break the free resolution into short exact sequences
+	\begin{align*}
+		0 \to K_1 \to &L_0 \to M \to 0 \\
+		0 \to K_2 \to &L_1 \to K_1 \to 0 \\
+		0 \to K_3 \to &L_2 \to K_2 \to 0 \\
+		&...
+	\end{align*}
+	
+	where $K_1 = \ker (L_0 \to M)$ and $K_i = \ker (L_{i+1} \to L_i)$ for $i \geq 1$, then $2$ and $3$ are equivalent to 
+	\begin{align*}
+		L_0 \otimes k &\cong M \otimes k \\
+		L_1 \otimes k &\cong K_1 \otimes k \\
+		L_2 \otimes k &\cong K_2 \otimes k
+	\end{align*}
+\end{remark}
+
+\begin{remark}
+	Minimal free resolution exists for every $A$-module $M$ and moreover, any two minimal free resolutions are term-wise isomorphic and compatible with differential maps
+\end{remark}
+
+\begin{proposition}
+	Let $M$ be a finitely generated $A$-module and $L_\bullet$ be a minimal free resolution of $M$, then
+	\begin{enumerate}
+		\item $\rank_A L_i = \dim_k \Tor_i^A(M, k)$ for every $i \geq 0$
+		\item projective dimension can be characterized by the length of minimal free resolution, that is, minimal free resolution is the length of the shortest projective resolution
+		$$
+			\projdim_A M = \sup\set{i \in \Z_{\geq 0}: \Tor_i^A(M, k) \neq 0} \leq \projdim_A k
+		$$
+	\end{enumerate}
+\end{proposition}
+
+\section{ANOTHER PREVIEW OF DIMENSION THEORY}
+
+
+\begin{remark}[Serre-Auslander-Buchsbaum - turning point for homological algebra]
+	Let $A$ be a Noetherian local ring
+	\begin{enumerate}
+		\item $\dim A \leq \dim_k \mf{m} / \mf{m}^2 \leq \infty$
+		\item the following are equivalent
+		\begin{enumerate}
+			\item $\dim A = \dim_k \mf{m} / \mf{m}^2$
+			\item $\projdim_A k < +\infty$
+			\item $\projdim_A M < + \infty$ for every finitely generated module $M$
+		\end{enumerate}
+		\item if $A$ is regular then $A_\mf{p}$ is also regular.
+	\end{enumerate}
+	
+	to the best of Prof Hansen's knowledge, (3) can only be proved using homological algebra techniques
+\end{remark}
+
+\begin{definition}[regular sequence]
+	Let $M$ be an $A$-module, elements $f_1, ..., f_r \in A$ form a $M$-regular sequence if (1) $M / (f_1, ..., f_r) M \neq 0$ and (2) the following functions are injective
+	\begin{align*}
+		&f_1: M \to M \\
+		&f_2: M / f_1 M \to M / f_1 M \\
+		&\;\;\;\;... \\
+		&f_i: M / (f_1, ..., f_{i-1}) M \to M / (f_1, ..., f_{i-1}) M
+	\end{align*}
+	
+	(1) implies $f_1, ..., f_r$ are not unit (2) implies $f_1$ is not zero or zero divisor on $A$, $f_2$ is not zero or zero divisor on $A / f_1 A$, ..., $f_i$ is not a zero divisor on $A / (f_1, ..., f_{i-1}) A$
+\end{definition}
+
+\begin{remark}
+	Some remarks on $M$-regular sequence
+	\begin{enumerate}
+		\item If $A = k[x_1, ..., x_n]$ for some field $k$ and $M = A$, then $x_1, ..., x_n$ is a regular sequence
+		
+		\item If $f_1, ..., f_r$ form a $M$-regular sequence then so is 
+		$$
+			f_1^{\alpha_1}, ..., f_r^{\alpha_r}
+		$$
+		for every $\alpha_i \in \Z_{\geq 1}$
+		
+		\item If $A$ is Noetherian local, $M$ is finitely generated, and $f_1, ..., f_r$ is a $M$-regular sequence, so is
+		$$
+			f_{\sigma(1)}, ..., f_{\sigma(r)}
+		$$
+		
+		for every $\sigma \in S_r$ element of symmetric group of $r$ elements
+	\end{enumerate}
+\end{remark}
+
+\begin{definition}[depth]
+	Let $M$ be an $A$-module and $I$ be an ideal of a ring $A$, then 
+	$$
+		I \text{ contains a $M$-regular sequence of length } r \iff \Ext_A^i(A / I, M) = 0 \;\; \forall i < r
+	$$
+	In particular, $\inf \set{i \geq 0: \Ext_A^i(A / I, M) \neq 0}$ is the maximal length of every $M$-regular sequence in $I$. Let $(A, \mf{m}, k)$ be a Notherian local ring, define $\depth_A M$
+	$$
+		\depth_A M = \inf \set{i \geq 0: \Ext_A^i(k, M) \neq 0}
+	$$
+\end{definition}
+
+\begin{remark}
+	Some remarks on depth
+	\begin{enumerate}
+		\item $\depth_A k = 0$ because there is no $k$-regular sequence
+		\item $A = k[[x_1, ..., x_n]]$ for some field $k$, then $\depth_A A = n = \dim A$
+		\item $\depth_A A \leq \dim A$
+	\end{enumerate}
+\end{remark}
+
+\begin{theorem}[Auslander–Buchsbaum formula]
+	If $A$ is a Noetherian local ring and $M$ is a finitely generated module with $\projdim_A M < +\infty$, then 
+	$$
+		\projdim_A M + \depth_A M = \depth_A A
+	$$
+\end{theorem}
+
+After \textit{André Weil} published his famous Fermat's last theorem proof, homological algebra is the tool to strim down his proof.

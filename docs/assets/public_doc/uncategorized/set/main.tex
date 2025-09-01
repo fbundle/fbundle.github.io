@@ -1,0 +1,204 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\usepackage{amsmath}
+% declare some theorems
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+\newtheorem{lemma}{Lemma}
+\newtheorem{remark}{Remark}
+\newtheorem{axiom}{Axiom}
+
+\usepackage{amssymb}
+% overwrite empty set
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+% big tau symbol
+
+\newcommand\Tau{\mathcal{T}}
+
+
+
+\title{set}
+\author{Khanh Nguyen}
+\date{June 2023}
+
+\begin{document}
+
+\maketitle
+
+\emph{some identities related to set}
+
+\section{Zermelo–Fraenkel set theory}
+
+9 axioms in ZFC serve as the foundation of mathematics. All concepts in mathematics at the moment can be built from these 9 axioms using the language of first-order logic. \footnote{will give more insights once I master the topic}
+
+\begin{axiom}[Axiom of extensionality]
+    Two sets are equal if they have the same elements
+    $$
+        \forall X \forall Y [\forall z (z \in X \iff z \in Y)] \implies X = Y
+    $$
+\end{axiom}
+
+\begin{axiom}[Axiom of regularity]
+    Every non-empty set of sets $\mathcal{X}$ contains a element $Y$ such that $\mathcal{X}$ and $Y$ are disjoint
+    $$
+        \forall \mathcal{X} [\mathcal{X} \neq \emptyset \implies \exists Y (Y \in \mathcal{X} \land Y \cap \mathcal{X} = \emptyset)]
+    $$
+\end{axiom}
+
+\begin{axiom}[Axiom schema of specification]
+    \label{axiom_schema}
+    Given any predicate $\varphi(z)$ and a set $X$, the subset of elements of $X$ obeying $\varphi$ exists, namely $Y$
+    $$
+        \forall X \exists Y \forall z [z \in Y \iff (z \in X \land \varphi(z))]
+    $$
+    we write $Y = \{z \in X: \varphi(z)\}$
+\end{axiom}
+
+\begin{axiom}[Axiom of pairing]
+    If $x$ and $y$ are sets, there exists a set that contains $x$ and $y$ as elements, namely $Z$
+    $$
+        \forall x \forall y \exists Z [(x \in Z) \land (y \in Z)]
+    $$
+    we use axiom \ref{axiom_schema} to construct the set of $x$ and $y$, $\{x, y\}$
+\end{axiom}
+
+
+
+\begin{axiom}[Axiom of union]
+    For any set of sets $\mathcal{F}$ there exists a set containing every element that is a element $x$ of some element $Y$ of $\mathcal{F}$, namely $A$
+    $$
+        \forall \mathcal{F} \exists A \forall Y \forall x [Y \in \mathcal{F} \land x \in Y \implies x \in A]
+    $$
+    we use axiom \ref{axiom_schema} to construct the union of $\mathcal{F}$, we write $\bigcup \mathcal{F} \subseteq A$
+\end{axiom}
+
+\begin{axiom}[Axiom schema of replacement]
+    Let $f: A \to B$, there exists a set containing the image of $A$, namely $C$
+    $$
+        \forall A \forall B \forall (f: A \to B) \exists C \forall x (x \in A \implies f(x) \in C)
+    $$ \footnote{sometimes, we write the formula $\forall x (x \in A \implies \varphi$ as $\forall x \in A, \varphi$}
+    we use axiom \ref{axiom_schema} to construct the image of $A$, we write $f(A) \subseteq C$. sometimes, we also write $f(A) = \{f(x): x \in A\}$ and $f(\{ x \in X: \varphi(x)\}) = \{f(x): x \in X \land \varphi(x) \}$
+\end{axiom}
+
+\begin{axiom}[Axiom of infinity]
+    There exists a set $X$ containing the empty set $\emptyset$ and if $y$ is a element of $X$ then $y \cup \{y\}$ is also a element of $X$
+    $$
+    \exists X[\emptyset \in X \land \forall y (y \in X \implies y \cup \{y\} \in X)]
+    $$
+    
+    this axiom asserts the existence of natural number (von Neumann ordinals)
+\end{axiom}
+
+\begin{axiom}[Axiom of power set]
+    For any set $X$, there is a set that contains every subsets $Z$ of $X$, namely $\mathcal{Y}$
+    $$
+        \forall X \exists \mathcal{Y} \forall Z (Z \subseteq X \implies Z \in \mathcal{Y})
+    $$
+    we use axiom \ref{axiom_schema} to construct the power set of $X$, we write $\mathcal{P}(X) \subseteq \mathcal{Y}$
+\end{axiom}
+
+\begin{axiom}[Axiom of choice]
+    For any set $\mathcal{X}$ of non-empty sets $Y$, there exists a choice function $f$ that defined on $\mathcal{X}$ and maps each set $Y$ of $\mathcal{X}$ to an element of that set.
+    $$
+    \forall \mathcal{X} [\emptyset \notin \mathcal{X} \implies \exists (f: \mathcal{X} \to \bigcup \mathcal{X}) \forall A (A \in \mathcal{X} \land f(A) \in A)]
+    $$
+\end{axiom}
+
+
+\section{Some common identities}
+
+
+
+
+\begin{theorem}\footnote{common techniques in set theory and general topology}
+    \label{cover}
+    Given a set $A$, for all element $x \in A$ if $x \in U_x \subseteq A$ then
+    $$
+        \bigcup_{x \in A} U_x = A
+    $$
+\end{theorem} 
+
+\textbf{Proof}
+
+We immediately have $\bigcup_{x \in A} U_x \subseteq A$. On the other hand, for all $x \in A$, $\{ x \} \subseteq U_x$. Then
+$$
+    A = \bigcup_{x \in A} \{ x \} \subseteq \bigcup_{x \in A} U_x
+$$
+
+\begin{theorem} \footnote{MIT 18.102 Intro to Functional Analysis - Dr. Casey Rodriguez}
+    Let some property $p$ be invariant over union of sets. Let $J$ be an index set,
+    $$
+        \forall j \in J, p(A_j) \implies p \left( \bigcup_{j \in J} A_j \right)
+    $$
+    Given a set A, for all element $x \in A$, if $x \in A_j \subseteq A$ and $p(A_j)$ then $p(A)$
+\end{theorem}
+
+
+
+\textbf{Proof}
+
+immediately from theorem \ref{cover}
+
+\begin{theorem} \footnote{Topology without tears - Sidney A. Morris}
+For any index set $J$ and $A_j \cap B_j = \emptyset$ for all $j \in J$
+$$
+    \bigcap_{j \in J} A_j \cup B_j = \bigcup_{J_A \in \mathcal{P}(J)} \left[ \left( \bigcap_{j \in J_A} A_j \right) \cap \left( \bigcap_{j \in J \setminus J_A}  B_j \right) \right]
+$$
+\end{theorem}
+
+\textbf{Proof}
+
+For all $x \in X = \bigcap_{j \in J} A_j \cup B_j$, for each $j\in J$, $x$ must be either in $A_j$ or $B_j$. Let $J_A(x) = \{j: j \in J \land x \in A_j \} \subseteq \mathcal{P}(J)$ be the set of indices where $x \in A_j$ and let $J_B(x) = J \setminus J_A(x)$. So that
+
+$$
+    x \in \left( \bigcap_{j \in J_A(x)} A_j \right) \cap \left( \bigcap_{j \in J \setminus J_A(x)}  B_j \right)
+$$
+
+On the other hand, $\bigcap_{j \in J_A} A_j \subseteq \bigcap_{j \in J_A} A_j \cup B_j$ and $\bigcap_{j \in J \setminus J_A}  B_j \subseteq \bigcap_{j \in J \setminus J_A}  A_J \cup B_j$, we have
+
+\begin{align*}
+    \left( \bigcap_{j \in J_A(x)} A_j \right) \cap \left( \bigcap_{j \in J \setminus J_A(x)}  B_j \right)
+        &\subseteq \left( \bigcap_{j \in J_A(y)} A_j \cup B_j \right) \cap \left( \bigcap_{j \in J \setminus J_A(y)}  A_j \cup B_j \right) \\
+        &= \bigcap_{j \in J} A_j \cup B_j \\
+        &= X \\
+\end{align*}
+
+Invoke theorem \ref{cover}
+
+\begin{theorem}
+    Let $f: X \to Y$ be a injective function. i.e $f(x_1) = f(x_2) \implies x_1 = x_2$. 
+    Let $I$ be an index set and $A_i \in X$ for all $i \in I$
+    $$
+        f(\bigcap_{i \in I} A_i) = \bigcap_{i \in I} f(A_i)
+    $$
+    and
+    $$
+        f(\bigcup_{i \in I} A_i) = \bigcup_{i \in I} f(A_i)
+    $$
+\end{theorem}
+
+\textbf{Proof}
+
+$\bigcap$
+
+($\subseteq$) Let $y \in f(\bigcap_{i \in I} A_i)$, there exists $x \in \bigcap_{i \in I} A_i$ such that $f(x) = y$. For any $i \in I$, $x \in A_i$ implies $y = f(x) \in f(A_i)$. Therefore, $y \in \bigcap_{i \in I} f(A_i)$
+
+($\supseteq$) Let $y \in \bigcap_{i \in I} f(A_i)$. For any $y \in A_i$, there exists $x_i \in A_i$ such that $f(x_i) = y$. Since $f$ is injective \footnote{if $f$ is not injective, consider $f(1 \mapsto 1, 2 \mapsto 1)$, then $f(\{1\} \cap \{2\}) \neq f(\{1\}) \cap f(\{2\})$}, all $x_i$s equal, namely $x$. $f(x) = y$ and $x \in \bigcap_{i \in I} A_i$ implies $y \in f(\bigcap_{i \in I} A_i)$
+
+
+$\bigcup$
+
+($\subseteq$) Let $y \in f(\bigcup_{i \in I} A_i)$, there exists $x \in \bigcup_{i \in I} A_i$ such that $f(x) = y$. Let $I_x = \{i \in I: x = A_i\} \neq \emptyset$ be all indices $i$ where $x \in A_i$ \footnote{here, we can choose an $i$ such that $x \in A_i$ using AC to simplify the proof}. So, for all $i \in I_x$, $y = f(x) \in f(A_i)$. Therefore, $y = f(x) \in \bigcup_{i \in I_x} f(A_i) \subseteq \bigcup_{i \in I} f(A_i)$
+
+($\supseteq$) Let $y \in \bigcup_{i \in I} f(A_i)$. Let $I_y = \{i \in I: y \in f(A_i) \} \neq \emptyset$ be all indices $i$ where $y \in f(A_i)$ \footnote{avoid AC}. So for all $i \in I_y$, $y \in f(A_i)$ there exists $x_i \in A_i$ such that $f(x_i) = y$. Since $f$ is injective, all $x_i$s coincide, namely $x$. $f(x) = y$ and $x \in \bigcup_{i \in I_y} A_i$ implies $y \in f(\bigcup_{i \in I_y} A_i)$. Moreover, $\bigcup_{i \in I_y} A_i \subseteq \bigcup_{i \in I} A_i$, so $y \in f(\bigcup_{i \in I_y} A_i) \subseteq f(\bigcup_{i \in I} A_i)$
+
+\textbf{Corollary}
+
+$f(A \setminus B) = f(A \cap B^C) = f(A) \cap f(B^C) = f(A) \cap f(B)^C = f(A) \setminus f(B)$
+
+
+\end{document}

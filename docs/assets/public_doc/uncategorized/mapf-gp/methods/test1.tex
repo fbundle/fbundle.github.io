@@ -1,0 +1,55 @@
+\subsection{test1}
+
+Inspired by derivation of Ratio cut \cite{gallier}, we introduced method test1.
+
+Let $A$ be symmetric, let $D$ be the degree matrix of $A$, $L = D - A$ be the laplacian matrix.
+Let $x^{(1)}$, $x^{(2)}$, ..., $x^{(K)}$ be the indicator vector for each partition such that:
+\[
+x^{(k)}_i = \{
+        \begin{array}{ll}
+            1 \;\;\;\; \text{if $i \in V_k$}\\
+            0 \;\;\;\; \text{otherwise}
+        \end{array}
+\]
+
+Since $K$ partitions are disjoint, we always have a set of $K$ orthogonal vectors.
+
+\[
+x^{(k_1)T} x^{(k_2)} = 0 \;\;\; \forall k_1 \neq k_2
+\]
+
+
+Ratio cut minimizes the sum of all cuts divided by its corresponding partition volume.
+
+\[
+\sum_{k=1}^{K} \frac{x^{(k)T} L x^{(k)}}{x^{(k)T} x^{(k)}}
+=
+\sum_{k=1}^{K} \frac{cut(V_k, V \setminus V_k)}{|V_k|}
+\]
+
+subject to $x^{(k)} \in \{0, 1\}^{|V|}$ and $x^{(k_1)T} x^{(k_2)} = 0$ $\forall k_1 \neq k_2$
+
+Furthermore, Ratio cut extends the domain the indicator vectors to real number.
+
+\[
+\sum_{k=1}^{K} \frac{x^{(k)T} L x^{(k)}}{x^{(k)T} x^{(k)}}
+\]
+
+subject to $x^{(k)} \in \mathbb{R}^{|V|}$ and $x^{(k_1)T} x^{(k_2)} = 0$ $\forall k_1 \neq k_2$
+
+The problem of minimizing Rayleigh quotients with orthogonal constraints yields $K$-smallest eigen vectors.
+
+In test1, we replaced laplacian matrix $L$ by adjacency matrix $A$. The objective of the formulation is
+
+\[
+O_1 = \sum_{k=1}^{K} \frac{x^{(k)T} A x^{(k)}}{x^{(k)T} x^{(k)}}
+=
+\sum_{k=1}^{K} \frac{\sum_{i=1}^{|V|} \sum_{j=1}^{|V|} x^{(k)}_i x^{(k)}_j A_{ij}}{\sum_{i=1}^{|V|} x^{(k)2}_i}
+=
+\sum_{k=1}^{K} \frac{\sum_{i \in V_k} \sum_{j \in V_k} A_{ij}}{|V_k|}
+= 
+\sum_{k=1}^{K} (1 - \frac{1}{|V_k|}) C_a^{(k)}
+\]
+
+Which is approximately equal to the sum of average cycle length.
+

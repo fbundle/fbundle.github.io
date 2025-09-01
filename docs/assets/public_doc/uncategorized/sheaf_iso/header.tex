@@ -1,0 +1,167 @@
+% header
+
+%% natbib
+\usepackage{natbib}
+\bibliographystyle{plain}
+
+%% comment
+\usepackage{comment}
+
+% no automatic indentation
+\usepackage{indentfirst}
+
+% manually indent
+\usepackage{xargs} % \newcommandx
+\usepackage{calc} % calculation
+\newcommandx{\tab}[1][1=1]{\hspace{\fpeval{#1 * 10}pt}}
+% \newcommand[number of parameters]{output}
+% \newcommandx[number of parameters][parameter index = x]{output}
+% use parameter index = x to substitute the default argument
+% use #1, #2, ... to get the first, second, ... arguments
+% \tab for indentation
+% \tab{2} for for indentation twice
+
+% note
+\newcommandx{\note}[1]{\textit{\textcolor{red}{#1}}}
+\newcommand{\todo}{\note{TODO}}
+% \note{TODO}
+
+%% math package
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz-cd}
+\usepackage{mathtools}
+\usepackage{amsthm}
+
+%% operator
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\grad}{grad}
+\DeclareMathOperator{\curl}{curl}
+\DeclareMathOperator{\Div}{div}
+\DeclareMathOperator{\card}{card}
+\DeclareMathOperator{\Span}{span}
+\DeclareMathOperator{\real}{Re}
+\DeclareMathOperator{\imag}{Im}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\aut}{Aut}
+\DeclareMathOperator{\inn}{Inn}
+\DeclareMathOperator{\Char}{char}
+\DeclareMathOperator{\Sylow}{Syl}
+\DeclareMathOperator{\coker}{coker}
+\DeclareMathOperator{\inc}{in}
+\DeclareMathOperator{\Sd}{Sd}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\interior}{int}
+\DeclareMathOperator{\ob}{ob}
+\DeclareMathOperator{\Set}{Set}
+\DeclareMathOperator{\Top}{Top}
+\DeclareMathOperator{\Meas}{Meas}
+\DeclareMathOperator{\Grp}{Grp}
+\DeclareMathOperator{\Op}{Op}
+\DeclareMathOperator{\Ab}{Ab}
+\DeclareMathOperator{\Ch}{Ch}
+\DeclareMathOperator{\Fun}{Fun}
+\DeclareMathOperator{\Gr}{Gr}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Ad}{Ad}
+\DeclareMathOperator{\ad}{ad}
+\DeclareMathOperator{\Vect}{Vect}
+\DeclareMathOperator{\Bil}{Bil}
+\DeclareMathOperator{\Skew}{Skew}
+\DeclareMathOperator{\Tor}{Tor}
+\DeclareMathOperator{\Ho}{Ho}
+\DeclareMathOperator{\RMod}{R-Mod}
+\DeclareMathOperator{\Ev}{Ev}
+\DeclareMathOperator{\Nat}{Nat}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\RV}{RV}
+\DeclareMathOperator{\rank}{rank}
+
+%% pair delimiter
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\inner}{\langle}{\rangle}
+\DeclarePairedDelimiter{\tuple}{(}{)}
+\DeclarePairedDelimiter{\bracket}{[}{]}
+\DeclarePairedDelimiter{\set}{\{}{\}}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+
+%% theorems
+\newtheorem{axiom}{Axiom}
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{lemma}{Lemma}
+\newtheorem{remark}{Remark}
+\newtheorem{claim}{Claim}
+\newtheorem{problem}{Problem}
+\newtheorem{assumption}{Assumption}
+\newtheorem{example}{Example}
+\newtheorem{exercise}{Exercise}
+
+%% empty set
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+\newcommand\eps{\epsilon}
+
+% mathcal symbols
+\newcommand\Tau{\mathcal{T}}
+\newcommand\Ball{\mathcal{B}}
+\newcommand\Sphere{\mathcal{S}}
+\newcommand\bigO{\mathcal{O}}
+\newcommand\Power{\mathcal{P}}
+\newcommand\Str{\mathcal{S}}
+
+
+% mathbb symbols
+\usepackage{mathrsfs}
+\newcommand\N{\mathbb{N}}
+\newcommand\Z{\mathbb{Z}}
+\newcommand\Q{\mathbb{Q}}
+\newcommand\R{\mathbb{R}}
+\newcommand\C{\mathbb{C}}
+\newcommand\F{\mathbb{F}}
+\newcommand\T{\mathbb{T}}
+\newcommand\Exp{\mathbb{E}}
+
+% mathrsfs symbols
+\newcommand\Borel{\mathscr{B}}
+
+% algorithm
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+% longproof
+\newenvironment{longproof}[1][\proofname]{%
+  \begin{proof}[#1]$ $\par\nobreak\ignorespaces
+}{%
+  \end{proof}
+}
+
+
+% for (i) enumerate
+% \begin{enumerate}[label=(\roman*)]
+%   \item First item
+%   \item Second item
+%   \item Third item
+% \end{enumerate}
+\usepackage{enumitem}
+
+% insert url by \url{}
+\usepackage{hyperref}
+
+% margin
+\usepackage{geometry}
+\geometry{
+a4paper,
+total={190mm,257mm},
+left=10mm,
+top=20mm,
+}

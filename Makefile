@@ -1,22 +1,24 @@
 
-TMP_DIR="tmp"
-VITAE_INPUT_PATH="/Users/khanh/mathdoc/public_doc/vitae/main.tex"
-VITAE_OUTPUT_DIR="docs/assets/vitae"
+TMP_DIR := tmp
+VITAE_INPUT_PATH := /Users/khanh/mathdoc/public_doc/uncategorized/vitae/main.tex
+VITAE_OUTPUT_DIR := docs/assets/vitae
 
-PAGES_INPUT_DIR="src/pages"
-PAGES_OUTPUT_DIR="docs/pages"
-PAGES_TEMPLATE_PATH="src/template.html"
+PAGES_INPUT_DIR := src/pages
+PAGES_OUTPUT_DIR := docs/pages
+PAGES_TEMPLATE_PATH := src/template.html
 
-HTML_ROOT_DIR="docs"
-PUBLIC_DOC_HTMLDIR="/assets/public_doc"
-PUBLIC_DOC_INPUT_DIR="/Users/khanh/mathdoc/public_doc"
 
-PUBLIC_DOC_DESC_PATH="data/public_doc_desc.json"
-TEXT_TEMPLATE_PATH="docs/pages/posts/text.template.html"
-TEXT_OUTPUT_PATH="docs/pages/posts/text.html"
+HTML_ROOT_DIR := docs
+PUBLIC_DOC_HTMLDIR := /assets/public_doc
+PUBLIC_DOC_INPUT_PATH := /Users/khanh/mathdoc/public_doc
+PUBLIC_DOC_OUTPUT_DIR := $(dir $(HTML_ROOT_DIR)$(PUBLIC_DOC_HTMLDIR:%/=%))
 
-TS_INPUT_PATH="src/post-script.ts"
-JS_OUTPUT_DIR="docs/js"
+PUBLIC_DOC_DESC_PATH=data/public_doc_desc.json
+TEXT_TEMPLATE_PATH=docs/pages/posts/text.template.html
+TEXT_OUTPUT_PATH=docs/pages/posts/text.html
+
+TS_INPUT_PATH=src/post-script.ts
+JS_OUTPUT_DIR=docs/js
 
 all: vitae pages text javascript
 
@@ -46,10 +48,9 @@ pages:
 
 public_doc:
 	# copy public_doc
-	python bin/copy_public_doc.py \
-		--html_root_dir $(HTML_ROOT_DIR) \
-		--doc_htmldir $(PUBLIC_DOC_HTMLDIR) \
-		--input_dir $(PUBLIC_DOC_INPUT_DIR)
+	rsync -avh --delete --progress \
+		$(PUBLIC_DOC_INPUT_PATH) \
+		$(PUBLIC_DOC_OUTPUT_DIR)
 
 text: pages public_doc
 	# generate text

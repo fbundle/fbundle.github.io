@@ -1,0 +1,238 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\input{header}
+
+\title{
+    Chapter 2 HW
+}
+\author{Khanh Nguyen}
+\date{August 2023}
+
+\begin{document}
+
+\maketitle
+
+\section*{3}
+
+If $[a', b']$ is a subinterval of $[a, b]$, show that $P[a', b'] \leq P[a, b]$ and $N[a', b'] \leq N[a, b]$
+
+\textbf{Proof}
+
+Let $\Gamma' = \{a' = x_0, x_1, ..., x_m = b' \}$ be any partition on $[a', b']$. Construct $\Gamma = \{a = x_{-1}, a' = a_0, x_1, ..., x_m = b', x_{m+1} = b\}$. Then,
+
+\begin{align*}
+    P_\Gamma[f; a, b]
+        &= \sum_{i=1}^m [f(x_i) - f(x_{i-1})]^+ + [f(a') - f(a)]^+ + [f(b) - f(b')]^+ \\
+        &\geq P_{\Gamma'}[f; a', b']
+\end{align*}
+
+Suppose, $P[a', b'] > P[a, b]$, i.e $\sup_{\Gamma'} P_{\Gamma'}[a', b'] > \sup_\Gamma P_\Gamma[a, b]$. Then there at least a $\Gamma'_1$ such that $P_{\Gamma'_1} > \sup_\Gamma P_\Gamma[a, b] \geq P_\Gamma$ for all $\Gamma$ on $[a, b]$. Contradiction
+
+
+\section*{6}
+
+Let $f(x) = x^2 \sin \frac{1}{x}$ for $0 < x \leq 1$ and $f(0) = 0$. Show that $V[f; 0, 1] < +\infty$
+
+\textbf{Proof}
+
+As $f$ is continuous,
+
+\begin{align*}
+    V[f; 0, 1]
+        &= \int_0^1 |f'| dx \\
+        &= \int_0^1 \left| x \sin \frac{1}{x} - \cos \frac{1}{x} \right| dx \\
+        &< \int_0^1 2 dx \\
+        &= 2
+\end{align*}
+
+
+\section*{9}
+
+Let $C$ be a curve with parametric equation $x = \Phi(t)$ and $y = \Psi(t)$, $a \leq t \leq b$
+
+\tab (a) If $\Phi$ and $\Psi$ are of bounded variation and continuous, show that $L = \lim_{|\Gamma| \to 0} l(\Gamma)$
+
+\tab (b) If $\Phi$ and $\Psi$ are continuously differentiable, show that $L = \int_a^b ([\Phi'(t)]^2 + [\Psi'(t)]^2)^{1/2}$
+
+\textbf{Proof}
+
+Let $\Gamma = \{a = t_0, t_1, ..., t_m = b \}$ be any partition on $[a, b]$
+
+$$
+    l(\Gamma) = \sum_{i=1}^m \sqrt{[\Phi(t_i) - \Phi(t_{i-1})]^2 + [\Psi(t_i) - \Psi(t_{i-1})]^2}
+$$
+
+(a) $\Phi$ and $\Psi$ are of bounded variation, therefore, 
+
+\begin{align*}
+    l(\Gamma)
+        &= \sum_{i=1}^m \sqrt{[\Phi(t_i) - \Phi(t_{i-1})]^2 + [\Psi(t_i) - \Psi(t_{i-1})]^2} \\
+        &\leq \sum_{i=1}^m |\Phi(t_i) - \Phi(t_{i-1})| + \sum_{i=1}^m |\Psi(t_i) - \Psi(t_{i-1})| \\
+        &\leq \sup_{\Gamma} \sum_{i=1}^m |\Phi(t_i) - \Phi(t_{i-1})| + \sup_{\Gamma} \sum_{i=1}^m |\Psi(t_i) - \Psi(t_{i-1})| \\
+        &\leq V[\Phi, a, b] + V[\Psi, a, b] \\
+        &\leq +\infty
+\end{align*}
+
+The set $\{l(\Gamma): \Gamma \}$ is bounded above. Hence, $\sup_\Gamma l(\Gamma)$ exists
+
+Given any $\epsilon > 0$, let $L = \sup_\Gamma l(\Gamma)$ and $\Gamma_1 = \{a = u_1, u_2, ..., u_{m_1} = b \}$ be a partition on $[a, b]$ such that $L - \frac{\epsilon}{2} < l(\Gamma_1) < L$.
+
+
+
+$c = (\Phi, \Psi)$ is a continuous function on a compact set in a metric space into another metric space. By \emph{Heine-Cantor Theorem}, $c$ is uniformly continuous, i.e for all $\frac{\epsilon}{4 |\Gamma_1|} > 0$, there exists a $\eta > 0$ such that $||c(x) - c(y)|| < \frac{\epsilon}{4 |\Gamma_1|}$ for all $x, y$ such that $|x - y| < \eta$
+
+If $\Gamma_2 = \{a = v_1, v_2, ..., v_{m_1} = b \}$ is a partition on $[a, b]$ with $|\Gamma_2| < \min \{ |\Gamma_1|, \eta\}$.
+
+For every interval in $\Gamma_2$, there is at most one point from $\Gamma_1$, we write
+
+$$
+    l(\Gamma_2) = \sum_{i \in I} ||c(v_i) - c(v_{i-1})|| + \sum_{j \in J} ||c(v_j) - c(v_{j-1})||
+$$
+
+where $J = \{j \in \{1, 2, ..., |\Gamma_2| \}: \exists k \in \{1, 2, ..., |\Gamma_1| \}, u_k \in [v_{j-1}, v_j]\}$ is the set of indices in $\Gamma_2$ such that the segment $[v_{j-1}, v_j]$ contains a point in $\Gamma_1$, namely $u_k$. $I = \{1, 2, ..., |\Gamma_2|\} \setminus J$
+
+$$
+    l(\Gamma_1 \cup \Gamma_2) = \sum_{i \in I} ||c(v_i) - c(v_{i-1})|| + \sum_{j \in J} ||c(u_k) - c(v_{j-1})|| + ||c(v_j) - c(u_k)||
+$$
+
+By triangle inequality, $l(\Gamma_1 \cup \Gamma_2) \geq l(\Gamma_1)$
+
+\begin{align*}
+    l(\Gamma_2)
+        &= \sum_{i \in I} ||c(v_i) - c(v_{i-1})|| + \sum_{j \in J} ||c(v_j) - c(v_{j-1})|| \\
+        &\geq \sum_{i \in I} ||c(v_i) - c(v_{i-1})|| \\
+        &= l(\Gamma_1 \cup \Gamma_2) - \sum_{j \in J} ||c(u_k) - c(v_{j-1})|| + ||c(v_j) - c(u_k)|| \\
+        &\geq l(\Gamma_1) - \sum_{j \in J} ||c(u_k) - c(v_{j-1})|| + ||c(v_j) - c(u_k)|| \\
+        &\geq l(\Gamma_1) - \sum_{j \in J} \frac{\epsilon}{4 |\Gamma_1|} + \frac{\epsilon}{4 |\Gamma_1|} &\text{($v_{j-1} < u_k < v_j$ and $v_j - v_{j-1} < \eta$)}\\
+        &\geq l(\Gamma_1) - |\Gamma_1| \left( \frac{\epsilon}{4 |\Gamma_1|} + \frac{\epsilon}{4 |\Gamma_1|} \right) &\text{($|J| = |\Gamma_1| - 2$)}\\
+        &= l(\Gamma_1) - \frac{\epsilon}{2} \\
+        &> L - \epsilon
+\end{align*}
+
+Therefore, given any $\epsilon > 0$, construct $\Gamma_1$ and $\eta$, pick $\delta < \min \{|\Gamma_1|, \eta\}$, then $|L - l(\Gamma_2)| < \epsilon$ for all $\Gamma_2$ such that $|\Gamma_2| < \delta$
+
+
+\section*{12}
+
+Prove that the construction of Theorem 2.30 is valid if the assumption that $\Phi$ is continuous is replaced by the assumption that $f$ and $\Phi$ has no common discontinuity.
+
+\textbf{Proof}
+
+
+\section*{15}
+
+Suppose that $f$ is continuous and $\Phi$ is of bounded variation on $[a, b]$. Show that the function $\Psi = \int_a^x f d\Phi$ is of bounded variation on $[a, b]$. If $g$ is continuous on $[a, b]$, show that $\int_a^b g d\Psi = \int_a^b gf d\Phi$
+
+\section*{21}
+If $V[\phi; a, b] = +\infty$, show that there is a point $x_0 \in [a, b]$ such that either $V[\phi; I] = +\infty$ for every subinterval $I$ of $[a, b]$ having $x_0$ as left-hand end-point or $V[\phi; I] = +\infty$ for every subinterval $I$ of $[a, b]$ having $x_0$ as right-hand end-point. 
+
+
+\section*{24}
+Let $f$ be continuous and $\phi$ be bounded variation on $[a, b]$, and recall that the Riemann-Stieltjes integral $\int_a^b fd\phi$ then exists by Theorem 2.24. Show that $\lim_{\epsilon \to 0^+} \int_a^{a + \epsilon} f d\phi = 0$ if and only if either $f(a) = 0$ or $\phi$ is continuous at $a$. Deduce that the formula $\int_a^b fd\phi = \lim_{\epsilon \to 0^+} \int_{a + \epsilon}^b f d\phi$ may not hold
+
+\begin{theorem}[Theorem 2.24]
+    If $f$ is continuous on $[a, b]$ and $\phi$ is of bounded variation on $[a, b]$. Then $\int_a^b f d\phi$ exists. Moreover
+    $$
+        \left| \int_a^b f d\phi \right| \leq \sup |f[a, b]| V[\phi; a, b]
+    $$
+\end{theorem}
+
+\textbf{Proof of ($\implies$)}
+
+We will prove that $\lim_{\epsilon \to 0^+} \int_a^{a + \epsilon} f d\phi = 0$ and $\phi$ is discontinuous at $a$ implies $f(a) = 0$.
+
+Without loss of generality, assume $f(a) > 0$. Let $\epsilon > 0$, $\Gamma$ is a partition on $[a, a+\epsilon]$
+
+$$
+    R_\Gamma = \sum_{i=1}^m f(\xi_i) [\phi(x_i) - \phi(x_{i-1})]
+$$
+
+
+As $f$ is continuous at $a$, for any $\epsilon_1 > 0$, there exists $\delta_1 > 0$ such that $|f(x) - f(a)| < \epsilon_1$ for all $x \in (a, a + \delta_1)$.
+Let $\epsilon_1 = \frac{f(a)}{2}$, if $\epsilon < \delta_1$, we have
+
+\begin{align*}
+    R_\Gamma
+        &\geq \sum_{i=1}^m \frac{f(a)}{2} [\phi(x_i) - \phi(x_{i-1})] \\
+        &= \sum_{i=1}^m \frac{f(a)}{2} [\phi(x_i) - \phi(x_{i-1})]
+\end{align*}
+    
+
+
+As $\phi$ is discontinuous at $a$, there exists $\epsilon_2 > 0$ such that for any $\delta_2 > 0$, there exists $x \in (a, a + \delta_2)$ such that $|\phi(x) - \phi(a)| > \epsilon_2$ that implies $V[\phi; a, a+\epsilon] \geq \epsilon_2 > 0$ for all $\epsilon > 0$. Therefore, the monotone function $V[\phi; a, a+\epsilon]$ has limit $\lim_{\epsilon \to 0+} V[\phi; a, a+\epsilon] \geq \epsilon_2 > 0$
+
+
+
+
+
+\section*{27}
+If $f$ is an even function on $[-1, 1]$, verify the formula $V[f; -1, 1] = 2P[f; -1, 1]$, $V[f; 0, 1] = P[f; -1, 1]$ and $P[f; 0, 1] = N[f; -1, 0]$
+
+\textbf{Proof}
+
+Suppose $f$ is bounded variation on $[-1, 1]$. Let $\Gamma_1$ be any partition on $[-1, 1]$. We define $\Gamma_2 = \{ -x : x \in \Gamma_1\}$ and $\Gamma = \Gamma_1 \cup \Gamma_2$. $\Gamma$ is of the form, namely \emph{symmetric partition}
+
+$$
+\Gamma = \{-1 = -x_m, ..., -x_1, x_0 = 0, x_1, ..., x_m = 1\}
+$$
+
+where $x_1$ might or might not equal $0$. As $\Gamma$ is a refinement of $\Gamma_1$, we immediately have 
+
+\begin{align*}
+    P_{\Gamma_1} &\leq P_{\Gamma} \\
+    N_{\Gamma_1} &\leq N_{\Gamma} \\
+    S_{\Gamma_1} &\leq S_{\Gamma} \\
+\end{align*}
+
+That is,
+
+\begin{align*}
+    P[a, b] &= \sup_{\Gamma_1} P_{\Gamma_1}[a, b] = \sup_{\Gamma\text{ is symmetric}} P_{\Gamma}[a, b] \\
+    N[a, b] &= \sup_{\Gamma_1} N_{\Gamma_1}[a, b] = \sup_{\Gamma\text{ is symmetric}} P_{\Gamma}[a, b] \\
+    V[a, b] &= \sup_{\Gamma_1} S_{\Gamma_1}[a, b] = \sup_{\Gamma\text{ is symmetric}} S_{\Gamma}[a, b]
+\end{align*}
+
+\textbf{Proof for $P[-1, 1] = V[0, 1]$}
+
+Let $\Gamma$ be a symmetric partition on $[-1, 1]$
+\begin{align*}
+    P_\Gamma[-1, 1]
+        &= \sum_{i=1}^m [f(x_i) - f(x_{i-1})]^+ + \sum_{i=1}^m [f(-x_{i-1}) - f(-x_i)]^+ \\
+        &= \sum_{i=1}^m [f(x_i) - f(x_{i-1})]^+ + \sum_{i=1}^m [f(x_{i-1}) - f(x_i)]^+ &\text{($f$ is even)} \\
+        &= \sum_{i=1}^m [f(x_i) - f(x_{i-1})]^+ + [f(x_{i-1}) - f(x_i)]^+ \\
+        &= \sum_{i=1}^m \left|f(x_i) - f(x_{i-1})\right| \\
+        &= S_\Gamma[0, 1]
+\end{align*}
+
+Therefore, the two sets $\{ P_\Gamma[-1, 1]: \Gamma \text{ is symmetric}\}$ and $\{ S_\Gamma[0, 1]: \Gamma \text{ is symmetric}\}$ are identical. So $P[-1, 1] = V[0, 1]$
+
+
+
+\textbf{Proof for $2 P[-1, 1] = V[-1, 1]$}
+
+Let $\Gamma$ be a symmetric partition on $[-1, 1]$
+\begin{align*}
+    P_\Gamma[-1, 1]
+        &= \sum_{i=1}^m [f(x_i) - f(x_{i-1})]^+ + \sum_{i=1}^m [f(-x_{i-1}) - f(-x_i)]^+ \\
+        &= \sum_{i=1}^m [f(-x_i) - f(-x_{i-1})]^+ + \sum_{i=1}^m [f(-x_{i-1}) - f(-x_i)]^+ &\text{($f$ is even)} \\
+        &= \sum_{i=1}^m [f(-x_i) - f(-x_{i-1})]^+ + [f(-x_{i-1}) - f(-x_i)]^+ \\
+        &= \sum_{i=1}^m \left|f(-x_{i-1}) - f(-x_i)\right| \\
+        &= S_\Gamma[-1, 0]
+\end{align*}
+
+Similarly, $P[-1, 1] = V[-1, 0]$. By linearity of variation, $S_\Gamma[-1, 1] = S_\Gamma[-1, 0] + S_\Gamma[0, 1] = 2 P_\Gamma[-1, 1]$
+
+\textbf{Proof for $P[0, 1] = N[-1, 0]$}
+
+Let $\Gamma$ be a symmetric partition on $[-1, 1]$
+\begin{align*}
+    P_\Gamma[0, 1]
+        &= \sum_{i=1}^m [f(x_i) - f(x_{i-1})]^+ \\
+        &= \sum_{i=1}^m [f(x_{i-1}) - f(x_i)]^- \\
+        &= \sum_{i=1}^m [f(-x_i) - f(-x_{i-1})]^- \text{($f$ is even)}\\
+        &= N_\Gamma[-1, 0]
+\end{align*}
+
+Using the same argument, $P[0, 1] = N[-1, 0]$
+\end{document}

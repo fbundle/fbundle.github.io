@@ -1,0 +1,1040 @@
+
+\begin{problem}[chapter 2 problem 1]
+	Show that $\frac{\Z}{m\Z} \otimes_\Z \frac{\Z}{n\Z} = 0$ if $m, n$ are coprime
+\end{problem}
+
+\begin{proof}
+	If $m, n$ are coprime, $m \Z + n \Z = \Z$ as sum of ideals in $\Z$
+	$$
+		\frac{\Z}{m\Z} \otimes_\Z \frac{\Z}{n\Z} = \frac{\Z}{m \Z + n \Z} = \frac{\Z}{\Z} = 0
+	$$
+\end{proof}
+
+\begin{problem}[chapter 2 problem 2]
+	Let $A$ be a ring, $\mf{a}$ be an ideal of $A$ and $M$ be an $A$-module. Show that $A / \mf{a} \otimes_A M$ is isomorphic to $M / \mf{a} M$
+\end{problem}
+
+\begin{proof}
+	The top sequence is exact with the canonical inclusion and projection. By right exactness of tensor product, the bottom sequence is also exact
+	
+	\begin{center}
+		\begin{tikzcd}
+			0 \arrow[r] & \mf{a} \arrow[r, "i", hook]               & A \arrow[r, "p", two heads]      & A / \mf{a} \arrow[r]           & 0 \\
+			& \mf{a} \otimes M \arrow[r, "i \otimes 1"] & A \otimes M \arrow[r, two heads] & A / \mf{a} \otimes M \arrow[r] & 0
+		\end{tikzcd}
+	\end{center}
+	
+	Then, $A / \mf{a} \otimes M \cong \coker (i \otimes 1)$. On the other hand, $A \otimes M \xrightarrow{\sim}  M$ and the image of $\mf{a} \otimes M$ in $M$ under $i \otimes 1$ is $\mf{a}M$
+	\begin{center}
+		\begin{tikzcd}
+			\mf{a} \otimes M \arrow[r, "i \otimes 1"'] \arrow[rr, "i \otimes 1", bend left] & A \otimes M \arrow[r, "\sim"]                         & M                \\
+			\sum_{i} a_i \otimes m_i \arrow[r, maps to]                                     & \sum_{i} a_i \otimes m_i \arrow[r] \arrow[r, maps to] & \sum_{i} a_i m_i
+		\end{tikzcd}
+	\end{center}
+	
+	Hence, $\coker (i \otimes 1) = \frac{A \otimes M}{(i \otimes 1)(\mf{a} \otimes M)} \cong \frac{M}{\mf{a} M}$
+\end{proof}
+
+
+\begin{problem}[chapter 2 problem 3]
+	Let $A$ be a local ring, $M$ and $N$ be finitely generated $A$-modules. Prove that if $M \otimes_A N = 0$, then $M = 0$ or $N = 0$
+\end{problem}
+
+\begin{proof}
+	Let $\mf{m}$ be an ideal of $A$ and $k = A / \mf{m}$. If $M \otimes_A N = 0$, then
+	$$
+		0 = (M \otimes_A N) \otimes_A k \otimes_A k \cong (k \otimes_A M) \otimes_A (k \otimes_A N)
+	$$
+	
+	By exercise 2, $k \otimes_A M \cong M / \mf{m} M = M_k$ and $k \otimes_A N \cong N / \mf{m} N = N_k$, then 
+	$$
+		M_k \otimes_A N_k  = 0
+	$$
+	
+	Note that, given any ring $A$ ideal $\mf{a}$ and an $A/\mf{a}$-module $M$, then $M$ also carries $A$-module structure defined by
+	\begin{align*}
+		A \times M &\to M \\
+		(a, m) &\mapsto \bar{a} m
+	\end{align*}
+	
+	$M_k \otimes_k N_K \cong M_k \otimes_A N_k$ by the following $A$-module isomorphism
+	\begin{align*}
+		M_k \otimes_k N_K &\xrightarrow{\sim} M_k \otimes_A N_k \\
+			\bar{x} \otimes_k \bar{y} &\mapsto \bar{x} \otimes_A \bar{y}
+	\end{align*}
+	
+	Hence, $M_k \otimes_k N_k  = 0$. Let $\mf{m}$ be the unique maximal ideal of the local ring $A$, then $k$ is a field, hence $M_k = 0$ or $N_k = 0$. By Nakayama lemma version 1, $\mf{m} \subseteq J(A)$, $\mf{m} M = M$ or $\mf{m} N = 0$ implies $M = 0$ or $N = 0$
+\end{proof}
+
+\begin{problem}[chapter 2 problem 8].
+	\begin{enumerate}
+		\item If $M$ and $N$ are flat $A$-modules, then so is $M \otimes_A N$
+		
+		\item If $B$ is a flat $A$-algebra and $N$ is a flat $B$-module, then $N$ is a flat as an $A$-module
+	\end{enumerate}
+\end{problem}
+
+\begin{longproof}
+	(1) Let $f: X \to Y$ be an injective $A$-module morphism and $f_1$ be the induced map by the functor $((- \otimes_A M) \otimes_A N)$. Let $f_2$ be the induced map by the functor $(- \otimes_A (M \otimes_A N))$. There is a natural isomorphism $g: ((- \otimes_A M) \otimes_A N) \to (- \otimes_A (M \otimes_A N))$ as follows:
+		
+	\begin{center}
+		\begin{tikzcd}
+			(X \otimes_A M) \otimes_A N \arrow[rrr, "f_1"] \arrow[ddd, "g_X"'] &                                                               &                                               & (Y \otimes_A M) \otimes_A N \arrow[ddd, "g_Y"] \\
+			& (x \otimes m) \otimes n \arrow[r, maps to] \arrow[d, maps to] & (f(x) \otimes m) \otimes n \arrow[d, maps to] &                                                \\
+			& x \otimes (m \otimes n) \arrow[r, maps to]                    & f(x) \otimes (m \otimes n)                    &                                                \\
+			X \otimes_A (M \otimes_A N) \arrow[rrr, "f_2"]                     &                                                               &                                               & Y \otimes_A (M \otimes_A N)                   
+		\end{tikzcd}
+	\end{center}
+	
+	The square commutes since
+	\begin{align*}
+		&g_Y f_1((x \otimes m) \otimes n) = g_Y((f(x) \otimes m) \otimes n) = f(x) \otimes (m \otimes n) \\
+		&f_2 g_X((x \otimes m) \otimes n) = f_2(x \otimes (m \otimes n)) = f(x) \otimes (m \otimes n)
+	\end{align*}
+	
+	for all $x \in X, m \in M, n \in N$. $f_1$ being injective implies $f_2$ being injective. Hence $M \otimes_A N$ is flat.
+	
+	(2) Note that $B$ and $N$ are $(A,B)$-bimodules, hence given any $A$-module $M$
+	$$
+		M \otimes_A N \cong M \otimes_A (B \otimes_B N) \cong (M \otimes_A B) \otimes_B N
+	$$
+	
+	
+	We will show the following: (2a) $(- \otimes_A B)$ is an exact functor from $A$-module into $(A,B)$-bimodule (2b) $((- \otimes_A B) \otimes_B N)$ is an exact functor from $A$-module into $(A,B)$-bimodule (2c) $((- \otimes_A B) \otimes_B N)$ is naturally isomorphic to $(- \otimes_A N)$
+	
+	(2a) Let $f: X \to Y$ be an injective $A$-module morphism and $f_1$ be the induced $A$-module map by the functor $(- \otimes_A B)$
+	\begin{align*}
+		f&: X \to Y \\
+		f_1&: X \otimes_A B \to Y \otimes_A B
+	\end{align*}
+
+	$X \otimes_A B$ and $Y \otimes_A B$ canonically carry $B$-module structure (extension of scalars under the map $a \mapsto a 1_B$) defined by
+	\begin{align*}
+		B \times (X \otimes_A B) &\to X \otimes_A B \\
+		(b_1, x \otimes_A b) &\mapsto x \otimes_A b_1 b
+	\end{align*}
+	
+	Under that $B$-module structure, $f_1$ is also a $B$-module map because
+	$$
+		f_1(b_1 (x \otimes_A b)) = f_1(x \otimes_A b_1 b) = f(x) \otimes_A b_1 b = b_1(f(x) \otimes_A b) = b_1 f_1(x \otimes_A b)
+	$$
+
+	Since $B$ is flat as an $A$-module, $f_1$ as an $A$-module map is injective, so is $f_1$ as an $(A,B)$-bimodule map. Hence, $(- \otimes_A B)$ is an exact functor from $A$-module into $(A,B)$-bimodule 
+	
+	(2b) Let $f_2$ be the induced $B$-module map by the functor $((- \otimes_A B) \otimes_B N)$
+	\begin{align*}
+		f&: X \to Y \\
+		f_1&: X \otimes_A B \to Y \otimes_A B \\
+		f_2&: (X \otimes_A B) \otimes_B N \to (Y \otimes_A B) \otimes_B N
+	\end{align*}
+	
+	Since $N$ is flat as a $B$-module, $((- \otimes_A B) \otimes_B N)$ is exact as a functor from $A$-module to $B$-module, that is, $f_2$ is injective as a $B$-module map. $(X \otimes_A B) \otimes_B N$ and $(Y \otimes_A B) \otimes_B N$ carry an $A$-module structure defined by
+	\begin{align*}
+		A \times ((X \otimes_A B) \otimes_B N) &\to (X \otimes_A B) \otimes_B N \\
+		(a, (x \otimes_A b) \otimes_B n) &\mapsto (x \otimes_A ab) \otimes_B n
+	\end{align*}
+	
+	Under that $A$-module structure, $f_2$ is also an $A$-module map because
+	$$
+		f_2(a ((x \otimes_A b) \otimes_B n)) = f_2((x \otimes_A ab) \otimes_B n) = (f(x) \otimes_A ab) \otimes_B n = a ((f(x) \otimes_A b) \otimes_B n) = a f_2((x \otimes_A b) \otimes_B n)
+	$$
+	
+	Hence, $((- \otimes_A B) \otimes_B N)$ is an exact functor from $A$-module into $(A,B)$-bimodule.
+	
+	(2c) Note that, $N$ carries a $A$-module structure defined by
+	\begin{align*}
+		A \times N &\to N \\
+		(a, n) &\mapsto (a 1_B) n
+	\end{align*}
+	
+	Let $f_3$ be the induced $A$-module map by the functor $(- \otimes_A N)$. The natural isomorphism $g: (- \otimes_A N) \to ((- \otimes_A B) \otimes_B N)$ is defined as follows:
+
+	\begin{center}
+		\begin{tikzcd}
+			X \otimes_A N \arrow[rrr, "f_3"] \arrow[ddd, "g_X"'] &                                                     &                                     & Y \otimes_A N \arrow[ddd, "g_Y"] \\
+			& x \otimes_A n \arrow[d, maps to] \arrow[r, maps to] & f(x) \otimes_A n \arrow[d, maps to] &                                  \\
+			& (x \otimes_A 1) \otimes_B n \arrow[r, maps to]      & (f(x) \otimes_A 1) \otimes_B n      &                                  \\
+			(X \otimes_A B) \otimes_B N \arrow[rrr, "f_2"]       &                                                     &                                     & (Y \otimes_A B) \otimes_B N     
+		\end{tikzcd}
+	\end{center}
+	
+	The square commutes since
+	\begin{align*}
+		&g_Y f_3 (x \otimes_A n) = g_Y (f(x) \otimes_A N) = (f(x) \otimes_A 1) \otimes_B n \\
+		&f_2 g_X (x \otimes_A n) = f_2((x \otimes_A 1) \otimes_B n) = (f(x) \otimes_A 1) \otimes_B n \\
+	\end{align*}
+	
+	for all $x \in X, n \in N$. $f_2$ being injective implies $f_3$ being injective. Hence, $N$ is flat as an $A$-module by the above $A$-module structure.
+\end{longproof}
+
+\begin{problem}[chapter 3 problem 4]
+	Let $f: A \to B$ be a homomorphism of rings and let $S$ be a multiplicatively closed subset of $A$. Let $T = f(S)$. Show that $S^{-1} B$ and $T^{-1} B$ are isomorphic as $S^{-1} A$-modules.
+\end{problem}
+
+\begin{proof}
+	$B$ carries the $A$-module structure defined by
+	\begin{align*}
+		A \times B &\to B \\
+		(a, b) &\mapsto f(a)b
+	\end{align*}
+	
+	for $a \in A$ and $b \in B$. Hence, $S^{-1} B$ is a localization of $A$-module $B$ on the multiplicatively closed subset $S$
+	$$
+		S^{-1} B = B \times S / \sim
+	$$
+	where $(b_1, s_1) \sim (b_2, s_2)$ for $b_1, b_2 \in B$ and $s_1, s_2 \in S$ if and only if there exists $s \in S$ so that $0 = s(s_2 b1 - s_1 b2) = f(s) (f(s_2) b_1 - f(s_1) b_2)$. The $S^{-1}A$-module structure on $S^{-1} B$ is defined by
+	\begin{align*}
+		S^{-1} A \otimes S^{-1} B &\to S^{-1} B \\
+		\tuple*{\frac{a}{s_1}, \frac{b}{s_2}} &\mapsto \frac{ab}{s_1 s_2} = \frac{f(a) b}{s_1 s_2}
+	\end{align*}
+
+	where $a \in A$, $b \in B$, and $s_1, s_2 \in S$. On the other hand, $T^{-1} B$ is a localization of ring $B$ on the multiplicatively closed subset $T$
+	$$
+		T^{-1} B = B \times T / \sim
+	$$
+	where $(b_1, t_1) \sim (b_2, t_2)$ for $b_1, b_2 \in B$ and $t_1, t_2 \in T$ if and only if there exists $t \in T$ so that $0 = t(t_2 b_1 - t_1 b_2)$. We define the canonical $S^{-1} A$-module structure on $T^{-1} B$ by
+	\begin{align*}
+		S^{-1} A \times T^{-1} B &\to T^{-1} B\\
+		\tuple*{\frac{a}{s}, \frac{b}{t}} &\mapsto \frac{ab}{st} = \frac{f(a) b}{f(s) t}
+	\end{align*}
+
+	Now, we can define a pair of isomorphisms between $S^{-1} B$ and $T^{-1} B$ as $S^{-1}A$-modules as follows:
+	\begin{align*}
+		S^{-1} B &\to T^{-1} B \\
+		\phi: \frac{b}{s} &\mapsto \frac{b}{f(s)} \\
+		\psi: \frac{b}{s_t} &\mapsfrom \frac{b}{t}
+	\end{align*}
+
+	where $b \in B$, $s \in S$, $t \in T$, and $s_t = f^{-1}(t) \in S$ is any element in the preimage of $t$.
+
+	($\phi$ is well-defined) Let $b_1 / s_1 = b_2 / s_2$ in $S^{-1}B$, then there exists $s \in S$, so that $0 = s(s_2 b_1 - s_1 b_2) = f(s) (f(s_2) b_1 - f(s_1) b_2)$, this is the condition for $\phi(b_1 / s_1) = \phi(b_2 / s_2)$
+
+	($\psi$ is well-defined) Let $s_1, s_2 \in S$ so that $b_1 / f(s_1) = b_2 / f(s_2)$ in $T^{-1} B$, then there exists $t \in T = f(S)$ so that $0 = t(f(s_2) b_1 - f(s_1) b_2)$. Let $s \in S$ so that $f(s) = t$, then we have $0 = f(s)(f(s_2) b_1 - f(s_1) b_2) = s(s_2 b_1 - s_1 b_2)$, this is the condition for $\psi(b_1 / f(s_1)) = psi(b_2 / f(s_2))$. Note that, this also show that the image of $\psi$ is independent of the choice of $s_t$
+
+	($\phi \psi = 1$, $\psi \phi = 1$) this is clear from the definition
+
+	($\phi$ and $\psi$ are  $S^{-1} A$-module maps) 
+	
+	$$
+		\phi\tuple*{\frac{a}{s_1} \frac{b_2}{s_2} + \frac{b_3}{s_3}}
+		= \phi \tuple*{\frac{f(s_3) f(a) b_2 + f(s_1) f(s_2) b_3}{s_1 s_2 s_3}}
+		= \frac{f(s_3) f(a) b_2 + f(s_1) f(s_2) b_3}{f(s_1) f(s_2) f(s_3)}
+		= \frac{a}{s_1} \phi\tuple*{\frac{b_2}{s_2}} + \phi\tuple*{\frac{b_3}{s_3}}
+	$$
+	
+	$$
+		\psi\tuple*{\frac{a}{s_1} \frac{b_2}{f(s_2)} + \frac{b_3}{f(s_3)}}
+		= \psi\tuple*{\frac{f(s_3)f(a) b_2 + f(s_1) f(s_2) b_3}{f(s_1) f(s_2) f(s_3)}}
+		= \frac{f(s_3)f(a) b_2 + f(s_1) f(s_2) b_3}{s_1 s_2 s_3}
+		= \frac{a}{s_1} \psi\tuple*{\frac{b_2}{f(s_2)}} + \phi\tuple*{\frac{b_3}{f(s_3)}}
+	$$
+\end{proof}
+
+\begin{problem}[chapter 3 problem 12 - torsion submodule]
+	Let $A$ be an integral domain and $M$ an $A$-module. An element $x \in M$ is a torsion element of $M$ if $\ann_A(x) = \set{a \in A: ax = 0} \neq 0$, that is if $x$ is killed by some non-zero element of $A$. Show that the torsion elements of $M$ form a submodule of $M$. This submodule is called the torsion submodule of $M$ and denoted by $T(M)$. If $T(M) = 0$, the module $M$ is said to be torsion-free. Show that
+	\begin{enumerate}
+		\item If $M$ is any $A$-module, then $M / T(M)$ is torsion-free
+		\item If $f: M \to N$ is a module morphism then $f(T(M)) \subseteq T(N)$
+		\item If $0 \to M_l \to M \to M_r \to 0$ is an exact sequence, then the sequence $0 \to T(M_l) \to T(M) \to T(M_r)$ is exact, i.e. $T(-)$ is a left exact covariant functor
+		\item If $M$ is any $A$-module, then $T(M)$ is the kernel of the mapping $x \mapsto 1 \otimes x$ of $M$ into $K \otimes_A A$ where $K$ is the field of fractions of $A$, i.e. $K = \Frac(A) = (A - 0)^{-1} A$
+	\end{enumerate}
+\end{problem}
+
+\begin{proof}
+	($T(M)$ is a submodule of $M$) $0 \in T(M)$. If $x, y \in T(M)$, then $ax = 0$ and $by = 0$ for some $a, b \in A$. Hence $a(-x) = ax + a(-x) = a(x - x) = 0$ and $ab(x+y) = bax + aby = 0$. Moreover, for any $a_1 \in A$, then $a(a_1 x) = a_1 ax = 0$, hence $T(M)$ is a submodule of $M$
+	
+	(1) Suppose $\bar{x} \in M / T(M)$ is nonzero and it is an element of the torsion submodule of $M / T(M)$, there exists $a \in A$ so that $0 = a \bar{x} = \overline{ax}$, hence $ax \in T(M)$, so there exists $b \in A$ so that $bax = 0$, that implies $x \in T(M)$ which contradicts the assumption of $\bar{x}$ being nonzero
+	
+	(2) Let $x \in T(M)$, then there exists $a \in A$, so that $ax = 0$. Hence $0 = f(ax) = a f(x)$, so $f(x) \in T(N)$
+	
+	(3) $T(M_l) \to T(M)$ is injective since it is a restriction of the injective map $M_l \to M$. Moreover, by (2)
+	$$
+		\ker (T(M) \to T(M_r)) = T(M) \cap \ker (M \to M_r) =  T(M) \cap \im(M_l \to M) \supseteq \im(T(M_l) \to T(M))
+	$$
+	
+	Let denote the map $M_l \to M$ by $f: M_l \to M$
+	For any $x \in T(M) \cap  \im(M_l \to M)$, there exists $y \in M_l$ so that $f(y) = x$. Since, $x \in T(M)$, there exists $a \in A$ so that $0 = ax = af(y) = f(ay)$. Since $f$ is injective, $ay = 0$, i.e $y \in T(M_l)$, hence $T(M) \cap \im(M_l \to M) = \im(T(M_l) \to T(M))$
+	
+	(4) 
+	
+	Let $S = A - 0$, then we have
+	$$
+		S^{-1} A \otimes_A M \cong S^{-1} M
+	$$
+	
+	The composition $M \to S^{-1} M$ is defined by
+	\begin{align*}
+		M \to K \otimes M \xrightarrow{\sim} S^{-1}M \\
+		x \mapsto 1 \otimes x \mapsto \frac{x}{1}
+	\end{align*}
+
+	$$
+		x \in \ker (M \to K \otimes M) \iff x / 1 = 0 \text{ in } S^{-1} M \iff \exists a \in S, ax = 0 \iff x \in T(M)
+	$$
+	
+	Note, the suggestion in the book was really misleading and that costed me a whole night and not delivering the solution. My effort was as below
+	
+	($K$ is a colimit of a diagram containing $A\mu$ for $\mu \in K - 0$)
+	
+	Consider $K$ as an $A$-module, for any $\mu \in K - 0$, $A \mu= \set{\tilde{a} \mu: \tilde{a} \in A}$ is a submodule of $K$, there is a canonical $A$-module map 
+	\begin{align*}
+		f_{\mu \nu}: A \mu &\to A \nu \\
+		x &\mapsto (\nu \mu^{-1}) x
+	\end{align*}
+	
+	for any $\mu, \nu \in K - 0$ and $x \in A \mu$. Define 
+	\begin{align*}
+		g_\mu: A \mu &\to K \\
+		x &\mapsto \mu^{-1} x
+	\end{align*}
+	
+	Then, $g_\bullet$ is the colimit of the diagram consists of $f_{\bullet \bullet}$
+	\begin{center}
+		\begin{tikzcd}
+			A \mu \arrow[rr, "f_{\mu \nu}"] \arrow[rd, "g_\mu"] \arrow[rdd, "h_\mu"'] &                          & A \nu \arrow[ld, "g_\nu"'] \arrow[ldd, "h_\nu"] \\
+			& K \arrow[d, "k", dashed] &                                                           \\
+			& L                        &                                                          
+		\end{tikzcd}
+	\end{center}
+	
+	Let $h_\mu$ and $h_\nu$ be defined so that the diagram commutes, then $k: K \to L$ is
+	\begin{align*}
+		k: K &\to L \\
+			x &\mapsto h_\mu(\mu x)
+	\end{align*}
+	
+	This map is unique since if $k': K \to L$ makes the diagram commutes, then 
+	$$
+		(k' - k) g_\mu = k' g_\mu - k g_\mu = 0 
+	$$
+	
+	for all $\mu \in K - 0$. For any $x = a / b \in K$ for $a \in A$ and $b \in A - 0$, let $\mu = 1 /b$, then $x \in A \mu$. In other words, the map $g: \coprod_{\mu \in K - 0} A\mu \to K$ is surjective.
+	\begin{center}
+		\begin{tikzcd}
+			A \mu \arrow[rd] \arrow[r] & \coprod_{\mu \in K - 0} A\mu = \bigoplus_{\mu \in K - 0} A\mu \arrow[d, two heads] \\
+			& K                                                                         
+		\end{tikzcd}
+	\end{center}
+	Then, $0 = (k' - k) g_\mu (\mu x) = (k' - k)(x)$ for all $x \in K$. Hence, $k' - k$ is a zero function, so the factoring map $k$ is unique. In particular, the diagram of $f_{\bullet \bullet}$ is a directed set, so $K$ is the direct limit of the directed set
+	$$
+		K = \colim_\mu A_\mu = \varinjlim_\mu A_\mu
+	$$
+	
+	(colimit are compatible with tensor product) The diagram consists of $A_\mu \otimes M$ and $g_{\mu \nu} \otimes 1: A_\mu \otimes M \to A_\nu \otimes M$ is a directed set, $A$-module is a cocomplete category, hence the colimit exists
+	$$
+		\colim_\mu (A_\mu \otimes M) = \varinjlim_\mu (A_\mu \otimes M)
+	$$
+	
+	We will show that $\colim_\mu (A_\mu \otimes M) \cong (\colim_\mu A_\mu) \otimes M$. For any $A$-module $L$, we have
+	
+	\begin{align*}
+		\Hom(\colim_\mu (A_\mu \otimes M), L)
+		&\cong \lim_\mu \Hom(A_\mu \otimes M, L) &\text{($\Hom(-, L)$ is contravariant)} \\
+		&\cong \lim_\mu \Hom(A_\mu, \Hom(M, L)) &\text{(tensor-hom adjunction)} \\
+		&\cong \Hom(\colim_\mu A_\mu, \Hom(M, L)) &\text{($\Hom(-,  \Hom(M, L))$ is contravariant)} \\
+		&\cong \Hom((\colim_\mu A_\mu) \otimes M, L) &\text{(tensor-hom adjunction)}
+	\end{align*}
+	
+	Hence, $\colim_\mu (A_\mu \otimes M) \cong (\colim_\mu A_\mu) \otimes M$ as a consequence of Yoneda lemma. In particular
+	$$
+		K \otimes M \cong \colim_\mu(A_\mu \otimes M)
+	$$
+	
+	(main proof)
+	
+	Now, the canonical isomorphism $M \mapsto A1 \otimes M$ defined by $x \mapsto 1 \otimes x$ and the canonical map $M \to K \otimes M$ defined by $x \mapsto 1 \otimes x$ make the diagram commutes.
+
+	\begin{center}
+		\begin{tikzcd}
+			M \arrow[rrd] \arrow[r, "\sim"] & A1 \otimes M \arrow[rd, "g_1 \otimes 1"] \arrow[r, "f_{1\nu} \otimes 1"] & A\nu \otimes M \arrow[d, "f_\nu \otimes 1"] \\
+			&                                                      & K \otimes M                                
+		\end{tikzcd}
+	\end{center}
+	
+	Let $x \in \ker (M \to K \otimes M)$, for any $\nu \in K - 0$, the image on $A\nu \otimes M$ is
+	$$
+		(f_{1 \nu} \otimes 1) (1 \otimes x) = \nu \otimes x
+	$$
+	
+	Let $\nu = a / 1$, then 
+	$$
+		(f_{1 \nu} \otimes 1) (1 \otimes x) = \nu \otimes x = 1 \otimes a x
+	$$
+	
+	Pullback to $M$ gives $a x \in \ker (M \to K \otimes M)$	
+\end{proof}
+
+\begin{problem}[chapter 3 problem 16 - faithfully flat]
+	Let $B$ be a flat $A$-algebra. Then the following conditions are equivalent
+	\begin{enumerate}
+		\item $\mf{a}^{ec} = \mf{a}$ for all ideals $\mf{a}$ of $A$
+		\item $\Spec B \to \Spec A$ is surjective
+		\item For every maximal ideal $\mf{m}$ of $A$, we have $\mf{m}^e \neq (1)$
+		\item If $M$ is any non-zero $A$-module, then $M_B \neq 0$ for $M_B = M \otimes_A B$
+		\item For every $A$-module $M$, the mapping $x \to 1 \otimes x$ of $M$ into $M_B$ is injective
+	\end{enumerate}
+	
+	$B$ is said to be faithfully flat over $A$
+\end{problem}
+
+\begin{lemma}[chapter 2 exercise 13]
+	\label{lemma_2_13}
+	Let $f: A \to B$ be a ring map and $N$ be a $B$-module, then the map $g: N \to N \otimes_A B$ defined by $y \mapsto 1 \otimes y$ is injective.
+\end{lemma}
+
+\begin{longproof}
+	($1 \implies 2$) The map $\phi^*: \Spec B \to \Spec A$ is defined by
+	\begin{align*}
+		\phi^*: \Spec B &\to \Spec A \\
+		\mf{q} &\mapsto \mf{q}^c
+	\end{align*}
+	
+	For any prime ideal $\mf{p}$ in $\Spec A$, 
+	$$
+		\mf{p} = \mf{p}^{ec} = \phi^*(\mf{p}^e)
+	$$
+	
+	Hence, the map $\phi^*: \Spec B \to \Spec A$ is surjective
+	
+	($2 \implies 3$) Since $\phi^*: \Spec B \to \Spec A$ is surjective, there exists a prime ideal $\mf{n} \in \Spec B$ so that $\mf{m} = \phi^*(\mf{n}) = \mf{n}^{c}$, hence
+	$$
+		\mf{m}^e = \mf{n}^{ce} \subseteq \mf{n} \subsetneq (1)
+	$$
+	
+	($3 \implies 4$) For any non-zero $x \in M$, let $Ax$ be the submodule of $M$ generated by $x$. Since $B$ is flat, the top exact sequence induces the exactness of the bottom sequence
+	
+	\begin{center}
+		\begin{tikzcd}
+			0 \arrow[r] & Ax \arrow[r]             & M             \\
+			0 \arrow[r] & Ax \otimes_A B \arrow[r] & M \otimes_A B
+		\end{tikzcd}
+	\end{center}
+	
+	Since $Ax \otimes_A B \to M \otimes_A B$ is injective, in order to show $M \otimes_A B \neq 0$, it suffices to show that $Ax \otimes_A B \neq 0$. The module $Ax$ generated by one element is isomorphic to $A / \mf{a}$ for some ideal $\mf{a}$ of $A$ and $\mf{a} \neq A$ since $Ax$ is nontrivial. Hence, 
+	$$
+		Ax \otimes_A B \cong \frac{A}{\mf{a}} \otimes_A B \cong \frac{B}{\mf{a} B} = \frac{B}{\mf{a}^e B} =  \frac{B}{\mf{a}^e}
+	$$
+	
+	Since $\mf{a}$ belongs to some maximal ideal $\mf{m}$ in $A$ and $\mf{m}^e \neq (1)$, so $\mf{a}^e \neq B$. Hence, $Ax \otimes_A B \neq 0$
+	
+	($4 \implies 5$) Let $K = \ker (M \to M \otimes_A B)$, since $B$ is a flat $A$-module, then top exact sequence induces the exactness of the bottom sequence
+	\begin{center}
+		\begin{tikzcd}
+			0 \arrow[r] & K \arrow[r]             & M \arrow[r]                  & M \otimes_A B               \\
+			0 \arrow[r] & K \otimes_A B \arrow[r] & M \otimes_A B \arrow[r, "v"] & (M \otimes_A B) \otimes_A B
+		\end{tikzcd}
+	\end{center}
+	
+	Note that, from Lemma \ref{lemma_2_13} with $N = M \otimes_A B$, the composition $t: M \otimes_A B \to (M \otimes_A B ) \otimes_A B$ is injective due to the natural isomorphism $(x \otimes 1) \otimes b \mapsto (x \otimes b)$, hence the induced map $v$ from $(- \otimes_A B)$ is injective.
+	\begin{center}
+		\begin{tikzcd}
+			M \arrow[r]          & M \otimes_A B & M \otimes_A B \arrow[r, "v"'] \arrow[rr, "t", bend left] & (M \otimes_A B) \otimes_A B \arrow[r, "\sim"] & (M \otimes_A B) \otimes_A B \\
+			x \arrow[r, maps to] & x \otimes 1   & x \otimes b \arrow[r, maps to]                           & (x \otimes 1) \otimes b \arrow[r, maps to]    & (x \otimes b) \otimes 1    
+		\end{tikzcd}
+	\end{center}
+	
+	So, by exactness, $K \otimes_A B = 0$. From 4, $K = 0$
+	
+	($5 \implies 1$) We always have $\mf{a}^{ec} \supseteq \mf{a}$ for all ideals $\mf{a}$ in $A$, we will show the other direction $\mf{a}^{ec} \subseteq \mf{a}$. Let $f: A \to B$, for any $x \in \mf{a}^{ec}$, then $f(x) \in \mf{a}^e \subseteq B$. Let $M = \frac{A}{\mf{a}}$, so the map below is is injective
+	\begin{align*}
+		\frac{A}{\mf{a}} \to \frac{A}{\mf{a}} \otimes_A B \xrightarrow{\sim} \frac{B}{\mf{a}^e} \\
+		\bar{a} \mapsto \bar{a} \otimes 1 \mapsto \overline{f(a)}
+	\end{align*}
+	
+	Since $f(x) \in \mf{a}^e$, then $\overline{f(x)} = 0$ in $\frac{B}{\mf{a}^e}$, by injectivity, $\bar{x} = 0$ in $\frac{A}{\mf{a}}$, hence $x \in \mf{a}$
+	
+\end{longproof}
+
+\begin{problem}[chapter 3 problem 18]
+	Let $f: A \to B$ be a flat homomorphism of rings ($B$ is a flat $A$-module), let $\mf{q}$ be a prime ideal of $B$ and let $\mf{p} = \mf{q}^c$. Then $f^*: \Spec B_\mf{q} \to \Spec A_\mf{p}$ is surjective
+\end{problem}
+
+\begin{lemma}
+	\label{lemma_contain}
+	Let $f: A \to B$ be a ring map and $S \subseteq T$ be two multiplicative subsets of $A$, then
+	$$
+		T^{-1} A \cong \phi_S(T)^{-1} (S^{-1} A) \cong T^{-1} (S^{-1} A)
+	$$
+	as $A$-modules. Note, the result is a consequence of chapter 3 problem 4
+\end{lemma}
+
+\begin{proof}
+	The induced map $A_\mf{p} \to B_\mf{q}$ is 
+	\begin{align*}
+		f_\mf{q}: A_\mf{p} &\to B_\mf{q} \\
+				\frac{a}{s} &\mapsto \frac{f(a)}{f(s)}
+	\end{align*}
+	
+	Let $S = A - \mf{p}$ and $T = B - \mf{q}$, then $f(S) \subseteq T$, from Lemma \ref{lemma_contain}
+	$$
+		B_\mf{q} = T^{-1} B \cong T^{-1} (f(S)^{-1} B) \cong T^{-1} (S^{-1} B) = (B_\mf{p})_\mf{q}
+	$$
+	
+	The map is well-defined since $s \in A - \mf{p} \iff f_\mf{q}(s) \in B - \mf{q}$. $B$ is flat as an $A$-module, since flatness is a local property, $B_\mf{p}$ is flat as an $A_\mf{p}$-module, hence $B_\mf{q}$ is also flat as an $A_\mf{p}$-module because again $B_\mf{q}$ is a localized module of $B_\mf{p}$. Now, we will show that $B_\mf{q}$ is faithfully flat over $A_\mf{p}$. Let $\mf{m} = \mf{p} A_\mf{p}$ be the unique maximal ideal of $A_\mf{p}$, we have a one-to-one correspondence between prime ideals of $A$ and $A_\mf{p}$, of $B$ and $B_\mf{q}$
+	
+	\begin{center}
+		\begin{tikzcd}
+			A \arrow[rrr] \arrow[ddd]    &                                                    &                             & B \arrow[ddd] \\
+			& \mf{p} \arrow[r, maps to] \arrow[d, maps to]       & \mf{p}^e \arrow[d, maps to] &               \\
+			& \mf{m} =\mf{p} A_\mf{p} \arrow[r, dashed, maps to] & m^e = \mf{p}^e B_\mf{q}     &               \\
+			A_\mf{p} \arrow[rrr, dashed] &                                                    &                             & B_\mf{q}     
+		\end{tikzcd}
+	\end{center}
+	
+	Hence,
+	$$
+		\mf{m}^e = \mf{p}^e B_\mf{q} = \mf{q}^{ce} B_\mf{q} \subseteq \mf{q} B_\mf{q}
+	$$
+	
+	Since $\mf{q} B_\mf{q}$ is a maximal in $B_\mf{q}$, $\mf{m}^e \neq (1)$. Then $\Spec B_\mf{q} \to \Spec A_\mf{p}$ is surjective.
+\end{proof}
+
+\begin{problem}[chapter 3 problem 19 - support of module]
+	Let $A$ be a ring and $M$ be an $A$-module. The support of $M$ is defined to be the set $\supp(M)$ of prime ideal $\mf{p}$ of $A$ such that $M_\mf{p} \neq 0$. Prove the following results:
+	\begin{enumerate}
+		\item $M \neq 0 \iff \supp(M) \neq \emptyset$
+		\item $V(\mf{a}) = \supp(A / \mf{a})$
+		\item If $0 \to M^l \to M \to M^r \to 0$ is an exact sequence, then $\supp (M) = \supp (M^l) \cup \supp(M^r)$
+		\item If $M = \sum_{i \in I} M_i$, then $\supp(M) = \bigcup_{i \in I} \supp(M_i)$ 
+		\item If $M$ is finitely generated, then $\supp(M) = V(\ann_A(M))$ (and is therefore a closed subset of $\Spec A$)
+		\item If $M, N$ are finitely generated, then $\supp (M \otimes_A N) = \supp(M) \cap \supp(N)$
+		\item If $M$ is finitely generated and $\mf{a}$ is an ideal of $A$, then $\supp(M / \mf{a}M) = V(\mf{a} + \ann_A(M))$
+		\item If $f: A \to B$ is a ring homomorphism and $M$ is a finitely generated $A$-module, then $\supp(B \otimes_A M) = (f^*)^{-1}(\supp (M))$ where $f^*: \Spec B \to \Spec A$ is the induced map from $f$
+	\end{enumerate}
+	
+	Note, $V(\mf{a})$ is the set of all prime ideals in $A$ containing $\mf{a}$
+\end{problem}
+
+\begin{lemma}[chapter 3 proposition 3.7]
+	\label{lemma_3_7}
+	Let $M$ and $N$ be $A$-modules and $S$ be a multiplicatively closed subset of $A$, then there is an isomorphism
+	$$
+		S^{-1} M \otimes_{S^{-1} A} S^{-1} N \xrightarrow{\sim} S^{-1} (M \otimes_A N)
+	$$
+	
+	In particular, if $S = A - \mf{p}$ for some prime ideal $\mf{p}$, then
+	$$
+		M_\mf{p} \otimes_{A_\mf{p}} N_\mf{p} \xrightarrow{\sim} (M \otimes_A N)_\mf{p}
+	$$
+\end{lemma}
+
+\begin{lemma}[chapter 2 problem 3 extended]
+	\label{lemma_2_3_e}
+	Let $A$ be a local ring with unique maximal ideal $\mf{a}$, $M$ and $N$ be $A$-modules with $M_\mf{a} \neq 0$ and $N$ finitely generated. Prove that 
+	$$
+		M \otimes_A N \implies N = 0
+	$$
+	
+	Note, the proof is exactly in chapter 2 problem 3, except at the last step we only use Nakayama lemma version 1 for $N$ and given $M_\mf{a} \neq 0$, then $N$ is zero.
+\end{lemma}
+
+\begin{longproof}
+	(1) 
+	$$
+		M = 0 \iff M_\mf{p} = 0 \text{ for all prime ideal } \mf{p} \subseteq A \iff \supp(M) = \emptyset
+	$$
+	
+	(2) For any prime ideal $\mf{p}$ in $A$, the following are equivalent
+	\begin{enumerate}[label=(\alph*)]
+		\item $(A / \mf{a})_\mf{p} \neq 0$
+		\item $\exists x \in A, \forall t \in A - \mf{p}, tx \notin \mf{a}$
+		\item $\mf{a} \subseteq \mf{p}$
+	\end{enumerate}
+	
+	($b \implies c$) suppose $(b \land \neg c)$, that is there exists $a \in \mf{a} - \mf{p} \subseteq A - \mf{p}$, then $ax \in \mf{a}$, that is a contradiction
+	
+	($b \impliedby c$) suppose $(\neg b \land c)$, note that $(\neg b)$ is $\forall x \in A, \exists t \in A - \mf{p}, tx \in \mf{a}$. Since $\mf{p}$ is prime, that is not the whole ring, choose $x \in A - \mf{p}$, then there exists $t \in A - \mf{p}$, but $tx \in \mf{a} \subseteq \mf{p}$, that is a contraction
+	
+	Hence, $p \in \supp(A / \mf{a}) \iff \mf{p} \in V(\mf{a})$, that is $\supp(A / \mf{a}) = V(\mf{a})$
+	
+	(3) For any prime ideal $\mf{p}$ in $A$, the functor $((A - \mf{p})^{-1} -)$ is exact, hence both sequences are exact
+	\begin{center}
+		\begin{tikzcd}
+			0 \arrow[r] & M^l \arrow[r]        & M \arrow[r]        & M^r \arrow[r]        & 0 \\
+			0 \arrow[r] & M^l_\mf{p} \arrow[r] & M_\mf{p} \arrow[r] & M^r_\mf{p} \arrow[r] & 0
+		\end{tikzcd}
+	\end{center}
+	
+	Then
+	$$
+		\mf{p} \in \supp(M)^c \iff M_\mf{p} = 0 \iff M^l_\mf{p} = 0 \text{ and } M^r_\mf{p} = 0 \iff \mf{p} \in \supp(M^l)^c \cap \supp(M^r)^c
+	$$
+	Hence, $ \supp(M)^c = \supp(M^l)^c \cap \supp(M^r)^c$, that is equivalent to $\supp(M) = \supp(M^l) \cup \supp(M^r)$
+	
+	(4) For any prime ideal $\mf{p}$ in $A$, the functor $((A - \mf{p})^{-1} -)$ is exact, hence both sequences are exact
+	
+	\begin{center}
+		\begin{tikzcd}
+			0 \arrow[r] & M_i \arrow[r]          & M        \\
+			0 \arrow[r] & (M_i)_\mf{p} \arrow[r] & M_\mf{p}
+		\end{tikzcd}
+	\end{center}
+	
+	Then
+	$$
+		\mf{p} \in \supp(M)^c \iff M_\mf{p} = 0 \implies (M_i)_\mf{p} = 0 \iff \mf{p} \in \supp(M_i)^c
+	$$
+	
+	Hence, $\supp(M)^c \subseteq  \bigcap_{i \in I} \supp(M_i)^c$, that is equivalent to $\supp(M) \supseteq \bigcup_{i \in I} \supp(M_i)$. To see the other direction, let $\mf{p} \in \supp(M)$ but $(M_i)_\mf{p} = 0$ for all $i \in I$. Let 
+	$$
+		x = \sum_{j \in J} x_j \in M
+	$$
+	
+	for some finite subset $J \subseteq I$ so that $\frac{x}{s} \neq 0$ in $M_\mf{p}$ for some $s \in A - \mf{p}$. Since $(M_j)_\mf{p} = 0$, $\frac{x_j}{1} = 0$ in $(M_j)_\mf{p}$, so there exists $t_j \in A - \mf{p}$ so that $t_j x_j = 0$. Hence, let $t = \prod_{j \in J} t_j$, then $tx = 0$, so $\frac{x}{s} = 0$, that a contradiction
+		
+	(5)	Let $x_1, x_2, ..., x_n$ generates $M$, the each $A x_i$ is a submodule of $M$ that is isomorphic to $A / \mf{a}_i$ for some ideal $\mf{a}_i$ in $A$. We will show that $\bigcap_{i=1}^n \mf{a}_i = \ann_A(M)$. If $a \in A$ so that $aM = 0$, then $a(A x_i) = 0$ for all $i$, hence $x \in \mf{a}_i$ for all $i$. On the other hand, if $a \in \mf{a}_i$, then $a$ acts on any element of $Ax_i$ resulting zero. Hence, $aM = 0$. We have
+	
+	$$
+		\supp(M) = \supp(\sum_{i=1}^n Ax_i) = \bigcup_{i=1}^n \supp(A x_i) = \bigcup_{i=1}^n \supp(A / \mf{a}_i) = \bigcup_{i=1}^n V(\mf{a}_i) = V\tuple*{\bigcap_{i=1}^n \mf{a}_i} = V(\ann_A(M))
+	$$
+	
+	
+	
+	(6) For any prime ideal $\mf{p}$ in $A$, since $A_\mf{p}$ is a local ring, from chapter 2 problem 3, we have
+	$$
+		\mf{p} \in \supp(M \otimes_A N)^c \iff M_\mf{p} \otimes_{A_\mf{p}} N_\mf{p} = (M \otimes N)_\mf{p} = 0 \iff M_\mf{p} = 0 \text{ or } N_\mf{p} = 0 \iff \mf{p} \in \supp(M)^c \cup \supp(N)^c
+	$$
+	
+	Hence, $\supp(M \otimes_A N) = \supp(M) \cap \supp(N)$
+	
+	(7) 
+	
+	$$
+		\supp(M / \mf{a} M) = \supp(A / \mf{a} \otimes_A M) = \supp(A / \mf{a}) \cap \supp(M) = V(\mf{a}) \cap V(\ann_A(M)) = V(\mf{a} \cup \ann_A(M)) = V(\mf{a} + \ann_A(M))
+	$$
+	
+	where the last equality is due to $\mf{a} + \ann_A(M)$ being the smallest ideal containing $\mf{a} \cup \ann_A(M)$
+	
+	(8) The induced map $f^*: \Spec B \to \Spec A$ is defined by
+	\begin{align*}
+		f^*: \Spec B &\to \Spec A \\
+				\mf{q} &\mapsto \mf{q}^c
+	\end{align*}
+	
+	Let $\mf{q} \in \Spec B$, and $\mf{p} = f^*(\mf{q}) = \mf{q}^c$, then we have
+	\begin{align*}
+		(B \otimes_A M)_\mf{q} 
+		&\cong B_\mf{q} \otimes_B (B \otimes_A M) \\
+		&\cong (B_\mf{q} \otimes_B B) \otimes_A M \\
+		&\cong B_\mf{q} \otimes_A M \\
+		&\cong (B_\mf{q} \otimes_{A_\mf{p}} A_\mf{p}) \otimes_A M &\text{($B_\mf{q}$ is an $A_\mf{p}$-module, Lemma \ref{lemma_contain})} \\
+		&\cong B_\mf{q} \otimes_{A_\mf{p}} (A_\mf{p} \otimes_A M) \\
+		&\cong B_\mf{q} \otimes_{A_\mf{p}} M_\mf{p} \\
+	\end{align*}
+	
+	The proof logic is as follows:
+	
+	\begin{center}
+		\begin{tikzcd}
+			\mf{q} \in (f^*)^{-1}(\supp(M))^c \arrow[r]   & \mf{p} \in \supp(M)^c \arrow[r] \arrow[l]       & M_\mf{p} = 0 \arrow[d, bend right] \arrow[l]                              \\
+			\mf{q} \in \supp_B(B \otimes_A M)^c \arrow[r] & (B \otimes_A M)_\mf{q}  = 0 \arrow[l] \arrow[r] & B_\mf{q} \otimes_{A_\mf{p}} M_\mf{p}  = 0 \arrow[l] \arrow[u, bend right]
+		\end{tikzcd}
+	\end{center}
+	
+	where $B_\mf{q} \otimes_{A_\mf{p}} M_\mf{p} = 0 \implies M_\mf{p} = 0$ because $(B_\mf{q})_\mf{p} = B_\mf{q} \neq 0$. $B_\mf{q} \neq 0$ because $1/1 \neq 0$ in $B_\mf{q}$ and $(B_\mf{q})_\mf{p} = B_\mf{q}$ because $B - \mf{q} \supseteq B - \mf{p}^e$, localizing larger subset first then localizing smaller subset is equivalent to localizing only larger subset.
+\end{longproof}
+
+\begin{proof}[Proof of Lemma \ref{lemma_3_7}]
+	\begin{align*}
+		S^{-1} (M \otimes_A N)
+		&\cong S^{-1} A \otimes_A (M \otimes_A N) \\
+		&\cong (S^{-1} A \otimes_A M) \otimes_A N \\
+		&\cong S^{-1} M \otimes_A N \\
+		&\cong (S^{-1} A \otimes_{S^{-1} A} S^{-1} M) \otimes_A N \\
+		&\cong (S^{-1} M \otimes_{S^{-1} A} S^{-1} A) \otimes_A N \\
+		&\cong S^{-1} M \otimes_{S^{-1} A} (S^{-1} A \otimes_A N) \\
+		&\cong S^{-1} M \otimes_{S^{-1} A} (S^{-1} A \otimes_A N) \\
+		&\cong S^{-1} M \otimes_{S^{-1} A} S^{-1} N \\
+	\end{align*}
+\end{proof}
+
+\begin{problem}[chapter 5 problem 1]
+	Let $f: A \to B$ be an integral ring extension. Show that $f^*: \Spec B \to \Spec A$ is a closed mapping, that is, it maps closed sets into closed sets
+\end{problem}
+
+\begin{proof}
+	Let $\mf{b} \subseteq B$ be any ideal, then $V(\mf{b})$  is a closed set in $\Spec B$ and 
+	$$
+		f^* V(\mf{b}) = \set{\mf{q} \cap A: \mf{q} \in V(\mf{b})}
+	$$
+	is its image in $\Spec A$. We have
+	$$
+		\mf{p} \in f^* V(\mf{b}) \iff \exists \mf{q} \in V(\mf{b}), \mf{q} \cap A = \mf{p} \implies \mf{p} \in V(\mf{b} \cap A)
+	$$
+	
+	That is, $f^* V(\mf{b}) \subseteq V(\mf{b} \cap A)$. On the other hand, for any $\mf{p} \in V(\mf{b} \cap A)$, the inclusion
+	$$
+		\frac{A}{\mf{b} \cap A} \hookrightarrow \frac{B}{\mf{b}}
+	$$
+	
+	is an integral ring extension, $\bar{\mf{p}}$ is a prime ideal in $\frac{A}{\mf{b} \cap A}$, hence there exists a prime ideal $\mf{q} \in V(\mf{b})$ so that $\bar{\mf{q}} \cap \frac{A}{\mf{b} \cap A} = \bar{\mf{p}}$. We have
+	\begin{align*}
+		\bar{\mf{q}} &= \set{y + \mf{b}: y \in \mf{q}} \\
+		\bar{\mf{p}} = \bar{\mf{q}} \cap  \frac{A}{\mf{b} \cap A} &= \set{x +\mf{b} \cap A: x \in A, f(x) = y}
+	\end{align*}
+	
+	Since $\mf{p}$ and $\bar{\mf{p}}$ are prime ideals of a quotient map $\mf{p} = \set{x \in A, f(x) = y} = \mf{q} \cap A$. Hence, $f^* V(\mf{b}) = V(\mf{b} \cap A)$, $f^*$ is a closed map
+\end{proof}
+
+\begin{problem}[chapter 5 problem 3]
+	Let $f: B \to B'$ be a $A$-algebra morphism and $C$ be an $A$-algebra. If $f$ is integral, show that $f \otimes 1: B \otimes_A C \to B' \otimes_A C$ is integral
+\end{problem}
+
+\begin{proof}
+	Since the integral closure of $B \otimes_A C$ in $B' \otimes_A C$ is a subring of $B' \otimes_A C$, it suffices to show that all every basic tensor $b' \otimes c$ is integral over $B \otimes_A C$. $f: B \to B'$ is integral, hence any $b' \in B$ satisfies a monic polynomial in $B$
+	$$
+		(b')^n + f(b_1) (b')^{n-1} + ... + f(b_n) = 0 
+	$$
+	
+	for some $b_1, ..., b_n \in B$. Note that, $(b' \otimes c)^k = (b')^n \otimes c^k$. Let $c^n$ act on the monic polynomial, we have
+	$$
+		(b' \otimes c)^n + (f(b_1) \otimes c) (b' \otimes c)^{n-1} + ... + (f(b_n) \otimes c^n) = 0 
+	$$
+	
+	The coefficients $f(b_k) \otimes c^k = (f \otimes 1)(b_k \otimes c^k) \in \im (f \otimes 1)$. Hence, $b' \otimes c$ is integral over $B \otimes_A C$
+\end{proof}
+
+\begin{problem}[chapter 5 problem 5]
+	Let $A \hookrightarrow B$ be an integral ring extension
+	\begin{enumerate}
+		\item If $x \in A$ is a unit in $B$ then it is a unit in $A$
+		\item The Jacobson radical of $A$ is the contraction of the Jacobson radical of $B$
+	\end{enumerate}
+\end{problem}
+
+\begin{longproof}
+	(1)
+	
+	Suppose $x$ is not a unit in $A$, let $\mf{m}_A$ be the maximal ideal containing $x$, then there exists a prime ideal $\mf{m}_B$ in $B$ so that $\mf{m}_B \cap A = \mf{m}_A$. Since $\mf{m}_A$ is maximal, then $\mf{m}_B$ is also maximal, but $x \in \mf{m}_A \subseteq \mf{m}_B$, then $x$ is not a unit in $B$, contradiction.
+	
+	(2)
+	
+	Using the previous argument, any maximal ideal in $A$ is the contraction of another maximal ideal in $B$, hence 
+	$$
+		J(A) \subseteq J(B) \cap A
+	$$
+	
+	Moreover, contraction of any maximal ideal in $B$ is maximal in $A$, then 
+	$$
+		J(B) \cap A \subseteq J(A)
+	$$
+\end{longproof}
+
+\begin{problem}[chapter 5 problem 12]
+	Let $G$ be a finite group of automorphisms of a ring $A$ and let $A^G$ denote the subring of $G$-invariants, that is
+	$$
+		A^G = \set{x \in A: \sigma(x) = x \text{ for all } \sigma \in G}
+	$$
+	
+	Prove that $A$ is integral over $A^G$. Let $S$ be a multiplicative closed subset of $A$ such that $\sigma(S) \subseteq S$ for all $\sigma \in G$, let $S^G = S \cap A^G$. Show that the action of $G$ on $A$ extends to an action on $S^{-1} A$ and that $(S^G)^{-1} A^G \cong (S^{-1} A)^G$
+\end{problem}
+
+\begin{proof}
+	($A$ is integral over $A^G$)
+	
+	For any $x \in A$, since $1_A \in G \subseteq \Hom(A, A)$ and $n = |G|$ is finite, $x$ is a root of the polynomial 
+	$$
+		f(t) = \prod_{\sigma \in G} (t - \sigma(x)) \in A[t]
+	$$
+	
+	We will show that $f(t) \in A^G[t]$, that is
+	$$
+		f(t) = a_0 + a_1 t^1 + ... + a_n t^n
+	$$
+	
+	with $a_0, ..., a_n \in A^G$. For any $\tau \in G \subseteq \Hom(A, A)$, it induces a $\tau \in \Hom(A[t], A[t])$, then
+	$$
+		\tau(f(t)) = \tau\tuple*{\prod_{\sigma \in G} (t - \sigma(x))} = \prod_{\sigma \in G} (t - (\tau \sigma)(x))
+	$$
+	
+	Since $\set{\tau \sigma: \sigma \in G} = G$, then $\tau(f(t)) = f(t)$, hence
+	$$
+		\tau(a_k) = a_k
+	$$
+	
+	Hence, $a_k \in A^G$, thus $f(t) \in A^G[t]$
+	
+	(the action of $G$ on $A$ extends to an action on $S^{-1} A$)
+	
+	The action of $G$ on $A$ extends to an action of $S^{1} A$ as follows:
+	\begin{align*}
+		G \times S^{-1} A &\to S^{-1} A \\
+		\tuple*{\sigma, \frac{a}{s}} &\mapsto \frac{\sigma(a)}{\sigma(s)}
+	\end{align*}
+	
+	This is a well-defined group action since
+	\begin{align*}
+		1_A \frac{a}{s} &= \frac{a}{s} \\
+		(\sigma \tau) \frac{a}{s} &= \frac{\sigma \tau(a)}{\sigma \tau(s)} = \sigma \tuple*{\tau \frac{a}{s}}\\
+	\end{align*}
+	
+	Moreover, it respects addition and multiplication on $S^{-1} A$, that is
+	\begin{align*}
+		\sigma\tuple*{\frac{a_1}{s_1}} + \sigma\tuple*{\frac{a_2}{s_2}} &= \frac{\sigma a_1}{\sigma s_1} + \frac{\sigma a_2}{\sigma s_2} = \frac{\sigma(s_2 a_1 + s_1 a_2)}{\sigma(s_1 s_2)} = \sigma \tuple*{\frac{a_1}{s_1} + \frac{a_2}{s_2}} \\
+		\sigma\tuple*{\frac{a_1}{s_1}} \sigma\tuple*{\frac{a_2}{s_2}} &= \frac{\sigma a_1}{\sigma s_1} \frac{\sigma a_2}{\sigma s_2} = \frac{\sigma(a_1 a_2)}{\sigma(s_1 s_2)} = \sigma\tuple*{\frac{a_1}{s_1} \frac{a_2}{s_2}}
+	\end{align*}
+	
+	($(S^G)^{-1} A^G \cong (S^{-1} A)^G$)
+	
+	Note that
+	$$
+		(S^{-1} A)^G = \set*{\frac{a}{s} \in S^{-1} A: \sigma\tuple*{\frac{a}{s}} = \frac{a}{s} \text{ for all } \sigma \in G}
+	$$
+	
+	We define a pair of isomorphism as follows: 
+	\begin{align*}
+		(S^G)^{-1} A^G &\to (S^{-1} A)^G \\
+			f: \frac{a}{s} &\mapsto \frac{a}{s} \\
+			g: \frac{\mu(a)}{\mu(s)} &\mapsfrom \frac{a}{s}
+	\end{align*}
+	
+	where $\mu(x) = \sum_{\sigma \in G} \sigma(x)$ for any $x \in A$
+	
+	$f$ is well-defined since if $a \in A^G$ and $s \in S^G$, then immediately $\sigma\tuple*{\frac{a}{s}} = \frac{a}{s}$, hence $f\tuple*{\frac{a}{s}} \in (S^{-1} A)^G \subseteq S^{-1} A$.
+	
+	$g$ is well-defined because $\mu(a) \in A^G$ for any $a \in A$ and $\mu(s) \in S^G$ for any $s \in S$. For any $\tau \in G$, since $\set{\tau \sigma: \sigma \in G} = G$
+	$$
+		\tau \mu (x) = \tau \tuple*{\sum_{\sigma \in G} \sigma(x)} = \sum_{\sigma \in G} \tau \sigma(x) = \sum_{\sigma \in G} \sigma(x) = \mu(x)
+	$$
+	
+	It is clear that $gf = 1_{(S^G)^{-1} A^G}$. On the other hand, For any $\frac{a}{s} \in (S^{-1} A)^G$, $fg\tuple*{\frac{a}{s}} = \frac{\mu(a)}{\mu(s)}$. For each $\sigma \in G$, $\frac{a}{s} \in (S^{-1} A)^G$ implies that there exists $t_\sigma \in S$ so that
+	$$
+		t_\sigma s \sigma(a) = t_\sigma a \sigma(s)
+	$$
+	
+	Let $t = \prod_{\sigma \in G} t_\sigma \in S$, since $t_\sigma$  is one of the factor of the product $t$, then $t s \sigma(a) = t a \sigma(s)$ for all $\sigma \in G$, summing over all $\sigma \in G$ gives $t s \mu(a) = t a \mu(s)$. Now, multiplying both sides by $\tuple*{\prod_{\tau \in G - \set{1_A}} \tau(t)}$ gives
+	$$
+		\nu(t) a \mu(s) = \nu(t) s \mu(a)
+	$$
+	
+	for $\nu(t) = \prod_{\tau \in G} \tau(t)$
+	using the same argument as above $\prod_{\tau \in G} \tau(t) \in A^G$, moreover since $\tau(S) \subseteq S$, then $\prod_{\tau \in G} \tau(t) \in A^G \cap S = S^G$. Theforefore, $\frac{\mu(a)}{\mu(s)} = \frac{a}{s}$, that is $fg = 1_{(S^{-1} A)^G}$
+\end{proof} 
+
+\begin{problem}[chapter 5 problem 13]
+	Let $\mf{p}$ be a prime ideal of $A^G$ and let $P$ be the set of prime ideals of $A$ whose contraction is $\mf{p}$. Show that $G$ act transitively on $P$. In particular, $P$ is finite.
+\end{problem}
+
+\begin{longproof}
+	(on a fiber of $\Spec A \to \Spec A^G$, $G$ maps sheets into sheets)
+	
+	For any $\mf{q} \in P$, then $\mf{q} \cap A^G = \mf{p}$, for any $\sigma \in G$, since $\sigma$ is an isomorphism in $\Hom(A, A)$, then $\sigma(\mf{q} \cap A^G) = \sigma(\mf{q}) \cap \sigma(A^G)$, hence
+	$$
+		\mf{p} = \sigma(\mf{p}) = \sigma(\mf{q} \cap A^G) = \sigma(\mf{q}) \cap \sigma(A^G) = \sigma(\mf{q}) \cap A^G
+	$$
+	
+	Thus, $\sigma(\mf{q})$ is another prime ideal whose contraction is $\mf{p}$
+	
+	(on a fiber of $\Spec A \to \Spec A^G$, given any two sheets, there is a $\sigma \in G$ maps from one to another)
+	
+	Let $\mf{q}_1$ and $\mf{q}_2$ be prime ideals in $A$ so that $\mf{p} = \mf{q}_1 \cap A^G = \mf{q}_2 \cap A^G$ but $\mf{q}_2$ is not on the $G$-orbit of $\mf{q}_1$, that is there exists $x \in \mf{q}_2$ so that $x \notin \sigma(\mf{q}_1)$ for any $\sigma \in G$. From previous part, we have $\nu(x) = \prod_{\sigma \in G} \sigma(x) \in A^G$, moreover $x$ is one of the factor of the product $\nu(x)$, hence 
+	$$
+		\nu(x) \in \mf{q}_2 \cap A^G = \mf{p} \subseteq \mf{q}_1
+	$$
+	
+	Hence, there at least one $\sigma \in G$ so that $\sigma(x) \in \mf{q}_1$. Thus, $\sigma^{-1} \in G$ map $\sigma(x) \in \mf{q}_1$ into $x$ which is a contradiction.
+	
+	($P$ is finite)
+	
+	In particular, since $G$ is finite, $P$ is also finite.
+	
+	
+\end{longproof}
+
+\begin{problem}[chapter 7 problem 4]
+	Which is the following rings Noetherian?
+	\begin{enumerate}
+		\item The ring of rational functions of $z$ having no pole on the circle $|z| = 1$
+		\item The ring of power series in $z$ with a positive radius of convergence
+		\item The ring of power series in $z$ with an infinite radius of convergence
+		\item The ring of polynomials in $z$ whose first $k$ derivatives vanish at the origin ($k$ being a fixed integer)
+		\item The ring of polynomial in $z, w$ all of whose partial derivatives with respect to $w$ vanish for $z = 0$
+		
+		In all cases the coefficients are complex numbers.  
+	\end{enumerate}
+\end{problem}
+
+\begin{longproof}
+	(1) $\C$ is Noetherian, so $\C[z]$ is Noetherian. Define the multiplicative closed set $S \subseteq \C[x]$
+	$$
+		S = \set{q(z) \in \C[z]: q(x) \neq 0 \text{ for all $x$ on the circle $|x| = 1$}}
+	$$
+	
+	Then the rational functions of $z$ having no pole on the circle $|z| = 1$ is precisely $S^{-1} \C[x]$, hence Notherian
+	
+	(2) The ring of power series in $z$ with positive radius of convergence is
+	$$
+		A = \set*{\sum_{n=0}^\infty a_n z^n: R = \frac{1}{\limsup_{n \to \infty} |a_n|^{1/n}} > 0}
+	$$
+	
+	Note that we can write any $f(z) \in \C[[z]]$ as 
+	$$
+		f(z) = z^{\ord f(z)} g(z)
+	$$
+	
+	If $f(z) \in A$, so is $g(z)$. Hence, $f(z) \in (z^{\ord f(z)} )$. Therefore, any ideal $I$ in $A$ is generated by $z^n$ for
+	$$
+		n = \min_{f(x) \in I} \ord f(x)
+	$$
+	
+	(3) The ring of power series in $z$ with infinite radius of convergence is the ring of holomorphic function $\mathcal{O}$, let
+	$$
+		I_n = \set{f(x) \in \mathcal{O}: 0 = f(n) = f(n+1) = f(n+2) = ...}
+	$$
+	
+	Then the chain of ideals $I_1 \subseteq I_2 \subseteq ...$ is strictly increasing. Hence, $\mathcal{O}$ is not Noetherian
+	
+	(4) The ring of polynomials in $z$ whose first $k$ derivatives vanish at the origin ($k$ being a fixed integer) is
+	$$
+		B = \C + z^{k+1} \C[z] = \set{a_0 + a_1 z + a_2 z^2 + ... + a_k z^k + ... + a_n z^n \in \C[z]: a_1 = a_2 = ... = a_k = 0}
+	$$
+	
+	$\C[z^{k+1}]$ is Noetherian and a subring of $M$ and $M$ is a $\C[z^{k+1}]$-module generated by $1, z, z^2, ..., z^k$. Then, $M$ is Noetherian
+	
+	(5) Let
+	$$
+		I_n = (z, zw, zw^2, ..., zw^n) \subseteq \C[z, w]
+	$$
+	
+	Then $I_1 \subseteq I_2 \subseteq ...$ is strictly increasing ($zw^{n+1} \in I_{n+1} - I_n$). Hence The ring of polynomial in $z, w$ all of whose partial derivatives with respect to $w$ vanish for $z = 0$ is not Noetherian
+\end{longproof}
+
+
+\begin{problem}[chapter 7 problem 5]
+	Let $A$ be a Noetherian ring and $B$ a finitely generated $A$-algebra, $G$ is a finite group of $A$-automorphisms of $B$ and $B^G$ be the set of all elements of $B$ which are left fixed by element element of $G$. Show that $B^G$ is a finitely generated $A$-algebra.
+\end{problem}
+
+\begin{lemma}[chapter 7 proposition 7.8]
+	\label{lemma_7_8}
+	Let $A \subseteq B \subseteq C$ be rings. Suppose $A$ is Noetherian, that $C$ is finitely generated as an $A$-algebra and $C$ is integral over $B$, then $B$ is finitely generated as an $A$-algebra
+\end{lemma}
+
+\begin{proof}
+	We know that $B^G \to B$ is an integral ring extension, $B$ being Noether follows from Lemma \ref{lemma_7_8}  and the chain
+	$$
+		A \subseteq B^G \subseteq B
+	$$
+\end{proof}
+
+\begin{problem}[chapter 7 problem 8]
+	If $A[x]$ is Noetherian, is $A$ necessarily Noetherian?
+\end{problem}
+
+\begin{proof}
+	Since $A \cong A[x] / (x)$, then quotient ring $A$ of a Noetherian ring $A[x]$ is Noetherian
+\end{proof}
+
+\begin{problem}[chapter 7 problem 12]
+	Let $A$ be a ring and $B$ be a faithfully flat $A$-algebra. If $B$ is Noetherian, show that $A$ is also Noetherian
+\end{problem}
+
+\begin{proof}
+	$B$ is a failthfully flat $A$-algebra, hence under the map $A \to B$, for any ideal $\mf{a} \subseteq A$, $\mf{a}^{ec} = \mf{a}$. Let 
+	$$
+		\mf{a}_1 \subseteq \mf{a}_2 \subseteq ...
+	$$
+	
+	be a chain of ideals in $A$. Then
+	$$
+		\mf{a}_1^e \subseteq \mf{a}_2^e \subseteq ...
+	$$
+	
+	is a chain of ideals in $B$ that must stablize at some point. Contracting back to $A$ gives
+	$$
+		\mf{a}_1^{ec} \subseteq \mf{a}_2^{ec} \subseteq ...
+	$$
+	
+	must stablize at some point. Hence, $A$ is Noetherian
+\end{proof}
+
+\begin{problem}
+	If $A$ is any Noetherian ring, then also the power series ring $A[[x]]$ is Noetherian
+\end{problem}
+
+\begin{proof}
+	For any power series $f(x) = a_0 + a_1 x^1 + a^2 x^2 + ... + a^n x^n + ... \in A[[x]]$, define
+	$$
+		\ord f(x) = \min \set{n \geq 0: a_n \neq 0}
+	$$
+	
+	Suppose $A[[x]]$ is not Noetherian, let $I$ be an ideal in $A[[x]]$ that is not finitely generated, we will inductively construct $f_0(x), f_1(x), f_2(x), ... \in A[x]$ and ideals $I_n = (f_0(x), f_1(x), ..., f_n(x))$ as follows:
+	
+	Pick a nonzero  $f_0(x) \in I$ of minimal order, set
+	$$
+		I_0 = (f_0(x))
+	$$
+	
+	If we already pick $f_0(x), f_1(x), ..., f_{n-1}(x)$, the we pick a nonzero $f_n(x) \in I - I_{n-1}$ of minimal order and set
+	$$
+		I_n = (f_0(x), f_1(x), ..., f_n(x))
+	$$
+	
+	By construction, we have
+	$$
+		\ord f_0(x) \leq \ord f_1(x) \leq \ord f_2(x) \leq ...
+	$$
+	
+	Let $a_n$ be the first nonzero coefficient of $f_n(x)$ and let $J \subseteq A$ be the ideal defined by
+	$$
+		J = (a_0, a_1, a_2, ...)
+	$$
+	
+	Since $A$ is Noetherian, $J$ is finitely generated, that is
+	$$
+		J = (a_0, a_1, a_2, ..., a_N)
+	$$
+	
+	for some $N \geq 0$. Let $f(x) \in I_n - I_N$ with $N < n$, by minimality of order of $f_i(x)$, we must have $\ord f(x) - \max\set{\ord f_i(x)} \geq 0$.
+	
+	We will write $f(x)$ as a $A[[x]]$-linear combination of $f_1(x), f_2(x), ..., f_N(x)$, let $a \in A$ be the first nonzero coefficient of $f(x)$, then $a = \sum_{i=0}^N r_i a_i $	for some $r_0, r_1, ..., r_N \in A$. We can write
+	$$
+		f(x) = f^{(1)}(x) - \sum_{i=0}^N r_i x^{\ord f(x) - \ord f_i(x)} f_i(x) = f^{(1)}(x) - \sum_{i=0}^N h^{(1)}_i(x) f_i(x)
+	$$
+	
+	for some $f^{(1)}(x) \in A[[x]]$ with $\ord f^{(1)}(x) \geq \ord f(x) + 1$ and $\ord h_i(x) \geq \ord f(x) - \max\set{\ord f_i(x)} \geq 0$.
+	
+	 Continue this process, we can write
+	$$
+		f(x) = f^{(k)}(x) - \tuple*{\sum_{i=0}^N h^{(k)}_i(x) f_i(x) + \sum_{i=0}^N h^{(k-1)}_i(x) f_i(x) + ... + \sum_{i=0}^N h^{(1)}_i(x) f_i(x)}
+	$$
+	
+	because at each step, order of $f^{(k)}(x)$ increases by at least $1$, so $\ord f^{(k)} \geq \ord f(x) + k$, and
+	$$
+		\ord h^{(k)}_i(x) \geq \ord f^{(k)}(x) - \max\set{\ord f_i(x)} \geq k + \ord f(x) - \max\set{\ord f_i(x)} \geq k
+	$$
+	
+	Then we can write
+	$$
+		f(x) = \sum_{i=1}^N h_i(x) f_i(x)
+	$$
+	
+	for some $h_i(x) \in A[[x]]$. Because $\ord h^{(k)}_i(x) \geq k$ and $\ord f^{(k)} \geq k$, the process gives a construction of all coeffcients of degree $< k$ of $h_i(x)$ for any $k$. Hence, $I \subseteq A[[x]]$ is finitely generated.
+	
+	Alternate proof: show $\C[[x]]$ is PID
+\end{proof}
+
+\begin{problem}
+	If $A$ is any ring and $\mf{p} \subset A$ is any prime ideal, then $A_\mf{p} / \mf{p} A_\mf{p} \cong \Frac(A / \mf{p})$
+\end{problem}
+
+\begin{proof}
+	Since localization is exact, let $S = A - \mf{p}$, we have two short exact sequences
+	\begin{center}
+		\begin{tikzcd}
+			0 \arrow[r] & \mf{p} \arrow[r]        & A \arrow[r]        & A/\mf{p} \arrow[r]          & 0 \\
+			0 \arrow[r] & S^{-1} \mf{p} \arrow[r] & A_\mf{p} \arrow[r] & S^{-1} (A / \mf{p}) \arrow[r] & 0
+		\end{tikzcd}
+	\end{center}
+	
+	Note that $S^{-1} \mf{p} = \set*{\frac{p}{s}: p \in \mf{p}, s \in S} = \mf{p} A_\mf{p} \subseteq A_\mf{p}$ is the maximal ideal of $A_\mf{p}$. The surjection $A \to A / \mf{p}$ sends $S$ into $A / \mf{p} - \set{0}$, there is an isomorphism of $S^{-1} A$-modules
+	$$
+		S^{-1} (A / \mf{p}) \cong \Frac(A / \mf{p})
+	$$
+	
+	Hence, by exactness of the sequence sequence
+	$$
+		\frac{A_\mf{p}}{\mf{p} A_\mf{p}} \cong \Frac(A / \mf{p})
+	$$
+	
+	as $S^{-1}$-modules
+\end{proof}

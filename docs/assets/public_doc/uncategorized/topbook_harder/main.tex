@@ -1,0 +1,1014 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\input{header}
+\title{topbook\_harder}
+\author{Khanh Nguyen}
+\date{June 2023}
+
+\begin{document}
+
+\maketitle
+
+\emph{some harder or interesting problems in topbook2023.pdf}
+
+\section*{Common}
+
+I will put here some common definitions, propositions used in this notes.
+
+\begin{proposition}[Cover Proposition]
+    Given a set $A$, for all element $x \in A$ if $x \in U_x \subseteq A$ then
+    $$
+        \bigcup_{x \in A} U_x = A
+    $$
+\end{proposition} 
+
+\textbf{Proof}
+
+We immediately have $\bigcup_{x \in A} U_x \subseteq A$. On the other hand, for all $x \in A$, $\{ x \} \subseteq U_x$. Then
+$$
+    A = \bigcup_{x \in A} \{ x \} \subseteq \bigcup_{x \in A} U_x
+$$
+
+\begin{definition}[Indistinguishability and $T_0$-space]
+    Two points $a, b \in X$ are called indistinguishable if every open set in $X$ either contains both $a$ and $b$ or contains none.
+    A topological space is a $T_0$-space if all pairs of points are distinguishable.
+\end{definition}
+
+\begin{definition}[$T_1$-space]
+    A topological space $(X, \Tau)$ is said to be a $T_1$-space if every singleton set $\{ x \}$ for $x \in X$ is closed in $(X, \Tau)$
+\end{definition}
+
+\begin{definition}[Hausdorff space or $T_2$-space]
+    A topological space $(X, \Tau)$ is said to be a Hausdorff space or $T_2$-space if given any two distinct points $a, b \in X$, there exists two disjoint open sets $U, V$ such that $a \in U$ and $b \in V$
+\end{definition}
+
+\begin{definition}[Regular space]
+    A topological space $(X, \Tau)$ is said to be a regular space if for any closed subset $A \subseteq X$ and any point $b \in X \setminus A$, there exists two disjoint open sets $U, V$ such that $A \subseteq U$ and $b \in V$
+\end{definition}
+
+\begin{definition}[$T_3$-space]
+    A topological space $(X, \Tau)$ is said to be a $T_3$-space if it is a $T_1$-space and a regular space.
+\end{definition}
+
+\begin{definition}[Initial segment topology]
+    $$
+        (\N, \{\emptyset, \N \} \cup \{ \{1, 2, ..., n \}: n \in \N\})
+    $$
+\end{definition}
+
+\begin{definition}[Final segment topology]
+    $$
+        (\N, \{\emptyset, \N \} \cup \{ \{n, n+1, ...\}: n \in \N\})
+    $$
+\end{definition}
+
+
+\begin{definition}[Coarser Topology and Finer Topology]
+Let $\Tau_1$ and $\Tau_2$ be two topologies on a set $X$. $\Tau_1$ is said to be a finer topology than $\Tau_2$ (and $\Tau_2$ is a coarser topology than $\Tau_1$) if $\Tau_1 \supseteq \Tau_2$
+\end{definition}
+
+\begin{definition}[Totally disconnected space]
+    A topological space $(X, \Tau)$ is said to be a totally disconnected space if every non-empty connected subset is a singleton set.
+\end{definition}
+
+\begin{definition}[Zero dimensional space]
+    A topological space $(X, \Tau)$ is said to be a zero dimensional space if there is a basis for the topology consisting of clopen sets.
+\end{definition}
+
+\begin{definition}[Local homeomorphism]
+    Let $(X, \Tau)$ and $(Y, \Tau_1)$ be topological spaces. A map $f: X \to Y$ is said to be a local homeomorphism if each point $x \in X$ has an open neighbourhood $U$ such that the restriction of $f$ to $U$ maps $U$ homeomorphically into an open subspace $V$ of $(Y, \Tau_1)$;
+    
+    that is, if the topology induced on an open neighbourhood $U$ by $\Tau$ is $\Tau_2$ and topology induced on $V = f(U)$ by $\Tau_1$ is $\Tau_3$, then $f$ is a homeomorphism of $(U, \Tau_2)$ onto $(Y, \Tau_1)$
+\end{definition}
+
+
+\section*{Exercise 1.1.9}
+
+\section*{Exercise 2.3.4}
+
+Let $C[0, 1]$ be the set of all continuous real-value functions on $[0, 1]$
+
+\begin{itemize}
+    \item Show that the collection $\mathcal{M} = \{ M(f, \epsilon): f \in C[0, 1] \land \epsilon > 0\}$ where $M(f, \epsilon) = \{g: g \in C[0, 1] \land \int_0^1 |f - g| < \epsilon \}$ is a basis for a topology $\Tau_1$ on $C[0, 1]$
+    \item Show that the collection $\mathcal{U} = \{ U(f, \epsilon): f \in C[0, 1] \land \epsilon > 0\}$ where $U(f, \epsilon) = \{g: g \in C[0, 1] \land \sup_{x \in [0, 1]} |f(x) - g(x)| < \epsilon \}$ is a basis for a topology $\Tau_2$ on $C[0, 1]$
+    \item Prove that $\Tau_1 \neq \Tau_2$
+\end{itemize}
+
+Let's generalize the first two questions a bit.
+\\
+
+\begin{lemma}
+\label{lemma_2.3.4.1}
+
+Let $\mathcal{B} = \{ B(f, \epsilon): f \in C[0, 1] \land \epsilon > 0\}$ where $B(f, \epsilon) = \{g: g \in C[0, 1] \land d(f, g) < \epsilon \}$ such that $d$ is a pseudo-metric, i.e: (1) semi-definiteness $d(a, a) = 0$ (2) symmetry $d(a, b) = d(b, a)$ (3) triangle inequality $d(a, c) \leq d(a, b) + d(b, c)$.
+
+$\mathcal{B}$ generates a topology $\Tau$ on $C[0, 1]$.
+\end{lemma}
+
+\begin{remark}
+$f \in B(f, \epsilon)$ for all $f \in C[0, 1]$ and $\epsilon > 0$
+\end{remark}
+
+\subsection*{Proof of Lemma \ref{lemma_2.3.4.1}}
+
+In order to prove $\mathcal{B}$ generates a topology $\Tau$ on $C[0, 1]$, we need to prove two properties (1) $C[0, 1] = \bigcup_{B \in \mathcal{B}} B$ and (2) for any $B_1, B_2 \in \mathcal{B}$, for all $f \in B_1 \cap B_2$, there exists a $B_3 \in \mathcal{B}$ such that $f \in B_3 \subseteq B_1 \cap B_2$
+
+For any $f \in C[0, 1]$, $f \in B(f, 1) \in \mathcal{B}$. On the other hand, $B(f, \epsilon) \subseteq C[0, 1]$ for all $f \in C[0, 1]$ and $\epsilon > 0$. Hence, (1)
+
+(2)
+
+Let $B_1 = B(f_1, \epsilon_1)$ and $B_2 = B(f_2, \epsilon_2)$.
+
+For any $f \in B_1 \cap B_2$, we have $d(f_1, f) < \epsilon_1$ and $d(f_2, f) < \epsilon_2$. Hence, choose a positive $\epsilon = \min \{\epsilon_1 - d(f_1, f), \epsilon_2 - d(f_2, f)\}$ and $B_3 = B(f, \epsilon)$
+
+For any $g \in B_3$,
+\begin{align*}
+    d(f_1, g)   &\leq d(f_1, f) + d(f, g) &\text{(triangle inequality)} \\
+                &< d(f_1, f) + \epsilon &\text{($g \in B_3$)} \\
+                &\leq d(f_1, f) + (\epsilon_1 - d(f_1, f)) &\text{(choice of $\epsilon$)} \\
+                &= \epsilon_1
+\end{align*}
+
+Similarly, $d(f_2, g) < \epsilon_2$. Therefore, $f \in B_3 \subseteq B_1 \cap B_2$, So (2)
+
+\subsection*{Main proof} .
+Now, we apply Lemma \ref{lemma_2.3.4.1} for $\mathcal{M}$ and $\mathcal{U}$.
+ 
+For any $x \in [0, 1]$ by \emph{Triangle inequality}, $|a(x) - c(x)| \leq |a(x) - b(x)| + |b(x) - c(x)|$
+
+
+From the properties of \emph{Riemann integral},
+
+$$
+    \int_0^1 |a - c| \leq \int_0^1 |a - b| + \int_0^1 |b - c|
+$$
+
+Furthermore, the LHS is upper-bounded by the RHS, hence their supremums
+
+$$
+    \sup_{x \in [0, 1]} |a(x) - c(x)| \leq \sup_{x \in [0, 1]} |a(x) - b(x)| + \sup_{x \in [0, 1]} |b(x) - c(x)|
+$$
+
+In the last question, it is obvious that for any $n > 0$ there exists a function $f \in M(0, 1)$ such that $\min_{x \in [0, 1]} f(x) = -n$ and $\max_{x \in [0, 1]} f(x) = n$. If $f$ is in any member $U(f_2, \epsilon_2)$ of $\mathcal{U}$, it must be that $\epsilon > n$. So, there exists a function $g \in U(f_2, \epsilon_2)$ with $\int_0^1 |0 -g| = n > 1$ or $U(f_2, \epsilon_2) \setminus M(0, 1) \neq \emptyset$. By Proposition 2.3.4 in the book, $\Tau_1 \neq \Tau_2$
+
+\section*{Exercise 3.1.5.v}
+
+\section*{Exercise 3.2.9}
+
+Let $S$ be a dense subset of a topological space $(X, \Tau)$. Prove that for every open subset $U$ of $X$, $\overline{S \cap U} = \overline{U}$
+
+
+
+\begin{lemma}
+    \label{lemma_3.2.9.1}
+    Let $A, B$ be subsets of a topological space $(X, \Tau)$, then $\overline{A \cap B} \subseteq \overline{A} \cap \overline{B}$
+\end{lemma}
+
+\subsection*{Proof of Lemma \ref{lemma_3.2.9.1}}
+
+We will prove (1) $A \cap B \subseteq \overline{A} \cap \overline{B}$ and (2) limit points of $A \cap B$ is in $\overline{A} \cap \overline{B}$
+
+(1)
+
+Any point in $A$ is in $\overline{A}$, any point in $B$ is in $\overline{B}$. Then any point in $A$ and $B$ is in $\overline{A}$ and $\overline{B}$. Hence (1)
+
+(2)
+
+Let $x \in X$ be a limit point of $A \cap B$, so any open set containing $x$ contains a point in $A \cap B$. Hence, any open set containing $x$ contains a point in $A$, that implies $x$ is a limit point of $A$, $x \in \overline{A}$. Similarly, $x \in \overline{B}$. Therefore, (2)
+
+\subsection*{Main proof} .
+
+Apply Lemma \ref{lemma_3.2.9.1}, $\overline{S \cap U} \subseteq \overline{U}$
+
+Now, we will prove that $\overline{U} \subseteq \overline{S \cap U}$, i.e (1) $u \in U \implies u \in \overline{S \cap U}$ and (2) $x$ is limit point of $U$ $\implies x \in \overline{S \cap U}$
+
+(1)
+
+Let $u \in U$. For any open set $O$ containing $u$,
+
+$S$ is dense, so $u$ is a limit point of $S$. Given the open set $U \cap O$ containing $u$, it must also contains a point $s \in S$. Hence $s \in S \cap (U \cap O) = (S \cap U) \cap O$. Therefore, for any open set $O$ containing $u$, the intersection of $S \cap U$ and $O$ is non-empty by the construction of $s$. So, $u$ is a limit point of $S \cap U$
+
+(2)
+
+Let $x \in X$ be a limit point of $U$. For any open set $O$ containing $x$, take $u \in U \cap O$,
+
+$S$ is dense, so $u$ is a limit point of $S$. Given the open set $U \cap O$ containing $u$, it must also contains a point $s \in S$. Hence $s \in S \cap (U \cap O) = (S \cap U) \cap O$. Therefore, for any open set $O$ containing $x$, the intersection of $S \cap U$ and $O$ is non-empty by the construction of $s$. So, $x$ is a limit point of $S \cap U$
+
+\section*{Exercise 3.2.11.v}
+
+Let $\mathcal{B} = \{ [a, b): a \in \R, b \in \Q, a < b\}$, $\mathcal{B}$ is a basis for a topology $\Tau_1$ on $\R$, namely the \emph{Sorgenfrey line}. Prove that the \emph{Sorgenfrey line} does not satisfy the second axiom of countability, i.e $(\R, \Tau_1)$ cannot be generated by a countable number of open sets.
+
+
+
+TODO
+
+\section*{Proposition 3.3.3}
+
+The only clopen sets of $\R$ are $\R$ and $\emptyset$
+
+
+
+\begin{lemma}[Lemma 3.3.2]
+    \label{lemma_3.3.2}
+    Let $S$ be a subset of $\R$ bounded above and let $p = \sup S$. If $S$ is closed, then $p \in S$ 
+\end{lemma}
+
+\begin{lemma}
+    \label{lemma_3.3.3.1}
+    Let $S$ be a non-empty subset of $\R$ bounded above and let $p = \sup S$. If $S$ is open, then $p \notin S$ 
+\end{lemma}
+
+\subsection*{Proof of Lemma \ref{lemma_3.3.3.1}}
+
+$S$ is open and $p \in S$, we can choose an open interval $(a, b) \subseteq S$ containing $p$. Hence, $p < b$ and there exists $q$ such that $p < q < b$. Contradiction to the assumption that $p$ is the supremum of $S$
+
+\subsection*{Main proof} .
+
+Suppose $A, B$ are non-empty clopen sets in $\R$ such that $A \cap B = \emptyset$ and $A \cup B = \R$. Choose $a_1 \in A$ and $b_1 \in B$, without loss of generality, assume that $a_1 < b_1$.
+
+Consider the closed set $S = A \cap [a_1, b_1]$ and its supremum $p = \sup S$
+
+$S$ is closed and bounded above by $b_1$, by Lemma \ref{lemma_3.3.2}, $p \in S$. Furthermore, $b_1 \notin A$ implies $b_1 \notin S = A \cap [a_1, b_1]$, we have the strict inequality $p < b_1$
+
+Now we will construct an element $t \in S$ that is greater than $p$ then conclude the contradiction. $p \in S \subseteq A$, $A$ is open then there exists an open interval $(a_2, a_3) \subseteq A$ such that $p \in (a_2, a_3) \subseteq A$. By the strict inequality $p < b_1$, we can choose $t \in (p, \min (a_3, b_1)) \subseteq (a_2, a_3) \subseteq A$. We also have $t \in (p, \min (a_3, b_1)) \subseteq [a_1, b_1]$. Hence, $p < t \in A \cap [a_1, b_1] = S$. Contradiction
+
+\section*{Exercise 4.1.11}
+
+Let $A, B$ be connected subspaces of a topological space $(X, \Tau)$. If $A \cap B \neq \emptyset$, prove that the subspace $A \cup B$ is connected.
+
+\subsection*{Main proof} .
+
+We will prove the statement by contradiction, first we assume that $A \cap B \neq \emptyset$ and $A \cup B$ is disconnected. Hence, we can find $P, Q \in A \cup B$ such that $P \neq \emptyset$, $Q \neq \emptyset$, $P \cup Q = A \cup  B$, and $P \cap Q = \emptyset$. $P, Q$ are corresponding to two open sets in $X$, namely $P = O_P \cap (A \cup B)$ and $Q = O_Q \cap (A \cup B)$.
+
+Consider 2 pairs of sets: $(O_P \cap A, O_Q \cap A)$ and $(O_P \cap B, O_Q \cap B)$. Claim that there must be at least a pair with no empty set.
+
+(case 1) $(O_P \cap A) = (O_P \cap B) = \emptyset$
+
+$(O_P \cap A) \cup (O_P \cap B) = \emptyset$ implies $P = O_P \cap (A \cup B) = \emptyset$, contradiction
+
+(case 2) $(O_P \cap A) = (O_Q \cap B) = \emptyset$.
+
+$O_P \cap A = \emptyset$ implies that 
+\begin{align*}
+    P   &= O_P \cap (A \cup B) \\
+        &= O_P \cap (A \cup B \setminus A) \\
+        &= (O_P \cap A) \cup (O_P \cap B \setminus A) \\
+        &= O_P \cap B \setminus A \subseteq B \setminus A \\   
+\end{align*}
+
+$O_Q \cap B  = \emptyset$ implies that
+
+\begin{align*}
+    Q   &= O_Q \cap (A \cup B) \\
+        &= O_Q \cap (A \setminus B \cup B) \\
+        &= (O_Q \cap A \setminus B) \cup (O_Q \cap B) \\
+        &= O_Q \cap A \setminus B \subseteq A \setminus B    
+\end{align*}
+
+
+Hence, an element $x \in A \cap B$ is not in either $P$ or $Q$, contradiction
+
+Therefore, there must be at least a pair in $(O_P \cap A, O_Q \cap A)$ and $(O_P \cap B, O_Q \cap B)$ is both non-empty sets. Without loss of generality, assume that $O_P \cap A, O_Q \cap A$ are both non-empty.
+
+\begin{align*}
+(O_P \cap A) \cup (O_A \cap A)  &= (O_P \cup O_Q) \cap A \\
+                                &= A &\text{since $A \cup B \subseteq O_P \cup O_Q$}\\
+\end{align*}
+
+\begin{align*}
+(O_P \cap A) \cap (O_A \cap A)  &= (O_P \cap O_Q) \cap A \\
+                                &= \emptyset &\text{since $O_P \cap O_Q$ is outside of $A \cup B$}\\
+\end{align*}
+
+\section*{Exercise 4.1.15}
+
+The closed interval $[a, b]$ for $a, b \in \R$ is connected.
+
+
+
+Let's recognize all the open sets and closed sets in $[a, b]$ first. $O$ is an open set in $[a, b]$ if and only if $O = O_\R \cap [a, b]$ for an open set $O_\R$ in $\R$. $C$ is a closed set in $[a, b]$ if and only if $C = [a, b] \setminus O_\R$ for an open set $O_\R$ in $\R$
+
+\begin{lemma}
+    \label{lemma_4.1.15.1}
+    If $C$ is a closed set in $[a, b]$, $C$ is also a closed set in $\R$.
+\end{lemma}
+
+\subsection*{Proof of Lemma \ref{lemma_4.1.15.1}}
+
+$\R \setminus C = (\R \setminus [a, b]) \cup O_\R$, union of two open sets in $\R$
+
+\subsection*{Main proof} .
+
+Similar to exercise 4.1.11, let prove the statement by contradiction. Let $A, B$ be clopen sets in $[a, b]$ such that $A \cap B = \emptyset$ and $A \cup B = [a, b]$. Choose $a_1 \in A$ and $a_2 \in B$, without loss of generality, assume the strict inequality $a < a_1 < b_1 < b$ since $A, B$ cannot be singleton sets.
+
+$A$ is a closed set in $\R$, consider the closed set $S = A \cap [a_1, b_1]$ in $[a, b]$ and its supremum $p = \sup S$ in $\R$.
+
+$S$ is closed and bounded above by $b_1$ in $\R$, by Lemma \ref{lemma_3.3.2}, $p \in S$. Furthermore, $b_1 \notin A$ implies $b_1 \notin S = A \cap [a_1, b_1]$, we have the strict inequality $a < a_1 \leq p < b_1 \leq b$
+
+Now we will construct an element $t \in S$ that is greater than $p$ then conclude the contradiction. $p \in S \subseteq A = O_A \cap [a, b] = (O_A \cap (a, b)) \cup (O_A \cap \{a, b\})$ where $O_A$ is an open set in $\R$. $a < p < b$ implies $p$ in the open set $O_A \cap (a, b) \subseteq A$ in $\R$. By the strict inequality $p < b_1$, we can choose $t \in (p, \min (a_3, b_1)) \subseteq (a_2, a_3) \subseteq O_A \cap (a, b) \subseteq A$. We also have $t \in (p, \min (a_3, b_1)) \subseteq [a_1, b_1]$. Hence, $p < t \in A \cap [a_1, b_1] = S$. Contradiction
+
+Comment: $O_A \cap (a, b)$ is the interior of $A = O_A \cap [a, b]$ in $\R$
+
+
+\section*{Exercise 4.1.17.v}
+
+Let $S = \{ \frac{1}{n}: n \in \N\}$. Define a set $C \subseteq \R$ to be closed if $C = A \cup T$ where $A$ is closed in $\R$ and $T \subseteq S$. The complements of these closed sets form a topology $\Tau$ on $\R$ which is Hausdorff but not regular.
+
+\begin{definition}[Hausdorff space or $T_2$-space]
+    A topological space $(X, \Tau)$ is said to be Hausdorff (or $T_2$-space) if given any pair of distinct points $a, b$ in $X$ there exist open sets $A, B$ such that $a \in A$, $b \in B$, and $A \cap B = \emptyset$
+\end{definition}
+
+\begin{definition}[Regular space]
+    A topological space $(X, \Tau)$ is said to be regular space if any closed set $A$ and any point $x \in X \setminus A$, there exist open sets $U, V$ such that $x \in U$, $A \subseteq V$, and $U \cap V = \emptyset$.
+\end{definition}
+
+\begin{lemma}
+\label{lemma_4.1.17.v.1}
+For any index set $J$ and $A_j \cap B_j = \emptyset$ for all $j \in J$
+$$
+    \bigcap_{j \in J} A_j \cup B_j = \bigcup_{J_A \in \mathcal{P}(J)} \left[ \left( \bigcap_{j \in J_A} A_j \right) \cap \left( \bigcap_{j \in J \setminus J_A}  B_j \right) \right]
+$$
+\end{lemma}
+
+\subsection*{Proof of Lemma \ref{lemma_4.1.17.v.1}}
+
+\textbf{Proof}
+
+For all $x \in X = \bigcap_{j \in J} A_j \cup B_j$, for each $j\in J$, $x$ must be either in $A_j$ or $B_j$. Let $J_A(x) = \{ j: j \in J, x \in A_j \} \subseteq \mathcal{P}(J)$ be the set of indices where $x \in A_j$ and let $J_B(x) = J \setminus J_A(x)$. So that
+
+$$
+    x \in \left( \bigcap_{j \in J_A(x)} A_j \right) \cap \left( \bigcap_{j \in J \setminus J_A(x)}  B_j \right)
+$$
+
+On the other hand, $\bigcap_{j \in J_A} A_j \subseteq \bigcap_{j \in J_A} A_j \cup B_j$ and $\bigcap_{j \in J \setminus J_A}  B_j \subseteq \bigcap_{j \in J \setminus J_A}  A_J \cup B_j$, we have
+
+\begin{align*}
+    \left( \bigcap_{j \in J_A(x)} A_j \right) \cap \left( \bigcap_{j \in J \setminus J_A(x)}  B_j \right)
+        &\subseteq \left( \bigcap_{j \in J_A(y)} A_j \cup B_j \right) \cap \left( \bigcap_{j \in J \setminus J_A(y)}  A_j \cup B_j \right) \\
+        &= \bigcap_{j \in J} A_j \cup B_j \\
+        &= X \\
+\end{align*}
+
+\subsection*{$\Tau$ is a topology}
+
+Take $A = \emptyset$ and $T = \emptyset$, then $C = A \cup T = \emptyset$. So $\R$ is an open set in $\Tau$. Take $A = \R$, then $C = A \cup T = \R$. So $\emptyset$ is an open set in $\Tau$
+
+\begin{align*}
+    \R \setminus C_1 \cap \R \setminus C_2  &= \R \setminus (A_1 \cup T_1) \cap \R \setminus (A_2 \cup T_2) \\
+                                                            &= \R \setminus ((A_1 \cup T_1) \cup (A_2 \cup T_2)) \\
+                                                            &= \R \setminus ((A_1 \cup A_2) \cup (T_1 \cup T_2)) \\
+\end{align*}
+
+$A_1 \cup A_2$ is an closed set in the euclidean topology, $T_1 \cup T_2 \subseteq S$. Hence the intersection of two open sets in $\Tau$ is an open set in $\Tau$
+
+Let $J$ be an index set, a union of open sets in $\Tau$ has the form
+
+$$
+    \bigcup_{j \in J} \R \setminus (A_j \cup T_j) = \R \setminus \bigcap_{j \in J} A_j \cup T_j
+$$
+
+We need to prove that $C = \bigcap_{j \in J} A_j \cup T_j$ can be written in the form $A \cup T$ where $A$ is a closed set in the euclidean topology and $T \subseteq S$. Invoke the lemma \ref{lemma_4.1.17.v.1}
+
+\begin{align*}
+    \bigcap_{j \in J} A_j \cup T_j
+        &= \bigcap_{j \in J} A_j \cup T_j \setminus A_j \\
+        &= \bigcup_{J_A \in \mathcal{P}(J)} \left[ \left( \bigcap_{j \in J_A} A_j \right) \cap \left( \bigcap_{j \in J \setminus J_A} T_j \setminus A_j \right) \right] \\
+\end{align*}
+
+We split $\mathcal{P}(J)$ into two groups: (1) $\{ J \} \in \mathcal{P}(J)$ and (2) $\mathcal{P}(J) \setminus \{ J \}$.
+
+$$
+    \bigcap_{j \in J} A_j \cup T_j
+        = \bigcap_{j \in J} A_j \cup \bigcup_{J_A \in \mathcal{P}(J) \setminus J} \left[ \left( \bigcap_{j \in J_A} A_j \right) \cap \left( \bigcap_{j \in J \setminus J_A} T_j \setminus A_j \right) \right]
+$$
+
+The set $\bigcap_{j \in J} A_j$ is a union of closed set in euclidean space hence a closed set in euclidean space.
+
+We further have 
+
+$$
+    \left( \bigcap_{j \in J_A} A_j \right) \cap \left( \bigcap_{j \in J \setminus J_A} T_j \setminus A_j \right)
+        \subseteq \bigcap_{j \in J \setminus J_A} T_j \setminus A_j
+        \subseteq S
+$$
+
+for all $J_A \in \mathcal{P} \setminus J$ since $J \setminus J_A$ is non-empty. Take $A$ and $T$ as follows
+
+\begin{align*}
+    A   &= \bigcap_{j \in J} A_j \\
+    T   &= \bigcup_{J_A \in \mathcal{P}(J) \setminus J} \left[ \left( \bigcap_{j \in J_A} A_j \right) \cap \left( \bigcap_{j \in J \setminus J_A} T_j \setminus A_j \right) \right] \\
+\end{align*}
+
+So, $C = A \cup T$ which is a union of a closed set in the euclidean topology and a subset of $S$
+
+\subsection*{$\Tau$ is Hausdorff}
+
+Any closed set in the euclidean topology is closed in $\Tau$ by taking $T = \emptyset$ in the form of closed set in $\Tau$: $C = A \cup T$. Hence, any open set in the euclidean topology is open in $\Tau$.
+
+Given any two point $a < b \in \R$, take $A = (-\infty, \frac{a+b}{2})$ and $B = (\frac{a+b}{2}, +\infty)$
+
+\subsection*{$\Tau$ is not regular}
+
+We will construct an example where it is not able to construct $U, V$
+
+Suppose that $\Tau$ is a regular space, let $A = S = \{ \frac{1}{n}: n \in \N\}$ and $x = 0$. There must be an open set $V$ that contains $0$ but not $S$. All open sets in $\Tau$ has the form
+
+$$
+    O = \R \setminus (A \cup T) = \R \setminus A \cap \R \setminus T
+$$
+
+where $A$ is a closed set in the euclidean topology and $T \subseteq S$.
+
+$0 \in \R \setminus A$ an open set in the euclidean topology, there must be an open interval $(a, b)$ such that $a < 0 < b$, hence that interval will contain some element of $S$, i.e: $\{ \frac{1}{n}: n \in \N, n > \frac{1}{b} \}$
+
+\subsection*{$\Tau$ is a topology (shorten approach)}
+
+I came across a short reasoning for the last statement \footnote{https://math.stackexchange.com/a/65558/700122} 
+
+$C = \bigcap_{i \in I} A_i \cup T_i$ where each $A_i$ is Euclidean-closed and each $T_i \subseteq S$. Let $A = \bigcap_{i \in I} A_i$; certainly $A$ is Euclidean-closed.
+
+If $x \in C \setminus A$, there exists $A_i$ such that $x \notin A_i$. But $x \in C$, so $x \in A_i \cup T_i$. Therefore, $x \in T_i \subseteq S$
+
+\section*{Exercise 4.2.8}
+Let $(X, \Tau)$ be a discrete topological space. Prove that $(X, \Tau)$ is homeomorphic
+to a subspace of $\R$ if and only if $X$ is countable.
+
+TODO
+
+\section*{Exercise 4.3}
+
+\begin{definition}
+
+Let $X$ be a unit circle in $\R^2$
+
+$$
+    X = \{ \langle x,y \rangle: x^2 + y^2 = 1 \}
+$$
+
+Let $Y$ be two disjoint circles in $\R^2$
+
+$$
+    Y = \{ \langle x,y \rangle: x^2 + y^2 = 1 \} \cup \{ \langle x, y\rangle: (x-2)^2 + y^2 = 1 \}
+$$
+
+Let $Z$ be two intersecting circles in $\R^2$
+
+$$
+    Z = \{ \langle x,y \rangle: x^2 + y^2 = 1 \} \cup \{ \langle x, y\rangle: (x-3/2)^2 + y^2 = 1 \}
+$$
+\end{definition}
+
+\begin{definition}[Sorgenfrey Line]
+    Let $\mathcal{B} = \{ [a, b): a \in \R, b \in \Q, a < b\}$. The set generated by $\mathcal{B}$ is a topology on $\R$
+\end{definition}
+
+\begin{lemma}
+    \label{lemma_4.3.1}
+    If $f$ is a homeomorphism from $(A, \Tau^A)$ to $(B, \Tau^B)$ and $A_1 \subseteq A$. Let $B_1 = f(A_1)$ be the image of $A_1$ over $f$. Define $f_1: A_1 \to B_1$ with $f_1(a) = f(a)$. $f_1$ is a homeomorphism from $(A_1, \Tau^A_{A_1})$ to $(B_1, \Tau^B_{B_1})$
+\end{lemma}
+
+\subsection*{Proof of Lemma \ref{lemma_4.3.1}}
+    $f_1$ is bijective.
+
+    Any open set in $A_1$ has the form $O_{A_1} = A_1 \cup O_A$ where $O_A$ is an open set in $A$. So $f_1(O_{A_1}) = f(O_{A_1}) = f(A_1) \cup f(O_A)$ since $f$ is injective. Furthermore, $f$ is an homeomorphism, $f_1(O_{A_1}) = B_1 \cup O_B$. So, $f(O_A)$ is an open set in $B_1$. Similar argument for $f_1^{-1}$
+\subsection*{Main proof} .
+
+main proof
+
+(3.i) $X \setminus \{ \langle 1, 0\rangle\}$ is homeomorphic to the open interval $(0, 1)$ by the homeomorphism $f(\langle x, y\rangle) =$ arc length \footnote{counter-clockwise} from $\langle 1, 0\rangle \to \langle x, y\rangle$ divided by $2\pi$
+
+(3.ii) $X \ncong (0, 1)$
+
+Suppose $X \cong (0, 1)$ by homeomorphic $f$ that maps $\langle 1, 0\rangle \mapsto a$, by remark 4.3.6, $(0, 1) \cong X \setminus \{\langle 1, 0\rangle\} \cong (0, a)\cup (a, 1)$ where $(0, a)$ and $(a, 1)$ be non-empty. The left most is a connected and the right most not a disconnected.
+
+(3.ii) $[0, 1] \ncong X$
+
+Suppose $[0, 1] \cong X$ by homeomorphic $f$ that maps $0 \mapsto a$ and $1 \mapsto b$ where $a \neq b$. By remark 4.3.6, $[0, 1] \cong X \implies (0, 1] \cong X \setminus \{a\} \implies (0, 1) \cong X \setminus \{a, b \}$. The RHS consists of two segments $a \to b$ and $b \to a$ each of which is homeomorphic to open intervals in $\R$. So, $(0, 1) \cong X \setminus \{ a, b \} = (a \to b) \cup (b \to a) \cong (0, 1) \cup (1, 2)$. The left most is a connected and the right most not a disconnected.
+
+(3.iii) $[0, 1) \ncong X$
+
+Suppose $[0, 1) \ncong X$ by homeomorphic $f$ that maps $1/2 \mapsto a$. By remark 4.3.6, $[0, 1) \ncong X \implies [0, 1/2) \cup (1/2, 1) \cong X \setminus \{ a \} \cong (0, 1)$. The left most is a disconnected and the right most not a connected.
+
+(3.iv) $X$ is not homeomorphic to any interval
+
+Same argument in (3.iii)
+
+(4.i) $Y \ncong X$
+
+$Y$ is disconnected and $X$ is connected
+
+(4.ii) $Y$ is not homeomorphic to any interval
+
+$Y$ is disconnected and any interval is connected
+
+(5.i) $Z$ is not homeomorphic to any interval
+
+Let $a, b$ be the two intersecting points in $Z$, $Z \setminus \{ a, b \}$ consists of 4 segments each of which is homeomorphic to open intervals in $\R$. Where $f(a), f(b)$ split an interval into 3 intervals where $f$ is a homeomorphism from $Z$ to an interval.
+
+(5.ii) $Z$ is not homeomorphic to $X$
+
+Same argument. Where $f(a), f(b)$ split $X$ into 2 intervals where $f$ is a homeomorphism from $Z$ to $X$.
+
+(5.ii) $Z$ is not homeomorphic to $Y$
+
+Same argument. Where $f(a), f(b)$ split $X$ into 2 or 3 intervals where $f$ is a homeomorphism from $Z$ to $X$.
+
+(6) Sorgenfrey line $\Tau$ is not homeomorphic to $\R$, $\R^2$ or any subspace of either of these spaces
+
+Sorgenfrey line is disconnected by 
+
+$$
+    \R = \left( \bigcup_{n = 1}^\infty [-n, 0) \right) \cup \left( \bigcup_{n = 1}^\infty [0, n) \right)
+$$
+
+While $\R$ is connected, so $\Tau \ncong \R$
+
+Suppose $\R^2 \cong \Tau$ by $f: \R^2 \to \R$. Let $A = \{ \langle x, 0 \rangle: x \in \R \} \subseteq \R^2$ be the horizontal line at $y = 0$. By lemma \ref{lemma_4.3.1}, $A \cong \Tau_{f(A)}$. Furthermore, $A \cong \R$, so $\R \cong \Tau_{f(A)}$.
+
+We will now prove that $f(A)$ is disconnected
+
+Let $a < b < c \in f(A)$ be 3 distinct points since $f(A)$ has at least 3 points. $f(A)$ is disconnected by
+
+$$
+    f(A) = \left[f(A) \cap \left( \bigcup_{n = 1}^\infty [-n, b) \right)\right] \cup \left[f(A) \cap \left( \bigcup_{n = 1}^\infty [b, n) \right)\right]
+$$
+
+where the left set has at least one element, namely $a$ hence non-empty. Similarly for the right set
+
+\section*{Exercise 4.3.7.iii}
+
+$\Tau_2$ consists of $\R, \emptyset$ and every interval $(-r, +r)$ for all positive real number $r$. $\Tau_9$ consists of $\R, \emptyset$ and every interval $(-r, +r)$ and $[-r, +r]$ for all positive real number $r$
+
+Is $\Tau_2 \cong \Tau_9$?
+
+
+TODO
+
+\section*{Exercise 4.3.8}
+
+Let $(X, \Tau)$ be a topological space where $X$ is an infinite set.
+
+
+    (i)* $(X, \Tau)$ has a subspace homeomorphic to $(\N, \Tau_1)$ where either $\Tau_1$ is the indiscrete topology or $(\N, \Tau_1)$ is a $T_0$-space
+    
+    (ii)** Let $(X, \Tau)$ be a $T_1$-space. Then $(X, \Tau)$ has a subspace homeomorphic to $(\N, \Tau_2)$ where $\Tau_2$ is either the finite-closed topology or the discrete topology
+    
+    (iii) Deduce from (ii) that any infinite Hausdorff space contains an infinite discrete subspace and hence a subspace homeomorphic to $\N$ with the discrete topology
+
+    (iv)** Let $(X, \Tau)$ be a $T_0$-space which has no infinite $T_1$-subspaces. Then the space $(X, \Tau)$ has a subspace homeomorphic to $(\N, \Tau_3)$ where $\Tau_3$ an initial segment topology or a final segment topology.
+
+    (v) Deduce from the above that every infinite topological space has a subspace homeomorphic to $(\N, \Tau_4)$ where $\Tau_4$ is the indiscrete topology, the discrete topology, the finite-closed topology, initial segment topology or the final segment topology. Further, no two of these five topology on $\N$ are homeomorphic
+
+\begin{lemma}
+    \label{lemma_4.3.8.1}
+    Distinguishability is preserved under subspace, i.e if $A$ is a subspace of $X$, $a$ and $b$ are in distinguishable in $X$ implies $a$ and $b$ are indistinguishable in $A$.
+\end{lemma}
+
+\begin{lemma}
+    \label{lemma_4.3.8.2}
+    Indistinguishability is an equivalent relation.
+\end{lemma}
+
+\begin{lemma}
+    \label{lemma_4.3.8.3}
+    Suppose $A \subseteq X$ and $|A| \geq 2$, $A$ consists of pairwise indistinguishable points if and only if $A$ is indiscrete
+\end{lemma}
+
+\begin{lemma}
+    \label{lemma_4.3.8.4}
+    $T_1$-space is preserved under subspace, i.e if $X$ is a $T_1$-space then $A \subseteq X$ a subspace of $X$ is also $T_1$
+\end{lemma}
+
+\begin{lemma}
+    \label{lemma_4.3.8.5}
+    If $X$ is a $T_1$-space but not a finite-closed topological space, $X$ has an infinite closed proper subset $A$.
+\end{lemma}
+
+\begin{lemma}
+    \label{lemma_4.3.8.6}
+    $T_2$-space (Hausdorff) is preserved under subspace, i.e if $X$ is a $T_2$-space then $A \subseteq X$ a subspace of $X$ is also $T_2$
+\end{lemma}
+
+\subsection*{Proof of Lemma \ref{lemma_4.3.8.1}}
+
+\subsection*{Proof of Lemma \ref{lemma_4.3.8.2}}
+
+
+
+\subsection*{Main proof} .
+
+(i)
+
+Suppose $(X, \Tau)$ has no subspace homeomorphic to $(\N, \Tau_1)$ that is an indiscrete space. We will prove that $(X, \Tau)$ must have a subspace homeomorphic to $(\N, \Tau_1)$ that is $T_0$.
+
+The premise implies that all indistinguishable subsets of $X$ is finite, namely $S_1, S_2, ...$. If number of indistinguishable subsets of $X$ is infinite. Invoke AC, choose each $x_i \in S_i$ for all $i \in \N$. The set $\{ x_i: i \in \N \}$ is $T_0$ since $S_i$ are disjoint indistinguishable subsets. Otherwise, number of indistinguishable subsets of $X$ is finite and these sets are finite imply that $X \setminus \bigcup_{i \in \N} S_i$ is infinite. A countably infinite subset of this set is $T_0$
+
+(ii)
+
+Let an infinite set $X$ be a $T_1$-space, suppose there is no countably infinite subset of $X$ that is finite-closed. We will construct an infinite subset of $X$ that is discrete.
+
+The premise implies if $A$ is a countably infinite subset of $X$ then $A$ is not finite-closed.
+
+\textbf{Induction step}
+
+Let $A_1$ be a countably infinite closed proper subset of $X$. By the premise and lemma \ref{lemma_4.3.8.4}, $A_1$ is a $T_1$-space and not finite-closed.
+
+By lemma \ref{lemma_4.3.8.5}, $A_1$ has a countably infinite closed proper subset, namely $A_2$. By the premise and lemma \ref{lemma_4.3.8.4}, $A_2$ is also a $T_1$-space and not finite-closed.
+
+By induction, we can construct an infinite sequence of countably subsets
+$$
+    X \supset A_1 \supset A_2 \supset A_3 \supset ...
+$$
+
+where $A_{i+1}$ is a countably infinite closed proper subset of $A_i$. We have $A_i \setminus A_{i+1} \neq \emptyset$ is open in $A_i$, so
+
+\begin{align*}
+    A_i \setminus A_{i+1}
+        &= O_{i-1} \cap A_i &\text{where $O_{i-1}$ is open in $A_{i-1}$} \\
+        &= (O_{i-2} \cap A_{i-1}) \cap A_i &\text{where $O_{i-2}$ is open in $A_{i-2}$} \\
+        &= ... \\
+        &= O \cap A_1 \cap A_2 \cap ... \cap A_{i-1} \cap A_i &\text{where $O$ is open in $X$} \\
+        &= O \cap A_i \\
+        &= O^{(i)} \cap A_i &\text{$O^{(i)} = O$}\\
+\end{align*}
+
+We observe that, for each $i \in \N$, there exists an open set $O^{(i)}$ of $X$ that contains $A_i \setminus A_{i+1}$ but does not contain $A_{i+1}$
+
+Invoke AC, we choose $x_i$ from each disjoint set $A_i \setminus A_{i+1}$ for all $i \in \N$. For each $x_i$, there exists an open set $O^{(i)}$ containing $x_i$ and does not contain $\{x_{i+1}, x_{i+2}, ...\} \subseteq A_{i+1}$.
+
+$X$ is $T_1$ implies that every finite subset of $X$ is closed. Therefore, $F_i = X \setminus \{x_1, x_2, ..., x_{i-1}\}$ is open. So, the open set $O^{(i)} \cap F_i$ does not contain $\{x_1, x_2, ..., x_{i-1}\}$ and $\{x_{i+1}, x_{i+2}, ... \}$. Therefore, $\{ x_i \}$ is an open set on $\{x_1, x_2, ... \}$. Every singleton set is open, so $\{x_1, x_2, ... \}$ is discrete.
+
+
+(iii)
+
+Let $X$ be an Hausdorff space and $A$ be any infinite subspace of $X$. Let $a \in A$, For any other point $b \in A$, since $X$ is Hausdorff, there exists an open set $U_b \subseteq X$ such that $a \notin U_b$ and $b \in U_b$. The open set $U^{(a)} \subseteq X$ is defined as follows
+
+$$
+    U^{(a)} = \bigcup_{b \in X \setminus \{ a \}} U_b
+$$
+
+Furthermore, $U^{(a)} \cap X = \{ a \}$ implies that every singleton set in $A$ is closed. Hence, every subset of $X$ is a $T_1$-space.
+
+From (ii), there exists an countably infinite subset of $X$ that is either finite-closed or discrete. Now, we will prove that every infinite subset of $X$ is not finite-closed.
+
+Suppose $A$ is an infinite subset of $X$ that is finite-closed. Let $x, y \in A$, since $X$ is a Hausdorff space, there exist two disjoint open set $U_x, U_y \subseteq X$ such that $x \in U_x$ and $y \in U_y$. $V_x = A \cap U_x$ and $V_y = A \cap U_y$ are two non-empty open sets in the subspace $A$. Two disjoint open sets $V_y, V_y$ in $A$ must have $V_y \subseteq A \setminus V_y$. $A \setminus V_x$ is closed in $A$, so $A \setminus V_x$ is finite, so $V_y$ is finite. That implies $A \setminus V_y$ is both closed and infinite, contradicts with the premise.
+
+(iv)
+
+TODO
+
+\section*{Exercise 4.3.9.iii}
+
+Prove that if $f: (X, \Tau) \to (Y, \Tau_1)$ is a local homeomorphism, then $f$ maps every open set of $X$ into an open set of $Y$
+
+
+\section*{Exercise 5.2.6}
+
+An analysis problem using topology
+
+\begin{lemma}
+    \label{lemma_5.2.6.1}
+    If $A$ is a connected subspace of $(X, \Tau)$ and $A \subseteq B \subseteq \overline{A}$, then $B$ is connected.
+\end{lemma}
+
+(i) Show that the subspace 
+$$
+    Y = \{ \langle x, y \rangle: y = \sin(1/x), 0 < x \leq 1\} 
+$$
+
+of $\R^2$ is connected
+
+(ii) Verify that 
+$$
+    \overline{Y} = Y \cup \{ \langle 0, y \rangle: -1 \leq y \leq 1\}
+$$
+
+(iii) From lemma \ref{lemma_5.2.6.1}, $\overline{Y}$ is connected.
+
+\begin{lemma}
+\label{lemma_5.2.6.2}
+For two distinct points $x_1, x_2 \in \R$
+$$
+    | \sin(x_2) - \sin(x_1) | < |x_2 - x_1|
+$$
+\end{lemma}
+
+\subsection*{Proof of Lemma \ref{lemma_5.2.6.1}}
+
+Suppose that $B$ is not connected, i.e there exists two non-empty open sets $P, Q$ in $\Tau$ that split $B$ into two parts. Since $A$ is connected, $A$ must be in either $P$ or $Q$. Let $A \in P$, $Q$ is non-empty so there exists a limit point of $A$ in $Q$, namely $q$.
+$q$ is a limit point of $A$, so there is no open sets in $\Tau$ containing $x$ and not containing $A$. Contradiction
+
+\subsection*{Main proof} .
+
+(i)
+
+We will use the Lemma 5.1.2 state that a mapping $f$ from $(X, \Tau)$ into $(Y, \Tau')$ is continuous if for each $a \in X$ and each $U \in \Tau'$ with $f(a) \in U$, there exists a $V \in \Tau$ such that $a \in V$ and $f(V) \subseteq U$
+
+Consider the mapping $f: (0, 1] \to \R^2$ that maps $x \mapsto \langle x, \sin(1/x) \rangle$
+
+For each $a \in (0, 1]$, $f(a) = \langle a, \sin(1/a) \rangle$ and each open set containing $f(a)$. Every open set $U$ containing $f(a)$ in $\R^2$ is a union of open squares, so there exists an open square containing $f(a)$. Now we choose an open square $O_U$ centered at $f(a)$ and contained in the previous open square. Let $2\epsilon$ be the size of $O_U$ such that $0 < \epsilon < a$, so
+
+$$
+    O_U = (a - \epsilon, a + \epsilon) \times (\sin\frac{1}{a} - \epsilon, \sin\frac{1}{a} + \epsilon)
+$$
+
+
+Now we will construct an open set $O_V \subseteq (0, 1]$.
+
+Let $a > \delta > 0$, for all $x \in (a - \delta, a + \delta)$
+
+\begin{align*}
+    \left|\sin \frac{1}{x} - \sin \frac{1}{a} \right|
+        &< \left| \frac{1}{x} - \frac{1}{a} \right| &\text{(lemma \ref{lemma_5.2.6.2})} \\
+        &= \frac{|a - x|}{xa} &\text{($a > 0$ and $x > 0$)} \\
+        &< \frac{\delta}{(a - \delta)a} &\text{($a > 0$ and $x > 0$)} \\
+        &= \frac{1}{(\frac{a}{\delta} - 1)a}
+\end{align*}
+
+We want to choose $\delta$ such that $\sin \frac{1}{x}$ stays within $(\sin\frac{1}{a} - \epsilon, \sin\frac{1}{a} + \epsilon)$, i.e
+
+$$
+    \left|\sin \frac{1}{x} - \sin \frac{1}{a} \right| < \epsilon
+$$
+    
+Let 
+
+\begin{align*}
+    \frac{1}{(\frac{a}{\delta} - 1)a} &< \epsilon \\
+    (\frac{a}{\delta} - 1)a &> \frac{1}{\epsilon} \\
+    \frac{a}{\delta} - 1 &> \frac{1}{a\epsilon} \\
+    \frac{a}{\delta} &> \frac{1}{a\epsilon} + 1 \\
+    \delta &< \frac{a}{\frac{1}{a\epsilon} + 1}
+\end{align*}
+
+Therefore, for any $a \in (0, 1]$, for any open set $U \in \R^2$ containing $f(a)$, there exists an open square $O_U$ of size $2\epsilon$ centered at $f(a)$ such that $O_U \subseteq U$ and $a > \epsilon > 0$. Let the open interval $V = (a - \delta, a + \delta)$ where $\delta < \frac{a}{\frac{1}{a\epsilon} + 1}$ and $\delta < \epsilon$. Then $a \in V$ and
+
+$$
+    f(V) \subseteq (a - \delta, a + \delta) \times (a - \epsilon, a + \epsilon) \subseteq O_U \subseteq U
+$$
+
+Hence, $f$ is continuous. Furthermore, $(0, 1]$ is connected, so $Y = f((0, 1])$ is also connected.
+
+(ii)
+
+We will prove precisely that $Z = \{ \langle 0, y \rangle: -1 \leq y \leq 1\}$ is the set of limit points not contained in $Y$.
+
+We split $\R^2 \setminus Y$ into several disjoint regions
+
+\begin{align*}
+    A_1 &= \{ \langle x, y \rangle: x > 1\} \\
+    A_2 &= \{ \langle x, y \rangle: 0 < x\} \\
+    A_3 &= \{ \langle x, y \rangle: 0 < x \leq 1\} \setminus Y \\
+    A_4 &= \{ \langle 0, y \rangle: 1 < y \} \\
+    A_5 &= \{ \langle 0, y \rangle: y < -1 \} \\
+    Z   &= \{ \langle 0, y \rangle: -1 \leq y \leq 1\}
+\end{align*}
+
+$A_1$
+
+For every point $\langle x, y \rangle \in A_1$, the open set $(1, x+1) \times (y-1, y+1)$ contains $\langle x, y \rangle$ but not any point in $Y$
+
+$A_2$
+
+For every point $\langle x, y \rangle \in A_2$, the open set $(x-1, 0) \times (y-1, y+1)$ contains $\langle x, y \rangle$ but not any point in $Y$
+
+$A_4$
+
+For every point $\langle x, y \rangle \in A_4$, the open set $(-1, 1) \times (1, y+1)$ contains $\langle x, y \rangle$ but not any point in $Y$
+
+$A_5$
+
+For every point $\langle x, y \rangle \in A_5$, the open set $(-1, 1) \times (y-1, -1)$ contains $\langle x, y \rangle$ but not any point in $Y$
+
+$A_3$
+
+For every point $\langle x, y \rangle \in A_3$, let $x > \delta > 0$, consider $x_1 \in (x - \delta, x+\delta) \subseteq (1, 0]$. Distance between $\langle x, y \rangle$ and $\langle x_1, \sin \frac{1}{x_1} \rangle \in Y$ is $r$ where
+
+$$
+    r^2 = \left(y - \sin \frac{1}{x_1}\right)^2 + \left(x - x_1\right)^2
+$$
+
+We will prove that $r^2$ is bounded below by some positive number.
+
+\begin{align*}
+    \left| y - \sin \frac{1}{x_1} \right|
+        &\geq \left| y - \sin \frac{1}{x} \right| - \left| \sin \frac{1}{x_1} - \sin \frac{1}{x} \right| &\text{(Triangle inequality)}\\
+        &> \left| y - \sin \frac{1}{x} \right| - \left| \frac{1}{x_1} - \frac{1}{x}\right| &\text{(lemma \ref{lemma_5.2.6.2})} \\
+        &= \left| y - \sin \frac{1}{x} \right| - \frac{|x - x_1|}{x_1 x} \\
+        &> \left| y - \sin \frac{1}{x} \right| - \frac{\delta}{(x - \delta) x} \\
+        &= \left| y - \sin \frac{1}{x} \right| - \frac{1}{(\frac{x}{\delta} - 1) x} \\
+\end{align*}
+
+Choose $\delta > 0$ small enough such that $\left| y - \sin \frac{1}{x} \right| - \frac{1}{(\frac{x}{\delta} - 1) x} > 0$, i.e
+
+\begin{align*}
+    \left| y - \sin \frac{1}{x} \right| - \frac{1}{(\frac{x}{\delta} - 1) x}
+    &> 0 \\
+    \frac{1}{(\frac{x}{\delta} - 1) x} &< \left| y - \sin \frac{1}{x} \right| \\
+    \frac{1}{\frac{x}{\delta} - 1} &< x \left| y - \sin \frac{1}{x} \right| \\
+    \frac{x}{\delta} - 1 &> \frac{1}{x \left| y - \sin \frac{1}{x} \right|} \\
+    \frac{x}{\delta} &> 1 + \frac{1}{x \left| y - \sin \frac{1}{x} \right|} \\
+    \delta &< \frac{x}{1 + \frac{1}{x \left| y - \sin \frac{1}{x} \right|}} \\
+\end{align*}
+
+
+we will have
+
+$$
+    r^2 > \left(\left| y - \sin \frac{1}{x} \right| - \frac{1}{(\frac{x}{\delta} - 1) x}\right)^2 > 0
+$$
+
+The open disc of radius $\left| y - \sin \frac{1}{x} \right| - \frac{1}{(\frac{x}{\delta} - 1) x}$ centered at $\langle x, y \rangle$ does not contain any point in $Y$
+
+$Z$
+
+For every point $\langle 0, y \rangle \in Z$, any open set containing $\langle 0, y \rangle$ contains an open disc of radius $r$ centered at $\langle 0, y \rangle$. We will prove that for all $y \in [-1, 1]$ and $0 < r < 1$, there exists a point $\langle x, y \rangle$ in $Y$ that is contained in the open disc, i.e $x < r$
+
+The set of real values $t > 0$ such that $\sin(t) = y$ is $T= \{ \arcsin(y) + 2\pi k: k \in \Z \} \cap [0, \infty)$. For any number $M$, there exists $t \in T$ such that $t > M$.
+
+Let $M = \frac{1}{r}$, there exists $t \in T$ such that $t > \frac{1}{r}$. Let $x = \frac{1}{t} < r$, $\langle x, y \rangle$ = $\langle x, \sin \frac{1}{x} \rangle$
+
+Therefore, every point in $Z$ is a limit point of $Y$.
+
+Hence, $\overline{Y} = Y \cup Z$ is connected.
+
+\section*{Exercise 5.2.7}
+
+Let $E$ be the set of all points in $\R^2$ having both coordinates rational. Prove that the space $\R^2 \setminus E$ is path-connected
+
+\subsection*{Main proof} .
+
+Let $\langle x_1, y_1\rangle$ and $\langle x_2, y_2\rangle$ be two points on $\R^2 \setminus E$. Without loss of generality, assume either one of these two cases occurs: (1) $x_1, x_2$ irrational or (2) $x_1, y_2$ irrational.
+
+Case (1)
+Let $y \in \R$ irrational, $f$ is defined as \footnote{$a \to b$ denotes the directed line segment from $a$ to $b$}
+
+\begin{align*}
+    f_1: \left[ 0 \to \frac{1}{3} \right] &\mapsto (\langle x_1, y_1\rangle \to \langle x_1, y\rangle) \subseteq \R^2 \setminus E \\
+    f_2: \left[\frac{1}{3} \to \frac{2}{3}\right] &\mapsto (\langle x_1, y\rangle \to \langle x_2, y\rangle) \subseteq \R^2 \setminus E \\
+    f_3: \left[\frac{2}{3} \to 1 \right] &\mapsto (\langle x_2, y\rangle \to \langle x_2, y_2\rangle) \subseteq \R^2 \setminus E \\
+\end{align*}
+
+Case (2)
+$f$ is defined as
+
+\begin{align*}
+    f_1: \left[ 0 \to \frac{1}{2} \right] &\mapsto (\langle x_1, y_1\rangle \to \langle x_1, y_2\rangle) \subseteq \R^2 \setminus E \\
+    f_2: \left[\frac{1}{2} \to 1 \right] &\mapsto (\langle x_1, y_2\rangle \to \langle x_2, y_2\rangle) \subseteq \R^2 \setminus E \\
+\end{align*}
+
+
+\section*{Exercise 5.2.8}
+
+Let $C$ be any countable subset of $\R^2$. Prove that space $\R^2 \setminus C$ is path-connected.
+
+TODO
+
+\section*{Exercise 5.2.12}
+
+Let $A$ and $B$ be subsets of a topological space $(X, \Tau)$. If $A$ and $B$ are both
+closed, and $A \cup B$ and $A \cap B$ are both connected, show that $A$ and $B$ are connected.
+
+\subsection*{Main proof} .
+
+Suppose $A$ is disconnected, i.e there exists non-empty disjoint closed sets $P, Q$ of $A$ such that $P \cup Q = A$.
+
+Since $P$ is closed in $A$, $P = C_P \cap A$ where $C_P$ is a closed set in $X$. Moreover, $A$ is closed, so $P$ is closed in $X$. Similarly, $C$ is closed in $X$.
+
+Since $A \cap B$ is connected, $A \cap B$ must be contained in either $P$ or $Q$.
+
+Without loss of generality, $A \cap B \subseteq Q$
+
+We have two disjoint closed sets $P$ and $Q \cup B$. Contradiction
+
+\section*{Exercise 5.2.13.vii}
+
+A subset of $\R$ is zero-dimensional if and only if it is totally disconnected.
+
+\subsection*{Main proof} .
+
+
+($\Rightarrow$)
+
+Suppose a subset $X \subseteq \R$ is zero-dimensional but not totally disconnected, i.e there exists a connected subset $Y \subseteq X$ containing at least two elements.
+
+Let $a, b \in Y \subseteq X$ such that $a < b$, let $A = (-\infty, \frac{a+b}{2})$ and $B = (\frac{a+b}{2}, \infty)$ open in $\R$, so $A \cap X$ is open in $X$. Since $X$ is zero-dimensional, there exists an clopen set $U \subseteq A$ of $A$ containing $a$ and not containing $b$. $U \cap Y$ and $(A \setminus U) \cap Y$ are two open sets in $Y$ that separate $a$ and $b$. So $Y$ is disconnected, contradiction.
+
+Therefore, all connected subsets of $X$ is singleton sets.
+
+($\Leftarrow$)
+
+TODO
+
+\section*{Exercise 5.3.15}
+
+Same as 5.2.8
+
+\section*{Tychonoff Theorem} \footnote{present here the proof of Tychonoff Theorem that is easier to read than the original version in the book}
+
+\begin{definition}[Product Topology]
+    Let $\{ (X_i, \Tau_i): i \in I \}$ be a family of topological spaces where $I$ is an index set. The Cartesian product of the family of sets $\{ X_i: i \in I\}$ is denoted by $\prod_{i \in I} X_i$ consists of the set of all functions $f: I \to \bigcup_{i \in I} X_i$ such that $f(i) = x_i \in X_i$. The product space is denoted by $\prod_{i \in I} (X_i, \Tau_i)$ on the product set $\prod_{i \in I} X_i$ with the product topology $\Tau$ having the basis
+    $$
+        \mathcal{B} = \left\{ \prod_{i \in I} O_i: O_i \in \Tau_i \;\text{and}\; O_i = X_i \;\text{for all but a finite number of}\; i \right\}
+    $$
+\end{definition}
+
+\begin{theorem}[Tychonoff Theorem]
+    Let $\{ (X_i, \Tau_i): i \in I \}$ be a family of topological spaces where $I$ is an index set. Then $(X, \Tau) = \prod_{i \in I} (X_i, \Tau_i)$ is compact if and only if each $(X_i, \Tau_i)$ is compact.
+\end{theorem}
+
+\begin{definition}[Finite Intersection Property]
+    Let $X$ be a set and $\mathcal{F}$ be a family of subsets of $X$. Then $\mathcal{F}$ is said to have the finite intersection property (FIP) if for any finite number $F_1, F_2, ..., F_n$ of elements of $\mathcal{F}$, $\bigcap_{i=1}^n F_i \neq \emptyset$
+\end{definition}
+
+\begin{axiom}[Zorn lemma]
+    Let $(X, \leq)$ be a non-empty partially ordered set in which every subset which is linearly ordered has an upper bound. Then $(X, \leq)$ has a maximal element.
+\end{axiom}
+
+\begin{proposition}[Compactness]
+    A topological space $(X, \Tau)$ is compact if and only if every family $\mathcal{F}$ of closed subsets of $X$ with FIP satisfies $\bigcap_{F \in \mathcal{F}} \neq \emptyset$
+\end{proposition}
+
+\begin{lemma}
+    \label{lemma_maximal_fip}
+    Let $X$ be a set and $\mathcal{F}$ be a family of subsets of $X$ with FIP. Then there is a maximal family of subsets of $X$ containing $\mathcal{F}$ with FIP.
+\end{lemma}
+
+\subsection*{Proof of Lemma \ref{lemma_maximal_fip}}
+Let $Z$ be the collection of all families of subsets of $X$ that have FIP. Consider the order on $Z$, that is, $\mathcal{F}_1 \leq \mathcal{F}_2$ if $\mathcal{F}_1 \subseteq \mathcal{F}_2$. Let $Y$ be any linearly ordered collection of elements of $Z$. $\bigcup_{\mathcal{Y} \in Y} \mathcal{Y}$ contains all $\mathcal{Y} \in Y$ with FIP, so $\bigcup_{\mathcal{Y} \in Y} \mathcal{Y}$ is an upper bound of $Y$.
+By Zorn Lemma, $Z$ has a maximal element
+
+\subsection*{Main Proof}
+
+Let $\mathcal{F}$ be a family of closed subsets of $X$ with FIP. We will prove that $\bigcap_{F \in \mathcal{F}} F \neq \emptyset$.
+
+Let $\mathcal{H}$ be the maximal family of subsets of $X$ containing containing $\mathcal{F}$ with FIP.
+
+\begin{claim}
+    \label{claim_1}
+    Let $p_i: (X, \Tau) \to (X_i, \Tau_i)$ be the projection mapping. Then,
+    $$
+        \bigcap_{H \in \mathcal{H}} \overline{p_i(H)} \neq \emptyset
+    $$
+\end{claim}
+
+\begin{claim}
+    \label{claim_2}
+    Since $\bigcap_{H \in \mathcal{H}} \overline{p_i(H)} \neq \emptyset$, let $x_i \in \bigcap_{H \in \mathcal{H}}  \overline{p_i(H)}$, we put $x = \prod_{i \in I} x_i$. Then,
+    $$
+        x \in \bigcap_{H \in \mathcal{H}} \overline{H}
+    $$
+\end{claim}
+
+Since $\mathcal{F}$ is a family of closed sets, then $\mathcal{F} \subseteq \mathcal{H}$ implies $\mathcal{F} \subseteq \{ \overline{H}: H \in \mathcal{H} \}$. From Claim \ref{claim_2}, $\bigcap_{H \in \mathcal{H}} \overline{H} \neq \emptyset$ implies $\bigcap_{F \in \mathcal{F}} F \supseteq \bigcap_{H \in \mathcal{H}} \overline{H} \neq \emptyset$.
+
+In the reverse direction, notice that the projection mapping is surjective continuous and surjective continuous preserves compactness.
+
+
+
+\subsubsection*{Proof of Claim \ref{claim_1}}
+
+$\mathcal{H}$ has FIP, then the family $\{p_i(H): H \in \mathcal{H}\}$ has FIP, so is $\{\overline{p_i(H)}: H \in \mathcal{H}\}$.
+
+$\{\overline{p_i(H)}: H \in \mathcal{H}\}$ is a family of closed subsets of $X_i$ with FIP, since $X_i$ is compact, then $\bigcap_{H \in \mathcal{H}} \overline{p_i(H)} \neq \emptyset$
+
+
+
+\subsubsection*{Proof of Claim \ref{claim_2}}
+Let $O$ be an open set containing $x$, then $O$ contains a basic open set \footnote{the open set in the canonical basis $\mathcal{B}$} containing $x$ that is of the form $B = \bigcap_{i \in J} p_i^{-1}(U_i)$ where $x_i \in U_i \in \Tau_i$ \footnote{$p_j^{-1}(U_j) = U_j \times \prod_{i \in I \setminus X_j} X_i$} and $J$ is a finite subset of $I$.
+
+For every $H \in \mathcal{H}$, $x_i \in \overline{p_i(H)}$, so $U_i \cap \overline{p_i(H)} \neq \emptyset$. That implies $p_i^{-1}(U_i) \cap H \neq \emptyset$.
+
+\begin{lemma}
+    \label{lemma_1}
+    Let $S \subseteq X$ that intersects non-trivially every element of $\mathcal{H}$ \footnote{$H \in \mathcal{H} \implies H \cap S \neq \emptyset$}. Then
+    $$
+        S \in \mathcal{H}
+    $$
+\end{lemma}
+
+\begin{lemma}
+    \label{lemma_2}
+    Let $\{H_1, H_2, .., H_n \}$ be a finite subset of $\mathcal{H}$. Then,
+    $$
+        H' = \bigcap_{i = 1}^n H_i \in \mathcal{H}
+    $$
+\end{lemma}
+
+By Lemma \ref{lemma_1}, $p_i^{-1}(U_i) \in \mathcal{H}$ for every $i \in I$. By Lemma \ref{lemma_2}, $B \in \mathcal{H}$. By FIP on $\mathcal{H}$, for every $H \in \mathcal{H}$, $B \cap H \neq \emptyset$. Hence, $O \cap H \neq \emptyset$
+
+Therefore, $x$ is either contained in or a limit point of every $H \in \mathcal{H}$. Hence $x \in \bigcap_{H \in \mathcal{H}} \overline{H}$
+
+\subsubsection*{Proof of Lemma \ref{lemma_1}}
+Suppose $S \notin \mathcal{H}$, $\mathcal{H}$ has FIP implies $\{ S\} \cup \mathcal{H}$ has FIP. That violates the maximal assumption of $\mathcal{H}$
+
+\subsubsection*{Proof of Lemma \ref{lemma_2}}
+Suppose $H' \notin \mathcal{H}$, $\mathcal{H}$ has FIP implies $\{ H'\} \cup \mathcal{H}$ has FIP. That violates the maximal assumption of $\mathcal{H}$
+
+
+\section*{Next}
+
+I STOPPED THIS SERIES HERE UNTIL FURTHER NOTICE DUE TO LACK OF TIME
+
+\end{document}

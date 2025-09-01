@@ -1,0 +1,407 @@
+\chapter{Sheaf Theory}
+
+\section{Presheaves}
+
+\begin{definition}[category of open sets, presheaf]
+	Let $X$ be a topological space, the category of open sets denoted by $\Op(X)$ is the category where objects are open sets of $X$ and morphisms and open set inclusions. If we drop the empty set from $\Op(X)$, the remaining object is also a category, denoted by $\Op(X)_*$.
+	
+	A presheaf $\mathcal{F}$ over $X$ is a functor on $\Op(X)_*^{op}$, that is
+	\begin{enumerate}
+		\item An assignment to each nonempty open set $U \subseteq X$ of an object $\mathcal{F}(U)$
+		\item For each pair of open sets $U, V \subseteq X$ such that $U \supseteq V$, there exists a map
+		$$
+		r^U_V: \mathcal{F}(U) \to \mathcal{F}(V)
+		$$
+		
+		And these restrictions satisfy the following:
+		\begin{enumerate}
+			\item $r^U_U: \mathcal{F}(U) \to \mathcal{F}(U)$ is the identity map on $\mathcal{F}(U)$
+			\item if $U \supseteq V \supseteq W$, then $r^U_W = r^U_V r^V_W$
+		\end{enumerate}
+	\end{enumerate}
+	
+	An element of $\mathcal{F}(U)$ is called section, the map $r^U_V$ is called restriction map. If the codomain category is an algebraic structure such as group, ring, etc, then the presheaf is called presheaf of groups, presheaf of rings, etc.
+\end{definition}
+
+\begin{definition}[category of presheaves, morphisms of presheaves]
+	The collection of presheaves over $X$ form a category where objects are presheaves and morphisms are natural transformations between them. The morphisms are called morphisms of presheaves. That is, if $\mathcal{F}, \mathcal{G}$ are presheaves over $X$, a morphism of presheaves $h: \mathcal{F} \to \mathcal{G}$ is a collection of maps 
+	$$
+		h_U: \mathcal{F}(U) \to \mathcal{G}(U)
+	$$
+	
+	for every open set $U$ in $X$ and the diagram below commutes
+	\begin{center}
+		\begin{tikzcd}
+			U                 & \mathcal{F}(U) \arrow[d, "r^U_V"] \arrow[r, "h_U"] & \mathcal{G}(U) \arrow[d, "r^U_V"] \\
+			V \arrow[u, hook] & \mathcal{F}(V) \arrow[r, "h_V"]                    & \mathcal{G}(V)                   
+		\end{tikzcd}
+	\end{center}
+	
+	The presheaf $\mathcal{F}$ is called subpresheaf of $\mathcal{G}$ if $h_U$ are inclusions
+\end{definition}
+
+\begin{remark}[constant presheaf]
+	Let $S$ be a set, the constant presheaf $\mathcal{F}$ is defined by $\mathcal{F}(U) = S$ for all $U$ and $\mathcal{F}(r^U_V): S \to S$ is the identity map.
+\end{remark}
+
+\begin{definition}[restriction of presheaf]
+	Let $\mathcal{F}$ be a presheaf on topological space $X$, let $U \subseteq X$ be an open subset of $X$, then the restriction of presheaf $\mathcal{F}\vert_{U}$ is a presheaf on subspace $U$ defined by
+	$$
+	\mathcal{F}\vert_{U}(V) = \mathcal{F}(V)
+	$$
+	
+	for every open subset $V \subseteq U$.
+\end{definition}
+
+\section{Sheaves}
+
+\begin{definition}[sheaf]
+	A presheaf $\mathcal{F}$ over a topological space $X$ is called sheaf if the following holds: Let $U = \bigcup_{i \in I} U_i$ be a union of open sets in $X$ then
+	\begin{enumerate}
+		\item If $s, t \in \mathcal{F}(U)$ such that $r^U_{U_i} (s) = r^U_{U_i} (t)$ for all $i \in I$, then $s = t$
+		
+		\item Given $s_i \in \mathcal{F}(U_i)$ for all $i \in I$ such that
+		$$
+		r^{U}_{U_i \cap U_j} (s_i) = r^{U}_{U_i \cap U_j} (s_j)
+		$$
+		
+		for all $U_i \cap U_j \neq \emptyset$, then there exists an $s \in \mathcal{F}(U)$ so that $r^U_{U_i}(s) = s_i$ for all $i \in I$
+	\end{enumerate}
+\end{definition}
+
+\begin{definition}[category of sheaves, morphisms of sheaves]
+	The collection of sheaves over $X$ form a category where objects are sheaves and morphisms are natural transformations between them. The morphisms are called morphisms of sheaves.
+\end{definition}
+
+\begin{remark}[constant sheaf]
+	Constant presheaf is not a sheaf. Let $X = U_1 \coprod U_2$ be disjoint union of two open sets and $A = \set{s_1, s_2}$ be the set of two elements. Let $\mathcal{F}(U_1) = \mathcal{F}(U_2) = \mathcal{F}(X) = A$ be the constant presheaf. As $s_1 \in \mathcal{F}(U_1)$ and $s_2 \in \mathcal{F}(U_2)$. Suppose $\mathcal{F}$, by condition 2, there exists $s \in \mathcal{F}(X)$ such that $r^X_{U_1} s_1 = r^X_{U_2} s_2$. Since the restriction in constant presheaf is the identity map, then $s_1 = s_2$. Contradiction.
+	
+	\note{TODO: construct constant sheaf}
+\end{remark}
+
+\section{Sheaves and Vector Bundles}
+
+\begin{definition}[sheaf of $\mathcal{R}$-modules]
+	Let $X$ be a topological space
+	\begin{enumerate}
+		\item Let $\mathcal{R}$ be a presheaf of commutative rings over $X$ and $\rho^U_V$ be the $\mathcal{R}$-restriction.
+		\item Let $\mathcal{M}$ be a presheaf of abelian groups over $X$ and $r^U_V$ be the $\mathcal{M}$-restriction.
+	\end{enumerate}
+	
+	Suppose for any open set $U \subseteq X$, $\mathcal{M}(U)$ is an $\mathcal{R}(U)$-module and if $\alpha \in \mathcal{R}(U)$ and $f \in \mathcal{M}(U)$, then
+	$$
+	r^U_V(\alpha f) = \rho^U_V(\alpha) r^U_V(f)
+	$$
+	
+	for all $U \supseteq V$. That is, the diagram below commutes
+	\begin{center}
+		\begin{tikzcd}
+			\mathcal{R}(U) \arrow[d, "\rho^U_V"'] & \mathcal{M}(U) \arrow[d, "r^U_V"'] & \mathcal{R}(U) \times \mathcal{M}(U) \arrow[d, "\rho^U_V \times r^U_V"'] \arrow[r] & \mathcal{M}(U) \arrow[d, "r^U_V"] \\
+			\mathcal{R}(V)                        & \mathcal{M}(V)                     & \mathcal{R}(V) \times \mathcal{M}(V) \arrow[r]                                     & \mathcal{M}(V)                   
+		\end{tikzcd}
+	\end{center}
+	
+	Then, $\mathcal{M}$ is called a presheaf of $\mathcal{R}$-modules. If $\mathcal{M}$ is a sheaf, then $\mathcal{M}$ is called a sheaf of $\mathcal{R}$-modules
+\end{definition}
+
+\begin{remark}[sheaf of $\Str$-modules from $\Str$-bundle]
+	Let $X$ be an $\Str$-manifold over field $K$, then we define the presheaf $\Str$ as follows: for any open set $U$ in $X$, let $\Str(U)$ be the collection of $\Str$-functions on $U$. If $U \supseteq V$, then $\Str$-restriction $\rho^U_V: \Str(U) \to \Str(V)$ is the usual restriction of functions. $\Str$ is a presheaf of commutative $K$-algebras, that is, commutative rings. Let $E \to X$ be an $\Str$-bundle, then define a presheaf $\Str(E) = \Str_X(E)$ as follows: for any open set $U$ in $X$, let 
+	$$
+		\Str(E)(U) = \Str(U, E)
+	$$
+	
+	be the collection of $\Str$-sections of $E$ on $U$. For any open subset $V \subseteq U$, we define
+	$$
+		r^U_V: \Str(E)(U) \to \Str(E)(V)
+	$$
+	
+	to be the usual restriction of sections. Then, $\Str(E)$ is a sheaf of $\Str$-sections of vector bundle $E$. Each $\Str(E)(U)$ is an $\Str$-section on $U$ which is a $\Str(U)$-module. It can be verified that $\Str(E)$ is a sheaf of $\Str$-modules.
+\end{remark}
+
+\begin{definition}[ideal sheaf]
+	Let $X$ be a topological space and $\mathcal{R}$ be a sheaf of commutative rings on $X$. Let $\mathcal{J}$ be a subsheaf of $\mathcal{R}$. In particular, there is an inclusion of ideal for every open set $U$
+	$$
+	\mathcal{J}(U) \subseteq \mathcal{R}(U)
+	$$
+	
+	Then, $\mathcal{J}$ is called an ideal sheaf in $\mathcal{R}$
+	
+\end{definition}
+
+\begin{definition}[direct sum, free sheaf]
+	Let $\mathcal{R}$ be a sheaf of commutative rings over a topological space $X$
+	\begin{enumerate}
+		\item For a positive integer $p$, we define the sheaf $\mathcal{R}^p$ by
+		$$
+		\mathcal{R}^p(U) = \bigoplus_{i=1}^p \mathcal{R}(U)
+		$$
+		
+		This is sheaf of $\mathcal{R}$-modules and called direct sum of sheaf $\mathcal{R}$
+		
+		\item If $\mathcal{M}$ is a sheaf of $\mathcal{R}$-modules such that $\mathcal{M}$ is isomorphic to $\mathcal{R}^p$ for some $p \geq 0$, then $\mathcal{M}$ is called a free sheaf of modules
+		
+		\item If $\mathcal{M}$ is a sheaf of $\mathcal{R}$-modules such that each $x \in X$ has a neighbourhood $U$ such that $\mathcal{M}\vert_U$ is free, then $\mathcal{M}$ is called a locally free sheaf.
+	\end{enumerate}
+\end{definition}
+
+\begin{remark}[vector bundles are locally free sheaves]
+	Let $E \to M$ be a smooth bundle of rank $r$. Let $x \in M$, there exists an open neighbourhood $U$ of $x$ and a local trivialization $h_U: E\vert_U \to U \times \R^r$ that induces an isomorphism of smooth bundles then an isomorphism of sheaves 
+	$$
+		\E(E\vert_U) \cong \E(U \times \R^r)
+	$$
+	
+	On the other hand, 
+	$$
+		\E(U \times \R^r) \cong \bigoplus_{i=1}^r \E\vert_U
+	$$
+	
+	where each $\E\vert_U$ is the restriction of sheaf $\E$ (the sheaf of smooth functions) on $U$. Hence, $\E(E)$ is a locally free $\E$-module
+	
+	\begin{proof}
+		We will show that $\E(U \times \R^r) \cong \bigoplus_{i=1}^r \E\vert_U$. Let $V \subseteq U$, then $f \in \E(U \times \R^r)(V) = \E(V, (U \times \R^r)\vert_V)$ is a $\E$-section if and only if
+		$$
+		f(x) = (x, g(x)) = (x, (g_1(x), g_2(x), ..., g_r(x)))
+		$$
+		
+		where each $g_i$ is a smooth function $V \to \R$. We define the bijection
+		\begin{align*}
+			\E(U \times \R^r)(V) &\to \bigoplus_{i=1}^r \E\vert_U(V) \\
+			f &\mapsto (g_1, g_2, ..., g_r)
+		\end{align*}
+		
+		The bijection is an isomorphism of $\E\vert_U(V)$-modules.
+	\end{proof}
+\end{remark}
+
+\begin{theorem}
+	Let $M$ be a connected $\Str$-manifold. Then there exists a one-to-one correspondence between (isomorphism classes of) $\Str$-bundles over $M$ and (isomorphism classes of) locally free sheaves of $\Str$-modules over $M$
+	\begin{proof}
+		We will show that locally free sheaf gives a vector bundle. Suppose that $\mathcal{F}$ is a locally free sheaf of $\Str$-modules over $M$. Then $M = \bigcup_{i \in I} U_i$ is a union of open sets and for each $i \in I$, there exists an isomorphism of sheaves
+		$$
+			g_i: \mathcal{F}\vert_{U_i} \to \Str^r\vert_{U_i}
+		$$
+		
+		for some non-negative integer $r$. Note that, $r$ does not depend on $U_i$ since $M$ is connected. Let 
+		$$
+			g_{ij}: \Str^r\vert_{U_i \cap U_j} \to \Str^r\vert_{U_i \cap U_j}
+		$$
+		
+		be defined by $g_{ij} = g_i g_j^{-1}$. The map $g_{ij}$ is a morphism of sheaves, it determine a $\Str$-map
+		$$
+			g_{ij} \in \Hom(\mathcal{S}(U_i \cap U_j)^r, \mathcal{S}(U_i \cap U_j)^r) = \Hom(U_i \cap U_j, GL(\R^r))
+		$$
+		
+		The collections $g_{ij}$ satisfies 
+		\begin{enumerate}
+			\item $g_{ii} = 1$ for all $i \in I$
+			\item $g_{ij} g_{jk} = g_{ik}$ for all $i, j, k \in I$
+		\end{enumerate}
+		
+		which determines a $\Str$-bundle.
+		
+		\note{TODO - finish the proof by showing the constructed smooth bundle induces the same sheaf}
+	\end{proof}
+\end{theorem}
+
+\section{Sheafification, Stalk}
+
+\begin{definition}[sheafification]
+	If $\mathcal{F}$ is a presheaf on $X$, then a morphism of presheaves
+	$$
+	sh: \mathcal{F} \to \mathcal{F}^{sh}
+	$$
+	
+	called sheafification of $\mathcal{F}$ if $\mathcal{F}^{sh}$ is a sheaf and for every sheaf $\mathcal{G}$, every morphism of presheaves $g: \mathcal{F} \to \mathcal{G}$ factors through $sh: \mathcal{F} \to \mathcal{F}^{sh}$ by a unique morphism of sheaves, that is, the following diagram commutes
+	\begin{center}
+		\begin{tikzcd}
+			\mathcal{F} \arrow[rd, "g"'] \arrow[r, "sh"] & \mathcal{F}^{sh} \arrow[d, "f", dashed] \\
+			& \mathcal{G}                            
+		\end{tikzcd}
+	\end{center}
+	
+	The sheaf $\mathcal{F}^{sh}$ is called the sheaf generated by $\mathcal{F}$
+\end{definition}
+
+\begin{definition}[stalk of a sheaf]
+	Let $\mathcal{F}$ be a presheaf over $X$, let $x \in X$, consider
+	$$
+		\Tilde{\mathcal{F}}_x = \coprod_{U \ni x} \mathcal{F}(U)
+	$$
+	
+	the disjoint union of all $\mathcal{F}(U)$ such that $U$ contains $x$. Define an equivalence relation on $\Tilde{\mathcal{F}}_x$ as follows:
+	
+	Let $f \in \mathcal{F}(U_1)$, $g \in \mathcal{F}(U_2)$, then $f \sim g$ if and only if there is an open subset $V$ such that $x \in V \subseteq U_1 \cap U_2$ and
+	$$
+		r^{U_1}_V f = r^{U_2}_V g
+	$$
+	
+	The stalk of $\mathcal{F}$ at $x$ is
+	$$
+		\mathcal{F}_x = \varinjlim_{U \ni x} \mathcal{F}(U) = \Tilde{\mathcal{F}}_x / \sim
+	$$
+	
+	the set of equivalence classes.
+	\note{Note 1: stalk is the colimit of the diagram generated by all open set containing $x$, namely direct limit}
+	\note{Note 2: a cocomplete category is a category having all of its colimits. That is, stalk is well-defined for a presheaf to a cocomplete category, for example abelian category}
+\end{definition}
+
+\begin{remark}
+	Some properties of stalk
+	\begin{enumerate}
+		\item Let $U$ be an open set containing $x$, then there is a map (if the codomain category is cocomplete, then this is a morphism)
+		$$
+			r^U_x: \mathcal{F}(U) \to \mathcal{F}_x
+		$$
+		
+		we will denote $r^U_x(f) = f_x$ for $f \in \mathcal{F}(U)$
+		
+		\item If $f_x \in \mathcal{F}_x$, then there exists an open set $U$ containing $x$ and $f \in \mathcal{F}(U)$ such that $r^U_x(f) = f_x$
+		
+		\item Let $\phi: \mathcal{F} \to \mathcal{G}$ be a morphism of presheaves over $X$, then it induces a map $\phi_x: \mathcal{F}_x \to \mathcal{G}_x$
+		
+		\item Suppose that $\mathcal{F}$ is a sheaf, let $f, g \in \mathcal{F}(U)$, if $f_x = h_x$ for all $x \in U$, then $f = h$
+		
+		\item Let $\phi: \mathcal{F} \to \mathcal{G}$ be a morphism of sheaves, suppose $\phi_x: \mathcal{F}_x \to \mathcal{G}_x$ is a bijection for all $x \in U$. Then $\phi$ is an isomorphism of sheaves.
+	\end{enumerate}    
+	\begin{longproof}
+		\begin{enumerate}
+			\setcounter{enumi}{2}
+			\item Let $f_x \in \mathcal{F}_x$, there exists an open set $U$ containing $x$ and a map $f \in \mathcal{F}(U)$ such that $r^U_x f = f_x$, define $\phi_x: \mathcal{F}_x \to \mathcal{G}_x$ by
+			$$
+				\phi_x f_x = r^U_x \phi_U f
+			$$
+			
+			We will show that $\phi_x$ does not depend on the choice of representative $f$. Let $\overline{f}$ be another representative of $f_x$ on $U$, as $f$ and $\overline{f}$ belong the the same stalk, there exists an open set $V \subseteq U$ such that $r^U_V f = r^U_V \overline{f}$, by naturality of $\phi$ and direct limit of $\mathcal{G}_x$, we have $r^U_V \phi_U = \phi_V r^U_V \text{ and } r^U_x = r^V_x r^U_V$
+			\begin{center}
+				\begin{tikzcd}
+					\mathcal{F}(U) \arrow[d, "r^U_V"'] \arrow[r, "\phi_U"] & \mathcal{G}(U) \arrow[d, "r^U_V"] & \mathcal{G}(U) \arrow[r, "r^U_V"] \arrow[rd, "r^U_x"', dashed] & \mathcal{G}(V) \arrow[d, "r^V_x", dashed] \\
+					\mathcal{F}(V) \arrow[r, "\phi_V"]                     & \mathcal{G}(V)                    &                                                                & \mathcal{G}_x                            
+				\end{tikzcd}
+			\end{center}
+			
+			Hence, 
+			
+			$$
+				r^U_x \phi_U f = r^V_x r^U_V \phi_U f = r^V_x \phi_V r^U_V f = r^V_x \phi_V r^U_V \overline{f} = r^U_x \phi_U \overline{f}
+			$$
+			
+			\item For every $x \in U$, as $f_x = h_x$, there exists an open set $U_x$ such that $f\vert_{U_x} = h\vert_{U_x}$. As $\set{U_x: x \in U}$ is an open cover for $U$, hence by the property of sheaf, $f = h$
+			
+			\item 
+			\begin{enumerate}
+				\item $\phi_U$ is injective
+				
+				Let $f, h \in \mathcal{F}(U)$ such that $\phi_U(f) = \phi_U(h) \in \mathcal{G}(U)$, then for any $x \in U$, $r^U_x \phi_U f = r^U_x \phi_U h$, then $r^U_x f_x = r^U_x h_x$. Since $\phi_x$ is injective, $f_x = h_x$. From the previous part, $f = h$
+				
+				\item $\phi_U$ is surjective
+				
+				Let $g \in \mathcal{G}(U)$ and $g_x = r^U_x g \in \mathcal{G}_x$, since $\phi_x$ is surjective,  there exists $f_x \in \mathcal{F}_x$ such that $\phi_x f_x = g_x$, hence by defintion of $\phi_x$, there exists open set $V \ni x$ and $f \in \mathcal{F}(V)$ such that $r^V_x \phi_V f = \phi_x f_x = g_x = r^U_x g$. Therefore, there exists $W \ni x$ such that $\phi_W r^V_W f= r^V_W \phi_V f = r^U_W g$. That is, for each $x \in U$, there is an open neighbourhood $W$ such that there exists an $f \in \mathcal{F}(W)$ and $\phi_W f = r^U_W g$. Let $f_1, f_2$ are the two maps on $W_1, W_2$, then
+				$$
+					r^{W_1}_{W_1 \cap W_2} f_1 = r^{W_2}_{W_1 \cap W_2} f_2
+				$$
+				
+				since they have the same stalks on $W_1 \cap W_2$. By definition of sheaf, there exists $f \in U$ such that $\phi_U f = g$, that is, $\phi_U$ is surjective.
+				
+				\item bijective morphism of sheaves is an isomorphism of sheaves
+				\note{TODO}
+				
+			\end{enumerate}
+		\end{enumerate}
+	\end{longproof}
+\end{remark}
+
+
+\begin{remark}[construction of sheafification]
+	\note{TODO}
+\end{remark}
+
+\section{Tensor Product of Sheaves}
+
+\begin{definition}[tensor product of sheaves]
+	Let $\mathcal{F}, \mathcal{G}$ be sheaves on $X$, let 
+	$$
+	\Tau(U) = \mathcal{F}(U) \otimes_{\E(U)} \mathcal{G}(U)
+	$$
+	
+	Then, $\Tau$ is a presheaf over $X$. We define the tensor product of sheaves by
+	$$
+	\mathcal{F} \otimes_\E \mathcal{G} = \Tau^{sh}
+	$$
+\end{definition}
+
+\begin{lemma}[local morphisms of sheaves induce global morphism of sheaves]
+	If $\mathcal{F}$ and $\mathcal{G}$ be two sheaves on $X$ and there exists an open cover $\set{U_i}_{i \in I}$ for $X$ such that $\tau_{U_i}: \mathcal{F}\vert_{U_i} \to \mathcal{G}\vert_{U_i}$ is a morphism of sheaves for all $i \in I$, then there exists a unique morphism of sheaves $\tau: \mathcal{F} \to \mathcal{G}$. Moreover, if each $\tau_{U_i}$ is an isomorphsim of sheaves, then $\tau$ is also an isomorphsim of sheaves.
+	
+	 \note{TODO - we can extend this lemma to (morphisms of stalks induce global morphism of sheaves)}
+	\begin{proof}
+		We will construct a map $\tau_V: \mathcal{F}(V) \to \mathcal{G}(V)$ for any open set $V \subseteq X$ that is compatible with any $\tau_{U_i}$, it will make $\tau: \mathcal{F} \to \mathcal{G}$ a sheaf morphism. For any $U \in \set{U_i}_{i \in I}$ with $\tau_U: \mathcal{F}(U) \to \mathcal{G}(U)$ is the corresponding isomorphism induced from the isomorphism of sheaves on $U$, define $\tau_V: \mathcal{F}(V) \to \mathcal{G}(V)$ as follows: For any $f \in \mathcal{F}(V)$, let
+		$$
+		g_U = \tau_U r^V_U f
+		$$
+		
+		For any $U_i, U_j \in \set{U_i}_{i \in I}$ with $U_i \cap U_j \neq \emptyset$, the diagram below commutes
+		\begin{center}
+			\begin{tikzcd}
+				\mathcal{F}(V) \arrow[rr, "r^V_{U_i}"] \arrow[rd, "r^V_{U_j}"] \arrow[ddd, "\tau_V"', dashed] &                                                                                 & \mathcal{F}(U_i) \arrow[rd, "r^{U_i}_{U_i \cap U_j}"] \arrow[ddd, "\tau_{U_i}"] &                                                              \\
+				& \mathcal{F}(U_j) \arrow[ddd, "\tau_{U_j}"] \arrow[rr, "r^{U_j}_{U_i \cap U_j}"] &                                                                                 & \mathcal{F}(U_i \cap U_j) \arrow[ddd, "\tau_{U_i \cap U_j}"] \\
+				&                                                                                 &                                                                                 &                                                              \\
+				\mathcal{G}(V) \arrow[rr] \arrow[rd]                                                          &                                                                                 & \mathcal{G}(U_i) \arrow[rd, "r^{U_i}_{U_i \cap U_j}"]                           &                                                              \\
+				& \mathcal{G}(U_j) \arrow[rr, "r^{U_j}_{U_i \cap U_j}"]                           &                                                                                 & \mathcal{G}(U_i \cap U_j)                                   
+			\end{tikzcd}
+		\end{center}
+		
+		We have
+		$$
+		r^{U_i}_{U_i \cap U_j} g_{U_i} = r^{U_i}_{U_i \cap U_j} \tau_{U_i} r^V_{U_i} f = r^{U_j}_{U_i \cap U_j} \tau_{U_j} r^V_{U_j} f = r^{U_j}_{U_i \cap U_j} g_{U_j} 
+		$$
+		
+		Therefore, by definition of sheaf, there exists a unique $g_V \in \mathcal{G}(V)$ such that for any $U \in \set{U_i}_{i \in I}$, the diagram below commutes
+		\begin{center}
+			\begin{tikzcd}
+				\mathcal{F}(V) \arrow[r, "r^V_U"] \arrow[d, "\tau_V"', dashed] & \mathcal{F}(U) \arrow[d, "\tau_U"] \\
+				\mathcal{G}(V) \arrow[r, "r^V_U"]                              & \mathcal{G}(U)                    
+			\end{tikzcd}
+		\end{center}
+		
+		That defines a unique map $\tau_V: \mathcal{F}(V) \to \mathcal{G}(V)$. Then, the collection $\set{\tau_V: V \subseteq X}$ defines a unique sheaf morphism $\tau: \mathcal{F} \to \mathcal{G}$. When $\tau_{U_i}$ are sheaf isomorphisms, we can construct another unique sheaf morphism $\tau^{-1}: \mathcal{G} \to \mathcal{F}$. It can be verified that $\tau$ is a natural isomorphism between two functors $\mathcal{F}$ and $\mathcal{G}$
+	\end{proof}
+\end{lemma}
+
+
+\begin{proposition}[tensor product of sheaves of vector bundles]
+	Let $E \to X$ and $F \to X$ be vector bundles over $X$. Then there is a sheaf isomorphism
+	$$
+	\tau: \E(E) \otimes_\E \E(F) \to \E(E \otimes F)
+	$$
+	
+	where $\E(E)$ and $\E(F)$ are sheaves induced from sections of vector bundles.
+	\begin{proof}
+		Let 
+		$$
+			\Tau(-) = \E(E)(-) \otimes_{\E(-)} \E(F)(-)
+		$$
+		
+		be the tensor product of presheaves and $\Tau^{sh}$ be the tensor product of sheaves. For every $x \in X$, pick $U \subseteq X$ containing $x$ small enough such that $E\vert_U \to U$ and $F\vert_U \to U$ are trivial bundles, then $\Tau\vert_U = \Tau^{sh}\vert_U$. We will construct a sheaf isomorphism $\Tau\vert_U \to \E(E \otimes F)\vert_U$
+		\begin{center}
+			\begin{tikzcd}
+				\Tau(U) \arrow[d, "r^U_V"] \arrow[r, "t"] & \E(E \otimes F)(U) \arrow[d, "r^U_V"] \\
+				\Tau(V) \arrow[r, "t"]                    & \E(E \otimes F)(V)                   
+			\end{tikzcd}
+		\end{center}
+		
+		Let $e = \tuple{e_1, e_2, ..., e_m}$ and $f = \tuple{f_1, f_2, ..., f_n}$ be frames of $E$ and $F$ on $U$. Then, every element $\xi \in \Tau(U)$ can be written as
+		$$
+			\xi = \sum_{i=1}^m \sum_{j=1}^n \xi_{ij} (e_i \otimes_{\E(U)} f_j)
+		$$
+		
+		where $\xi_{ij} \in \E(U)$. And every element $\eta \in \E(E \otimes F)(U)$ can be written as
+		$$
+			\eta(x) = \sum_{i=1}^m \sum_{j=1}^n \eta_{ij}(x) (e_i(x) \otimes f_i(x))
+		$$
+		
+		where $\eta_{ij} \in \E(U)$. Hence, there exists a natural isomorphism of sheaves from $\Tau\vert_U = \Tau^{sh}\vert_U$ to $\E(E \otimes F)\vert_U$ defined on $U \subseteq X$. Local sheaf isomorphisms induce a global sheaf isomorphism, which can be verified to be also natural
+		$$
+			\tau: \E(E) \otimes_\E \E(F) \to \E(E \otimes F)
+		$$ 
+	\end{proof}
+\end{proposition}

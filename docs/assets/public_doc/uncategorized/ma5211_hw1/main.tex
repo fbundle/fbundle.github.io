@@ -1,0 +1,263 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\input{header}
+
+\title{ma5211 hw1}
+\author{Nguyen Ngoc Khanh - A0275047B}
+\date{January 2024}
+
+\begin{document}
+
+\maketitle
+
+\section{Problem Set I}
+
+\textbf{(1)} Let $M_n$ be the space of $n \times n$ real matrices and $S_n$ its subspace of symmetric matrices. Consider the map
+$$
+    f: M_n \to S_n
+$$
+
+defined by $f(A) = A^T A$. Show that the identity matrix $I$ is a regular value of $f$, i.e. the rank of $(df)_A = \dim(S_n)$ for all $A \in f^{-1}(I)$. This implies that $f^{-1}(I)$ is a differential manifold and therefore $O(n) = f^{-1}(I)$ is a Lie group
+
+\begin{longproof}
+    We observe that both $M_n$ and $S_n$ are linear space, then their tangent spaces are themselves. Let $\alpha(t)$ be a curve on $M_n$ such that $\alpha(0) = A \in M_n$ and $\alpha'(0) = X \in T_A M_n = M_n$. The differential $(df)_A: T_A M_n \to T_{f(A)} S_n$ of $f$ at $A \in M_n$ is defined as
+    $$
+        (df)_A X = \frac{d}{dt} f(\alpha(t)) |_{t=0}
+    $$
+    Calculate $\frac{d}{dt} f(\alpha(t))$
+    \begin{align*}
+        \frac{d}{dt} f(\alpha(t))
+        &= \lim_{\Delta t \to 0} \frac{f(\alpha(t + \Delta t)) - f(\alpha(t))}{\Delta t} \\
+        &= \lim_{\Delta t \to 0} \frac{f(\alpha(t) + \Delta t \alpha'(t) + o(\Delta t)) - f(\alpha(t))}{\Delta t} &\text{(where $\norm{o(\Delta t)} \to 0$ as $\Delta t \to 0$)}\\
+        &= \lim_{\Delta t \to 0} \frac{(\alpha(t) + \Delta t \alpha'(t) + o(\Delta t))^T (\alpha(t) + \Delta t \alpha'(t) + o(\Delta t)) - \alpha(t)^T \alpha(t)}{\Delta t} \\
+        &= \alpha(t)^T \alpha'(t) + \alpha'(t)^T \alpha(t)
+    \end{align*}
+    Then,
+    $$
+        (df)_A X = A^T X + X^T A
+    $$
+    Rank of $(df)_A = \dim(S_n)$ is equivalent to $\im (df)_A = S_n$. Indeed, let any $B \in S_n$, let $X = \frac{1}{2}AB$, then $(df)_A X = B$
+\end{longproof}
+
+\textbf{(2i)} Let $D \subset GL(n, \R)$ be the subgroup of upper triangular matrices with positive elements on the diagonal. Show that the multiplication map
+$$
+    D \times O(n) \to GL(n, \R)
+$$
+is a diffeomorphism
+
+\begin{longproof}
+    Every square invertible matrix can be written as a unique product of an upper triangular matrix with positive diagonal and an orthogonal matrix (QR decomposition). As the product of product of an upper triangular matrix with positive diagonal and an orthogonal matrix is always invertible (product of two invertible matrices). The map $D \times O(n) \to GL(n, \R)$ is a bijection. Smoothness of that map and its inverse come from smoothness of matrix multiplication in $GL(n, \R)$
+\end{longproof}
+
+\textbf{(2ii)} Let $P \subset GL(n, \R)$ be the set of positive definite symmetric matrices. Show that the multiplication map
+$$
+    P \times O(n) \to GL(n, \R)
+$$
+is a diffeomorphism.
+
+Every square invertible matrix can be written as a unique product of a positive definite symmetric matrix and an orthogonal matrix (left polar decomposition). As the product of a positive definite symmetric matrix and an orthogonal matrix is always invertible (product of two invertible matrices). The map $P \times O(n) \to GL(n, \R)$ is a bijection. Smoothness of that map and its inverse come from smoothness of matrix multiplication in $GL(n, \R)$
+
+
+\begin{comment}
+\textbf{(3)} Show that the exponential map is surjective for $SO(n), U(n)$ and $GL(n, \C)$
+   
+
+\begin{longproof}
+    Define
+    $$
+        e^X = \sum_{k=0}^\infty \frac{X^k}{k!}
+    $$
+    $e^X$ is well-defined for $GL(V)$.
+    \begin{claim}
+        $\exp(X) = e^X$ for any subgroup of $GL(n, \C)$.
+    \end{claim}
+    Let $G$ be a Lie subgroup of $GL(n, \C)$, for each $X \in \LieAlg$ the Lie algebra, the left-invariant vector field $\Tilde{X}$ with $\Tilde{X}(e) = X$ satisfies
+    $$
+        \Tilde{X}(L(x)e) = l(x)_e v(e)
+    $$
+    where $L(x): g \mapsto xg$ is the left-translation. For matrix groups, $L(x)$ is linear, then $l(x)_\bullet = (dL)_\bullet: g \mapsto xg$. Then
+    $$
+        \Tilde{X}(x) = xX
+    $$
+    The curve $\phi(t) = e^{tX}$ is an integral curve because $\Tilde{X}(\phi(t)) = \frac{d\phi}{dt}$. Then, $\exp(X) = e^X$ for $X \in \LieAlg$ the Lie algebra. The rest is to verify that $e^X$ is surjective on $SO(n), U(n), GL(n, \C)$. 
+
+    (case 1: $SO(n)$)
+    
+
+    (case 2: $U(n)$)
+    For all $A \in G$, $A^* A = A A^* = I$. As $A$ is unitary, by spectral theorem, $A = UDU^*$ where $D, U \in \C^{n \times n}$, $U$ unitary and
+    $$
+        D = 
+        \begin{bmatrix}
+        e^{i\theta_1} & & \\
+        & \ddots & \\
+        & & e^{i\theta_n}
+        \end{bmatrix}
+    $$
+    Then, $D = e^E$ where $E$ is
+    $$
+        E = 
+        \begin{bmatrix}
+        i\theta_1 & & \\
+        & \ddots & \\
+        & & i\theta_n
+        \end{bmatrix}
+    $$
+    Then, let $X = UEU^*$, then $A = e^X$. Now, we verify that $X \in \LieAlg$
+    Let $\alpha(t)$ be a curve on $G$, then $\alpha(t)^T \alpha(t) = I$. Let $\alpha'(t) = X \in \LieAlg$, take the derivative on both sides at $t = 0$,
+    $$
+        X^* + X = 0
+    $$
+    Indeed, $X \in \LieAlg$ as $(UEU^*)^* UEU^* = U(E^* + E)U^* = 0$
+    
+
+
+    \textcolor{red}{TODO}
+    
+\end{longproof}
+\end{comment}
+
+\textbf{(4)} Determine the image of the exponential map for $G = SL(2, \R)$.
+
+\begin{longproof}
+$G$ is a subspace of $GL(2, \R)$, hence its exponential map is $\exp(X) = e^X$. Now we fine the tangent space $\LieAlg$ of $G$ at $I$. Let $\alpha(t)$ be a curve on $G$
+$$
+    \alpha(t) = \begin{bmatrix}
+        a(t) & b(t) \\
+        c(t) & d(t)
+    \end{bmatrix}
+$$
+such that $a(t) d(t) - b(t) c(t) = 1$. Then
+$$
+    \alpha'(t) = \begin{bmatrix}
+        a'(t) & b'(t) \\
+        c'(t) & d'(t)
+    \end{bmatrix}
+$$
+Take the derivative of $a(t) d(t) - b(t) c(t) = 1$ on both sides at $I$
+$$
+    a'(t) + d'(t) = 0
+$$
+$\tr(\alpha'(0)) = 0$, i.e $\LieAlg$ is the space of $2 \times 2$ real matrices with trace $0$. Then, $\im \exp = \exp(\LieAlg)$
+
+\end{longproof}
+
+\section{Problem Set II}
+\textbf{(1)} Show that the adjoint representation of $SU(2)$ defines a surjective homomorphism $SU(2) \to SO(3)$ with kernel consisting of two-element $\set{I, -I}$
+
+\begin{longproof}
+\begin{claim}
+    $SU(2) \cong S^3$ (as topological spaces). Therefore, $SU(2)$ is connected.
+\end{claim}
+
+$$
+    SU(2) = \set{A \in GL(2, \C): \det A = 1, A^* A = I}
+$$
+let $A = \begin{bmatrix} a & b \\ c & d \end{bmatrix} \in SU(2)$ where $a, b, c, d \in \C$, must have
+\begin{enumerate}
+    \item \label{1} $ad - bc = 1$
+    \item \label{2} $\overline{a} a + \overline{c} c = 1 \iff |a|^2 + |b|^2 = 1$
+    \item \label{3} $\overline{b} a + \overline{d} c = 0$
+    \item \label{4} $\overline{a} b + \overline{c} d = 0$
+    \item \label{5} $\overline{b} b + \overline{d} d = 1 \iff |c|^2 + |d|^2 = 1$
+\end{enumerate}
+
+We have
+$
+    \overline{b}
+    = \overline{b}(ad - bc) 
+    = \overline{b}ad - \overline{b}bc 
+    = (-\overline{d}c)d - \overline{b}bc 
+    = - (|d|^2 + |b|^2)c 
+    = -c
+$
+
+Similarly, 
+$
+    \overline{a}
+    = \overline{a}(ad - bc)
+    = \overline{a}ad - \overline{a}bc 
+    = \overline{a}ad + \overline{c}dc 
+    = (|a|^2 + |c|^2)d 
+    = d
+$
+
+Then, every element $A \in SU(2)$ can be written as
+
+$$
+    A = \begin{bmatrix}
+        a & b \\
+        -\overline{b} & \overline{a}
+    \end{bmatrix}
+$$
+where $a, b \in \C$ and $|a|^2 + |b|^2 = 1$. We can also verify that every $\C$ matrix of that form is in $SU(2)$, then $SU(2) \cong S^3$
+
+\begin{claim}
+    $\mathfrak{su}(2) \cong \R^3$ (as vector spaces)
+\end{claim}
+Let $\alpha(t)$ be a curve on $SU(2)$ such that $\alpha(0) = I$, $\alpha'(0) = X \in \mathfrak{su}(2)$, write
+$$
+    \alpha(t) = \begin{bmatrix}
+        a(t) & b(t) \\
+        -\overline{b(t)} & \overline{a(t)}
+    \end{bmatrix}
+$$
+and $a(t) \overline{a(t)} + b(t) \overline{b(t)} = 1$. Take the derivative on both sides at $t = 0$
+\begin{align*}
+    a \overline{a'} + a' \overline{a} + b \overline{b'} + b' \overline{b} &= 0 \\
+    \overline{a'} + a' &= 0 &\text{($a = 1, b = 0$)}
+\end{align*}
+That is, $a'(0)$ is purely imaginary. Then, every element of $\mathfrak{su}(2)$ can be written as
+$$
+    X = \begin{bmatrix}
+        ic & -b + ia \\
+        b + ia & - ic
+    \end{bmatrix}
+$$
+
+where $a, b, c \in \R$. Then, $\mathfrak{su}(2) \cong \R^3$ with basis $e_1 = \begin{bmatrix} 0 & i \\ i & 0 \end{bmatrix}$, $e_2 = \begin{bmatrix} 0 & -1 \\ 1 & 0 \end{bmatrix}$, $e_3 = \begin{bmatrix} i & 0 \\ 0 & -i \end{bmatrix}$. Then we have
+\begin{align*}
+    e_1 e_1 = -I, e_2 e_2 = -I, e_3 e_3 = -I \\
+    e_1 e_2 = +e_3, e_2 e_3 = +e_1, e_3 e_1 = +e_2 \\
+    e_2 e_1 = -e_3, e_3 e_2 = -e_1, e_1 e_3 = -e_2 \\
+    e_1^* = -e_1, e_2^* = -e_2, e_3^* = -e_3
+\end{align*}
+
+For $X = x_1 e_1 + x_2 e_2 + x_3 e_3, Y = y_1 e_1 + y_2 e_2 + y_3 e_3 \in \mathfrak{su}(2)$ where $x_1, x_2, x_3, y_1, y_2, y_3 \in \R$, define the inner product 
+$$
+    \inner{X, Y} = x_1 y_1 + x_2 y_2 + x_3 y_3 = \tr XY^*
+$$
+
+
+\begin{lemma}
+    $SO(3) \subseteq O(3)$ is a connected component containing identity
+    \label{lemma_1}
+\end{lemma}
+
+\textbf{Main Proof}
+
+Let $SU(2) \acts \mathfrak{su}(2)$ by conjugation denoted as $c$. That is,
+\begin{align*}
+    c(x)    &: SU(2) \to SU(2) \\
+            &: g \mapsto xgx^{-1}
+\end{align*}
+for each $x \in SU(2)$. Define the adjoint representation ($SU(2) \acts \mathfrak{su}(2)$) $Ad: SU(2) \to GL(\mathfrak{su}(2)) \cong GL(\R^3)$
+\begin{align*}
+    Ad(x) = (dc(x))_e   &: \mathfrak{su}(2) \to \mathfrak{su}(2) \\
+                        &: X \mapsto xXx^{-1}
+\end{align*}
+for each $x \in SU(2)$. In $SU(2)$, $x^{-1} = x^*$, then
+
+$$
+    \tr Ad(x)(X) Ad(x)(Y)^* = \tr(xXx^{-1}) (xYx^{-1})^* = \tr XY^*
+$$
+for all $X, Y \in \mathfrak{su}(2)$. $Ad(x)$ preserves inner product in $\mathfrak{su}(2)$. That is, $Ad(x)$ is a orthogonal linear map in $\mathfrak{su}(2) \cong \R^3$. Then, $Ad(x) \in O(3)$ and $\im Ad = Ad(SU(2)) \subseteq O(3)$ (subset in the embedding sense). $Ad$ is also a homomorphism that is continuous (due to matrix multiplication). As $SU(2)$ is connected, $\im Ad$ is a connected subset of $O(3)$ containing $I$ which is a subset of $SO(3)$
+
+$\ker Ad$ is the set of $x \in SU(2)$ such that $Ad = I$. Hence, $\ker Ad = \set{I, -I}$
+
+As $Ad: SU(2) \to SO(3)$ is continuous, let $V \subseteq SO(3)$ be an open neighbourhood of identity, let $U = Ad^{-1}(V) \subseteq SU(2)$ be an open neighbourhood of identity. As $SU(2)$ is connected, it is generated by $U$, i.e. $SU(2) = \inner{U}$. Hence, $\im Ad = \inner{V}$ is a subgroup of $SO(3)$. As $V$ is open, $\inner{V}$ is open (union of translations of $V$), and $\inner{V}$ is also closed (a complement of union of open cosets). As $SO(3)$ is connected, $\inner{V} = SO(3)$. Therefore, $Ad$ is surjective.
+\end{longproof}
+
+
+\end{document}

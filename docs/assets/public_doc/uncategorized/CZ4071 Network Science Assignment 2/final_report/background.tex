@@ -1,0 +1,29 @@
+\chapter{Background}
+
+\section{Problem Statement and Related Works}
+GCNs are rising in popularity due to favourable implementations in various areas. However, training GCNs is difficult in practice due to the fact that graph data can be extremely large, unlike tokens in a paragraph or pixels in an image that normally have a fixed size. A node's embedding in GCNs depend recursively on all its neighbours' embeddings, causing an exponential growth in computation dependency depending on the number of layers. Thus, GCNs are still inapplicable in large-scale graphs.
+
+Classical solutions to the size problem includes sampling-based methods such as the "node-wise neighbour-sampling" and "layer-wise importance sampling" that train GCNs on a subset of nodes. The "node-wise neighbour-sampling", which recursively samples a fixed number of neighbour nodes and calculates each node's embedding \cite{assigned_paper_zou2019layer}. However, when nodes share the same sampled neighbour, the neighbour's embedding has to be reevaluated and the redundancy increases exponentially with more layers. This results in an exponentially increasing computation cost with a node's neighbour size.
+
+An the other hand, the "layer-wise importance sampling" calculates the sampling probability based on the node's degree and a fixed number of nodes is sampled for each layer. The sampled nodes are used to build a smaller, now sampled adjacency matrix, which reduces computation costs. A problem, however, is that sampled nodes from adjacent layers may not be connected due to the fact that sampling probability is independent for each layer. This may cause the matrix to be extremely sparse and so, the sampled nodes may suffer from sparse connectivity problems.
+
+Due to the limitations of the classical methods, alternative methods such as the VR-GCN \cite{chen2017stochastic}, FastGCN \cite{chen2018fastgcn} and Cluster-GCN \cite{chiang2019cluster} have been proposed in the recent years. The FastGCN reduces the computation cost by using only sampled nodes to build a sampled adjacency matrix \cite{chen2018fastgcn}, while the VR-GCN uses variance
+reduction techniques to improve sample complexity to reduce computation redundancy \cite{chen2017stochastic} and the Cluster-GCN does preprocessing before training the GCN by restricting the sampled neighbors within some dense subgraphs through a graph clustering algorithm \cite{chiang2019cluster}. However, it is argued in \cite{assigned_paper_zou2019layer} that those proposed methods still cannot resolve the issue of redundant
+computations completely.
+
+
+\section{Real-World Applications}
+Due to its flexibility, GCNs can be applied in various domains in the real-world. Examples of such domains are in the application of GCNs in Computer Vision (CV), Natural Language Processing (NLP) and other sciences.
+
+CV has been a hot research area in the past decades. Although classic convolutional neural networks (CNN) have achieved great successes in CV, it is not feasible to encode the intrinsic graph structures in the specific learning tasks. On the other hand, GCNs have been applied and achieved a comparable or even better performance in some CV problems. For example, \cite{cui2018context} proposes a graph CNN to leverage both the semantic graphs of words and spatial scene graph for visual relationship detection. Furthermore, in \cite{chen2017photographic}, it is shown that a GCN model can be used to process the input scene graph and generate the images by a cascaded refinement network for photographic image synthesis. Moreover, GCNs can also be applied in videos. \cite{yan2018spatial} applied GCN to perform action recognition by proposing a spatial-temporal graph convolutional model to eliminate the need of hand-crafted part assignment which achieved a greater expressive power.
+
+GCNs also have applications in NLP. For text classification, citation network can be constructed with the documents as nodes and the citation relationships among them as edges. And node classification can be a straightforward way to classify documents into different categories. In \cite{yao2019graph}, TextGCN performs text classification by modeling a whole corpus to a heterogeneous graph and learn word embedding and document embedding simultaneously, followed by a softmax classifier for text classification. In addition, a syntactic GCN model is developed and it can be used on top of syntactic dependence trees, which is suitable for semantic role labelling \cite{marcheggiani2017encoding} and neural machine translation \cite{bastings2017graph}.
+
+GCNs are also applied in other domains outside of Computer Science.
+
+In chemistry, \cite{zitnik2018modeling} first models drug-protein target interactions and protein-protein interactions into a multimodal graph, and then graph convolutions is applied to predict polypharmacy side effects. 
+
+In material science, \cite{xie2018crystal} proposes a crystal GCN to directly learn material properties from the connections of atoms in the crystal. 
+
+In social sciences, GCNs have been widely used for social recommendation to improve the recommendation performances based on user-item interactions and/or user-user interactions. \cite{wu2019neural} proposes a neural influence diffusion model for better social recommendation by considering the influence of trusted friends.
+

@@ -1,0 +1,34 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\input{header}
+
+\title{
+    Test
+}
+\author{Nguyen Ngoc Khanh}
+\date{August 2023}
+
+\begin{document}
+
+Find all functions $f: [0, +\infty) \to [0, +\infty)$ such that
+$$
+	f(f(x)) + 3 f(x) - 270 x = 133
+$$
+
+For each real number $\mathbf{a}$, let $a: \R \to \R$ be the multiplication function by $\mathbf{a}$, that is $a(x) =  \mathbf{a}x$. If $f: \R \to \R$ and $g: \R \to \R$, then $gf: \R \to \R$ denotes the function composition, $f+g: \R \to \R$ denotes the function $(f+g)(x) = f(x) + g(x)$ (note: this makes real-valued functions on real number a non-commutative ring). Then
+
+\begin{align*}
+	f(f(x)) + \mathbf{3} f(x) - \mathbf{270} x
+	&= (f^2 + 3f - 270)(x) \\
+	&= (f^2 - 15f + 18f - 270)(x) \\
+	&= ((f - 15)f + 18(f - 15))(x) \\
+	&= (f + 18)(f - 15)(x) \\
+\end{align*}
+
+The original equation becomes
+$$
+	(f + 18)(f - 15)(x) = 133
+$$
+
+\end{document}

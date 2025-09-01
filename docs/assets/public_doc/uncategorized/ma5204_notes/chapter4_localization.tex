@@ -1,0 +1,409 @@
+\chapter{LOCALIZATION}
+
+\section{LOCALIZATION OF RING}
+
+\begin{definition}[multiplicatively closed set]
+	Let $A$ be a ring and a subset $S$ of $A$ is a multiplicatively closed if $1 \in S$ and $S$ is closed under multiplication, that is, $s_1, s_2 \in S$ implies $s_1 s_2 \in S$.
+\end{definition}
+
+\begin{remark}
+	If $\mf{p}$ is an ideal in a ring $A$, then $S = A - \mf{p}$ is multiplicatively closed if and only if $\mf{p}$ is prime.
+\end{remark}
+
+\begin{theorem}[localization of ring, ring of fractions]
+	Let $A$ be a ring and a multiplicatively closed subset $S \subseteq A$. Then, there exists a naturally associated ring $S^{-1} A$, namely ring of fractions, and a ring map $\phi_S: A \to S^{-1} A$ such that for any ring map $f: A \to B$ such that $f(S) \subseteq B^{\times}$, then $f$ factors through $\phi_S$ by a unique ring map $g: S^{-1} A \to B$.
+	\begin{center}
+		\begin{tikzcd}
+			A \arrow[r, "f"] \arrow[d, "\phi_S"'] & B \\
+			S^{-1} A \arrow[ru, "\exists !"', dashed] &  
+		\end{tikzcd}
+	\end{center}
+	
+	The process of passing from $A$ into $S^{-1} A$ is called localization.
+\end{theorem}
+
+\begin{proof}[Construction]
+	Construct the ring $S^{-1} A$ by
+	$$
+		S^{-1} A = A \times S / \sim
+	$$ 
+	where $(a, s) \sim (a_1, s_1)$ if and only if there exists $t \in S$ such that $t(s_1 a - s a_1) = 0$. The equivalence class of $(a, s)$ is denoted by $\frac{a}{s}$. The addition and multiplication are defined by
+	\begin{align*}
+		\frac{a}{s} + \frac{a_1}{s_1} &= \frac{s_1 a + s a_1}{s s_1} \\
+		\frac{a}{s} \frac{a_1}{s_1} &= \frac{a a_1}{s s_1}
+	\end{align*}
+	The additive identity and multiplicative identity of $S^{-1} A$ are
+	$$
+		0 = \frac{0}{1} \text{ and } 1 = \frac{1}{1}
+	$$
+	The map $\phi_S: A \to S^{-1} A$ is 
+	\begin{align*}
+		\phi_S: A &\to S^{-1} A \\
+				a &\mapsto \frac{a}{1}
+	\end{align*}
+\end{proof}
+
+\begin{remark}
+	From the universal property, any construction satisfying the universal property is unique up to isomorphism. Moreover, $\phi_S$ is not injective in general. Observe that
+	\begin{enumerate}
+		\item $a \in \ker \phi_S \iff (a, 1) \sim (0, 1) \iff \exists s \in S, sa = 0$
+		\item for each $s \in S$, $\phi_S(s)$ is a unit in $S^{-1} A$ since $(s / 1) (1 / s) = 1/1$
+		\item $\phi_S$ is the universal map sending $S$ into units in domain ring
+	\end{enumerate}
+\end{remark}
+
+\begin{longproof}
+	($\impliedby$) The ring map $f': S^{-1} A \to B$ maps units into units, then the composition $f' \phi_S: A \to B$ maps $S$ into units of $B$
+	
+	($\implies$)
+	
+	Existence of $f': S^{-1} A \to B$, define
+	\begin{align*}
+		f': S^{-1} A &\to B \\
+			\frac{a}{s} &\mapsto f(a) f(s)^{-1}
+	\end{align*}
+	$f'$ is well defined because if $a_1 / s_1 = a / s$, then there exists $t \in S$ such that $t(s_1 a - s a_1) = 0$. Then
+	$$
+		f(t) f(s_1) f(a) - f(t) f(s) f(a_1) = 0
+	$$
+	Since $f(t), f(s), f(s_1)$ are units in $B$, then 
+	$$
+		f(a) f(s)^{-1} = f(a_1) f(s_1)^{-1}
+	$$
+	
+	Uniqueness of $f': S^{-1} A \to B$, for any map $g: S^{-1} A \to B$ satisfies the same condition. We have
+	$$
+		g\tuple*{\frac{1}{s}} = g\tuple*{\tuple*{\frac{s}{1}}^{-1}} = g\tuple*{\frac{s}{1}}^{-1} = f(s)^{-1}
+	$$
+	
+	Hence, 
+	$$
+		g \tuple*{\frac{a}{s}} = g \tuple*{\frac{a}{1} \frac{1}{s}} = g \tuple*{\frac{a}{1}} g \tuple*{\frac{1}{s}} = f (a) f(s)^{-1} = f' \tuple*{\frac{a}{s}}
+	$$
+	
+	\note{another proof for uniqueness using $\ker f \supseteq \ker \phi_S$, then $f$ factors through $\phi_S$ - need elaboration} 
+\end{longproof}
+
+\begin{corollary}
+	$\phi_S: A \to S^{-1} A$ is an isomorphism if and only if $S \subseteq A^\times$
+\end{corollary}
+
+\begin{longproof}
+	($\implies$) For each $s \in S$, $\phi_S(s)$ is a unit in $S^{-1} A$, since $\phi_S: A^\times \to (S^{-1}A)^\times$ is a morphism of multiplicative groups and it is injective, $s$ is a unit in $A$. Hence, $S \subseteq A^\times$
+	
+	($\impliedby$) If $S \subseteq A^\times$, let $1_A: A \to A$, then $1_A$ factors through $\phi_S: A \to S^{-1} A$ by a map $f: S^{-1} A \to A$
+	\begin{center}
+		\begin{tikzcd}
+			A \arrow[r, "1_A"] \arrow[d, "\phi_S"', hook] & A & A \arrow[d, "\phi_S"'] \arrow[r, "\phi_S"]  & S^{-1} A \\
+			S^{-1} A \arrow[ru, "f"', dashed]             &   & S^{-1} A \arrow[ru, "1_{S^{-1}A}"', dashed] &         
+		\end{tikzcd}
+	\end{center}
+	
+	$\phi_S$ is injective since $f \phi_S = 1_A$. Moreover, let $\phi_S: A \to S^{-1} A$, then $\phi_S$ factors \textbf{uniquely} through $\phi_S: A \to S^{-1} A$ by the map $1_{S^{-1} A}: S^{-1} A \to S^{-1} A$. That is, any map $g: S^{-1} A \to S^{-1} A$ such that $g \phi_S = \phi_S$, then $g$ must be $1_{S^{-1} A}$. We have
+	$$
+		(\phi_S f) \phi_S = \phi_S
+	$$
+	Hence, $\phi_S f = 1_{S^{-1} A}$, thus $\phi_S$ is surjective.
+\end{longproof}
+
+\begin{remark}
+	If $S$ contains no zero divisor, then $\phi_S$ is injective. In particular, if $A$ is a domain, then $\phi_S$ is injective for all $S$. Moreover, $S^{-1}A$ is also a domain.
+\end{remark}
+
+\begin{proof}
+	\note{TODO}
+\end{proof}
+
+\begin{remark}
+	Given a ring $A$, if $S, T$ are multiplicatively closed subsets of $A$ and $S \subseteq T$. Then localizing at $S$ then localizing at $T$ is equivalent to localizating at $T$, that is,
+	$$
+		T^{-1} A \cong \phi_S(T)^{-1} (S^{-1} A)
+	$$
+\end{remark}
+
+\begin{proof}
+	Given any $f: S^{-1} A \to B$ such that $f \phi_S$ sends $T$ into units of $B$, then $f$ sends $\phi_S(T)$ into units of $B$. Both $S^{-1} A \to T^{-1} A$ and $S^{-1} A \to \phi_S(T)^{-1} (S^{-1} A)$ satisfy the same universal property.
+	\begin{center}
+		\begin{tikzcd}
+			A \arrow[dd, "\phi_T"'] \arrow[rr, "\phi_S"] \arrow[rrr, bend left] &  & S^{-1}A \arrow[dd] \arrow[r, "f"] \arrow[lldd, dashed] & B \\
+			&  &                                                        &   \\
+			T^{-1}A \arrow[rrruu, "f_2"', dashed]                               &  & \phi_S(T)^{-1} (S^{-1} A) \arrow[ruu, "f_1"', dashed]  &  
+		\end{tikzcd}
+	\end{center}
+\end{proof}
+
+\begin{remark}
+	Let $A$ be a ring, $f \in A$, and $S = \set{1, f, f^2, ...}$ be a multiplicative closed set. Let $A_f = S^{-1} A$, then
+	$$
+		A_f \cong A[x] / (1 - fx)
+	$$
+	
+	Given any $\psi: A \to C$ that sends $f$ into units in $C$, extend $\psi$ into $\psi': A[x] \to C$ with $\psi'(x) = \psi(f)^{-1}$. Then, $\psi'(1 - fx) = 0$. Thus $\psi'$ factors uniquely through the natural surjection $A[x] \to A[x] / (1 - fx)$ by a map $\psi'': A[x] / (1 - fx) \to C$
+\end{remark}
+
+\section{EXTENSION AND CONTRACTION}
+
+\begin{theorem}
+	Let $R$ be a ring and $S$ be a multiplicatively closed subset of $R$, and a map $\phi_S: R \to S^{-1}R$, then there is a bijection
+	\begin{align*}
+		\set{\text{$\mf{p}$ prime in $R$ such that $\mf{p} \subseteq R - S$}} &\cong \set{\text{$\mf{q}$ prime of $S^{-1} R$}} \\
+		\alpha: \mf{p} &\mapsto \mf{p}^e \\
+		\beta:\mf{q}^c &\mapsfrom \mf{q}
+	\end{align*}
+\end{theorem}
+
+\begin{definition}[saturation]
+	If $S$ is a multiplicatively closed subset of a ring $R$, let $\mf{a}$ be a subset of $R$, define the saturation of $\mf{a}$ with respect to $S$ by
+	$$
+		\mf{a}^S = \set{a \in R: as \in \mf{a} \text{ for some } s \in S}
+	$$
+	
+	Note that, $\mf{a} \subseteq \mf{a}^S$ and $\mf{a}^S = \mf{a}$, then $\mf{a}$ is called saturated.
+	
+	\note{$\mf{a}^S = \bigcup_{s \in S} (\mf{a} : s)$ where each $(A : B)$ is the collection of elements $x$ such that multiplication by $x$ sends $B$ into $A$}
+\end{definition}
+
+\begin{proposition}
+	If $\mf{a}$ is an ideal in $R$ then $\ker \phi_S = \set{0}^S$ and $\mf{a}^S$ is an ideal
+\end{proposition}
+
+\begin{longproof}
+	$(\ker \phi_S = \set{0}^S)$
+
+	$$
+		x \in \ker \phi_S \iff (x, 1) \sim (0, 1) \iff tx = 0 \text{ for some } t \in S \iff x \in \set{0}^S
+	$$
+	
+	($\mf{a}^S$ is an ideal) if $a, b \in \mf{a}^S$, then there exists $t, s \in S$ such that $ta, sb \in \mf{a}$, then $ts(a + b) \in \mf{a}$ and $t (ac) \in \mf{a}$ for all $c \in R$. Thus, $a + b \in \mf{a}^S$ and $ac \in \mf{a}^S$ for all $c \in R$. Hence, $\mf{a}^S$ is an ideal.
+\end{longproof}
+
+\note{$y \in \mf{a}^S \iff \frac{y}{1} = \frac{x}{s}$ in $S^{-1} A$ for some $x \in \mf{a}$ and $s \in S$}
+
+\begin{lemma}
+	Let $S$ be a multiplicatively closed subset of a ring $R$ and $\phi_S: R \to S^{-1} R$
+	\begin{enumerate}
+		\item If $\mf{b}$ is an ideal in $S^{-1} R$, then $\mf{b}^c$ is saturated and $\mf{b} = \mf{b}^{ce}$
+		
+		\item If $\mf{a}$ is an ideal in $R$, then $\mf{a}^e = (\mf{a}^S)^e$, $\mf{a}^S = \mf{a}^{ec}$, and $\mf{a} \subseteq R - S \iff \mf{a}^e \subsetneq S^{-1} R$
+		
+		\item If $\mf{p}$ is a prime ideal in $R$ such that $\mf{p} \subseteq R - S$, then $\mf{p} = \mf{p}^S$ and $\mf{p}^e$ is a prime ideal of $S^{-1} R$
+		\end{enumerate}
+\end{lemma}
+
+\begin{longproof}[Proof of Lemma]
+	($\mf{b}^c$ is saturated) Since $\mf{b}^c \subseteq (\mf{b}^c)^S$, we will show that $(\mf{b}^c)^S \subseteq \mf{b}^c$. Let $x \in (\mf{b}^c)^S$, that is, there exists $s \in S$ such that $xs \in \mf{b}^c$. Hence $\frac{xs}{1} \in \mf{b}$. We have $\frac{x}{1} = \frac{xs}{1} \frac{1}{s} \in \mf{b}$. Then, $x \in \mf{b}^c$
+	
+	($\mf{b} = \mf{b}^{ce}$) Since $\mf{b} \supseteq \mf{b}^{ce}$, we will show that $\mf{b} \subseteq \mf{b}^{ce}$. Let $\frac{x}{s} \in \mf{b}$, 
+	$$
+		\frac{x}{1} = \frac{x}{s} \frac{s}{1} \in \mf{b} \implies x \in \mf{b}^c \implies \frac{x}{1} \in \mf{b}^{ce} \implies \frac{x}{s} = \frac{x}{1} \frac{1}{s} \in \mf{b}^{ce}
+	$$
+	
+	
+	($\mf{a}^e = (\mf{a}^S)^e$) Since $\mf{a} \subseteq \mf{a}^S$, then $\mf{a}^e \subseteq (\mf{a}^S)^e$, we will show that $(\mf{a}^S)^e \subseteq \mf{a}^e$. Let $x \in \mf{a}^S$, then there exists $s \in S$ such that $xs \in \mf{a}$. Hence $\frac{xs}{1} \in \mf{a}^e$. We have $\frac{x}{1} = \frac{xs}{1} \frac{1}{s} \in \mf{a}^e$. Then, $\phi_S(\mf{a}^S) \subseteq a^e$. As $\mf{a}^e$ is an ideal, $(\mf{a}^S)^e$ is the ideal generated by a subset of $\mf{a}^e$. Therefore, $(\mf{a}^S)^e \subseteq \mf{a}^e$
+	
+	($\mf{a}^S \subseteq \mf{a}^{ec}$) We have $\mf{a}^S \subseteq (\mf{a}^S)^{ec}$, because $(\mf{a}^S)^e = \mf{a}^e$, then $\mf{a}^S \subseteq \mf{a}^{ec}$
+	
+	($\mf{a}^S \supseteq \mf{a}^{ec}$) Let $x \in \mf{a}^{ec}$, then $\frac{x}{1} \in \mf{a}^e = (\phi_S(\mf{a}))$. Hence
+	$$
+		\frac{x}{1} = \frac{r_1}{s_1} \frac{a_1}{1} + \frac{r_2}{s_2} \frac{a_2}{1} + ... + \frac{r_n}{s_n} \frac{a_n}{1}
+	$$
+	
+	for some $r_1, r_2, ..., r_n \in R$, $s_1, s_2, ..., s_n \in S$, and $a_1, a_2, ..., a_n \in \mf{a}$. This simplifies into $\frac{x}{1} = \frac{a}{s}$ for some $a \in \mf{a}$ and $s \in \mf{s}$. Thus, there exists $t \in S$ such that $tsx = ta \in \mf{a}$. Therefore, $x \in \mf{a}^S$
+	
+	($\mf{a} \cap S = \emptyset \implies \mf{a}^e \neq S^{-1} R$) 
+	$
+		s \in \mf{a} \cap S \implies \frac{s}{1} \in \mf{a}^e \implies 1 = \frac{s}{1} \frac{1}{s} \in \mf{a}^e \implies \mf{a}^e = S^{-1} R
+	$
+	
+	($\mf{a} \cap S = \emptyset \impliedby \mf{a}^e \neq S^{-1} R$)  $\mf{a}^e = S^{-1}R \implies \mf{a}^S = \mf{a}^{ec} = (S^{-1} R)^c = R$. Hence, there exists $s \in S$ such that $s1 \in \mf{a}$. Thus, $S \cap \mf{a} \neq \emptyset$
+	
+	($\mf{p} = \mf{p}^S$) Since $\mf{p} \subseteq \mf{p}^S$, we will show that $\mf{p}^S \subseteq \mf{p}$. Let $x \in \mf{p}^S$, that is, there exists $s \in S$ such that $xs \in \mf{p}$. Since $\mf{p}$ is prime and $s \in S \subseteq R - \mf{p}$, then $x \in \mf{p}$
+	
+	($\mf{p}^e$ is prime in $S^{-1}R$) Note that, $\mf{p}^e$ is proper since $\mf{p} \cap S = \emptyset$. Now, suppose $\frac{a}{s} \frac{b}{t} \in \mf{p}^e$, then $\frac{ab}{st} = \frac{c}{u}$ for some $c \in \mf{p}$ and $u \in S$. Hence $u(ab) = c(st) \in \mf{p}$. Since $\mf{p}$ is prime and $u \in S \subseteq A - \mf{p}$, then $ab \in \mf{p}$. Hence, $a \in \mf{p}$ or $b \in \mf{p}$. Then $\frac{a}{s} = \frac{a}{1} \frac{1}{s} \in \mf{p}^e$ or $\frac{b}{t} = \frac{b}{1} \frac{1}{t} \in \mf{p}^e$. That is, $\mf{p}^e$ is prime.
+\end{longproof}
+
+\begin{longproof}[Proof of Theorem]
+	($\alpha$ is well-defined) The lemma implies that extension of a prime ideal that does not intersect $S$ in $R$ is prime in $S^{-1} R$. Therefore, $\alpha$ is well-defined.
+	
+	($\beta$ is well-defined) $\mf{q}$ prime implies $\mf{q}^c$ is also prime. Moreover, $\mf{q} = \mf{q}^{ce}$ is proper in $S^{-1} R$, then $\mf{q}^c \cap S \neq \emptyset$. Therefore, $\beta$ is well-defined.
+	
+	($\alpha$ and $\beta$ are isomorphisms) The lemma implies that 
+	
+	For any prime ideal $\mf{p}$ in $R$ such that $\mf{p} \cap S = \emptyset$, we have
+	$$
+		\beta \alpha (\mf{p}) = \mf{p}^{ec} = \mf{p}^S = \mf{p}
+	$$
+	
+	For any prime ideal $\mf{q}$ in $S^{-1} R$, we have
+	$$
+		\alpha \beta (\mf{q}) = \mf{q}^{ce} = \mf{q}
+	$$
+	
+	Hence, $\beta \alpha = 1$ and $\alpha \beta = 1$
+\end{longproof}
+
+\begin{remark}[An equivalent formulation of the previous theorem]
+	Let $S$ be a multiplicatively closed subset of a ring $R$ and the natural map $\phi_S: R \to S^{-1} R$. Then $\phi_S$ induces an injective map
+	\begin{align*}
+		\phi_S^*: \Spec S^{-1} R &\to \Spec R \\
+								\mf{q} &\mapsto \mf{q}^c \\
+								\mf{p}^e &\mapsfrom \mf{p}
+	\end{align*}
+	with the image 
+	$$
+		\set{\text{$\mf{p}$ prime ideal in $R$ such that $\mf{p} \subseteq R - S$}}
+	$$
+\end{remark}
+
+\begin{remark}[localization on complement of prime ideal, local ring]
+	Let $\mf{p}$ be an ideal in $A$, then $S = A - \mf{p}$ is multiplicatively closed if and only if $\mf{p}$ is prime. When $\mf{p}$ is prime, we write $A_\mf{p} = S^{-1} A$. The natural map $\phi_S: A \to A_\mf{p}$ induces an injective map
+	$$
+		\phi_S^*: \Spec A_\mf{p} \to \Spec A
+	$$
+	
+	with image 
+	$$
+		\set{\mf{q} \text{ prime ideal in } A \text{ such that } \mf{q} \subseteq \mf{p}}
+	$$
+
+	In particular, $A_\mf{p}$ is a local ring since it admits the unique maximal ideal $\mf{p}^e = \mf{p} A_\mf{p}$.
+	$$
+		\mf{p} A_\mf{p} = \set*{\frac{x}{s}: x \in \mf{p}, s \in A - \mf{p}}
+	$$
+	
+	\note{quotienting at a prime $\mf{p}$ is like getting the primes outside of $\mf{p}$, localizing at $\mf{p}$ is like getting the primes inside of $\mf{p}$}
+\end{remark}
+
+\begin{proof}
+	Let $\mf{q}$ be a prime ideal in $A_\mf{p}$. We have, $\mf{q}^c = \phi_S^*(\mf{q}) \subseteq \mf{p}$. Then $\mf{q}^{ce} \subseteq \mf{p}^e$. From the previous lemma, $\mf{q} = \mf{q}^{ce}$. Hence, any prime ideal is contained in $\mf{p}^e$
+\end{proof}
+
+\begin{remark}
+	If $\mf{p}_1 \subseteq \mf{p}_2$ are prime ideals of a ring $A$. The extension $\mf{p}_1 A_{\mf{p}_2}$ of $\mf{p}_1$ is a prime ideal in $A_{\mf{p}_2}$ and the localization of $A_{\mf{p}_2}$ with multiplicatively closed set $A_{\mf{p}_2} - \mf{p}_1 A_{\mf{p}_2}$ equals $A_{\mf{p}_1}$
+	$$
+		(A_{\mf{p}_2})_{\mf{p}_1 A_{\mf{p}_2}} = A_{\mf{p}_1}
+	$$
+\end{remark}
+
+\begin{proof}
+	\note{TODO}
+\end{proof}
+	
+\begin{remark}[localization in Zariski topology]
+	If $S = \set{1, f, f^2, ...}$, then $\Spec R_f \to \Spec R$ is an injective map with image $X_f = \Spec R - V(f)$. That is the set of prime ideals that do not contain $f$. Thus, the localization on the ideal generated by $f$ is analogous to restriction of the spectrum of $R$ into a basic open set in Zariski topology. Similarly, image of the image $\phi_S^*: \Spec S^{-1} A \to \Spec A$ is an open set in Zariski topology for any multiplicatively closed set.
+\end{remark}
+
+\section{LOCALIZATION OF MODULE}
+
+\begin{definition}[localization of module, module of fractions]
+	Let $S$ be a multiplicatively closed subset of a ring $A$ and $M$ be an $A$-module. Construct the $S^{-1} A$-module $S^{-1} M$ as follows:
+	$$
+		S^{-1} M = M \times S / \sim
+	$$
+	
+	where $(m_1, s_1) \sim (m_2, s_2)$ if and only if there exists $t \in S$ such that $t(s_2 m_1 - s_1 m_2) = 0$. The equivalence class of $(m_1, s_1)$ is denoted by $\frac{m_1}{s_1}$. The addition and scalar multiplication on $S^{-1} M$ are defined by
+	\begin{align*}
+		\frac{m_1}{s_1} + \frac{m_2}{s_2} &= \frac{s_2 m_1 + s_1 m_2}{s_1 s_2} \\
+		\frac{a}{s} \frac{m_1}{s_1} &= \frac{a m_1}{s s_1}
+	\end{align*}
+	
+	The zero in $S^{-1} M$ is $0  = \frac{0}{1}$
+\end{definition}
+
+\begin{remark}[localizing modules as a functor]
+	Let $S$ be a multiplicatively closed subset of a ring $A$ and $f: M \to N$ be an $A$-module morphism. Then there is an induced $S^{-1} A$-module morphism
+	\begin{align*}
+		S^{-1} f: S^{-1} M &\to S^{-1} N \\
+						\frac{m}{s} &\mapsto \frac{f(m)}{s}
+	\end{align*}
+	
+	That is, $S^{-1}$ is a functor from $A$-mod into $S^{-1} A$-mod
+\end{remark}
+
+\begin{proposition}[localization is exact]
+	Let $S$ be a multiplicatively closed subset of a ring $A$, then $S^{-1}$ is exact. That is, if \begin{tikzcd}M \arrow[r, "f"] & N \arrow[r, "g"] & L\end{tikzcd} is exact at $N$, then the induced sequence \begin{tikzcd} S^{-1} M \arrow[r, "S^{-1} f"] & S^{-1} N \arrow[r, "S^{-1} g"] & S^{-1} L\end{tikzcd} is also exact at $S^{-1} N$
+\end{proposition}
+
+\begin{longproof}
+	($\im S^{-1} f \subseteq \ker S^{-1} g$) Let $\frac{m}{s} \in S^{-1} M$, then 
+	$$
+		(S^{-1} g) (S^{-1} f)\frac{m}{s} = (S^{-1} g) \frac{f(m)}{s} = \frac{(gf)(m)}{s} = \frac{0}{s} = 0
+	$$
+	
+	($\im S^{-1} f \supseteq \ker S^{-1} g$) Let $n \in N$ and $s \in S$ so that $\frac{n}{s} \in \ker S^{-1} g \subseteq S^{-1} N$, that is $0 = (S^{-1} g) \frac{n}{s} = \frac{g(n)}{s}$ in $S^{-1} N$. Then, there exists $t \in S$ such that $t g(n) = 0$ in $L$, hence $g(tn) = 0$, thus $tn \in \ker g$ implies there exists $m \in M$ such that $f(m) = tn$. Hence
+	$$
+		(S^{-1} f) \frac{m}{ts} = \frac{f(m)}{ts} = \frac{tn}{ts} = \frac{n}{s}
+	$$
+\end{longproof}
+
+\begin{proposition}[localzation commutes with sum, intersection, quotient of submodules]
+	\note{TODO - cololary 3.4} 
+\end{proposition}
+
+\section{LOCAL PROPERTIES}
+
+\begin{proposition}[being zero module is a local property]
+	Let $M$ be any $A$-module, the following are equivalent
+	\begin{enumerate}
+		\item $M = 0$
+		\item $M_\mf{p} = 0$ for every prime ideal $\mf{p}$ of $A$
+		\item $M_\mf{m} = 0$ for every maximal ideal $\mf{m}$ of $A$
+	\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+	It is clear that $1 \implies 2 \implies 3$, we will show that $3 \implies 1$. Suppose $M \neq 0$, let $x \in M$ so that $x \neq 0$. Let 
+	$$
+		\ann(x) = \set{a \in A: ax = 0}
+	$$
+	
+	$\ann(x)$ is a proper ideal of $A$ because if otherwise, $1 \in \ann(x) \implies x = 1x = 0$. This, there exists a maximal ideal $\mf{m}$ containing $\ann(x)$. Let $\frac{x}{1} \in M_\mf{m}$, since $M_\mf{m} = 0$, we must have $\frac{x}{1} = 0$ in $M_\mf{m}$. That is, there exists $t \in A - \mf{m}$ so that $tx = 0$, hence, $t \in \ann(x)$. However, by definition of $\mf{m}$,
+	$$
+		(A - \mf{m}) \cap \ann(x) = \emptyset
+	$$
+	
+	That is a contradiction.
+\end{proof}
+
+\begin{proposition}[being injective and being surjective are local properties]
+	Let $f: M \to N$ be any $A$-module morphism.
+	\begin{enumerate}
+		\item The following are equivalent:
+			\begin{enumerate}
+				\item $f$ is injective
+				\item $f_\mf{p} = S^{-1} f: M_\mf{p} \to N_\mf{p}$ is injective for every prime ideal $\mf{p}$ of $A$
+				\item $f_\mf{m} = S^{-1} f: M_\mf{m} \to N_\mf{m}$ is injective for every maximal ideal $\mf{m}$ of $A$
+			\end{enumerate}
+		\item The following are equivalent:
+		\begin{enumerate}
+			\item $f$ is surjective
+			\item $f_\mf{p} = S^{-1} f: M_\mf{p} \to N_\mf{p}$ is surjective for every prime ideal $\mf{p}$ of $A$
+			\item $f_\mf{m} = S^{-1} f: M_\mf{m} \to N_\mf{m}$ is surjective for every maximal ideal $\mf{m}$ of $A$
+		\end{enumerate}
+	\end{enumerate}
+\end{proposition}
+
+\begin{longproof}
+	$1a \implies 1b$ because $0 \to M \to N$ being exact at $M$ implies $0 \to M_\mf{p} \to N_\mf{p}$ being exact at $M_\mf{p}$ since $S^{-1}$ is an exact functor, $1b \implies 1c$ is clear. We will show that $1c \implies 1a$. Let $K = \ker f$, then the following two sequences are exact
+	\begin{center}
+		\begin{tikzcd}
+			0 \arrow[r] & K \arrow[r]        & M \arrow[r, "f"]               & N        \\
+			0 \arrow[r] & K_\mf{m} \arrow[r] & M_\mf{m} \arrow[r, "f_\mf{m}"] & N_\mf{m}
+		\end{tikzcd}
+	\end{center}
+	
+	$f_\mf{m}$ being injective implies $K_\mf{m} = 0$. By the previous proposition, $K = 0$, hence $f$ is injective
+	
+	$2a \implies 2b$ because $M \to N \to 0$ being exact at $N$ implies $M_\mf{p} \to N_\mf{p} \to 0$ being exact at $N_\mf{p}$ since $S^{-1}$ is an exact functor. $2b \implies 2c$ is clear. We will show that $2c \implies 2a$. Let $L = \coker f$, then the following two sequences are exact
+	\begin{center}
+		\begin{tikzcd}
+			M \arrow[r, "f"]               & N \arrow[r]        & L \arrow[r]        & 0 \\
+			M_\mf{m} \arrow[r, "f_\mf{p}"] & N_\mf{m} \arrow[r] & L_\mf{m} \arrow[r] & 0
+		\end{tikzcd}
+	\end{center}
+	
+	$f_\mf{m}$ being surjective implies $L_\mf{m} = 0$. By the previous proposition, $L = 0$, hence $f$ is surjective.
+	
+\end{longproof}
+
+

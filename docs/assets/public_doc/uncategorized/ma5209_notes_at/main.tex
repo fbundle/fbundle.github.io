@@ -1,0 +1,2546 @@
+\documentclass{report}
+
+\input{header}
+
+ 
+\title{ma5209 - algebraic topology}
+\author{Khanh Nguyen}
+\date{January 2024}
+
+\begin{document}
+
+\maketitle
+\chapter{CATEGORY AND HOMOLOGICAL ALGEBRA}
+
+\section{BASIC HOMOLOGICAL ALGEBRA}
+
+\begin{definition}[chain complex]
+    A chain complex $A_\bullet$ is a sequence of abelian groups and homomorphisms, namely boundary operator
+\begin{center}
+\begin{tikzcd}
+... & A_{-2} \arrow[l, "\partial"'] & A_{-1} \arrow[l, "\partial"'] & A_0 \arrow[l, "\partial"'] & A_1 \arrow[l, "\partial"'] & A_2 \arrow[l, "\partial"'] & ... \arrow[l, "\partial"']
+\end{tikzcd}
+\end{center}
+such that $\partial^2 = 0$, that is, $\im (\partial: A_{n+1} \to A_n) \subseteq \ker(\partial: A_n \to A_{n-1})$
+
+\end{definition}
+
+\begin{definition}[cycle, boundary, homology group]
+Given a chain complex $A_\bullet$ with boundary operator $\partial$.
+
+\begin{itemize}
+    \item An $n$-cycle is an element of $Z_n(A)$ defined by
+    $$
+        Z_n(A_\bullet) = \ker(\partial: A_n \to A_{n-1})
+    $$
+    \item An $n$-boundary is an element of $B_n(A)$ defined by
+    $$
+        B_n(A_\bullet) = \im(\partial: A_{n+1} \to A_n)
+    $$
+    \item The $n$th homology group of $A$ is the quotient
+    $$
+        H_n(A_\bullet) = \frac{Z_n(A_\bullet)}{B_n(A_\bullet)}
+    $$
+\end{itemize}
+\end{definition}
+
+\begin{definition}[chain map]
+    Let $A_\bullet, B_\bullet$ be chain complexes. A chain map $g: A_\bullet \to B_\bullet$ is a sequence of homomorphisms such that $\partial g = g \partial$. The following square commutes
+\begin{center}
+\begin{tikzcd}
+A_n \arrow[r, "\partial"] \arrow[d, "g"] & A_{n-1} \arrow[d, "g"] \arrow[d] \\
+B_n \arrow[r, "\partial"]                & B_{n-1}                         
+\end{tikzcd}
+\end{center}
+
+\end{definition}
+
+\begin{proposition}
+    Let $g: A \to B$ be a chain map. Then, $g$ determines a homomorphism $H_n(g) = g_*: H_n(A) \to H_n(B)$ for all $n$
+    \begin{center}
+        \begin{tikzcd}
+        A_n \arrow[r, "g"] \arrow[d, "\subseteq"]  & B_n \arrow[d, "\subseteq"]  \\
+        Z_n(A) \arrow[r, "g"] \arrow[d, two heads] & Z_n(B) \arrow[d, two heads] \\
+        H_n(A) \arrow[r, "g_*"]                    & H_n(B)
+        \end{tikzcd}
+    \end{center}
+\end{proposition}
+
+\begin{longproof}
+    ($g: Z_n(A) \to Z_n(B)$ well-defined - $g$ maps cycles to cycles) Let $\sigma \in Z_n(A)$, then $\partial \sigma = 0$ and $\partial g \sigma = g \partial \sigma = g 0 = 0$
+
+    ($g: B_n(A) \to B_n(B)$ well-defined - $g$ maps boundaries to boundaries) Let $\sigma \in B_n(A)$, then $\sigma = \partial b$ where $b \in C_{n+1}(A)$, and $g \sigma = g \partial b = \partial g b \in B_n(B)$
+    
+    ($g_*: H_n(A) \to H_n(B)$ well-defined) Any element of $Z_n(A)$ in equivalence class $[a] \in H_n(A)$ can be written as $a + \partial c$, then $g(a + \partial c) = ga + g \partial c = ga$. That is, $g$ maps elements from the same equivalence class to the same value.
+
+    ($g_*: H_n(A) \to H_n(B)$ is a homomorphism) Let $a + \partial c, b + \partial d \in Z_n(A)$ be in the equivalence classes $[a], [b] \in H_n$. Then $g(a + \partial c + b + \partial d) = g(a + \partial c) + g(b + \partial d)$. Therefore, $g_*([a] + [b]) = g_*[a] + g_*[b]$
+\end{longproof}
+
+\begin{proposition}
+    Let $1: A \to A, f: B \to C, g: A \to B$ be chain maps.
+    \begin{enumerate}
+        \item $H_n(1) = 1$ \label{prop_chainmap1}
+        \item $H_n(fg) = H_n(f) H_n(g)$ \label{prop_chainmap2}
+    \end{enumerate}
+\end{proposition}
+
+\begin{longproof}
+    (\ref{prop_chainmap1}) obvious
+    
+    (\ref{prop_chainmap2}) $H_n(f g)[a] = [fga] = H_n(f)[ga] = H_n(f) H_n(g)[a]$
+\end{longproof}
+
+\begin{definition}[chain homotopy]
+    Let $g_0, g_1: A_\bullet \to B_\bullet$ be chain maps. A chain homotopy from $g_0$ to $g_1$ is a sequence of homomorphisms $h: A_n \to B_{n+1}$ such that $\partial h + h \partial = g_0 - g_1$
+    \begin{center}
+        \begin{tikzcd}
+        ... \arrow[rd, "h"] & A_0 \arrow[l, "\partial"'] \arrow[rd, "h"] & A_1 \arrow[l, "\partial"'] \arrow[rd, "h"] & A_2 \arrow[l, "\partial"'] \arrow[rd, "h"] & ... \arrow[l, "\partial"'] \\
+        ...                 & B_0 \arrow[l, "\partial"']                 & B_1 \arrow[l, "\partial"']                 & B_2 \arrow[l, "\partial"']                 & ... \arrow[l, "\partial"']
+        \end{tikzcd}
+    \end{center}
+    If there is a chain homotopy from $g_0$ to $g_1$, we said $g_0$ and $g_1$ are chain homotopic or of the same chain homotopy type.
+\end{definition}
+
+\begin{proposition}
+    \label{prop_4}
+    Two chain homotopic maps induce the same map in homology. That is, if $g_0, g_1$ are chain homotopic, then $g_{0*} = g_{1*}$
+\end{proposition}
+
+\begin{proof}
+    Let $a \in Z_n(A)$, then $\partial a = 0$ and $g_0(a) = g_1(a) + \partial h a + h \partial a = g_1(a) + \partial h a$. So, $[g_0(a)] = [g_1(a)]$
+\end{proof}
+
+\begin{definition}[chain homotopy equivalence]
+    A map $f: X \to Y$ is a chain homotopy equivalence if there exists $g: Y \to X$ such that $fg: Y \to Y$ is chain homotopic to $1_Y$ and $gf: X \to X$ is chain homotopic to $1_X$
+\end{definition}
+
+
+\begin{definition}[short exact sequence]
+    A sequence of groups and homomorphisms
+\begin{center}
+\begin{tikzcd}
+0 \arrow[r] & A \arrow[r, "i"] & B \arrow[r, "p"] & C \arrow[r] & 0
+\end{tikzcd}
+\end{center}
+
+is a short exact sequence if one of the following equivalent conditions satisfies
+
+\begin{itemize}
+    \item \textcolor{red}{(change needed)} $p$ is surjective and $i =$ inclusion of $\ker p$
+    \item \textcolor{red}{(change needed)} $i$ is injective and $p =$ projection onto $\coker i$ 
+    \item $i$ is injective, $p$ is surjective, and $\im i = \ker p$
+\end{itemize}
+ 
+\end{definition}
+
+\begin{definition}[exact]
+Given sequences of groups
+\begin{itemize}
+    \item
+\begin{tikzcd}
+A \arrow[r, "i"] & B \arrow[r, "p"] & C
+\end{tikzcd}
+is exact at $B$ if $\im i = \ker p$
+    \item
+\begin{tikzcd}
+... \arrow[r] & A \arrow[r] & B \arrow[r] & C \arrow[r] & ...
+\end{tikzcd}
+is exact if it is exact at every group
+
+\end{itemize}
+
+\end{definition}
+
+\begin{theorem}
+    Short exact sequence of chain complexes induces long exact sequence in homology. That is, 
+    
+    Let 
+\begin{tikzcd}
+0 \arrow[r] & A \arrow[r, "i"] & B \arrow[r, "p"] & C \arrow[r] & 0
+\end{tikzcd}
+be a short exact sequence of chain complexes and $i, p$ be chain maps.
+
+\begin{center}
+\begin{tikzcd}
+            & ... \arrow[d, "\partial"]                    & ... \arrow[d, "\partial"]                    & ... \arrow[d, "\partial"]               &   \\
+0 \arrow[r] & A_{n+1} \arrow[d, "\partial"] \arrow[r, "i"] & B_{n+1} \arrow[d, "\partial"] \arrow[r, "p"] & C_{n+1} \arrow[d, "\partial"] \arrow[r] & 0 \\
+0 \arrow[r] & A_n \arrow[d, "\partial"] \arrow[r, "i"]     & B_n \arrow[d, "\partial"] \arrow[r, "p"]     & C_n \arrow[d, "\partial"] \arrow[r]     & 0 \\
+0 \arrow[r] & A_{n-1} \arrow[r, "i"] \arrow[d, "\partial"] & B_{n-1} \arrow[r, "p"] \arrow[d, "\partial"] & C_{n-1} \arrow[r] \arrow[d, "\partial"] & 0 \\
+            & ...                                          & ...                                          & ...                                     &  
+\end{tikzcd}
+\end{center}
+
+
+Then there exists connecting homomorphisms $\partial$ such that the sequence
+
+\begin{center}
+\begin{tikzcd}
+                             &  &                              &  & ... \arrow[lllld, "\partial"']        \\
+H_{n+1}(A) \arrow[rr, "i_*"] &  & H_{n+1}(B) \arrow[rr, "p_*"] &  & H_{n+1}(C) \arrow[lllld, "\partial"'] \\
+H_n(A) \arrow[rr, "i_*"]     &  & H_n(B) \arrow[rr, "p_*"]     &  & H_n(C) \arrow[lllld, "\partial"']     \\
+H_{n-1}(A) \arrow[rr, "i_*"] &  & H_{n-1}(B) \arrow[rr, "p_*"] &  & H_{n-1}(C) \arrow[lllld, "\partial"'] \\
+...                          &  &                              &  &                                      
+\end{tikzcd}
+\end{center}
+
+is exact.
+
+\end{theorem}
+
+\begin{longproof}
+    (1 defining of $\partial: H_{n+1}(C) \to H_n(A)$)
+
+\begin{center}
+\begin{tikzcd}
+n+1  &                                                          & b \arrow[r, "p", maps to] \arrow[d, "\partial", maps to]          & c \arrow[d, "\partial", maps to] \\
+n:   & a \arrow[r, "i", maps to] \arrow[d, "\partial", maps to] & \partial b \arrow[r, "p", maps to] \arrow[d, "\partial", maps to] & 0                                \\
+n-1: & \partial a \arrow[r, "i", maps to]                       & \partial^2 b = 0                                                  &                                 
+\end{tikzcd}
+\end{center}
+
+    Given $[c] \in H_{n+1}(C)$, (1) take any representative $c \in Z_{n+1}(C)$. As $p: B_{n+1} \to C_{n+1}$ is surjective, (2) take any $b \in B_{n+1}$ such that $pb = c$. As $p \partial b = \partial pb = \partial c = 0$ and $\ker (p: B_n \to C_n) = \im (i: A_n \to B_n)$, take $a \in A_n$ such that $ia = \partial b$, this choice is unique as $i$ is injective. $i \partial a = \partial i a = \partial^2 b = 0$, as $i$ is an injective homomorphism, $\partial a = 0$, then $a \in Z_n(A)$. The construction is done by $[c] \mapsto [a]$
+
+    We will verify that the homology class of $a$ does not depend on (1) the representative $c$ and (2) the value of $b$.
+
+    (1.1 $[a]$ does not depend on the choice of $b$)
+
+\begin{center}
+\begin{tikzcd}
+n+1: & d \arrow[r, "i", maps to] \arrow[d, "\partial"] & b-b_1 \arrow[r, "p", maps to] \arrow[d, "\partial", maps to] & 0 \\
+n:   & \partial d = a-a_1 \arrow[r, "i"]               & \partial b - \partial b_1                                    &  
+\end{tikzcd}
+\end{center}
+    Let $b_1 \in B_{n+1}$ such that $pb_1 = c$ and $a_1 \in A_n$ such that $ia_1 = \partial b_1$. We want to prove that $a$ and $a_1$ belong to the same homology class, that is $a - a_1$ is a boundary. As $p(b - b_1) = c - c = 0$, there exists a unique $d \in A_{n+1}$ such that $id = b - b_1$. Then, $i \partial d = \partial id = \partial (b - b_1) = \partial b - \partial b_1 = ia - ia_1 = i(a - a_1)$. As $i$ is injective, $a - a_1 = \partial d$, that is, $a - a_1$ is a boundary.
+
+    (1.1 $[a]$ does not depend on the choice of $c$)
+
+\begin{center}
+\begin{tikzcd}
+n+2: &                                                          &                                              &   & f \arrow[r, "p", maps to] \arrow[d, "\partial"] & e \arrow[d, "\partial", maps to] \\
+n+1: & d \arrow[r, "i", maps to] \arrow[d, "\partial", maps to] & b - b_1 - \partial f \arrow[r, "p", maps to] & 0 & \partial f \arrow[r, "p"]                       & c - c_1 = \partial e             \\
+n:   & a - a_1 = \partial d                                     &                                              &   &                                                 &                                 
+\end{tikzcd}
+\end{center}
+
+    Let $c_1 = c - \partial e$ for $e \in C_{n+2}$ be in the same homology class with $c$, $b_1 \in B_{n+1}$ such that $pb_1 = c_1$, and $a_1 \in A_n$ such that $ia_1 = \partial b_1$. We want to prove that $a$ and $a_1$ belong to the same homology class, that is $a - a_1$ is a boundary. Let $f \in B_{n+2}$ such that $pf = e$. Then, $p \partial f = \partial pf = \partial e$. Hence, $p(b - b_1 - \partial f) = c - c_1 - \partial e = 0$. There exists unique $d \in A_{n+1}$ such that $id = b - b_1 - \partial f$, then $i \partial d = \partial id = \partial (b - b_1 - \partial f) = \partial b - \partial b_1 - \partial^2 f = ia - ia_1 = i(a - a_1)$. As $i$ is injective, $a - a_1 = \partial d$, that is, $a - a_1$ is a boundary.
+
+    (1.3 $\partial$ is a homomorphism) 
+
+    Let $c_1 \in Z_{n+1}(C)$, $b_1 \in B_{n+1}$ such that $pb_1 = c_1$, and $a_1 \in A_n$ such that $ia_1 = \partial b_1$. We want to prove that $\partial (c + c_1) = a + a_1$. Indeed, this is done verifying $p(b + b_1) = c + c_1$ and $i(a + a_1) = \partial(b + b_1)$.
+
+    (2 exactness at $H_n(A), H_n(B), H_n(C)$) It is equivalent to $\im \partial = \ker i_*, \im i_* = \ker p_*, \im p_* = \ker \partial$
+
+    (2.1 $\im \partial \subseteq \ker i_* \iff $ for all $[c] \in H_{n+1}(C)$, $i_* \partial [c] = 0$) $i_* \partial [c] = i_* [a] = [ia] = [\partial b] = 0$
+
+    (2.2 $\im i_* \subseteq \ker p_* \iff $ for all $[a] \in H_n(A)$, $p_* i_* [a] = 0$) $p_* i_* [a] = p_* [ia] = [pia] = 0$
+
+    (2.3 $\im p_* \subseteq \ker \partial \iff $ for all $[b] \in H_n(B)$, $\partial p_* [b] = 0$) $\partial p_* [b] = \partial [p b] = i^{-1}(\partial^* b)$ where $\partial^*: B_n \to B_{n-1}$ denotes the boundary operator. As $b \in Z_n(B)$, $\partial^* b = 0$ and $i$ is an injective homomorphism, then $\partial p_* [b] = i^{-1}(\partial^* b) = i^{-1}(0) = 0$
+
+    (2.4 $\im \partial \supseteq \ker i_* \iff$ for all $[\overline{a}] \in H_n(A)$, if $i_* [\overline{a}] = 0$, then there exists $[c] \in H_{n+1}(C)$ such that $\partial [c] = [\overline{a}]$)
+
+    $i_*[\overline{a}] = 0 \implies [i\overline{a}] = 0$, that is $i \overline{a}$ is a boundary, then there exists $b \in B_n$ such that $\partial^* b = i \overline{a}$. Take $c = pb$.
+    
+    (2.5 $\im i_* \supseteq \ker p_*$)
+    \note{TODO - look at the notes from prof}
+    
+    (2.6 $\im p_* \supseteq \ker \partial \iff$ for all $[c] \in H_n(C)$, if $\partial [c] = 0$, then there exists $[\overline{b}] \in H_n(B)$ such that $p_*[\overline{b}] = [c]$)
+
+\begin{center}
+\begin{tikzcd}
+n:   & d \arrow[d, "\partial", maps to] & b \arrow[r, "p", maps to] \arrow[d, "\partial", maps to] & c & d \arrow[r, "i", maps to] \arrow[d, "\partial", maps to] & id \arrow[d, "\partial", maps to] \arrow[r, "p", maps to] & 0 \\
+n-1: & a \arrow[r, "i", maps to]        & ia = \partial b                                          &   & a \arrow[r, "i", maps to]                                & ia = \partial b                                           &  
+\end{tikzcd}
+\end{center}
+
+    As $p$ is surjective, let $b \in B_n$ such that $pb = c$, $a \in A_{n-1}$ such that $ia = \partial^* b$, then $[a] = \partial [c] = 0$, that is $a$ is a boundary. Then, there exists $d \in A_n$ such that $a = \partial^* d$. Take $\overline{b} = b - id \in B_n$, then $p_*[\overline{b}] = [p(b - id)] = [pb - pid] = [pb] = [c]$, and $\overline{b} \in Z_n(B)$ because $\partial^* \overline{b} = \partial^*(b - id) = \partial^* b - \partial^* id = \partial^* b - i \partial^* d = \partial^* b - ia = 0$
+
+\end{longproof}
+
+\begin{definition}[short exact sequence splits]
+    A short exact sequence splits if
+    \note{TODO}
+\end{definition}
+
+\section{BASIC CATEGORY THEORY}
+
+\subsection{CATEGORY, FUNCTOR, NATURAL TRANSFORMATION}
+
+\begin{definition}[category]
+    A category $C$ is a class $\ob C$ of objects such that
+    \begin{itemize}
+        \item for all $X, Y \in \ob C$, a class $C(X, Y)$ (or $\hom_C(X, Y), \hom(X, Y)$) of morphisms
+        \item for all $X \in \ob C$, $1_X \in C(X, X)$: the identity morphism
+        \item for all $X, Y, Z \in \ob C$, there exists a function
+        \begin{align*}
+            \circ   : C(Y, Z) \times C(X, Y) &\to C(X, Z) \\
+                    (g, f) &\mapsto gf
+        \end{align*}
+        $f \in C(X, Y)$ is also written as $f: X \to Y$
+    \end{itemize}
+    and
+    \begin{enumerate}
+        \item Let $f: X \to Y$, $1_Y f = f$, $f 1_X = f$
+        \begin{center}
+            \begin{tikzcd}
+            X \arrow[r, "f"] \arrow[rd, "1_Y f = f"'] & Y \arrow[d, "1_Y"] &  & X \arrow[rd, "f 1_X = f"] \arrow[d, "1_X"'] &   \\
+                                                      & Y                  &  & X \arrow[r, "f"]                            & Y
+            \end{tikzcd}
+        \end{center}
+
+        \item Let $f: X \to Y, g: Y \to Z, h: Z \to W$, $h(gf) = (hg)f$
+        \begin{center}
+        
+        \end{center}
+    \end{enumerate}
+\end{definition}
+
+\begin{remark}:
+
+    Some remarks on categories
+    \begin{itemize}
+        \item $\Set$: the category of sets and functions
+        \item $\Top$: the category of topological spaces and continuous maps
+        \item $\Grp$: the category of groups and homomorphisms
+        \item $\Ab$: the category of abelian groups and homomorphisms
+    \end{itemize}
+
+    Some remarks on morphisms: given a morphism $f: A \to B$
+    \begin{itemize}
+        \item $f$ is said to be a monomorphism if for all $g_1, g_2: X \to A$, $f g_1 = f g_2 \implies g_1 = g_2$
+        \item $f$ is said to be an epimorphism if for all $g_1, g_2: B \to X$, $g_1 f = g_2 f \implies g_1 = g_2$
+        \item $f$ is said to be an isomorphism if there exists $g: B \to A$ such that $fg = 1_B$ and $gf = 1_A$
+    \end{itemize}
+\end{remark}
+
+
+
+\begin{definition}[functor]
+    Let $C, D$ be categories. A functor from $C$ to $D$, $F: C \to D$ is
+    \begin{itemize}
+        \item $F: \ob C \to \ob D$
+        \item for all $X, Y \in \ob C$, there is a function $F: C(X, Y) \to C(F(X), F(Y))$ such that
+        \begin{itemize}
+            \item for all $X \in \ob C$, $F(1_X) = 1_{F(X)}$
+            \item for all $f: X \to Y, g: Y \to Z$, $F(gf) = F(g) F(f)$
+            \begin{center}
+                \begin{tikzcd}
+                X \arrow[rr, "f"] \arrow[rrdd, "gf"'] &  & Y \arrow[dd, "g"] &                   &    & F(X) \arrow[rr, "F(f)"] \arrow[rrdd, "F(gf) = F(g) F(f)"'] &  & F(Y) \arrow[dd, "F(g)"] \\
+                                                      &  &                   & {} \arrow[r, "F"] & {} &                                                            &  &                         \\
+                                                      &  & Z                 &                   &    &                                                            &  & F(Z)                   
+                \end{tikzcd}
+            \end{center}
+        \end{itemize}
+    \end{itemize}
+\end{definition}
+
+\begin{remark}
+    Some remarks on functors
+    \begin{itemize}
+        \item identity functor: $1: C \to C$
+        \item forgetful functors: $U: \Grp \to \Set$, $U: \Top \to Set$
+        \item singular homology: $H_n: \Top \to \Ab$
+        \item free abelian group functor: $\Z: \Set \to \Ab$
+    \end{itemize}
+\end{remark}
+
+\begin{definition}[natural transformation]
+    Let $C, D$ be categories and $F, G: C \to D$ be functors. A natural transformation from $F$ to $G$ is an assignment of each $X \in \ob C$ to a morphism $\theta_X: F(X) \to G(X)$ in $D$ such that for all $f: X \to Y$ in $C$. The diagram below commutes
+    \begin{center}
+        \begin{tikzcd}
+        X \arrow[d, "f"] & F(X) \arrow[r, "\theta_X"] \arrow[d, "F(f)"'] & G(X) \arrow[d, "G(f)"] \\
+        Y                & F(Y) \arrow[r, "\theta_Y"]                    & G(Y)                  
+        \end{tikzcd}
+    \end{center}
+    Notation:
+    \begin{itemize}
+        \item $\ob \Fun(C, D)$: functors $C \to D$
+        \item $\Fun(C, D)(F, G)$: natural transformations $F \to G$
+    \end{itemize}
+\end{definition}
+
+\begin{remark}
+    Some remarks on natural transformations
+    \begin{itemize}
+        \item The boundary operator $\partial$ is a natural transformation from $C_n$ to $C_{n-1}$ where $C_n$ is the functor from the $\Top$ to the category of free abelian group of $n$-chains
+        \begin{center}
+            \begin{tikzcd}
+            X \arrow[d, "f"] &  & C_n(X) \arrow[d, "C_n(f) = f_\#"'] \arrow[r, "\partial"] & C_{n-1}(X) \arrow[d, "C_{n-1}(f) = f_\#"] \\
+            Y                &  & C_n(Y) \arrow[r, "\partial"]                             & C_{n-1}(Y)                               
+            \end{tikzcd}
+        \end{center}
+    
+        \item The connecting homomorphism $\partial$ is a natural transformation from $H_n(C)$ to $H_{n-1}(A)$ where $H_n(C)$ and $H_{n-1}(A)$ are two functors from the category of short exact sequence of chain complexes to $\Ab$ and defined by
+        \begin{itemize}
+            \item $H_n(C)(\text{upper chain}) = H_n(C_\bullet)$
+            \item $H_n(C)(\text{lower chain}) = H_n(C_\bullet')$
+            \item $H_n(C)(f) = H_n(f) = f_*$
+            \item $H_{n-1}(A)(\text{upper chain}) = H_{n-1}(A_\bullet)$
+            \item $H_{n-1}(A)(\text{lower chain}) = H_{n-1}(A_\bullet')$
+            \item $H_{n-1}(A)(f) = H_n(f) = f_*$
+        \end{itemize}
+        \begin{center}
+            \begin{tikzcd}
+            0 \arrow[r] & A_\bullet \arrow[r] \arrow[d, "f"] & B_\bullet \arrow[r] \arrow[d, "f"] & C_\bullet \arrow[r] \arrow[d, "f"] & 0 &  & H_n(C_\bullet) \arrow[r, "\partial"] \arrow[d, "H_n(C)(f) = f_*"'] & H_{n-1}(A_\bullet) \arrow[d, "H_{n-1}(A)(f) = f_*"] \\
+            0 \arrow[r] & A_\bullet' \arrow[r]               & B_\bullet' \arrow[r]               & C_\bullet' \arrow[r]               & 0 &  & H_n(C_\bullet') \arrow[r, "\partial"']                             & H_{n-1}(A_\bullet')                                
+            \end{tikzcd}
+        \end{center}
+    \end{itemize}
+\end{remark}
+
+\subsection{UNIVERSAL MAPPING PROPERTY}
+
+\begin{definition}[product]
+    Let $X, Y \in \ob C$, the product an object $Z$ together with $p_1: Z \to X$, $p_2: Z \to Y$. Moreover, the triplet $(Z, p_1, p_2)$ is universal, that is, for each diagram \begin{tikzcd}X & W \arrow[l, "f_X"'] \arrow[r, "f_Y"] & Y\end{tikzcd}, there exists a unique $h: W \to Z$ such that the diagram commutes
+    \begin{center}
+        \begin{tikzcd}
+          & W \arrow[ld, "f_X"'] \arrow[d, "h", dashed] \arrow[rd, "f_Y"] &   \\
+        X & X \times Y \arrow[l, "p_1"] \arrow[r, "p_2"']                 & Y
+        \end{tikzcd}
+    \end{center}
+    The coproduct is written by $Z = X \times Y$
+\end{definition}
+
+\begin{definition}[coproduct]
+    Let $X, Y \in \ob C$, the coproduct an object $Z$ together with $i_1: X \to Z$, $i_2: Y \to Z$. Moreover, the triplet $(Z, i_1, i_2)$ is universal, that is, for each diagram \begin{tikzcd}X \arrow[r, "f_X"] & W & Y \arrow[l, "f_Y"']\end{tikzcd}, there exists a unique $h: Z \to W$ such that the diagram commutes
+    \begin{center}
+        \begin{tikzcd}
+                                         & W                                  &                                          \\
+        X \arrow[r, "i_1"'] \arrow[ru, "f_X"] & X \amalg Y \arrow[u, "h"', dashed] & Y \arrow[l, "i_2"] \arrow[lu, "f_Y"']
+        \end{tikzcd}
+    \end{center}
+    The coproduct is written by $Z = X \amalg Y$
+\end{definition}
+
+\begin{remark}
+    Some remarks on coproduct
+    \begin{itemize}
+        \item direct sum on abelian groups is a coproduct
+        \item disjoint union on sets is a coproduct
+        \item free product on groups is a coproduct
+        \item coproduct is unique upto isomorphism
+        \begin{longproof}
+            Let $(Z, i_1, i_2), (Z', i_1', i_2')$ be both coproduct of $X, Y$. Using universal property, we can construct unique $h: Z \to Z'$ and $h': Z' \to Z$ such that the diagram below commutes
+            \begin{center}
+                \begin{tikzcd}
+                X \arrow[r, "i_1"] \arrow[rd, "i_1'"] \arrow[rdd, "i_1"'] & Z \arrow[d, "h", dashed]   & Y \arrow[l, "i_2"'] \arrow[ld, "i_2'"'] \arrow[ldd, "i_2"] \\
+                                                                                   & Z' \arrow[d, "h'", dashed] &                                                                     \\
+                                                                                   & Z                          &                                                                    
+                \end{tikzcd}
+            \end{center}
+            By uniqueness of $h, h'$, we must have $h' h = 1_Z$. Similarly, $h h' = 1_{Z'}$
+        \end{longproof}
+        
+        \item Construction of coproduct from pushout: coproduct of $X, Y$ is the pushout of \begin{tikzcd} X & 0 \arrow[l] \arrow[r] & Y \end{tikzcd} where $0$ is the initial object.
+        
+    \end{itemize}
+\end{remark}
+
+\begin{definition}[equalizer]
+    Let $f, g: X \to Y$, the equalizer is an object $Q$ and a map $Q \to X$ such that $fq = gq$. Moreover, the pair $(Q, q)$ is universal, that is, if $(Q', q')$ satisfies the same condition, there exists a unique map $h: Q' \to Q$ such that the diagram below commutes
+    \begin{center}
+        \begin{tikzcd}
+        Q \arrow[r, "q"]                            & X \arrow[r, "g"', bend right] \arrow[r, "f", bend left] & Y \\
+        Q' \arrow[u, "h", dashed] \arrow[ru, "q'"'] &                                                         &  
+        \end{tikzcd}
+    \end{center}
+\end{definition}
+
+\begin{definition}[coequalizer]
+    Let $f, g: X \to Y$, the coequalizer is an object $Q$ and a map $q: Y \to Q$ such that $q f = q g$. Moreover, the pair $(Q, q)$ is universal, that is, if $(Q', q')$ satisfies the same conditions, there exists a unique map $h: Q \to Q'$ such that the diagram below commutes
+    \begin{center}
+        \begin{tikzcd}
+        X \arrow[r, "g"', bend right] \arrow[r, "f", bend left] & Y \arrow[r, "q"] \arrow[rd, "q'"'] & Q \arrow[d, "h", dashed] \\
+                                                                &                                    & Q'                      
+        \end{tikzcd}
+    \end{center}
+\end{definition}
+
+\begin{definition}[pullback]
+    The pullback of \begin{tikzcd} C \arrow[r, "\gamma"] & A & B \arrow[l, "\beta"'] \end{tikzcd} is $X$ and $X \to B, X \to C$ such that the diagram below commutes
+    \begin{center}
+        \begin{tikzcd}
+        X \arrow[d] \arrow[r] & C \arrow[d, "\gamma"] \\
+        B \arrow[r, "\beta"'] & A                    
+        \end{tikzcd}
+    \end{center}
+    Moreover, $X$ is universal, that is, if there exists $Y$ and the commutative diagram 
+    \begin{center}
+        \begin{tikzcd}
+        Y \arrow[d] \arrow[r] & C \arrow[d, "\gamma"] \\
+        B \arrow[r, "\beta"'] & A                    
+        \end{tikzcd}
+    \end{center}
+    then there exists a unique map $Y \to X$ such that the diagram below commutes
+    \begin{center}
+        \begin{tikzcd}
+            Y \arrow[rdd] \arrow[rrd] \arrow[rd, dashed] &                       &                       \\
+                                                         & X \arrow[d] \arrow[r] & C \arrow[d, "\gamma"] \\
+                                                         & B \arrow[r, "\beta"'] & A                    
+            \end{tikzcd}
+    \end{center}
+\end{definition}
+
+\begin{definition}[pushout]
+    The pushout of \begin{tikzcd} C & A \arrow[r, "\beta"] \arrow[l, "\gamma"'] & B \end{tikzcd} is $X$ and $A \to X$, $B \to X$ such that the diagram below commutes
+    \begin{center}
+        \begin{tikzcd}
+        A \arrow[r, "\beta"] \arrow[d, "\gamma"'] & B \arrow[d] \\
+        C \arrow[r]                               & X          
+        \end{tikzcd}
+    \end{center}
+    Moreover, $X$ is universal, that is, if there exists $Y$ and the commutative diagram 
+    \begin{center}
+        \begin{tikzcd}
+        A \arrow[r, "\beta"] \arrow[d, "\gamma"'] & B \arrow[d] \\
+        C \arrow[r]                               & Y          
+        \end{tikzcd}
+    \end{center}
+    then there exists a unique map $X \to Y$ such that the diagram below commutes
+    \begin{center}
+        \begin{tikzcd}
+        A \arrow[r, "\beta"] \arrow[d, "\gamma"'] & B \arrow[d] \arrow[rdd] &   \\
+        C \arrow[r] \arrow[rrd]                   & X \arrow[rd, dashed]    &   \\
+                                                  &                         & Y
+        \end{tikzcd}
+    \end{center}
+\end{definition}
+
+\begin{remark}
+    Some remarks on pushout
+    \begin{itemize}
+        \item Construction of pushout from coproduct and coequalizer: the pushout of \begin{tikzcd} C & A \arrow[r, "\beta"] \arrow[l, "\gamma"'] & B \end{tikzcd}, is the coequalizer of 
+        \begin{center}
+            \begin{tikzcd}
+            A \arrow[r, "i_1 \beta", bend left] \arrow[r, "i_2 \gamma"', bend right] & B \amalg C
+            \end{tikzcd}
+        \end{center}
+        
+    
+        \item Consider the category of sets, then the pushout $X = B \amalg C / \sim$ where the equivalence relation is defined by $\beta(a) \sim \gamma(a)$ for all $a \in A$
+
+        \item $\R P^{n-1}$: real projective space - space of lines through the origin in $\R^n$, $\R P^n$ is the pushout of \begin{tikzcd} \R P^{n-1} & S^{n-1} \arrow[r, hook] \arrow[l, two heads] & e^n \end{tikzcd}, the diagram below commutes
+        \begin{center}
+            \begin{tikzcd}
+            S^{n-1} \arrow[r, hook] \arrow[d, two heads] & D^n \arrow[d] \\
+            \R P^{n-1} \arrow[r]                         & \R P^n       
+            \end{tikzcd}
+        \end{center}
+        where $S^{n-1}$ denotes the equator, $D^n$ denotes the closed upper hemisphere.
+
+        \item $\C P^{n-1}$: complex projective space - space of lines through the origin in $\C^n$, similarly, $\C P^n$ is the pushout of the diagram below
+        \begin{center}
+            \begin{tikzcd}
+            S^{2n-1} \arrow[r, hook] \arrow[d, two heads] & D^{2n} \arrow[d] \\
+            \C P^{n-1} \arrow[r]                          & \C P^n          
+            \end{tikzcd}
+        \end{center}
+    \end{itemize}
+\end{remark}
+
+\begin{definition}[base change, cobase change]:
+    \begin{enumerate}
+        \item if $X$ is the pullback of \begin{tikzcd} C \arrow[r, "\gamma"] & A & B \arrow[l, "\beta"'] \end{tikzcd} then the transform from $B \to A$ to $X \to C$ is called base change.
+        \item if $X$ is the pushout of \begin{tikzcd} C & A \arrow[r, "\beta"] \arrow[l, "\gamma"'] & B \end{tikzcd}, then the transform from $A \to B$ to $C \to X$ is called cobase change.
+    \end{enumerate}
+\end{definition}
+
+
+\begin{definition}[direct limit]
+    Given a category $C$ with
+    \begin{center}
+        \begin{tikzcd}
+        X_0 \arrow[r, "f_1"] & X_1 \arrow[r, "f_2"] & X_2 \arrow[r, "f_3"] & ...
+        \end{tikzcd}    
+    \end{center}
+    the direct limit of this sequence is an object $X$ with maps $g_n: X_n \to X$ for all $n$ such that the diagram below commutes for all $n$
+    \begin{center}
+        \begin{tikzcd}
+                                                        & X_n \arrow[d, "g_n"] \\
+        X_{n-1} \arrow[ru, "f_n"] \arrow[r, "g_{n-1}"'] & X                   
+        \end{tikzcd}
+    \end{center}
+    Moreover, $(X, g_\bullet)$ is universal, that is, if $(Y, h_\bullet)$ is also a direct limit, then there exists a unique map $h: X \to Y$ such that the diagram below commutes for all $n$
+    \begin{center}
+        \begin{tikzcd}
+                                                                               & X_n \arrow[d, "g_n"'] \arrow[rdd, "h_n"] &   \\
+        X_{n-1} \arrow[ru, "f_n"] \arrow[r, "g_{n-1}"] \arrow[rrd, "h_{n-1}"'] & X \arrow[rd, "h", dashed]                &   \\
+                                                                               &                                          & Y
+        \end{tikzcd}
+    \end{center}
+    The direct limit is written by $X = \varinjlim X_n$
+\end{definition}
+
+\begin{remark}
+    Some remarks on direct limit
+    \begin{itemize}
+        \item Construction of direct limit from pushout: the direct limit of \begin{tikzcd} X_0 \arrow[r, "f_1"] & X_1 \arrow[r, "f_2"] & X_2 \arrow[r, "f_3"] & ... \end{tikzcd} is $X$ such that $X$ is the pushout of \begin{tikzcd} X_{n-1} & X_{n-1} \arrow[r, "f_n"] \arrow[l, "1"'] & X_n \end{tikzcd} for all $n$
+        \item Consider the category of sets, then the direct limit of $(X_n)$ is $\coprod X_n / \sim$ where the equivalence relation is defined by $(x \in X_{n-1}) \sim (f_n(x) \in X_n)$
+        \begin{center}
+            \begin{tikzcd}
+            X_n \arrow[r, "i_n", hook] \arrow[rd, "g_n"] \arrow[rdd, "h_n"'] & \coprod X_n \arrow[d, two heads]          \\
+                                                                                & \coprod X_n / \sim \arrow[d, "h", dashed] \\
+                                                                                & Y                                        
+            \end{tikzcd}
+        \end{center}
+    
+        \item if each $f_n$ is mono, $\varinjlim X_n = \bigcup X_n$
+        \item if each $f_n$ is inclusion of a subspace, then $\varinjlim X_n$ describe a topology on $\bigcup X_n$, called weak topology, that is, $U \subseteq \bigcup X_n$ is said to be open if $U \cap X_n$ open for all $n$
+    \end{itemize}
+\end{remark}
+
+\subsection{PREADDITIVE CATEGORY, ADDITIVE FUNCTOR, PROJECTIVE CLASS, DERIVED FUNCTOR}
+
+\begin{definition}[initial object, terminal object, zero, pointed category, zero map]
+    Let $C$ be a category. $0$ is initial if $\# C(0, X) = 1$ for all $X$, $*$ is terminal if $\# C(X, *) = 1$ for all $X$. $C$ is called pointed if it has initial and terminal objects and the unique map $0 \to *$ is an isomorphism. We write $0$ for both initial and terminal objects. Consequently, given any two objects $M, N$ there exists a zero map
+    \begin{center}
+        \begin{tikzcd}
+        M \arrow[r] \arrow[rr, "0"', bend right] & 0 \arrow[r] & N
+        \end{tikzcd}
+    \end{center}
+\end{definition}
+
+\begin{definition}[kernel]
+    Given a pointed category $C$, let $f: M \to N$, a kernel of $f$ is a map $i: K \to M$ such that $fi = 0$. Moreover, $i$ is universal, that is, if $j: L \to M$ such that $fj = 0$, then there exists a unique $k: L \to K$ such that the diagram below commutes
+    \begin{center}
+        \begin{tikzcd}
+        K \arrow[r, "i"'] \arrow[rr, "0", bend left]                            & M \arrow[r, "f"'] & N \\
+        L \arrow[ru, "j"'] \arrow[rru, "0"', bend right] \arrow[u, "k", dashed] &                   &  
+        \end{tikzcd}
+    \end{center}
+    The category $C$ has kernels if every morphism has a kernel.
+\end{definition}
+
+\begin{remark}
+    Some remarks on kernels
+    \begin{itemize}
+        \item Construction of kernel from equalizer: the kernel of $f: X \to Y$ is the equalizer of $f: X \to Y$ and $0: X \to Y$
+    \end{itemize}
+\end{remark}
+
+\begin{definition}[cokernel]
+    Given a pointed category $C$, let $f: M \to N$, a cokernel of $f$ is a map $i: N \to K$ such that $if = 0$. Moreover, $i$ is universal, that is, if $j: N \to L$ such that $jf = 0$, then there exists a unique $k: K \to L$ such that the diagram below commutes
+    \begin{center}
+        \begin{tikzcd}
+        M \arrow[r, "f"'] \arrow[rr, "0", bend left] \arrow[rrd, "0"', bend right] & N \arrow[r, "i"'] \arrow[rd, "j"'] & K \arrow[d, "k", dashed] \\
+                                                                                   &                                    & L                       
+        \end{tikzcd}
+    \end{center}
+\end{definition}
+
+\begin{definition}[preadditive category, $\Ab$-enriched category]
+    A preadditive category is a category $\mathcal{C}$ together with an abelian group structure on $\Hom(M, N)$ for all $M, N \in \ob \mathcal{C}$ such that composition map are bilinear. That is,
+    $$
+        fh + gh = (f+g) h \text{ and } hf + hg = h (f+g)
+    $$
+    Preadditive category is also called $\Ab$-enriched category, or enriched over a monoidal category.
+\end{definition}
+
+\begin{definition}[additive functor]
+    A functor $F$ between preadditive categories is additive if 
+    $$
+        \Hom(M, N) \to \Hom(F(M), F(N))
+    $$
+    is a homomorphism between two abelian groups.
+\end{definition}
+
+\begin{definition}[$P$-element, $P$-exact, $P$-epic - \url{https://arxiv.org/pdf/math/9912157.pdf}]
+    For any two objects $P, A$, a map $P \to A$ is called $P$-element of $A$. If $\mathcal{P}$ is a collection of objects, then $\mathcal{P}$-element is a $P$-element for some $P \in \mathcal{P}$. Let $C$ be a (locally small) pointed category. Let $P \in \ob C$, a sequence 
+    \begin{center}
+        \begin{tikzcd}
+        A \arrow[r] & B \arrow[r] & C
+        \end{tikzcd}
+    \end{center}
+    is said to be $P$-exact if the composite $A \to B \to C$ is the zero map and 
+    \begin{center}
+        \begin{tikzcd}
+        {C(P, A)} \arrow[r] & {C(P, B)} \arrow[r] & {C(P, C)}
+        \end{tikzcd}
+    \end{center}
+    is an exact sequence of pointed sets (based point is the zero map). If $\mathcal{P}$ is a class of objects in $C$, a $\mathcal{P}$-exact sequence in one which is $P$-exact for all $P \in \mathcal{P}$. A map $A \to B$ is called $P$-epic if it induces a surjection of $P$-elements.
+\end{definition}
+
+\begin{definition}[projective class - \url{https://arxiv.org/pdf/math/9912157.pdf}]
+    A projective class on a pointed category $C$ is $(\mathcal{P}, \mathcal{E})$ where $\mathcal{P}$ is a class of objects (projectives) and $\mathcal{E}$ is a class of morphisms (epimorphisms) such that
+    \begin{enumerate}
+        \item $\mathcal{E}$ is precisely the collection of all $\mathcal{P}$-exact sequences
+        \item $\mathcal{P}$ is precisely the collection of all object $P$ such that each sequence in $\mathcal{E}$ is $P$-exact.
+        \item any map $A \to B$ can be extended to a sequence $P \to A \to A$ in $\mathcal{E}$ with $P \in \mathcal{P}$
+    \end{enumerate}
+\end{definition}
+
+
+\begin{definition}[projective class]
+    Let $C$ be a pointed category with kernels. A projective class in $C$ is $(\mathcal{P}, \mathcal{E})$ where $\mathcal{P}$ is a class of objects (projectives) and $\mathcal{E}$ is a class of morphisms (epimorphisms) such that
+    \begin{enumerate}
+        \item $P \in \ob C$ lies in $\mathcal{P}$ if and only if for all $f: M \to N$ in $\mathcal{E}$, the map $C(P, M) \to C(P, N)$ defined by $g \mapsto fg$ is onto.
+        \begin{center}
+            \begin{tikzcd}
+            P \arrow[rd, "fg"'] \arrow[r, "g", dashed] & M \arrow[d, "f"] \\
+                                                       & N               
+            \end{tikzcd}
+        \end{center}
+
+        \item A morphism $f: M \to N$ lies in $\mathcal{E}$ if and only if for all $P \in \mathcal{P}$, the map $C(P, M) \to C(P, N)$ defined by $g \mapsto fg$ is onto.
+        \begin{center}
+            \begin{tikzcd}
+            P \arrow[rd, "fg"'] \arrow[r, "g", dashed] & M \arrow[d, "f"] \\
+                                                       & N               
+            \end{tikzcd}
+        \end{center}
+
+        \item For any object $M \in \ob C$, there exists $P \to M$ in $\mathcal{E}$ such that $P \in P$. This condition is also called $C$ has enough projectives
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[left derived functor]
+    Given a pointed preadditive category $\mathcal{C}$ with kernels and projective class $(\mathcal{P}, \mathcal{E})$ in $\mathcal{C}$. Let $F: \mathcal{C} \to \Ab$ be an additive functor (\note{it maps chain complexes to chain complexes}). The left derived functors of $F$ with respect to $\mathcal{P}$ are $L_n F: \mathcal{C} \to \Ab$ for $n \geq 0$ defined by
+    $$
+        L_n F(X) = H_n(F(P_\bullet))
+    $$
+    where $X \leftarrow P_\bullet$ is a $\mathcal{P}$-projective resolution. (\note{analogous to Tor functor})
+\end{definition}
+
+\begin{remark}
+    Some remarks on left derived functor
+    \begin{itemize}
+        \item Let $C = \RMod$, $\mathcal{P}$ be the categorical projectives (= direct summands of free $R$-modules), $F: \RMod \to \Ab$ defined by $A \mapsto A \oplus_R B$ where $B \in \RMod$, then 
+        $$
+            L_n F(A) = \Tor^R_n(A, B)
+        $$
+
+        \item $F(X) \leftarrow L_0 F(X)$ might not be an isomorphism. It is an isomorphism if and only if $F$ is right exact
+    \end{itemize}
+\end{remark}
+
+\begin{definition}[retract]
+    $P$ is a retract of $F$ is there exists a commutative diagram
+    \begin{center}
+        \begin{tikzcd}
+        P \arrow[rd, "1"'] \arrow[r] & F \arrow[d] \\
+                                     & P          
+        \end{tikzcd}
+    \end{center}
+    The map $P \to F$ is called section and the map $F \to P$ 
+\end{definition}
+
+\begin{proposition}
+    Class of projectives $\mathcal{P}$ is closed under coproduct and retract
+\end{proposition}
+
+\subsection{AXIOMATISE FUNDAMENTAL THEOREM OF HOMOLOGICAL ALGEBRA}
+
+\begin{theorem}[fundamental theorem of homological algebra]
+    Let $\mathcal{C}$ be a pointed category with kernels. Let $(\mathcal{P}, \mathcal{E})$ be a projective class in $\mathcal{C}$.
+    \begin{enumerate}
+        \item For any $M \in \ob \mathcal{C}$, there is an exact sequence w.r.t $(\mathcal{P}, \mathcal{E})$ ($\mathcal{P}$-projective resolution)
+        \begin{center}
+            \begin{tikzcd}
+            0 & M \arrow[l] & P_0 \arrow[l] & P_1 \arrow[l] & ... \arrow[l]
+            \end{tikzcd}
+        \end{center}
+        where $P_n \in \mathcal{P}$ and exactness $A \to B \to C$ is defined by the composition being the zero map and $A \to B$ is factored through $\ker (B \to C)$ by an epimorphism, that is, there exists an epimorphism $A \to \ker (B \to C)$ such that the diagram below commutes
+        \begin{center}
+            \begin{tikzcd}
+            A \arrow[r] \arrow[d, dashed] & B \arrow[r] & C \\
+            \ker (B \to C) \arrow[ru]     &             &  
+            \end{tikzcd}
+        \end{center}
+
+        \item Any map $f: M \to M'$ lifts to maps of projectives
+        \begin{center}
+            \begin{tikzcd}
+            0 & M \arrow[l] \arrow[d, "f"'] & P_0 \arrow[l] \arrow[d, dashed] & P_1 \arrow[l] \arrow[d, dashed] & ... \arrow[l] \\
+            0 & M' \arrow[l]                & P'_0 \arrow[l]                  & P'_1 \arrow[l]                  & ... \arrow[l]
+            \end{tikzcd}
+        \end{center}
+        Furthermore, if $\mathcal{C}$ is preadditive, the lifts are unique upto chain homotopy.
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    \note{TODO}
+\end{proof}
+
+\subsection{YONEDA LEMMA}
+
+\begin{definition}[functor category, evaluation functor]
+    Let $A, B$ be categories, the functor category $\Fun(A, B)$ is defined by functors $A \to B$ as objects and natural transformations as morphisms. Let $X \in \ob A$, define the evaluation functor $\Ev_X: \Fun (A, B) \to B$ by
+    
+    $$
+        \Ev_X(F) = F(X)
+    $$
+    
+    where $F \in \ob \Fun (A, B)$. \note{define application of morphism}
+\end{definition}
+
+\begin{definition}[hom functor]
+    Let $C$ be a locally small category, for any $A \in \ob C$, the hom functor $h_A: C \to \Set$ is defined by
+    \begin{center}
+        \begin{tikzcd}
+        X \arrow[d, "f"'] \arrow[r, "h_A"] & {C(A, X)} \arrow[d, "h_A(f)"] \\
+        Y \arrow[r, "h_A"]                 & {C(A, Y)}                    
+        \end{tikzcd}
+    \end{center}
+    where $h_A(f)(g) = f g$ for any $g \in C(A, X)$. $h_A$ is also written as $C(A, -)$
+\end{definition}
+
+\begin{remark}
+    Some remarks on hom functor
+    \begin{itemize}
+        \item The singular chain complex functor $C_n: \Top \to \Ab$ can be defined by
+        $$
+            C_n = \Z \Top(\Delta^n, -)
+        $$
+    \end{itemize}
+\end{remark}
+
+\begin{theorem}[Yoneda lemma]
+    Given a locally small category $C$ and $A \in \ob C$. Let $F: C \to \Set$ be a functor, then both $h_A$ and $F$ are objects in $\Fun(C, \Set)$ and the set of morphisms $h_A \to F$ in $\Fun(C, \Set)$ is isomorphic to $F(A)$,
+    $$
+        \Nat(h_A, F) \cong F(A)
+    $$
+    where $\Nat(h_A, F)$ denotes the set of natural transformation from $h_A$ to $F$. Since, $F(A) = \Ev_A (F)$, then
+    $$
+        \Phi: \Hom(A, -) \to \Ev_A
+    $$
+    is a natural isomorphism. We say that $\Ev_A$ is corepresentable. $(\Phi, A)$ is called corepresentation of $\Ev_A$
+\end{theorem}
+
+\begin{longproof}
+    Let $\Phi: h_A \to F$ be a natural transformation
+
+    \begin{center}
+        \begin{tikzcd}
+        A \arrow[dddd, "f"'] & {C(A, A)} \arrow[rrrr, "\Phi_A", Rightarrow] \arrow[dddd, "h_A(f)"'] &                                           &  &                       & F(A) \arrow[dddd, "F(f)"] \\
+                             &                                                                      & 1 \arrow[rr, maps to] \arrow[dd, maps to] &  & u \arrow[dd, maps to] &                           \\
+                             &                                                                      &                                           &  &                       &                           \\
+                             &                                                                      & f \arrow[rr, dashed, maps to]             &  & F(f)(u)               &                           \\
+        X                    & {C(A, X)} \arrow[rrrr, "\Phi_X", Rightarrow]                         &                                           &  &                       & F(X)                     
+        \end{tikzcd}
+    \end{center}
+
+    By commutativity, $\Phi_X: C(A, X) \to F(X)$ is defined by $f \mapsto F(f)(u)$. That is,
+    \begin{enumerate}
+        \item for each $u \in F(A)$, there is a unique natural transformation $\Phi$ defined by
+        $$
+            \Phi_X(f) = F(f)(u)
+        $$
+
+        \item for each natural transformation $\Phi$, there is unique $u \in F(A)$ defined by
+        $$
+            u = \Phi_A(1)
+        $$
+    \end{enumerate}
+\end{longproof}
+
+\begin{remark}
+    Some remarks on Yoneda lemma
+    \begin{itemize}
+        \item Take $C$ be a category such objects are sets, take $F$ to be the forgetful functor and $A \in \ob C$. Then, the set of natural transformations $h_A \to F$ is exactly $A$
+
+        \item in $C = \Set$, each functor $F: C \to \Set$ corresponds to a natural transformation $1 \to F$. From Yoneda lemma, for each natural transformation $1 \to F$, the map $X \to F(X)$ is factored through $X \to C(X, X)$ defined by $x \mapsto 1$
+    \end{itemize}
+\end{remark}
+
+\begin{lemma}
+    Let $C$ be any category, then $\Fun(C, \Ab)$ is preadditive. That is, given any two functors $G, F: C \to \Ab$, the class of natural transformations of $G \to F $ is an abelian group.
+\end{lemma}
+
+\begin{proof}
+    \note{TODO}
+\end{proof}
+ 
+\begin{proposition}[Yoneda lemma for $\Ab$-enriched functor]
+     Given $C$ is preadditive, for any $A \in \ob C$ and functor $F: C \to \Ab$, then we have an isomorphism between abelian groups
+     $$
+        \Nat(h_A, F) \cong F(A)
+     $$
+\end{proposition}
+
+\begin{corollary}
+    Given $X, Y \in \ob C$, $X \cong Y$ if and only if $C(X, -) \cong C(Y, -)$
+\end{corollary}
+
+\subsection{ACYCLIC MODEL}
+
+\begin{remark}[kernel of natural transformation between $\Ab$-enriched functors]
+    Given $\Fun(C, \Ab)$ is pointed, has kernels, and preadditive. Let $F, G \in \Fun(C, \Ab)$, and $v: G \to F$ be a natural transformation, then
+    $$
+        \ker (v: G \to F)(X) = \ker (v_X: G(X) \to F(X))
+    $$
+    where $X \in \ob C$
+\end{remark}
+
+\begin{definition}[acyclic models]
+    Let $\mathcal{M}$ be any set of objects in $C$ ("models"). It defines a projective class in $\Fun(C, \Ab)$ as follows:  an object is projective (relative to $\mathcal{M}$) if it is a retract of a coproduct of $\Z C(M, -)$s. A morphism $Y: G \to F$ is an epimorphism (relative to $\mathcal{M}$) if $G(M) \twoheadrightarrow F(M)$ is surjective for all $M \in \mathcal{M}$
+\end{definition}
+
+\begin{remark}
+    Some remarks on acyclic model
+    \begin{itemize}
+        \item $\Z C(M, -)$ is analogous to free $\Z$-module (free abelian group), then the coproduct is direct product and retract is direct summand (\note{$A$ is a summand of $B$ if $B = A \oplus C$})
+    
+        \item $C = \Top$, $\mathcal{M} = \set{\Delta^n: n \geq 0}$, this models $\mathcal{M}$ recovers projectives being singular $n$-chains and left derive functor of evaluation map at $X$ of $H_0$ is $H_n$ (\note{lecture 16 })
+    \end{itemize}
+\end{remark}
+
+
+\begin{proof} We will show the that the construction is indeed a projective class in $\Fun(C, \Ab)$ by the following
+    \begin{enumerate}
+        \item If $H$ is a projective and $G \to F$ epimorphism, then there is a lift from $H \to F$ to $H \to G$ (\note{forward direction of (1) and (2)})
+
+        It suffices to show for the case if $H = C(M, -)$.
+        \begin{center}
+            \begin{tikzcd}
+                                                   & G \arrow[d] & G(M) \arrow[d, two heads] \\
+            {C(M, -)} \arrow[r] \arrow[ru, dashed] & F           & F(M)                     
+            \end{tikzcd}
+        \end{center}
+        By Yoneda lemma, let natural transformation $C(M, -) \to F$ determined by $v \in F(M)$
+        \begin{align*}
+            C(M, N) &\to F(N) \\
+            f &\mapsto F(f)(v)
+        \end{align*}
+
+        Since $G(M) \to F(M)$ is surjective, let $u \in G(M)$ such that $u \mapsto v$ by $G(M) \to F(M)$. Construct the natural transformation $C(M, -) \to G$ by
+        \begin{align*}
+            C(M, N) &\to G(N) \\
+            f &\mapsto G(f)(u)
+        \end{align*}
+
+        The lift make diagram commutes is due to naturality of $G \to F$ as in the diagram below
+
+        \begin{center}
+            \begin{tikzcd}
+                                                                       &  &                                                  &                            & G(N) \arrow[dddd, two heads] & G(M) \arrow[dddd, two heads] \arrow[rrrr, "G(f)"] &                                           &  &                                     & G(N) \arrow[dddd, two heads] \\
+                                                                       &  &                                                  &                            &                              &                                                   & u \arrow[dd, maps to] \arrow[rr, maps to] &  & G(f)(u) \arrow[dd, dashed, maps to] &                              \\
+                                                                       &  &                                                  & G(f)(u) \arrow[d, maps to] &                              &                                                   &                                           &  &                                     &                              \\
+                                                                       &  & f \arrow[r, maps to] \arrow[ru, dashed, maps to] & F(f)(v)                    &                              &                                                   & v \arrow[rr, maps to]                     &  & F(f)(v)                             &                              \\
+{C(M, N)} \arrow[rrrr, "F(-)(v)"'] \arrow[rrrruuuu, "G(-)(u)", dashed] &  &                                                  &                            & F(N)                         & F(M) \arrow[rrrr, "F(f)"']                        &                                           &  &                                     & F(N)                        
+\end{tikzcd}
+        \end{center}
+
+        
+        \item If for every projective $H$ there is a lift from $H \to F$ to $H \to G$, then $G \to F$ epimorphism (\note{backward direction of (2)})
+
+        Let $H = C(M, -)$,
+
+        \begin{center}
+            \begin{tikzcd}
+                                                   & G \arrow[d] & G(M) \arrow[d, two heads] \\
+            {C(M, -)} \arrow[r] \arrow[ru, dashed] & F           & F(M)                     
+            \end{tikzcd}
+        \end{center}
+        
+        \note{FOR LATER - TOO LONG}
+
+    \end{enumerate}
+    
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+
+\section{EILENBERG-STEENROD-MILNOR AXIOMS}
+
+\begin{definition}[category of pairs of topological spaces]
+    The category of pairs of topological spaces $\Top_2$ is defined as follows
+    \begin{itemize}
+        \item objects: pair $(X, A)$ where $A \subseteq X$
+        \item morphisms: continuous map $f: (X, A) \to (Y, B)$ that is a continuous map $f: X \to Y$ such that $f(A) \subseteq B$ 
+        \item composition law for morphisms: compose a set maps
+    \end{itemize}
+\end{definition}
+
+\begin{axiom}[Eilenberg-Steenrod-Milnor axioms]
+    Let $C$ be a category of pairs of topological spaces $(X, A)$ such that if $(X, A) \in \ob C$, then $(A, \emptyset) \to (X, \emptyset) \to (X, A)$ are also in $C$. A homology theory on $C$ is a functor $H_n: \ob C \to \Ab, n \in \Z$ and a natural transformation (connecting homomorphism) $\partial: H_n(X, A) \to H_{n-1}(A, \emptyset)$ such that
+    \begin{enumerate}
+        \item \textbf{homotopy axiom}: if $f \simeq g$, then $H_n(f) = H_n(g)$ where $f, g: (X, A) \to (Y, B)$ are homotopic if they are homotopic as both a function $X \to Y$ and $A \to B$.
+        \item \textbf{exactness axiom}: for all $(X, A) \in \ob C$, the sequence below is exact
+        \begin{center}
+            \begin{tikzcd}
+                                               &  & ... \arrow[rr]                 &  & {H_{n+1}(X, A)} \arrow[lllld] \\
+            {H_n(A)} \arrow[rr]     &  & {H_n(X)} \arrow[rr] &  & {H_n(X, A)} \arrow[lllld]     \\
+            {H_{n-1}(A)} \arrow[rr] &  & ...                            &  &                              
+            \end{tikzcd}
+        \end{center}
+        where $H_n(X)$ denotes $H_n(X, \emptyset)$
+        
+        \item \textbf{excision axiom}: if $(X, A) \in \ob C$ and $U \subseteq \overline{U} \subseteq \interior A$ and $(X - U, A - U) \hookrightarrow (X, A)$ in $C$, then $H_n(X - U, A - U) \cong H_n(X, A)$
+
+        \item \textbf{additivity axiom} (Milnor): homology commutes with coproduct. That is, let $\set{X_\alpha: \alpha \in \mathcal{A}}$ be a set of topological spaces. If $(X_\alpha, \emptyset) \in \ob C$ for all $\alpha \in \mathcal{A}$ and $\tuple*{\coprod X_\alpha, \emptyset} \in \ob C$, then
+
+        \begin{center}
+            \begin{tikzcd}
+            {\bigoplus H_n(X_\alpha, \emptyset)} \arrow[rr, "\cong"]                               &  & {H_n(\coprod X_\alpha, \emptyset)} \\
+                                                                                                   &  &                                    \\
+            {H_n(X_\alpha, \emptyset)} \arrow[uu, "i_\alpha"] \arrow[rruu, "H_n(i_\alpha)"'] &  &                                   
+            \end{tikzcd}
+        \end{center}
+
+        \item \textbf{dimension axiom}: $H_n(*, \emptyset) = \begin{cases}
+            \Z, &n = 0 \\
+            0, &n \neq 0
+        \end{cases}$
+    \end{enumerate}
+\end{axiom}
+
+\begin{remark}
+    Some remarks on Eilenberg-Steenrod axioms
+    \begin{itemize}
+        \item we omit dimension axiom: extraordinary cohomology theory.
+        \item varying of dimension axiom: homology with coefficients. Let $A$ be any abelian group, $H_n(*, \emptyset; A) = \begin{cases}
+            A, &n = 0 \\
+            0, &n \neq 0
+        \end{cases}$
+    \end{itemize}
+    
+\end{remark}
+
+
+
+
+
+
+
+\chapter{ALGEBRAIC TOPOLOGY}
+\section{SINGULAR HOMOLOGY}
+\subsection{DEFINITION OF SINGULAR HOMOLOGY}
+
+\begin{definition}[$n$-simplex, barycentric coordinate, barycentre]
+    The standard n-simplex is the convex hull of $e_0, e_1, ..., e_n$ in $\R^{n+1}$ where $e_0, e_1, ..., e_n$ are the standard basis vectors, denoted by $\Delta^n$,
+    $$
+        \Delta^n = \set{x \in \R^{n+1}: \sum_{i=0}^n x_i = 1, x_i \geq 0}
+    $$
+    We also write $\Delta^n = [e_0,..., e_n] = [0,..., n]$. $\set{x_0, ..., x_n}$ is called the barycentric coordinate. The point $b = \tuple*{\frac{1}{n+1}, ..., \frac{1}{n+1}}$ is called the barycentre.
+\end{definition}
+
+\begin{definition}[singular $n$-simplex]
+    A singular $n$-simplex in $X$ is a continuous function $\sigma: \Delta^n \to X$. The set of singular $n$-simplicies in $X$ is denoted by $S_n(X)$
+\end{definition}
+
+\begin{definition}[singular $n$-chain]
+    A singular $n$-chain is an element of the free abelian group $C_n(X) = \Z[S_n(X)]$ generated by $S_n$. Alternatively, $n$-chain is a finite formal linear combination of singular $n$-simplicies with integer coefficients. If $n \leq 0$, $C_n(X) = 0$ is defined to be the trivial group.
+\end{definition}
+
+\begin{definition}[face map]
+    The face map $d^i: \Delta^{n-1} \to \Delta^n$ is the affine map sending vertices to vertices, in order, missing $i$. That is, 
+    $$
+        d^i(j) = \begin{cases}
+            j &\text{if $j < i$} \\
+            j+1 &\text{if $j \geq i$}
+        \end{cases}
+    $$
+\end{definition}
+
+\begin{proposition}
+    If $i < j$, then $d^j \circ d^i = d^i \circ d^{j-1}$. Equivalently, $d_i d_j = d_{j-1} d_i$
+\end{proposition}
+
+\begin{definition}[boundary operator]
+    Define the boundary operator $\partial: C_n(X) \to C_{n-1}(X)$ as a linear extension of $\partial: S_n(X) \to C_{n-1}(X)$ 
+    $$
+        \partial \sigma = \sum_{i=0}^n (-1)^i \sigma \circ d^i = \sum_{i=0}^n (-1)^i d_i \sigma \in C_{n-1}(X)
+    $$
+    where $\sigma \in S_n(X)$. 
+\end{definition}
+
+\begin{proposition}
+    $\partial^2 = 0$
+\begin{center}
+\begin{tikzcd}
+C_{n-1}(X) & C_n(X) \arrow[l, "\partial"'] & C_{n+1}(X) \arrow[l, "\partial"'] \arrow[ll, "0", hook, bend left]
+\end{tikzcd}
+\end{center}
+
+\end{proposition}
+
+
+
+
+\begin{proposition}[singular homology]
+The singular $n$-chains $C_n(X)$ together with the boundary operator $\partial$ is a chain complex, written as $C_\bullet(X)$. The corresponding $n$-homology group is denoted by $H_n(X)$.
+\end{proposition}
+
+\subsection{PATH-COMPONENT DECOMPOSITION}
+
+Define $x \sim y$ if and only if there exists a path in $X$ from $x$ to $y$, then $\sim$ is an equivalent relation. Each equivalence class of $\sim$ is called a path component of $X$. The set of path components of $X$ is denoted by $\pi_0(X)$. Since each singular $n$-simplex $\sigma: \Delta^n \to X$ land entirely in a single path component, we have
+$$
+    S_n(X) = \coprod_{\alpha \in \pi_0(X)} S_n(X_\alpha)
+$$
+where $X_\alpha$ denotes the subspace induced by $\alpha$, and
+$$
+    C_n(X) = \bigoplus_{\alpha \in \pi_0(X)} C_n(X_\alpha)
+$$
+
+\begin{proposition}
+    $H_n(X) \cong \bigoplus_{\alpha \in \pi_0(X)} H_n(X_\alpha)$
+\end{proposition}
+
+\subsection{SOME SPECIAL CASES: $H_0, H_n(*)$}
+
+Assume $X$ is path connected, then $Z_0(X) = C_0(X)$, and $H_0(X) = \frac{Z_0(X)}{B_0(X)} = \frac{C_0(X)}{\im (\partial: C_1(X) \to C_0(X))} = \coker \partial$
+
+\begin{definition}[augmentation map]
+    The augmentation map $\epsilon: C_n(X) \to \Z$ is defined by
+    $$
+        \epsilon \tuple*{\sum_{x \in S_n(X)} a_x x} = \sum_{x \in S_n(X)} a_x
+    $$
+\end{definition}
+
+\begin{lemma}
+    Let $\epsilon: C_0(X) \to \Z$, then $\epsilon \partial = 0$
+\end{lemma}
+
+\begin{proof}
+    For each $\sigma \in S_1(X)$, then $\epsilon \partial \sigma = \epsilon (d_0 \sigma - d_1 \sigma) = \epsilon d_0 \sigma - \epsilon d_1 \sigma = 1 - 1 = 0$.
+\end{proof}
+
+\begin{center}
+    \begin{tikzcd}
+    C_1(X) \arrow[r, "\partial"] & C_0(X) \arrow[r, "\epsilon"]            & \mathbb{Z} \\
+                                 & H_0(X) \arrow[ru, "\epsilon"] \arrow[u] &           
+    \end{tikzcd}
+\end{center}
+
+\begin{lemma}
+    If $X$ is path connected, then the augmentation map induces an isomorphism $\epsilon: H_0(X) \to \Z$
+\end{lemma}
+
+\begin{longproof}
+
+    (well-defined) Let $a$ and $a + \partial b$ be two elements from the same cosets of $B_0(X)$, then
+    $$
+        \epsilon [a + \partial b] = \epsilon (a + \partial b) = \epsilon a = \epsilon [a]
+    $$
+
+    (homomorphism)
+    $$
+        \epsilon ([a] + [b]) = \epsilon [a + b] = \epsilon (a + b) = \epsilon a + \epsilon b = \epsilon [a] + \epsilon [b]
+    $$
+
+    (surjective) Let any $x \in S_0(X), n \in \Z$, then 
+    $$
+        \epsilon [nx] = \epsilon (nx) = n \epsilon x = n
+    $$
+
+    (injective) As $\epsilon$ is a homomorphism, we just need to prove that the kernel of $\epsilon$ is $0$, that is, for all $c \in C_0(X)$, if $\epsilon c = 0$, then $[c] = 0$, that is, $c \in B_0(X)$. Let $c = \sum_{x \in S_0(X)} a_x x$ and $\epsilon c = 0$, then $\sum_{x \in S_0(X)} a_x = 0$. We can rewrite
+    $$
+        c = \sum_{x \in S_0(X)} a_x x = (x_1 + ... + x_n) - (y_1 + ... + y_n)
+    $$
+    where $x_1, ..., x_n, y_1, ..., y_n \in S_0(X)$. For each $i=1, ..., n$, pick $\sigma_i \in S_1(X)$ such that $d_0 \sigma_i = x_i$ and $d_1 \sigma_i = y_i$ (pick $\sigma_i: \Delta^1 \to X$ mapping the end points of $\Delta^1$ to $x_i$ and $y_i$), then $\sum_{i=1}^n \sigma_i \in C_1(X)$, and 
+    $$
+        \partial \tuple*{\sum_{i=1}^n \sigma_i} = \sum_{i=1}^n (d_0 \sigma_i - d_1 \sigma_i) = \sum_{i=1}^n (x_i - y_i) = c
+    $$
+\end{longproof}
+
+\begin{corollary}
+    $H_0(X) = \bigoplus_{a \in \pi_0(X)} \Z$ for any space $X$
+\end{corollary}
+
+\begin{proposition}
+    $H_n(*) = \begin{cases}
+        \Z, &n = 0 \\
+        0, &n \neq 0
+    \end{cases}$
+    where $*$ denotes the space of one point.
+\end{proposition}
+
+\begin{proof}
+    For any $n = 0, 1, ...$, $S_n(*) = *$ then $C_n(*) = \Z$. For $n > 0$, and $* \in S_n(X)$, 
+    $$
+        \partial * = \sum_{i=0}^n (-1)^i d_i * = \sum_{i=0}^n (-1)^i * = \begin{cases}
+            0, &\text{$n$ odd} \\
+            *, &\text{$n$ even}
+        \end{cases}
+    $$
+    We have the diagram
+
+    \begin{center}
+        \begin{tikzcd}
+        0 & C_0(*) \arrow[l, "\partial=0"'] & C_1(*) \arrow[l, "\partial = 0"'] & C_2(*) \arrow[l, "\partial = 1"'] & C_3(*) \arrow[l, "\partial = 0"'] & ... \arrow[l, "\partial = 1"']
+        \end{tikzcd}
+    \end{center}
+
+$H_0(*) = \Z$ by the previous explanation. If $n > 0$ ($n$ odd or even), $Z_n(*) = B_n(*) = C_n(*) = \Z$, then $H_n(*) = 0$.
+
+\end{proof}
+
+\subsection{INDUCED FUNCTION BETWEEN TWO TOPOLOGICAL SPACES}
+
+\begin{proposition}[naturality of induced map]
+    A function $f: X \to Y$ induces a function $f_\#: C_n(X) \to C_n(Y)$ defined by a linear extension of $f_\#: S_n(X) \to S_n(Y)$ with $f_\# \sigma = f \sigma$
+    \begin{center}
+        \begin{tikzcd}
+        \Delta^n \arrow[r, "\sigma"] \arrow[rd, "f_\# \sigma = f \sigma"'] & X \arrow[d, "f"] \\
+                                                                           & Y               
+        \end{tikzcd}
+    \end{center}
+    Then, $f_\# \partial = \partial f_\#$, that is, the following square commutes    
+    \begin{center}
+        \begin{tikzcd}
+        C_n(X) \arrow[d, "f_\#"] \arrow[r, "\partial"] & C_{n-1}(X) \arrow[d, "f_\#"] \\
+        C_n(Y) \arrow[r, "\partial"]                   & C_{n-1}(Y)                  
+        \end{tikzcd}
+    \end{center}
+\end{proposition}
+
+\begin{proof}
+    Let $\sigma \in S_n(X)$, then 
+    $$
+        f_\# \partial \sigma = f_\# \sum_{i=0}^n (-1)^i \sigma d^i = f \sum_{i=0}^n (-1)^i \sigma d^i = \sum_{i=0}^n (-1)^i f \sigma d^i = \partial f_\# \sigma
+    $$
+\end{proof}
+
+\begin{remark}[chain map]
+    The function $f_\#: C_n(X) \to C_n(Y)$ induced from $f: X \to Y$ is a chain map of from chain complex $C_\bullet(X)$ to chain complex $C_\bullet(Y)$. The induced map in homology is written as $H_n(f) = f_*: H_n(A) \to H_n(B)$
+\end{remark}
+
+\subsection{HOMOTOPY}
+
+\begin{definition}[homotopy]
+    Let $f_0, f_1: X \to Y$ be continuous maps. A homotopy from $f_0$ to $f_1$ is a continuous map $F: X \times I \to Y$ where $I = [0, 1]$ such that $F(x, 0) = f_0(x)$ and $F(x, 1) = f_1(x)$. Being homotopic is an equivalence relation on maps: $(X, Y) \to [X, Y]$ where $(X, Y)$ denotes the set of all maps from $X$ to $Y$ and $[X, Y]$ denotes the equivalence classes of homotopy of maps from $X$ to $Y$. $f_0$ and $f_1$ being homotopic is denoted by $f_0 \simeq f_1$.
+\end{definition}
+
+\begin{theorem}[homotopy invariance]
+    Two homotopic maps induce the same map in homology. That is, if $f_0 \simeq f_1$, then $H_n(f_0) = H_n(f_1): H_n(X) \to H_n(Y)$ for all $n$
+\end{theorem}
+
+\begin{proof}
+    Consequence of Proposition \ref{prop_4} and Proposition \ref{prop_5}
+\end{proof}
+
+\textbf{prism operator}
+
+Let $f_0, f_1: X \to Y$ be homotopic, the diagram below commutes
+
+\begin{center}
+\begin{tikzcd}
+X \arrow[d, "i_0"'] \arrow[rd, "f_0"] &   \\
+X \times I \arrow[r, "F"]              & Y \\
+X \arrow[u, "i_1"] \arrow[ru, "f_1"'] &  
+\end{tikzcd}
+\end{center}
+
+where $i_0: x \mapsto (x, 0)$, and $i_1: x \mapsto (x, 1)$
+
+\begin{definition}[prism operator]
+    Given homotopy $F: X \times I \to Y$, the prism operator $h_F: C_n(X) \to C_{n+1}(Y)$ is defined by a linear extension of $h_F: S_n(X) \to C_{n+1}(Y)$ as follows. Let $\sigma \in S_n(X)$,
+    \begin{center}
+        \begin{tikzcd}
+        \Delta^n \times I \arrow[rr, "\sigma \times 1"]                                                             &  & X \times I \arrow[rr, "F"] &  & Y \\
+                                                                                                                    &  &                            &  &   \\
+        \Delta^{n+1} \arrow[uu, "P_n = h_{\Delta^n}(1)"] \arrow[rrrruu, "h_F(\sigma)"'] \arrow[rruu, "h_X(\sigma)"] &  &                            &  &  
+        \end{tikzcd}
+    \end{center}
+    Let $\bracket{v_0, ..., v_n}, \bracket{w_1, ..., w_n}$ be the bases of the prism $\Delta^n \times I$. Define $\sigma_i: \Delta^{n+1} \to \Delta^n \times I$ be the affine map from $\Delta^{n+1}$ to the simplex $\bracket{v_0, v_1, ..., v_i, w_i, w_{i+1}, ..., w_n}$. Define $P_n = \sum_{i=0}^n (-1)^i \sigma_i$, and $h_F(\sigma) = F (\sigma \times 1) P_n$ is then defined accordingly.
+\end{definition}
+
+\begin{proposition}
+    \label{prop_prism}
+    $\partial P_n = -P_{n-1} \partial + i_1 - i_0$
+    and 
+    $\partial h_{F} = -h_{F} \partial + f_1 - f_0$ where $i_1: \Delta^n \mapsto (\Delta^n, 1), i_0: \Delta^n \mapsto (\Delta^n, 0)$
+\end{proposition}
+
+\begin{proof}
+    \note{TODO}
+\end{proof}
+
+\begin{proposition}
+    \label{prop_5}
+    Two homotopic maps induce chain homotopic maps. That is, if $f_0 \simeq f_1: X \to Y$, then $f_{0\#}, f_{1\#}: C_n(X) \to C_n(Y)$ are chain homotopic
+    \begin{center}
+\begin{tikzcd}
+C_{n-1}(X) \arrow[rrdd, "h_F"] &  & C_n(X) \arrow[dd, "f_{0\#} - f_{1\#}"] \arrow[ll, "\partial"'] \arrow[rrdd, "h_F"] &  &                                    \\
+                               &  &                                                                                    &  &                                    \\
+                               &  & C_n(Y)                                                                             &  & C_{n+1}(Y) \arrow[ll, "\partial"']
+\end{tikzcd}    
+    \end{center}
+    
+\end{proposition}
+\begin{proof}
+    Proposition \ref{prop_prism}
+\end{proof}
+
+\begin{definition}[homotopy equivalence, homotopy type]
+    A map $f: X \to Y$ is a homotopy equivalence if there exists $g: Y \to X$ such that
+    $1_Y \simeq fg: Y \to Y$ and $1_X \simeq gf: X \to X$. If there exists a homotopy equivalence between $X$ and $Y$, $X$ and $Y$ are said to be of the same homotopy type.
+\end{definition}
+
+\begin{definition}[contractible]
+    $X$ is contractible if $X \to *$ is a homotopy equivalence
+\end{definition}
+
+\begin{corollary}
+    Any homotopy equivalence induces an isomorphism in homology
+\end{corollary}
+
+\begin{proof}
+    As $fg \simeq 1_Y$, then $H_n(f) H_n(g) = 1_{H_n(Y)}$. Similarly, $H_n(g) H_n(f) = 1_{H_n(X)}$. Therefore, $H_n(f)$ is an isomorphism
+\end{proof}
+
+
+
+\subsection{LOCALITY OF $H_*(-)$}
+
+Let $\mathcal{U}$ be an open cover of a topological space $X$.
+
+\begin{definition}[$\mathcal{U}$-small]
+    A singular simplex $\sigma: \Delta^n \to X$ is $\mathcal{U}$-small if its image lies entirely in a single open set $U \in \mathcal{U}$. Let $C_n^\mathcal{U}(X)$ denote the subgroup of $C_n(X)$ generated by $\mathcal{U}$-small singular simplicies, namely $\mathcal{U}$-small $n$-chains 
+
+    \begin{center}
+        \begin{tikzcd}
+        C_n^\mathcal{U}(X) \arrow[r, hook] \arrow[d, "\partial", dashed] & C_n(X) \arrow[d, "\partial"] \\
+        C_{n-1}^\mathcal{U}(X) \arrow[r, hook]                           & C_{n-1}(X)                  
+        \end{tikzcd}
+    \end{center}
+    The boundary map, homology on $\mathcal{U}$-small chains is defined accordingly.
+\end{definition}
+
+\begin{theorem}[locality principle]
+    The inclusion map $C_n^\mathcal{U}(X) \hookrightarrow C_n(X)$ is a chain homotopy equivalence
+\end{theorem}
+
+\begin{proof}
+    \note{TODO}
+\end{proof}
+
+\begin{corollary}
+    $H_n(C_n^\mathcal{U}(X)) = H_n(C_n(X)) = H_n(X)$
+\end{corollary}
+
+\begin{proof}
+    \note{chain homotopy equivalence induces isomorphism in homology}
+\end{proof}
+
+\subsection{LONG EXACT SEQUENCE IN HOMOLOGY}
+
+Special case: $\mathcal{U} = \set{U, V}$, $X = U \cup V$, $U, V$ open. Define $u, v, u', v'$ being the inclusion maps.
+
+\begin{center}
+    \begin{tikzcd}
+                                                & U \arrow[rd, "u"'] &   \\
+    U \cap V \arrow[rd, "v'"] \arrow[ru, "u'"'] &                    & X \\
+                                                & V \arrow[ru, "v"]  &  
+    \end{tikzcd}
+\end{center}
+
+\begin{proposition}
+    The diagram below is a short exact sequence
+    \begin{center}
+        \begin{tikzcd}
+        C_n(U \cap V) \arrow[rr, "i = \begin{bmatrix} u'_\# \\ -v'_\# \end{bmatrix}"] &  & C_n(U) \oplus C_n(V) \arrow[rr, "{p = \begin{bmatrix} u_\#, v_\# \end{bmatrix}}"] \arrow[rrd] &  & C_n^\mathcal{U}(X) \arrow[d, "\subseteq"] \\
+                                                                                      &  &                                                                                               &  & C_n(X)                                   
+        \end{tikzcd}
+    \end{center}
+
+    where $i = c \mapsto (c, -c)$ and $p = (c_1, c_2) \mapsto c_1 + c_2$
+\end{proposition}
+
+\begin{theorem}[Mayer-Vietoris sequence]
+    Special case: $\mathcal{U} = \set{U, V}$, $X = U \cup V$, $U, V$ open. There exists a long exact sequence
+
+    \begin{center}
+        \begin{tikzcd}
+                                            &  &                                                &  & ... \arrow[lllld, "\partial"']                             \\
+        H_n(U \cap V) \arrow[rr, "i_*"]     &  & H_n(U) \oplus H_n(V) \arrow[rr, "p_*"]         &  & H_n(C_n^\mathcal{U}(X)) \arrow[lllld, "\partial"']         \\
+        H_{n-1}(U \cap V) \arrow[rr, "i_*"] &  & H_{n-1}(U) \oplus H_{n-1}(V) \arrow[rr, "p_*"] &  & H_{n-1}(C_{n-1}^\mathcal{U}(X)) \arrow[lllld, "\partial"'] \\
+        ...                                 &  &                                                &  &                                                           
+        \end{tikzcd}
+    \end{center}
+\end{theorem}
+
+\subsection{PROOF OF LOCALITY PRINCIPLE}
+\textbf{barycentric subdivision}
+
+\begin{definition}[cone operator]
+    Given a star-shaped subset $D$ of $\R^n$ (there exists a point $p$ such that the line segment from $p$ to any point $x \in D$ belongs to $D$). The cone operator $c_p: C_n(D) \to C_{n+1}(D)$ is defined by a linear extension of $c_p: S_n(D) \to C_{n+1}(D)$. Let $\sigma \in S_n(D)$, then $c_p(\sigma)$ is defined by
+    $$
+        c_p(\sigma): (x_0, x_1, ..., x_{n+1}) \mapsto x_0 p + (1-x_0) \sigma(\overline{x_1}, ..., \overline{x_{n+1}})
+    $$
+    where $\overline{x_i} = \frac{x_i}{x_1 + ... + x_{n+1}}$    
+\end{definition}
+
+\begin{definition}[subdivision operator]
+    The subdivision operator $\Sd_n: C_n(\Delta^n) \to C_n(\Delta^n)$ is defined by
+    \begin{align*}
+        \Sd_0 &= 1 \\
+        \Sd_n &= c_{b(n)} \Sd_{n-1} \partial
+    \end{align*}
+    where $c_{b(n)}$ is the cone operator with respective to the barycentre of $\Delta^n$
+\end{definition}
+
+\begin{lemma}
+    \label{lemma_3}
+    Given a chain $s \in C_n(\Delta^p)$, we can define a unique operator, a linear transformation
+    $$
+        S^\bullet: C_p(\bullet) \to C_n(\bullet)
+    $$
+    such that
+    \begin{enumerate}
+        \item $S^{\Delta^p}(1) = s$ where $1: \Delta^p \mapsto \Delta^p$ is the identity simplex
+        \item for any map $f: X \to Y$, the diagram below commutes
+        \begin{center}
+            \begin{tikzcd}
+            C_p(X) \arrow[r, "S^X"] \arrow[d, "f_\#"'] & C_n(X) \arrow[d, "f_\#"'] \\
+            C_p(Y) \arrow[r, "S^Y"']                   & C_n(Y)                   
+            \end{tikzcd}
+        \end{center}
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+    (Uniqueness of $S^X$)
+
+    \begin{center}
+    \begin{tikzcd}
+    C_p(\Delta^p) \arrow[r, "S^{\Delta^p}"] \arrow[d, "\sigma_\#"'] & C_n(\Delta^p) \arrow[d, "\sigma_\#"'] & 1 \arrow[d, "\sigma_\#", maps to] \arrow[r, "S^{\Delta^p}", maps to] & s \arrow[d, "f_\#", maps to]               \\
+    C_p(X) \arrow[r, "S^X"']                                        & C_n(X)                                & \sigma \arrow[r, "S^X", maps to]                                     & S^X \sigma_\# 1 = \sigma_\# S^{\Delta^p} 1
+    \end{tikzcd}
+    \end{center}
+
+Let $\sigma: \Delta^n \to X$, the commutativity implies the unique definition of $S^X$ by $S^X \sigma = S^X \sigma_\# 1 = \sigma_\# S^{\Delta^p} 1 = \sigma_\# s$
+\end{proof}
+
+
+\begin{definition}[subdivision operator]
+    Given $\Sd_n: C_n(\Delta^n) \to C_n(\Delta^n)$, by Lemma \ref{lemma_3}, naturality of $S^X$ induces a unique map $\Sd_n: C_n(X) \to C_n(X)$ such that for all $\sigma: \Delta^n \to X$, $\Sd_n \sigma = \Sd_n \sigma_\# 1 = \sigma_\# \Sd^n 1$ where $1: \Delta^n \to \Delta^n$ is the identity simplex.
+\end{definition}
+
+\begin{proposition}[boundary of cone operator]
+Given the cone operator $c_p: C_n(D) \to C_{n+1}(D)$ then its boundary is
+
+$$
+    \partial c_p = \begin{cases}
+        1 - c_p \partial, &n > 0 \\
+        1 - p \epsilon, &n = 0
+    \end{cases}
+$$
+where $\epsilon: C_0(X) \to \Z$ is the augmentation map
+\end{proposition}
+
+\begin{proposition}
+    $Sd_n: C_n(X) \to C_n(X)$ is a chain map, that is $\Sd_n \partial = \partial \Sd_{n-1}$
+\end{proposition}
+
+apply formula
+
+\begin{proposition}
+    $\Sd$ is chain homotopic to $1$
+\end{proposition}
+
+\begin{longproof}
+    Let defined $T_n: C_n(X) \to C_{n+1}(X)$ as follows:
+    \begin{align*}
+        T_0 &= 0 \\
+        T_n &= c_{b(n)}(1 - \Sd_n - T_{n-1} \partial)
+    \end{align*}
+    
+    We will prove that $\partial T_n = 1 - \Sd_n - T_{n-1} \partial$ by induction. Base case: $n = 1$, then
+
+    \begin{align*}
+        \partial T_1
+        &= \partial c_{b(1)}(1 - \Sd_1 - T_0 \partial) \\
+        &= (1 - c_{b(1)} \partial) (1 - \Sd_1) \\
+        &= 1 - \Sd_1 - c_{b(1)} \partial + c_{b(1)} \partial \Sd_1 \\
+        &= 1 - \Sd_1 - c_{b(1)} \partial + c_{b(1)} \Sd_0 \partial  \\
+        &= 1 - \Sd_1 - c_{b(1)} \partial + c_{b(1)} \partial \\
+        &= 1 - \Sd_1 \\
+        &= 1 - \Sd_1 - T_0
+    \end{align*}
+    
+    Induction case, suppose $\partial T_{n-1} = 1 - \Sd_{n-1} - T_{n-2} \partial$, then
+    \begin{align*}
+        \partial T_n
+        &= (1 - c_p \partial) (1 - \Sd_n - T_{n-1} \partial) \\
+        &= (1 - \Sd_n - T_{n-1} \partial) - c_p (\partial - \partial \Sd_n - \partial T_{n-1} \partial) \\
+        &= (1 - \Sd_n - T_{n-1} \partial) - c_p (\partial - \partial \Sd_n - (1 - \Sd_{n-1} - T_{n-2} \partial) \partial) \\
+        &= 1 - \Sd_n - T_{n-1} \partial \\
+    \end{align*}
+\end{longproof}
+
+\begin{proposition}
+    $\Sd^k: C_\bullet(X) \to C_\bullet(X)$ is a chain map
+\end{proposition}
+
+\begin{proof}
+    Let $g$ be a chain map, then $\partial gg = g \partial g = gg \partial$
+\end{proof}
+
+\begin{corollary}
+    $1$ and $\Sd^k$ are chain homotopic
+\end{corollary}
+
+\begin{proof}
+    Let $G = 1 + \Sd + \Sd^2 + ... + \Sd^{k-1}$, then
+    $$
+        1 - \Sd^k = G (1 - \Sd) = G(\partial T + T \partial) = \partial (GT) + (GT) \partial
+    $$
+\end{proof}
+
+\begin{theorem}[locality principle]
+    
+\end{theorem}
+
+\begin{longproof}
+    \note{TODO - assignment 1}
+\end{longproof}
+
+\subsection{RELATIVE HOMOLOGY}
+
+
+
+\begin{definition}[pair, quotient chain complex, relative homology]
+    A pair $(X, A)$ is a space $X$ together with a subspace $A \subseteq X$
+    \begin{center}
+        \begin{tikzcd}
+        0 \arrow[r] & C_n(A) \arrow[r, hook] \arrow[d, "\partial"] & C_n(X) \arrow[rr, two heads] \arrow[d, "\partial"] &  & C_n(X) / C_n(A) \arrow[rr] \arrow[d, "\partial", dashed] &  & 0 \\
+        0 \arrow[r] & C_{n-1}(A) \arrow[r, hook]                   & C_{n-1}(X) \arrow[rr, two heads]                   &  & C_{n-1}(X) / C_{n-1}(A) \arrow[rr]                       &  & 0
+        \end{tikzcd}
+    \end{center}
+    \begin{center}
+        \begin{tikzcd}
+        ... \arrow[r, hook] & c + a \arrow[rr, two heads] \arrow[d, "\partial"] &  & {[c]} \arrow[rr] \arrow[d, "\partial", dashed] &  & 0 \\
+        ... \arrow[r, hook] & \partial c + \partial a \arrow[rr, two heads]     &  & {[\partial c]} \arrow[rr]                      &  & 0
+        \end{tikzcd}
+    \end{center}
+    The boundary map on quotient chain complex $C_n(X) / C_n(A)$ is induced from the boundary map on chain complex $C_n(X)$ such that the diagram remains commutative. The quotient chain complex is also denoted by $C_n(X, A) = C_n(X) / C_n(A)$. The relative homology is defined by the homology on $C_n(X, A)$ and denoted by $H_n(X, A) = H_n(C_n(X, A))$. The short exact sequence \begin{tikzcd} C_n(A) \arrow[r, "i", hook] & C_n(X) \arrow[r, "p", two heads] & C_n(X) / C_n(A) \end{tikzcd} induces a long exact sequence
+    \begin{center}
+        \begin{tikzcd}
+                                   &  &                                       &  & ... \arrow[lllld, "\partial"']             \\
+        H_n(A) \arrow[rr, "i"]     &  & H_n(X) \arrow[rr, "p", two heads]     &  & {H_n(X, A)} \arrow[lllld, "\partial"']     \\
+        H_{n-1}(A) \arrow[rr, "i"] &  & H_{n-1}(X) \arrow[rr, "p", two heads] &  & {H_{n-1}(X, A)} \arrow[lllld, "\partial"'] \\
+        ...                        &  &                                       &  &                                           
+        \end{tikzcd}
+    \end{center}
+\end{definition}
+
+\begin{remark}
+    $C_n(X, \emptyset) = C_n(X)$, then $H_n(X, \emptyset) = H_n(X)$
+\end{remark}
+
+\begin{definition}[map of pairs]
+    $f: (X, A) \to (Y, B)$ is a map of pairs of $f: X \to Y$ and $f(A) \subseteq B$
+\end{definition}
+
+\begin{definition}[naturality of induced map in pair]
+    Let $f:(X, A) \to (Y, B)$, the induced map $f_\#: C_n(X, A) \to C_n(Y, B)$ is well-defined since the map $f_\#: C_n(X) \to C_n(Y)$ takes $C_n(A)$ to $C_n(B)$. The naturality is followed by naturality in absolute chains
+    \begin{center}
+        \begin{tikzcd}
+        {C_n(X, A)} \arrow[d, "f_\#"] \arrow[r, "\partial"] & {C_{n-1}(X, A)} \arrow[d, "f_\#"] \\
+        {C_n(Y, B)} \arrow[r, "\partial"]                   & {C_{n-1}(Y, B)}                  
+        \end{tikzcd}
+    \end{center}    
+\end{definition}
+
+\begin{theorem}[excision]
+    Let $(X, A)$ be a pair and $U \subseteq X$ such that $\overline{U} \subseteq \interior A$. Then,
+    $$
+        H_n(X - U, A - U) \cong H_n(X, A)
+    $$
+\end{theorem}
+
+\begin{longproof}
+    \note{TODO}
+\end{longproof}
+
+
+
+\begin{longproof}
+    \note{TODO}
+\end{longproof}
+
+\begin{lemma}[five lemma]
+    Given $A \to B \to C \to D \to E$ and $A' \to B' \to C' \to D' \to E'$ exact. Then
+    \begin{center}
+        \begin{tikzcd}
+        A \arrow[r] \arrow[d] & B \arrow[r] \arrow[d] & C \arrow[r] \arrow[d] & D \arrow[r] \arrow[d] & E \arrow[d] \\
+        A' \arrow[r]          & B' \arrow[r]          & C' \arrow[r]          & D' \arrow[r]          & E'         
+        \end{tikzcd}
+    \end{center}
+
+    $C \to C'$ is a monomorphism if 
+    \begin{itemize}
+        \item $D \to D'$ is a monomorphism
+        \item $B \to B'$ is a monomorphism
+        \item $A \to A'$ is a epimorphism
+    \end{itemize}
+
+    $C \to C'$ is a epimorphism if 
+    \begin{itemize}
+        \item $B \to B'$ is a epimorphism
+        \item $D \to D'$ is a epimorphism
+        \item $E \to E'$ is a monomorphism
+    \end{itemize}
+\end{lemma}
+
+\begin{longproof}
+    \note{TODO}
+\end{longproof}
+
+\begin{definition}[pointed space, reduced homology]
+    A pointed space is a pair $(X, *)$ such that $*$ is a single point. The reduced homology is a pointed space is denoted by $\overline{H}_n(X) = H_n(X, *)$
+\end{definition}
+
+\begin{proposition}
+    Some propositions on reduced homology
+    \begin{itemize}
+        \item $H_0(X) = \overline{H}_0(X) \oplus \Z$
+        \item $H_n(X) = \overline{H}_n(X)$ for $n \geq 1$
+    \end{itemize}
+\end{proposition}
+
+\subsection{EXPRESSING RELATIVE HOMOLOGY IN TERMS OF REDUCE HOMOLOGY}
+
+\begin{definition}[cone]
+    Let $A$ be a topological space, the cone on $A$ is defined by 
+    $$
+        CA = A \times [0, 1] / A \times \set{0}
+    $$
+    Note: $A / \emptyset = A \amalg *$, then $C \emptyset = *$
+\end{definition}
+
+\begin{lemma}
+    The cone on any space $A$ is contractible, that is $CA \simeq *$. In other words, any space can be embedded into a contractible space.
+\end{lemma}
+
+\begin{longproof}
+    \note{TODO}
+\end{longproof}
+
+\begin{definition}[cone of the pair]
+    The cone of the pair $(X, A)$ is
+    $$
+        X \cup_A CA = X \amalg CA / a \sim (a, 1)
+    $$
+    where $a \sim (a, 1)$ denotes the equivalence relation between point $a \in A$ and point $(a, 1) \in CA$
+\end{definition}
+
+\begin{proposition}
+    $H_n(X, A) = \overline{H}_n(X \cup_A CA)$
+\end{proposition}
+
+\begin{longproof}
+    \note{TODO}
+\end{longproof}
+
+\begin{definition}[suspension]
+    The cone of pair $(CA, A)$, denoted by $\Sigma A$
+\end{definition}
+
+
+\section{CELLULAR HOMOLOGY}
+closure-finite weak topology 
+
+\begin{definition}[cell complex]
+    A cell complex is a space $X$ with a filtration $X_0 \subseteq X_1 \subseteq ... \subseteq X$ by subspaces such that
+    \begin{enumerate}
+        \item $X_0$ is discrete
+        
+        \item for each $n$, $X_n$ is the pushout of the diagram below
+        \begin{center}
+            \begin{tikzcd}
+            \coprod_{\alpha \in \mathcal{A}_n} \partial D^n \arrow[d] \arrow[r, hook] & \coprod_{\alpha \in \mathcal{A}_n} D^n \arrow[d] \\
+            X_{n-1} \arrow[r, hook]                                                   & X_n                                             
+            \end{tikzcd}
+        \end{center}
+        where $D^n$ is a space homeomorphic to an $n$-dimensional disk, $\partial D^n$ is the boundary of $D^n$ ($S^{n-1}$). $X_n$ is called the $n$-skeleton of $X$, $\coprod \partial D^n \to X_{n-1}$ is called the attaching map, $\coprod D^n$ is called the characteristic map.
+        
+        \item $X = \varinjlim X_n$
+    \end{enumerate}
+\end{definition}
+
+\begin{remark}
+    Some remarks on cell complex
+    \begin{itemize}
+        \item $\R P^{n-1}$ is a cell complex with $(\R P^{n-1})_k = \R P^k \subseteq \R P^n$. $\R P^\infty = \bigcup \R P^n = \varinjlim \R P^n$
+        
+        \item $S^n$ is a cell complex
+
+        \item Grassmannians, $\Gr_k(\R^n)$, the set of $k$-dimensional subspace of $\R^n$, is a cell complex
+    \end{itemize}
+\end{remark}
+
+\begin{definition}[finite type, finite dimensional]
+    A cell complex $X_0 \subseteq X_1 \subseteq ... \subseteq X$ is of finite type if $X_0$ is finite and each $\mathcal{A}_n$ is finite ($|X_0|$ is the number of $0$-cells, $|\mathcal{A}_n|$ is the number of $n$-cells). $X$ is of finite dimensional if $\mathcal{A}_n = \emptyset$ for $n >> 0$. $X$ is of finite if it is both finite type and finite dimensional.    
+\end{definition}
+
+\subsection{THE CONSTRUCTION OF CELLULAR HOMOLOGY}
+
+Let $X_0$ be the pushout of the diagram below
+\begin{center}
+    \begin{tikzcd}
+    \coprod_{\alpha \in \mathcal{A}_0} \partial D^0 = \emptyset \arrow[d] \arrow[rr, hook] &  & \coprod_{\alpha \in \mathcal{A}_0} D^0 \arrow[d] \\
+    X_{-1} = \emptyset \arrow[rr, hook]                                                    &  & X_0                                             
+    \end{tikzcd}
+\end{center}
+
+Then, from the definition of cell complex,
+$$
+    X_n / X_{n-1} = \left. \coprod_{\alpha \in \mathcal{A}_n} D^n \middle/ \coprod_{\alpha \in \mathcal{A}_n} \partial D^n \right. = \bigvee_{\alpha \in \mathcal{A}_n} S^n
+$$
+
+where $S^n = D^n / \partial D^n$ (\note{why do the two quotient topologies coincide? think about it. $X_n / X_{n-1}$ makes $X_{n-1}$ to be one point}). The wedge sum $\vee$ is defined by follows: Let $(A, *_A), (B, *_B)$ be pointed spaces, then
+$$
+    A \vee B = A \amalg B / *_A \sim *_B
+$$
+
+\begin{remark}
+    Wedge sum is the coproduct in the category of pointed spaces
+\end{remark}
+
+Let $H$ be a homology functor satisfying Eilenberg-Steenrod axioms. Given $A \subseteq X$, as $CA$ contractible, $X \cup_A CA \simeq X / A$, then $\overline{H}_q(X \cup_A CA) \cong \overline{H}_q(X / A)$. Therefore, $H_q(X, A) = \overline{H}_q(X / A)$
+
+\begin{center}
+    \begin{tikzcd}
+    {H_q(X, A)} \arrow[r, "\cong"] & \overline{H}_q(X \cup_A CA) \arrow[r, "\cong"] & \overline{H}_q(X / A)
+    \end{tikzcd}
+\end{center}
+
+\begin{definition}[cofibration]
+    A map $f: A \to X$ is a cofibration if the homotopy $H_A: A \times I \to W$ can be extended to $H_X: X \times I \to W$, namely, homotopy extension property. That is, given the diagram below, there exists a map $H_X: X \times I \to W$ such that the diagram below commutes
+    \begin{center}
+        \begin{tikzcd}
+                                                  &  &                                                        & W \\
+        X \arrow[rrru, "g"] \arrow[rr, "i_1"'] &  & X \times I \arrow[ru, "H_X"', dashed]                    &   \\
+                                                  &  &                                                        &   \\
+        A \arrow[rr, "i_1"'] \arrow[uu, "f"]   &  & A \times I \arrow[ruuu, "H_A"'] \arrow[uu, "f \times 1"] &  
+        \end{tikzcd}
+    \end{center}
+    where $i_1$ denotes the map $x \mapsto (x, 1)$
+\end{definition}
+
+\begin{proof}
+    Let $Z = X \cup_A (A \times I)$ be the pushout of \begin{tikzcd} X & A \arrow[r, "i_1"'] \arrow[l, "f"] & A \times I \end{tikzcd} where $X \cup_A (A \times I) = X \amalg (A \times I) / \sim$ with $f(a) \sim (a, 1)$ for all $a \in A$. There exists a retraction $r: X \times I \to Z$. Define $H = h r$ where $h: Z \to W$ is the unique map from pushout $Z$ to $W$
+\end{proof}
+
+\begin{lemma}
+    Some lemmas on cofibration
+    \begin{enumerate}
+        \item the composite of cofibrations is a cofibration
+        \item the coproduct of (closed) cofibrations is a (closed) cofibration
+        \item (closed) cofibration is closed under cobase change, that is, if $f: A \to X$ is a (closed) cofibration and $Y = X \cup_A B$ is the pushout of \begin{tikzcd}B & A \arrow[r, "f"] \arrow[l, "g"'] & X\end{tikzcd}, then $\overline{f}: B \to Y$ is a (closed) cofibration
+        \begin{center}
+            \begin{tikzcd}
+            A \arrow[r, "f"] \arrow[d, "g"'] & X \arrow[d] \\
+            B \arrow[r, "\overline{f}"]      & Y          
+            \end{tikzcd}
+        \end{center}
+        where $X \cup_A B = X \amalg B / \sim$ with $f(a) \sim g(a)$ for all $a \in A$
+    \end{enumerate}
+\end{lemma}
+
+\begin{corollary}
+    $X_q \hookrightarrow X_n$ for $q \leq n$ is a closed cofibration
+\end{corollary}
+
+\begin{proof}
+    the composite of cofibrations is a cofibration (\note{inclusion map is a cofibration})
+\end{proof}
+
+\begin{corollary}
+    $H_q(X_n, X_{n-1}) = \overline{H}_q(X_n / X_{n-1}) = \overline{H}_q(\bigvee_{\alpha \in \mathcal{A}_n} S^n) = \bigoplus_{\alpha \in \mathcal{A}_n} \overline{H}_q (S^n) = \begin{cases}
+        0, &q \neq n \\
+        \Z \mathcal{A}_n, &q = n \\
+    \end{cases}$
+    where $\Z$ denotes the free abelian group functor, that is, $\Z \mathcal{A}_n$ is the free abelian group generated by $\mathcal{A}_n$
+\end{corollary}
+
+\begin{proof}
+    In the category of pointed space, morphisms are the continuous maps that fix the basepoint and wedge sum is the coproduct. As $H_q$ is a functor on that category. Let $X, Y$ be pointed spaces, we must have the coproduct of two abelian groups $H_q(X)$ and $H_q(Y)$ being $H_q(X \vee Y)$, that is, $H_q(X) \oplus H_q(Y) = H_q(X \vee Y)$
+\end{proof}
+
+The long exact sequence for $(X_n, X_{n-1})$ 
+
+\begin{center}
+    \begin{tikzcd}
+                                      &                    & {H_{q+1}(X_n, X_{n-1})} \arrow[lld, "\partial"'] \\
+    H_q(X_{n-1}) \arrow[r, "i_*"'] & H_q(X_n) \arrow[r] & {H_q(X_n, X_{n-1})}                             
+    \end{tikzcd}
+\end{center}
+
+the map $i_*: H_q(X_{n-1}) \to H_q(X_n)$ is an isomorphism unless $q = n, n-1$. This is due to $H_q(X_n, X_{n-1}) = 0$ and $H_{q+1}(X_n, X_{n-1})$ otherwise. Therefore,
+
+\begin{corollary}
+    $H_q(X_n) \cong H_q(X_{n-1}) \cong ... \cong H_q(X_0) = 0$ for $q > n \geq 0$. That is, homology groups do not see the skeleton of dimension less than its.   
+\end{corollary}
+
+\begin{corollary}
+    $H_q(X_n) \cong H_q(X_{n+1}) \cong ... \cong H_q(X)$ for $q < n$. That is, homology groups see the same thing on skeleton of dimension more than its.
+\end{corollary}
+
+
+When $q = n$, the long exact sequence
+\begin{center}
+    \begin{tikzcd}
+    0 = H_n(X_{n-1}) \arrow[r, "i_*"'] & H_q(X_n) \arrow[r, "\partial"'] & {H_q(X_n, X_{n-1}) = \Z \mathcal{A}_n}
+    \end{tikzcd}
+\end{center}
+
+Then
+
+\begin{corollary}
+    $H_n(X_n)$ is free abelian (a subgroup of $H_n(X_n, X_{n-1}) = \Z \mathcal{A}_n$). Moreover, the number of generators of $H_n(X_n)$ is bounded above by number of $n$-cells.
+\end{corollary}
+
+Now using the lemmas, we put the long exact sequence of the pairs $(X_{n+1}, X_n), (X_n, X_{n-1})$ together,
+
+\begin{center}
+\begin{tikzcd}
+... \arrow[r]             & {H_{n+1}(X_{n+1}, X_n)} \arrow[d, "\partial_{n+1}"'] \arrow[rrd, "d_n = i_n \partial_{n+1}", dashed] &                                &                                                                                                  &  &                                       \\
+0 =H_n(X_{n-1}) \arrow[r] & H_n(X_n) \arrow[d] \arrow[rr, "i_n"]                                                                 &                                & {H_n(X_n, X_{n-1})} \arrow[d, "\partial_n"'] \arrow[rrd, "d_{n-1} = i_{n-1} \partial_n", dashed] &  &                                       \\
+                          & H_n(X_{n+1}) = H_n(X) \arrow[d]                                                                      & 0 = H_{n-1}(X_{n-2}) \arrow[r] & H_{n-1}(X_{n-1}) \arrow[rr, "i_{n-1}"] \arrow[d]                                                 &  & {H_{n-1}(X_{n-1}, X_{n-2})} \arrow[d] \\
+                          & {H_n(X_{n+1}, X_n) = 0}                                                                              &                                & ...                                                                                              &  & ...                                  
+\end{tikzcd}
+\end{center}
+
+
+\begin{definition}[cellular chain complex, cellular homology]
+    The abelian groups $H_n(X_n, X_{n-1})$ and homomorphisms $d_n: H_{n+1}(X_{n+1}, X_n) \to H_n(X_n, X_{n-1})$ form a chain complex and called cellular chain complex of the cell complex $X_0 \subseteq X_1 \subseteq ... \subseteq X$ with respect to homology $H$. Denote $H_n(X_n, X_{n-1})$ by $C^{CW}_n(X)$. We have
+    $$
+        C^{CW}_n(X) = \Z \mathcal{A}_n
+    $$
+    That is, the number of generators of $C^{CW}_n(X)$ is exactly the number of $n$-cells. Cellular homology is defined from the cellular chain complex and denoted by $H_n(C^{CW}_n(X)) = H^{CW}_n(X)$.
+\end{definition}
+
+\begin{theorem}
+    $H_n(X) = H^{CW}_n(X)$ and the isomorphism is also natural in the cell complex.
+\end{theorem}
+
+\begin{longproof}
+    \begin{align*}
+        H_n(X)
+        &= H_n(X_{n+1}) \\
+        &= \im (H_n(X_n) \to H_n(X_{n+1})) &\text{($H_n(X_n) \to H_n(X_{n+1})$ is surjective)}\\
+        &= \frac{H_n(X_n)}{\ker (H_n(X_n) \to H_n(X_{n+1}))} &\text{(first isomorphism theorem)} \\ 
+        &= \frac{H_n(X_n)}{\im \partial_{n+1}} &\text{(exactness)} \\ 
+        &= \frac{\im i_n}{\im d_n} &\text{($i_n$ is injective)} \\ 
+        &= \frac{\ker \partial_n}{\im d_n} &\text{(exactness)} \\ 
+        &= \frac{\ker d_{n-1}}{\im d_n} &\text{($i_{n-1}$ injective)} \\ 
+        &= H^{CW}_n(X)
+    \end{align*}
+\end{longproof}
+
+\begin{theorem}[cellular boundary formula]
+    \note{TODO}
+\end{theorem}
+
+\subsection{COEFFICIENTS IN AN ABELIAN GROUP}
+
+\begin{definition}
+    Let $A$ be an abelian group, cellular chain complex of $X$ is
+    \begin{align*}
+        C^{CW}_n(X; A) &= H_n(X_n, X_{n-1}; A) = H_n(X_n, X_{n-1}) \otimes A= \bigoplus_{\alpha \in \mathcal{A}_n} A = \tuple*{\bigoplus_{\alpha \in \mathcal{A}_n} \Z} \otimes A \\
+        H_n(X; A) &= H^{CW}_n(X; A)
+    \end{align*}
+\end{definition}
+
+
+\section{HOMOLOGY WITH COEFFICIENTS}
+
+\subsection{TENSOR PRODUCT}
+
+\begin{definition}[tensor product]
+    Let $A, B, C$ be abelian groups. A bilinear map $A \times B \to C$ is a function $f: A \times B \to C$ such that
+    \begin{align*}
+        f(a + a', b) &= f(a, b) + f(a', b) \\
+        f(a, b + b') &= f(a, b) + f(a, b')
+    \end{align*}
+    The set of bilinear maps $A \times B \to C$ is denoted by $\Bil(A, B; C)$. There exists an abelian group $A \otimes B$ and bilinear map $A \times B \to A \otimes B$ such that for any $C$ and any bilinear map $g: A \times B \to C$, there exists a unique homomorphism $A \otimes B \to C$ such that the following diagram commutes
+    \begin{center}
+        \begin{tikzcd}
+        A \otimes B \arrow[r]                & C \\
+        A \times B \arrow[ru, "g"] \arrow[u] &  
+        \end{tikzcd}
+    \end{center}
+    Moreover, $A \otimes B$ is universal. \note{universal mapping property}
+\end{definition}
+
+\begin{remark}:
+    \begin{enumerate}
+        \item If $A \times B \to D$ is bilinear and $D \to C$ is a homomorphism, then the composite $A \times B \to D \to C$ is bilinear
+        \item Let $B$ be an abelian group, then $\otimes B$, the right tensoring of $B$, is a functor on the category of abelian groups $\Ab$
+        \item $\Z \otimes B = B$
+    \end{enumerate}
+\end{remark}
+
+\begin{longproof}
+    \begin{enumerate}
+        \item trivial
+        \item consequence of $A \times B \to A \otimes B$ being a functor
+        \item define the map $f: Z \times B \to B$ by $f(n, b) = nb$ and prove that $B$ satisfies the tensor product factoring property. Hence, $\Z \otimes B = B$
+    \end{enumerate}
+\end{longproof}
+
+\begin{proposition}
+    $\Hom(A \otimes B, C) \cong \Bil(A, B; C) \cong \Hom(A, \Hom(B, C))$
+\end{proposition}
+
+\begin{proof}
+    $\Hom(A \otimes B, C) \cong \Bil(A, B; C)$ is done by the definition of tensor product. $\Bil(A, B; C) \cong \Hom(A, \Hom(B, C))$ is done by natural evaluation map.
+\end{proof}
+
+
+\begin{corollary}
+    $\Hom\tuple*{\tuple*{\bigoplus_\alpha A_\alpha} \otimes B, C} = \Hom \tuple*{\bigoplus_\alpha A_\alpha \otimes B, C}$
+\end{corollary}
+
+\begin{proof}
+    \begin{align*}
+        \Hom\tuple*{\tuple*{\bigoplus_\alpha A_\alpha} \otimes B, C}
+        &= \Hom \tuple*{\bigoplus_\alpha A_\alpha, \Hom(B, C)} \\
+        &= \prod_\alpha \Hom \tuple*{A_\alpha, \Hom(B, C)} \\
+        &= \prod_\alpha \Hom \tuple*{A_\alpha \otimes B, C} \\
+        &= \Hom \tuple*{\bigoplus_\alpha A_\alpha \otimes B, C} \\
+    \end{align*}
+\end{proof}
+
+\begin{lemma}
+    Let $\mathcal{C}$ be a category, then $f\in \mathcal{C}(X, Y)$ is an isomorphism in $\mathcal{C}$ if and only if for all $W \in \ob \mathcal{C}$, $\mathcal{C}(Y, W) \to \mathcal{C}(X, W)$ defined by $g \mapsto gf$ is bijective
+\end{lemma}
+
+\begin{proof}
+    By surjectivity, $1 \in C(X, X)$ has a preimage $g \in C(Y, X)$ such that $g \mapsto gf = 1$. Now, $fg \in C(Y, Y)$ is mapped to $g = gfg \in C(X, Y)$. Moreover, $1 \in C(Y, Y)$ is also mapped to $g \in C(X, Y)$. By injectivity, $fg = 1$.
+\end{proof}
+
+
+\begin{proposition}
+    $\beta: \bigoplus \tuple*{A_\alpha \otimes B} \to \tuple*{\bigoplus A_\alpha} \otimes B$ is an isomorphism
+\end{proposition}
+
+\begin{proof}
+    From the corollary above
+\end{proof}
+
+\begin{lemma}
+    Suppose $A' \to A \to A'' \to 0$ in $\Ab$. Then $A' \to A \to A'' \to 0$ is exact if and only if for all $C$, $\Hom(A', C) \leftarrow \Hom(A, C) \leftarrow \Hom(A'', C) \leftarrow 0$ is exact.
+\end{lemma}
+
+\begin{proof}
+    \note{no proof provided}
+\end{proof}
+
+\begin{corollary}[right exactness of tensoring abelian group]
+    If $A' \to A \to A'' \to 0$ is exact, then $A' \otimes B \to A \otimes B \to A'' \otimes B \to 0$ is also exact
+\end{corollary}
+
+\begin{longproof}
+    A sequence of exact sequences
+    \begin{enumerate}
+        \item $A' \to A \to A'' \to 0$
+        \item $\Hom(A', \Hom(B, C)) \to \Hom(A, \Hom(B, C)) \to \Hom(A'', \Hom(B, C)) \to 0$
+        \item $\Hom(A' \otimes B, C) \to \Hom(A\otimes B, C) \to \Hom(A''\otimes B, C) \to 0$
+        \item $A' \otimes B \to A \otimes B \to A'' \otimes B \to 0$
+    \end{enumerate}
+\end{longproof}
+
+\begin{proposition}[an example of free resolution of abelian group]
+Let $A$ be an arbitrary abelian group, if $S \subseteq A$ generates $A$, then the natural projection $\eta: \Z S \to A$ is a surjection where $\Z$ is the free abelian group functor. Let $F_0 = \Z S$, $F_1 = \ker \eta$ ($F_1$ is free abelian as it is a subgroup of $F_0$) and $M: F_1 \to F_0$ be the inclusion map, then the sequence below is short exact
+
+\begin{center}
+    \begin{tikzcd}
+    0 \arrow[r] & F_1 \arrow[r, "M"] & F_0 \arrow[r, "\eta"] & A \arrow[r] & 0
+    \end{tikzcd}
+\end{center}
+
+Let $F = \bigoplus_\alpha \Z$ be a free abelian group, then $ F \otimes B = \tuple*{\bigoplus_\alpha \Z} \otimes B = \bigoplus_\alpha (\Z \otimes B) = \bigoplus_\alpha B$. 
+Therefore, for any abelian group $B$, the sequence below is also exact
+\begin{center}
+    \begin{tikzcd}
+    \bigoplus_{S_1} B \arrow[r, "M"] & \bigoplus_{S_0} B \arrow[r, "\eta"] & A \otimes B \arrow[r] & 0
+    \end{tikzcd}
+\end{center}
+
+\end{proposition}
+
+
+\begin{remark}
+Let $A = \Z / m \Z$, $S = \set{1}$, then $\begin{tikzcd} m\Z \cong \Z \arrow[r, "m"] & \Z \arrow[r] & A \arrow[r] & 0 \end{tikzcd}$ is exact. And
+\begin{center}
+    \begin{tikzcd}
+    \Z \otimes B \arrow[r, "m "] \arrow[d, "=", no head] & \Z \otimes B \arrow[r] \arrow[d, "=", no head] & A \otimes B \arrow[r] \arrow[d, "=", no head] & 0 \\
+    B \arrow[r, "m"]                                    & B \arrow[r]                                    & \coker (m) = B / mB \arrow[r]                              & 0
+    \end{tikzcd}
+\end{center}
+
+is exact. Therefore, $\Z / m \Z \otimes B = B / m B$
+\end{remark}
+
+\begin{lemma}
+    There is a natural isomorphism $A \otimes B \cong B \otimes A$
+\end{lemma}
+
+\begin{proof}
+    short
+\end{proof}
+
+\begin{lemma}[right exactness of tensoring free abelian group]
+    If $F$ is a free abelian group and \begin{tikzcd} A' \arrow[r] & A \arrow[r] & A'' \end{tikzcd} is exact at $A$, then
+    \begin{center}
+        \begin{tikzcd}
+        A' \otimes F \arrow[r] & A \otimes F \arrow[r] & A'' \otimes F
+        \end{tikzcd}
+    \end{center}
+    is exact at $A \otimes F$
+\end{lemma}
+  
+\begin{proof}
+    As $F$ is free, write $F = \bigoplus_\alpha \Z$, then $A \otimes F = A \otimes \bigoplus_\alpha \Z = \bigoplus_\alpha A$
+\end{proof}
+
+\begin{proposition}:
+    \begin{enumerate}
+        \item In the category $\Ch \times \Ab$ where $\Ch$ is the category of chain complexes and $\Ab$ is the category of abelian groups, then there is a natural transformation $\alpha$
+        \begin{center}
+            \begin{tikzcd}
+            H_n(C_\bullet) \otimes A \arrow[rr, "{\alpha_{C_\bullet, A}}"] \arrow[d] &  & H_n(C_\bullet \otimes A) \arrow[d] \\
+            H_n(C'_\bullet) \otimes A' \arrow[rr, "{\alpha_{C'_\bullet, A'}}"]       &  & H_n(C'_\bullet \otimes A')        
+            \end{tikzcd}
+        \end{center}
+        where $\alpha: H_n(C_\bullet) \times A \to H_n(C_\bullet \otimes A)$ is defined by a bilinear map as follows
+        $$
+            [z], a \mapsto [z \otimes a]
+        $$
+        for $z \in C_\bullet, a \in A$.
+
+        \item $\alpha$ is compatible with direct sum
+        \begin{center}
+            \begin{tikzcd}
+            H_n(C_\bullet) \otimes \tuple*{\bigoplus_\alpha A_\alpha} \arrow[d, "=", no head] \arrow[rr] &  & H_n(C_\bullet \otimes \tuple*{\bigoplus_\alpha A_\alpha}) \arrow[d, "=", no head] \\
+            \bigoplus_\alpha H_n(C_\bullet) \otimes A_\alpha \arrow[rr]                                  &  & \bigoplus_\alpha H_n(C_\bullet \otimes A_\alpha)                                 
+            \end{tikzcd}
+        \end{center}
+
+        \item if $A$ is free abelian then $\alpha$ is an isomorphism. An example when $\alpha$ is not an isomorphism:
+        \begin{center}
+            \begin{tikzcd}
+                                      & n-1 & n                & n+1                    & n+2         \\
+            C_\bullet                 & 0   & \Z \arrow[l]     & \Z \arrow[l, "2"']     & 0 \arrow[l] \\
+            H(C_\bullet)              &     & \Z/2             & 0                      &             \\
+            H(C_\bullet) \otimes \Z/2 &     & \Z/2             & 0                      &             \\
+            C_\bullet \otimes \Z/2    & 0   & \Z / 2 \arrow[l] & \Z / 2 \arrow[l, "0"'] & 0 \arrow[l] \\
+            H(C_\bullet \otimes \Z/2) &     & \Z/2             & \Z/2                   &            
+            \end{tikzcd}
+        \end{center}
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}($\alpha: H_n(C_\bullet) \otimes A \to H_n(C_\bullet \otimes A)$ is mono)
+
+Let $C_\bullet$ be a chain complex and $A$ be an abelian group, the natural projection $F_0 = \Z S \to A$ where $S \subseteq A$ generates $A$, $F_1 = \ker (F_0 \to A)$. Suppose $C_\bullet$ is a free abelian group, we have two short exact sequences
+\begin{center}
+    \begin{tikzcd}
+    0 \arrow[r] & F_1 \arrow[r, "d"]                             & F_0 \arrow[r]                   & A \arrow[r]                   & 0 \\
+    0 \arrow[r] & C_\bullet \otimes F_1 \arrow[r, "1 \otimes d"] & C_\bullet \otimes F_0 \arrow[r] & C_\bullet \otimes A \arrow[r] & 0
+    \end{tikzcd}
+\end{center}
+
+Define the natural boundary maps to make $C_\bullet \otimes F_1, C_\bullet \otimes F_0, C_\bullet \otimes A$ chain complexes. The short exact sequence of chain complexes induces a long exact sequence in homology
+\begin{center}
+    \begin{tikzcd}
+                                                               &  &                                           &  & ... \arrow[lllld]                          \\
+    H_n(C_\bullet \otimes F_1) \arrow[rr, "H_n(1 \otimes d)"']         &  & H_n(C_\bullet \otimes F_0) \arrow[rr]     &  & H_n(C_\bullet \otimes A) \arrow[lllld]     \\
+    H_{n-1}(C_\bullet \otimes F_1) \arrow[rr, "H_{n-1}(1 \otimes d)"'] &  & H_{n-1}(C_\bullet \otimes F_0) \arrow[rr] &  & H_{n-1}(C_\bullet \otimes A) \arrow[lllld] \\
+    ...                                                                &  &                                           &  &                                           
+    \end{tikzcd}
+\end{center}
+
+Hence, $\coker H_n(1 \otimes d) \to H_n(C_\bullet \otimes A)$ is a monomorphism and $H_n(C_\bullet \otimes A) \to \ker H_{n-1}(1 \otimes d)$ is a epimorphism. Hence, the sequence below is exact
+\begin{center}
+    \begin{tikzcd}
+    0 \arrow[r] & \coker H_n(1 \otimes d) \arrow[r] & H_n(C_\bullet \otimes A) \arrow[r] & \ker H_{n-1}(1 \otimes d) \arrow[r] & 0
+    \end{tikzcd}
+\end{center}
+
+Since $H_n(C_\bullet)$ is abelian, we have another exact sequence
+\begin{center}
+    \begin{tikzcd}
+    H_n(C_\bullet) \otimes F_1 \arrow[r, "1 \otimes d"] & H_n(C_\bullet) \otimes F_0 \arrow[r] & H_n(C_\bullet) \otimes A \arrow[r] & 0
+    \end{tikzcd}
+\end{center}
+
+The diagram below commutes
+\begin{center}
+    \begin{tikzcd}
+    H_n(C_\bullet) \otimes F_1 \arrow[r, "1 \otimes d"] \arrow[d, "\alpha (\cong)"] & H_n(C_\bullet) \otimes F_0 \arrow[r] \arrow[d, "\alpha (\cong)"] & H_n(C_\bullet) \otimes A \arrow[r] \arrow[d, "\alpha"] & 0                                                                &                                \\
+    H_n(C_\bullet \otimes F_1) \arrow[r, "H_n(1 \otimes d)"]                        & H_n(C_\bullet \otimes F_0) \arrow[r] \arrow[d]                   & H_n(C_\bullet \otimes A) \arrow[r] \arrow[rd]          & H_{n-1}(C_\bullet \otimes F_1) \arrow[r, "H_{n-1}(1 \otimes d)"] & H_{n-1}(C_\bullet \otimes F_0) \\
+                                                                                    & \coker H_n(1 \otimes d) \arrow[d] \arrow[ru] \arrow[ruu, dashed] &                                                        & \ker H_{n-1}(1 \otimes d) \arrow[rd] \arrow[u]                   &                                \\
+    0 \arrow[ru]                                                                    & 0                                                                &                                                        & 0 \arrow[u]                                                      & 0                             
+    \end{tikzcd}
+\end{center}
+
+We have $H_n(C_\bullet) \otimes A = \coker (1 \otimes d) = \coker H_n(1 \otimes d)$. Since the sequence $0 \to \coker H_n(1 \otimes d) \to H_n(C_\bullet \otimes A) \to \ker H_{n-1}(1 \otimes d) \to 0$ is exact, then $\coker H_n(1 \otimes d) \to H_n(C_\bullet \otimes A)$ is mono. Hence $\alpha: H_n(C_\bullet) \otimes A \to H_n(C_\bullet \otimes A)$ is mono.
+\end{proof}
+
+\subsection{$R$-MODULE}
+
+\begin{definition}[$R$-module]
+    Given a commutative ring $R$, an $R$-module is an abelian group $M$ with bilinear map $R \times M \to M$ such that
+    \begin{itemize}
+        \item $1 m = m$
+        \item $r (s m) = (r s) m$
+    \end{itemize}
+    for all $r, s \in R, m \in M$
+\end{definition}
+
+\begin{remark}
+    Some remarks on $R$-module
+    \begin{itemize}
+        \item $R$-module is similar to group acting on a set
+        \item $R$-module is a generalization of a vector space where the field of scalars ($\R$ or $\C$) is taken as a commutative ring $R$
+        \item $R$-module is a generalization of abelian group that is every abelian group is a $\Z$-module.
+    \end{itemize}
+\end{remark}
+
+\begin{definition}[free $R$-module]
+    An $R$-module $M$ is free if there is a subset $B$, namely basis, such that
+    \begin{itemize}
+        \item $B$ generates $M$: every element of $M$ can be written as a linear combination of elements in $B$
+        \item elements of $B$ are linearly independent: for every $\set{e_1, e_2, ..., e_n} \subseteq B$, if $r_1 e_1 + r_2 e_2 + ... + r_n e_n = 0$, then $r_1 = r_2 = ... = r_n = 0$
+    \end{itemize}
+\end{definition}
+
+\begin{definition}[tensor product of $R$-modules]
+    Let $M, N, L$ be $R$-modules and a bilinear map $f: M \times N \to L$ such that
+    $$
+        f(rm, n) = r f(m, n) = f(m, rn)
+    $$
+    Define the tensor product $M \otimes_R N$ with universal property as follows
+    $$
+        \Bil_R(M, N; L) = \Hom_R(M \otimes_R N, L)
+    $$
+\end{definition}
+
+The story above works for chain complexes over $R$-module, that is, the sequence below is exact
+\begin{center}
+    \begin{tikzcd}
+        0 \arrow[r] & F_1 \arrow[r] & F_0 \arrow[r, "\epsilon"] & A \arrow[r] & 0
+    \end{tikzcd}
+\end{center}
+
+if $F_1$ is free. In particular, if $R$ is a principal ideal domain (PID) .
+
+\subsection{FUNDAMENTAL THEOREM OF HOMOLOGICAL ALGEBRA}
+
+\begin{comment}
+\begin{definition}[free resolution]
+    Let $\mathcal{M}$ be the category of $R$-modules (more generally, abelian category). A free resolution of $M \in \mathcal{M}$ is a chain complex of $R$-modules $(F_\bullet, d)$ together with map $\epsilon$
+    \begin{center}
+        \begin{tikzcd}
+        0 \arrow[d] & F_0 \arrow[l] \arrow[d, "\epsilon"] & F_1 \arrow[l, "d"'] \arrow[d] & F_2 \arrow[l, "d"'] \arrow[d] & ... \arrow[l, "d"'] \\
+        0           & M \arrow[l]                         & 0 \arrow[l]                   & 0 \arrow[l]                   & ... \arrow[l]      
+        \end{tikzcd}
+    \end{center}
+    such that each $F_k$ is a free $R$-module and $\epsilon$ is an isomorphism in homology, that is, the sequence below is exact
+    \begin{center}
+        \begin{tikzcd}
+        0 & M \arrow[l] & F_0 \arrow[l] & F_1 \arrow[l] & F_2 \arrow[l] & ... \arrow[l]
+        \end{tikzcd}
+    \end{center}
+\end{definition}
+\end{comment}
+
+\begin{definition}[resolution, free resolution]
+    Let $\mathcal{M}$ be the category of $R$-modules (more generally, abelian category). A resolution of $M \in \ob \mathcal{M}$ is a chain complex of $R$-modules $(F_\bullet, d)$ together with a map $\epsilon: F_0 \to M$ such that the sequence below is exact
+    \begin{center}
+        \begin{tikzcd}
+        0 & M \arrow[l] & F_0 \arrow[l, "\epsilon"'] & F_1 \arrow[l, "d"'] & F_2 \arrow[l, "d"'] & ... \arrow[l, "d"']
+        \end{tikzcd}
+    \end{center}
+    $d$ is called boundary map, $\epsilon$ is called augmentation map. If $F_\bullet$ are free, the sequence is called free resolution of $M$
+\end{definition}
+
+\begin{remark}
+    Some remarks on resolution
+    \begin{itemize}
+        \item If we write free resolution as a chain map
+        \begin{center}
+            \begin{tikzcd}
+            0 \arrow[d] & F_0 \arrow[l] \arrow[d, "\epsilon"] & F_1 \arrow[l, "d"'] \arrow[d] & F_2 \arrow[l, "d"'] \arrow[d] & ... \arrow[l, "d"'] \\
+            0           & M \arrow[l]                         & 0 \arrow[l]                   & 0 \arrow[l]                   & ... \arrow[l]      
+            \end{tikzcd}
+        \end{center}
+        then $\epsilon$ is an isomorphism in homology.
+    
+        \item If $A$ is a $\Z$-module (abelian group), then \begin{tikzcd} 0 & A \arrow[l] & \Z S \arrow[l, "\epsilon"'] & \ker \epsilon \arrow[l, "d"'] & 0 \arrow[l] \end{tikzcd} is the free resolution of $A$ where $S \subseteq A$ generates $A$
+    \end{itemize}
+\end{remark}
+
+\begin{proposition}
+    Free resolution always exists
+\end{proposition}
+
+\begin{proof}
+    Denote $M$ by $F_{-1}$, $0$ by $F_{-2}$. Let $S_n = \ker (F_{n-1} \to F_{n-2})$, construct $F_n = R S_n$ free $R$-module generated by $S_n$
+    \begin{center}
+        \begin{tikzcd}
+        F_{n-2} & F_{n-1} \arrow[l] & F_n = R S_n \arrow[l, dashed]              \\
+                &                   & S_n = \ker(F_{n-1} \to F_{n-2}) \arrow[lu]
+        \end{tikzcd}
+    \end{center}
+
+    \note{ask prof why in her proof, $M$ has a generator}
+\end{proof} 
+
+\begin{theorem}[fundamental theorem of homological algebra, FTHA]
+    Let $f: M \to M'$ be a map of $R$-modules and let
+    \begin{center}
+        \begin{tikzcd}
+        0 & M \arrow[l] \arrow[d, "f"] & P_0 \arrow[l, "\epsilon"'] \arrow[d, "f_0", dashed] & P_1 \arrow[l, "d"'] \arrow[d, "f_1", dashed] & ... \arrow[l, "d"']  \\
+        0 & M' \arrow[l]               & P'_0 \arrow[l, "\epsilon'"']                        & P'_1 \arrow[l, "d'"']                        & ... \arrow[l, "d'"']
+        \end{tikzcd}
+    \end{center}
+    be such that $P_n$ is free, the top chain is a chain complex, the bottom chain is exact. Then
+    \begin{enumerate}
+        \item for each $n$, there exists a chain map (lift) $f_n: P_n \to P'_n$ lifting $f$
+        \item any two lifts are chain homotopic
+    \end{enumerate}
+\end{theorem}
+
+\begin{longproof}
+\begin{enumerate}
+    \item We will prove the first statement by induction. 
+    \begin{center}
+\begin{tikzcd}
+                                &  &  &                                             & K_{n-1} \arrow[ddd, "\overline{f_{n-1}}"', dashed] \arrow[ld] &  &                                                        \\
+P_{n-2} \arrow[ddd, "f_{n-2}"'] &  &  & P_{n-1} \arrow[lll] \arrow[ddd, "f_{n-1}"'] &                                                               &  & P_n \arrow[llu] \arrow[ddd, "f_n", dashed] \arrow[lll] \\
+                                &  &  &                                             &                                                               &  &                                                        \\
+                                &  &  &                                             & K'_{n-1} \arrow[ld]                                           &  &                                                        \\
+P'_{n-2}                        &  &  & P'_{n-1} \arrow[lll]                        &                                                               &  & P'_n \arrow[llu, two heads] \arrow[lll]               
+\end{tikzcd}
+    \end{center}
+
+    Suppose $f_{n-1}: P_{n-1} \to P'_{n-1}$ and $f_{n-2}: P_{n-2} \to P'_{n-2}$ were constructed. Let $K_{n-1} = \ker (P_{n-1} \to P_{n-2})$ and $K'_{n-1} = \ker (P'_{n-1} \to P'_{n-2})$. Since the both chains are chain complexes, there are maps $P_n \to K_{n-1}$ and $P'_n \to K'_{n-1}$. Moreover, since the bottom chain is exact, the map $P'_n \to K'_{n-1}$ is surjective. We also have the restriction of $f_{n-1}$ on $K_{n-1}$ by $\overline{f_{n-1}}: K_{n-1} \to K'_{n-1}$. This map is well-defined because if $x \in K_{n-1} \subseteq P_{n-1}$, $x$ is mapped to $0$ through $P_{n-1} \to P_{n-2} \to P'_{n-2}$, by commutativity, $x$ is also mapped to $0$ through $P_{n-1} \to P'_{n-1} \to P'_{n-2}$, that is, $x$ is mapped to $K'_{n-1}$ through $f_{n-1}$.
+
+    Now, since $P'_n \to K'_{n-1}$ is surjective, there exists a map $f_n: P_n \to P'_n$ such that the diagram remains commutative.
+
+    For the base case when $n=0$, let $P_{n-1} = M, P'_{n-1} = M', P_{n-2} = P'_{n-2} = 0, f_{n-1} = f, f_{n-2} = 0$
+    
+    \item Let $f^{(1)}_\bullet, f^{(2)}_\bullet: P_\bullet \to P'_\bullet$ are two lifts.
+    
+    \begin{center}
+        \begin{tikzcd}
+        M \arrow[d, "f"'] & P_\bullet \arrow[l, "\epsilon"] \arrow[d, "f^{(1)}_\bullet"', dashed, bend right] \arrow[d, "f^{(2)}_\bullet", dashed, bend left] \\
+        M'                & P'_\bullet \arrow[l, "\epsilon'"]                                                                                                
+        \end{tikzcd}
+    \end{center}
+
+    We will prove that $g_\bullet = f^{(1)}_\bullet - f^{(2)}_\bullet$ is chain homotopic to zero, that is, find map $h_{n+1}: P_n \to P'_{n+1}$ such that $d'h + hd = g$
+
+    \begin{center}
+        \begin{tikzcd}
+        0 \arrow[d, "0"'] & P_0 \arrow[l, "d"'] \arrow[d, "g_0"'] & P_1 \arrow[l, "d"'] \arrow[d, "g_1"'] & ... \arrow[l, "d"'] \\
+        0                 & P'_0 \arrow[l, "d'"]                  & P'_1 \arrow[l, "d'"]                  & ... \arrow[l, "d'"]
+        \end{tikzcd}
+    \end{center}
+
+    Suppose $h_{n-1}: P_{n-2} \to P'_{n-1}$ and $h_{n-2}: P_{n-3} \to P'_{n-2}$ were constructed
+
+    \begin{center}
+\begin{tikzcd}
+P_{n-3} \arrow[rrdd, "h_{n-2}"] &  & P_{n-2} \arrow[rrdd, "h_{n-1}"] \arrow[ll, "d"'] &  & P_{n-1} \arrow[ll, "d"']  \\
+                                &  &                                                  &  &                           \\
+P'_{n-3}                        &  & P'_{n-2} \arrow[ll, "d'"]                        &  & P'_{n-1} \arrow[ll, "d'"]
+\end{tikzcd}
+    \end{center}    
+
+    Consider the term below
+    \begin{align*}
+        d'(g_{n-1} - h_{n-1} d)
+        &= d' g_{n-1} - d' h_{n-1} d \\
+        &= d' g_{n-1} - (g_{n-2} - h_{n-2} d) d &\text{(induction)}\\
+        &= d' g_{n-1} - g_{n-2} d &\text{(top chain is a chain complex)}\\
+        &= 0 &\text{(commutativity)}
+    \end{align*}
+
+    Hence, there exists a map $P_{n-1} \to K'_{n-1}$ where $K'_{n-1} = \ker (P'_{n-1} \to P'_{n-2})$ such that the diagram below commutes
+
+    \begin{center}
+\begin{tikzcd}
+P_{n-2} \arrow[rrdd, "h_{n-1}"] &  & P_{n-1} \arrow[ll, "d"'] \arrow[rd, dashed] &                     \\
+                                &  &                                             & K'_{n-1} \arrow[ld] \\
+P'_{n-2}                        &  & P'_{n-1} \arrow[ll, "d'"]                   &                    
+\end{tikzcd}
+    \end{center}
+
+    Using the same argument as above, there exists a surjective map $P'_n \to K'_{n-1}$ such that the diagram below commutes. Then, $h_n: P_{n-1} \to P'_n$ is constructed from $P_{n-1} \to K'_{n-1}$ and surjectivity of $P'_n \to K'_{n-1}$.
+
+    \begin{center}
+\begin{tikzcd}
+P_{n-2} \arrow[rrdd, "h_{n-1}"] &  & P_{n-1} \arrow[ll, "d"'] \arrow[rd] \arrow[rrdd, "h_n", dashed, bend left] &                     &                                                     \\
+                                &  &                                                                            & K'_{n-1} \arrow[ld] &                                                     \\
+P'_{n-2}                        &  & P'_{n-1} \arrow[ll, "d'"]                                                  &                     & P'_n \arrow[lu, two heads, dashed] \arrow[ll, "d'"]
+\end{tikzcd}
+    \end{center}
+
+    For the base case, let $K'_0 = \ker \epsilon'$, the map $M \to M'$ is zero, then $g_0: P_0 \to P'_0$ is factored through $K'_0$. The map $P_1 \to K'_0$ is surjective since $M' \leftarrow P'_0 \leftarrow P'_1$ is exact. Hence, $h_1: P_0 \to P'_1$ can be constructed.
+
+    \begin{center}
+\begin{tikzcd}
+0 \arrow[rrrddd, "h_0 = 0"'] &  &                     & P_0 \arrow[lll] \arrow[rdd] \arrow[rrrddd, "h_1", dashed, bend left] \arrow[ddd, "g_0"'] \arrow[ld, "\epsilon"'] &                 &  &                                                       \\
+                             &  & M \arrow[ddd, "0"'] &                                                                                                                  &                 &  &                                                       \\
+                             &  &                     &                                                                                                                  & K'_0 \arrow[ld] &  &                                                       \\
+0                            &  &                     & P'_0 \arrow[lll] \arrow[ld, "\epsilon'"]                                                                         &                 &  & P'_1 \arrow[llu, two heads, dashed] \arrow[lll, "d'"] \\
+                             &  & M'                  &                                                                                                                  &                 &  &                                                      
+\end{tikzcd}
+    \end{center}
+    
+\end{enumerate}
+    
+
+\end{longproof}
+
+\begin{corollary}
+    A free resolution of $M$ is well-defined as a chain homotopy type.
+\end{corollary}
+
+\begin{proof}
+    Suppose we have two free resolutions $0 \leftarrow M \leftarrow P_\bullet$ and $0 \leftarrow M \leftarrow P'_\bullet$
+
+    \begin{center}
+        \begin{tikzcd}
+        0 & M \arrow[l] \arrow[d, "1"] \arrow[ddd, "1"', bend right] & P_0 \arrow[l] \arrow[d, "f_0", dashed] \arrow[ddd, "1"', dashed, bend right] & P_1 \arrow[l] \arrow[d, "f_1", dashed] \arrow[ddd, "1"', dashed, bend right] & ... \arrow[l] \\
+        0 & M \arrow[l] \arrow[dd, "1"]                              & P'_0 \arrow[l] \arrow[dd, "g_0", dashed]                                     & P'_1 \arrow[l] \arrow[dd, "g_1", dashed]                                     & {} \arrow[l]  \\
+          &                                                          &                                                                              &                                                                              &               \\
+        0 & M \arrow[l]                                              & P_0 \arrow[l]                                                                & P_1 \arrow[l]                                                                & ... \arrow[l]
+        \end{tikzcd}
+    \end{center}
+    
+    By FTHA, there are three lifts $1_\bullet: P_\bullet \to P_\bullet, f_\bullet: P_\bullet \to P'_\bullet, g_\bullet: P'_\bullet \to P_\bullet$. As both $1_\bullet$ and $g_\bullet f_\bullet$ are both lifts $P_\bullet \to P_\bullet$. By FTHA, $g_\bullet f_\bullet \simeq 1$. Similarly, $f_\bullet g_\bullet \simeq 1$. Hence, the two free resolutions are of the same chain homotopy type.
+
+    \note{TODO - whether free resolution of two $R$-modules can be chain homotopic?}
+    
+\end{proof}
+
+\begin{corollary}
+    There exists a functor $\RMod \to \Ho(\Ch(\RMod))$ where $\Ho$ denotes the category of homology 
+\end{corollary}
+
+\begin{proof}
+    Given $M$ being an $R$-module, the functor is defined by the homology of the chain complex from free resolution of $M$. The functor is well-defined because a free resolution defines a chain homotopy type and chain homotopic chain complexes induces the same homology. Given any map between $R$-modules $M$ and $M'$, the functor is defined by the chain map between free resolutions of $M$ and $M'$. The functor is well-defined because two chain homotopic maps induces the same map in homology.
+\end{proof}
+
+\subsection{ADDITIVE FUNCTOR, TOR FUNCTOR $\RMod \to \Ab$}
+
+\begin{remark}
+    Let $F: \RMod \to \Ab$ be a functor from $R$-module to abelian group. Let $P_\bullet$ be a chain complex of $\R$-module
+    
+    \begin{center}
+        \begin{tikzcd}
+        0 & P_0 \arrow[l]   & P_1 \arrow[l, "d"']     & ... \arrow[l, "d"']   \\
+        0 & F P_0 \arrow[l] & F P_1 \arrow[l, "F d"'] & ... \arrow[l, "F d"']
+        \end{tikzcd}
+    \end{center}
+    
+    then,
+    
+    $$
+        (Fd) (Fd) = F(dd) = F(0)
+    $$
+    
+    If $F(0) = 0$, then $F$ sends a chain complex to a chain complex.
+\end{remark}
+
+\begin{definition}[additive functor $\RMod \to \Ab$]
+    $F: \RMod \to \Ab$ is a additive functor if for any $M, N \in \ob \RMod$,
+    $$
+        \Hom_R(M, N) \to \Hom(F(M), F(N))
+    $$
+    is a homomorphism of abelian groups.
+\end{definition}
+
+\begin{remark}
+    Some remarks on additive functor of $\RMod \to \Ab$
+    \begin{itemize}
+        \item in the categories $\RMod$ or $\Ab$, $\Hom$ is an abelian groups. More generally, they are preadditive categories or $\Ab$-enriched categories where $\Hom$ is equipped with abelian group structure and composition is bilinear. 
+
+        \item if $F: \RMod \to \Ab$ is additive, then $F$ sends a chain complex to a chain complex, that is, there is an extension $\Ch(\RMod) \to \Ch(\Ab)$
+
+        \item tensor product is an additive functor.
+    \end{itemize}
+\end{remark}
+
+\begin{lemma}
+    If $F$ is additive and $h$ is a chain homotopy $f_0 \simeq f_1: C_\bullet \to C'_\bullet$ in $\RMod$, then $F(h)$ is a chain homotopy $F(f_0) \simeq F(f_1): F (C_\bullet) \to F(C'_\bullet)$
+\end{lemma}
+
+\begin{proof}
+    Suppose $d'h + hd = f_0 - f_1$ is a chain homotopy. Then
+    \begin{align*}
+        F(d') F(h) + F(h) F(d)
+        &= F(d' h) + F(h d) &\text{($F$ is a functor)} \\
+        &= F(d'h + hd) &\text{($F$ is an additive functor)} \\
+        &= F(f_0 - f_1) \\
+        &= F(f_0) - F(f_1) &\text{($F$ is an additive functor)}
+    \end{align*}
+\end{proof}
+
+\begin{corollary}
+    Chain homotopy type of $F(P_\bullet)$ is well-defined (where $M \leftarrow P_\bullet$ is a free resolution)
+\end{corollary}
+
+\begin{remark}
+    \note{TODO}
+\end{remark}
+
+\begin{definition}[$\Tor$ functor]
+    Let $R$ be a ring and $M$ be $R$-modules, define the $\Tor$ functor as the homology of chain complex $P_\bullet \otimes_R N$
+    $$
+        \Tor^R_n(M, N) = H_n(P_\bullet \otimes_R N)
+    $$
+    for $M \leftarrow P_\bullet$ is any free resolution.
+\end{definition}
+
+\begin{remark}
+    Some remarks on $\Tor$
+    \begin{itemize}
+        \item $\Tor^R_0(M, N) = M \otimes_R N$
+        \item Some example of Tor \note{TODO}
+    \end{itemize}
+    
+\end{remark}
+
+\begin{proposition}
+    $\Tor$ is well-defined and functorial in both variables, that is, $\Tor^R_n(M, -)$ and $\Tor^R_n(-, N)$ are functors $\RMod \to \Ab$.
+\end{proposition}
+
+\subsection{UNIVERSAL COEFFICIENT THEOREM}
+
+\begin{theorem}[universal coefficient theorem]
+    Let $R$ be a PID and $N$ be an $R$-module, then for any chain complex $C_\bullet$, then there is a short exact sequence
+    \begin{center}
+        \begin{tikzcd}
+        0 \arrow[r] & H_n(C_\bullet) \otimes_R N \arrow[r, "\alpha"] & H_n(C_\bullet \otimes_R N) \arrow[r] & {\Tor^R_1(H_{n-1}(C_\bullet), N)} \arrow[r] & 0
+        \end{tikzcd}
+    \end{center}
+\end{theorem}
+
+\begin{proof}
+    Since $R$ is a PID, $N$ admits a free resolution
+    \begin{center}
+\begin{tikzcd}
+0 & N \arrow[l] & P_0 \arrow[l] & P_1 \arrow[l, "d"'] & 0 \arrow[l]
+\end{tikzcd}
+    \end{center}
+
+    By exactness of tensor product, the sequence below is exact
+
+    \begin{center}
+\begin{tikzcd}
+0 & C_\bullet \otimes_R N \arrow[l] & C_\bullet \otimes_R P_0 \arrow[l] & C_\bullet \otimes_R P_1 \arrow[l, "1 \otimes d"'] & 0 \arrow[l]
+\end{tikzcd}
+    \end{center}
+
+    The short exact sequence induces a long exact sequence
+
+    \begin{center}
+\begin{tikzcd}
+H_n(C_\bullet \otimes_R P_1) \arrow[rr, "H_n(1 \otimes_R d)"] &  & H_n(C_\bullet \otimes_R P_0) \arrow[r] & H_n(C_\bullet \otimes_R N) \arrow[r] & H_{n-1}(C_\bullet \otimes_R P_1) \arrow[rr, "H_{n-1}(1 \otimes_R d)"] &  & H_{n-1}(C_\bullet \otimes_R P_0)
+\end{tikzcd}
+    \end{center}
+
+    That induces a short exact sequence
+
+    \begin{center}
+\begin{tikzcd}
+0 \arrow[r] & \coker H_n(1 \otimes_R d) \arrow[r] & H_n(C_\bullet \otimes_R N) \arrow[r] & \ker H_{n-1}(1 \otimes_R d) \arrow[r] & 0
+\end{tikzcd}
+    \end{center}
+
+    As discussed earlier, $\coker H_n(1 \otimes_R d) = H_n(C_\bullet) \otimes_R N$. Furthermore, we can identify $\ker H_n(1 \otimes_R d)$ by $\ker (1 \otimes_R d)$
+    \begin{center}
+\begin{tikzcd}
+H_{n-1}(C_\bullet) \otimes_R P_1 \arrow[d, "\alpha(\cong)"] \arrow[rr, "1 \otimes_R d"] &  & H_{n-1}(C_\bullet) \otimes_R P_0 \arrow[d, "\alpha(\cong)"] \\
+H_{n-1}(C_\bullet \otimes_R P_1) \arrow[rr, "H_{n-1}(1 \otimes_R d)"]                   &  & H_{n-1}(C_\bullet \otimes_R P_0)                           
+\end{tikzcd}
+    \end{center}
+
+    And $\ker (1 \otimes_R d) = \Tor^R_1(H_{n-1}(C_\bullet), N)$ by exactness of tensor product, the sequence below is exact
+
+    \begin{center}
+\begin{tikzcd}
+0 & H_{n-1}(C_\bullet) \otimes_R N \arrow[l] & H_{n-1}(C_\bullet) \otimes_R P_0 \arrow[l] & H_{n-1}(C_\bullet) \otimes_R P_1 \arrow[l, "1 \otimes d"'] & 0 \arrow[l]
+\end{tikzcd}
+    \end{center}   
+\end{proof}
+
+\begin{remark}
+    Let $C_\bullet = C_\bullet(X; R) = C_\bullet(X) \otimes_\Z R$, then
+    \begin{center}
+        \begin{tikzcd}
+        0 \arrow[r] & H_n(X; R) \otimes_R N \arrow[r, "\alpha"] & H_n(X; N) \arrow[r] & {\Tor^R_1(H_{n-1}(X; R), N)} \arrow[r] & 0
+        \end{tikzcd}
+    \end{center}
+\end{remark}
+
+
+
+
+
+
+\subsection{KÜNNETH THEOREM}
+
+\begin{definition}[tensor product of chain complexes]
+    Let $C_\bullet, D_\bullet$ be chain complexes of $R$-module. Define the tensor product $C_\bullet \otimes D_\bullet$ by
+    $$
+        (C_\bullet \otimes D_\bullet)_n = \bigoplus_{p + q = n} C_p \otimes D_q
+    $$
+    and define the boundary map $\partial: (C_\bullet \otimes D_\bullet)_n \to (C_\bullet \otimes D_\bullet)_{n-1}$ by a extension of $\partial: C_p \otimes D_q \to (C_\bullet \otimes D_\bullet)_{n-1}$ 
+    $$
+        \partial(x \otimes y) = \partial x \otimes y + (-1)^p x \otimes \partial y
+    $$
+    where $x \in C_p, y \in D_q$
+\end{definition}
+
+\begin{theorem}[Eilenberg-Zilber theorem]
+    The Alexander-Whitney (AW) map and Eilenberg-Zilber (EZ) map are natural transformation of functors $\Top^2 \to \Ch(\Ab)$ which are naturally chain homotopy inverses
+    \begin{center}
+        \begin{tikzcd}
+        C_\bullet(X \times Y) \arrow[rr, "AW", bend left] &  & C_\bullet(X) \otimes C_\bullet(Y) \arrow[ll, "EZ", bend left]
+        \end{tikzcd}
+    \end{center}
+\end{theorem}
+
+\note{TODO: method of proof}
+
+\begin{remark}
+    Two chain complexes of functors $\Top^2 \to \Ab$
+    \begin{align*}
+        (X, Y) &\mapsto C_n(X \times Y) \\
+        (X, Y) &\mapsto (C_\bullet(X) \otimes C_\bullet(Y))_n
+    \end{align*}
+\end{remark}
+
+\begin{theorem}
+    There is a natural short exact sequence
+    \begin{center}
+        \begin{tikzcd}
+        0 \arrow[r] & \bigoplus_{p+q=n} H_p(C_\bullet) \otimes_R H_q(D_\bullet) \arrow[r] & H_n(C_\bullet \otimes D_\bullet) \arrow[r] & {\bigoplus_{p+q=n-1} \Tor^R_1(H_p(C_\bullet), H_q(D_\bullet))} \arrow[r] & 0
+        \end{tikzcd}
+    \end{center}
+    if $R$ is a PID, $C_\bullet$ degree-wise free chain complex and this sequence splits
+\end{theorem}
+
+\begin{proof}
+    \note{TODO}
+\end{proof}
+
+\begin{corollary}
+    Let $R$ be a PID and $C'_\bullet, C_\bullet$ degree-wise $R$-free. If $C'_\bullet \to C_\bullet$ and $D'_\bullet \to D_\bullet$ are homology isomorphisms, so is $C'_\bullet \otimes D'_\bullet \to C_\bullet \otimes D_\bullet$
+\end{corollary}
+
+
+\chapter{OUT OF PLACE DISCUSSION}
+
+\section{(BROUWER) DEGREE OF $f: S^n \to S^n$ ()}
+
+\end{document}
+

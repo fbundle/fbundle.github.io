@@ -1,0 +1,75 @@
+\documentclass{article}
+
+% Language setting
+% Replace `english' with e.g. `spanish' to change the document language
+\usepackage[english]{babel}
+
+% Set page size and margins
+% Replace `letterpaper' with`a4paper' for UK/EU standard size
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+% Useful packages
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+
+\newtheorem{definition}{Definition}
+
+
+\title{Two-Sum}
+\author{Khanh Nguyen}
+
+\begin{document}
+\maketitle
+
+
+\section{Preliminaries}
+
+Let first define some data structures
+
+Denote $[a, b] = \{a, a+1, a+2, ..., b-1, b\}$ for $a < b \in \mathbb{N}$ be the set of all natural numbers between $a$ and $b$ (inclusive)
+
+
+\begin{definition}[finite length array]
+An array of length $n$ of element from $S$ is defined as a function $f: [1, n] \to S$
+\end{definition}
+
+The set all all arrays of length $n$ from $S$ is $S^{[1, n]}$
+
+
+The set of all arrays from $S$ is $\bigcap_{n=0}^{\infty} S^{\mathbb{N} \cap [1, n]}$ or $S^*$ for short.
+
+\begin{definition}[sub-array]
+Let $a \leq b \in \mathbb{N} \cap [1, n]$, the sub-array of $f$ with respect to bounds $(a, b)$ denoted as $f_{(a, b)}: \mathbb{N} \cap [1, b-a+1] \to S$ is defined by $f_{(a, b)}(i) = f(a+i-1) \forall i \in \mathbb{N} \cap [1, b-a+1]$
+\end{definition}
+
+Note that $f_{(1, n)} = f$
+
+\begin{definition}[increasing array]
+An array $f: \mathbb{N} \cap [1, n] \to \mathbb{N}$ is increasing if and only if $\forall i < j \in \mathbb{N} \cap [1, n], f(i) \leq f(j)$
+\end{definition}
+
+\begin{definition}[array membership]
+If $\exists i \in \mathbb{N}, x = f(i)$, we write $x \in f$
+\end{definition}
+
+\begin{definition}[array length]
+The function $len : S^* \to \mathbb{N}$ returns the length of an array
+\end{definition}
+
+\section{Two-Sum}
+
+Given an increasing array $f$ of length $n$ and a number $s$, if there exists two numbers $a, b \in f$ such as $a + b = s$, define a function $ts: \mathbb{N} \times \mathbb{N}^* \to \mathbb{N} \times \mathbb{N}$ as $ts(s, f) = (a, b)$ where $a \leq b \in f$ and $a + b = s$
+
+One possible definition of $ts$ is as follow:
+
+\begin{equation}
+    ts(s, f) = 
+    \begin{cases}
+    (f(1), f(n)) &\text{if $f(1) + f(n) = s$} \\
+    ts(s, f_{(2, n)}) &\text{if $f(1) + f(n) < s$} \\
+    ts(s, f_{(1, n-1)}) &\text{if $s < f(1) + f(n)$} \\
+    \end{cases}
+\end{equation}
+
+\end{document}

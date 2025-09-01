@@ -1,0 +1,49 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\input{header}
+
+\title{
+    MA4271 Tutorial Week 4
+}
+\author{Nguyen Ngoc Khanh - A0275047B}
+\date{September 2023}
+
+\begin{document}
+
+\maketitle
+
+\begin{problem}
+    Find the curvature of $\alpha(t) = (t \log t, t^2, \log t)$ at the point $(0, 1, 0)$, i.e. $t = 1$. Here $\log$ is the logarithm function with base $e$
+\end{problem}
+
+The curve is defined and  smooth when $t \in (0, +\infty)$
+
+We have
+
+\begin{align*}
+    \alpha' &= \left( \log t + 1, 2t, \frac{1}{t} \right) \\
+    \alpha'' &= \left( \frac{1}{t}, 2, \frac{-1}{t^2} \right) \\
+    \alpha' \cdot \alpha'' &= \frac{\log t + 1}{t} + 4t + \frac{-1}{t^3}
+\end{align*}
+
+The curvature is of the form
+
+$$
+    \kappa = \frac{\sqrt{||\alpha'||^2 ||\alpha''||^2 - |\alpha' \cdot \alpha''|^2}}{||\alpha'||^3}
+$$
+
+At $t = 1$, we have
+
+\begin{align*}
+    \alpha'(1) &= \left( 1, 2, 1 \right) \\
+    \alpha''(1) &= \left( 1, 2, -1 \right) \\
+    \alpha'(1) \cdot \alpha''(1) &= 4
+\end{align*}
+
+$\alpha$ is smooth and regular at $t = 1$, then
+
+$$
+    \kappa(1) = \frac{\sqrt{(1^2 + 2^2 + 1^2) (1^2 + 2^2 + (-1)^2) - |4|^2}}{(1^2 + 2^2 + 1^2)^{3/2}} = \frac{\sqrt{30}}{18 }
+$$
+\end{document}

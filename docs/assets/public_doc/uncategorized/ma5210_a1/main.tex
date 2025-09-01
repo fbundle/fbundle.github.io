@@ -1,0 +1,146 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\input{header}
+
+
+\title{ma5210 assignment 1}
+\author{Nguyen Ngoc Khanh - A0275047B}
+\date{August 2024}
+
+\begin{document}
+
+\maketitle
+
+Let $(M, \Tau)$ be a topological space. We assume that $(M, \Tau)$ satisfies the following conditions:
+\begin{enumerate}
+    \item $(M, \Tau)$ is Hausdorff and second countable
+    \item $\set{U_1, U_2, U_3}$ is an open cover of $M$
+    \item For each $j = 1, 2, 3$, there is a continuous function $h_j: U_j \to \C^n$
+\end{enumerate}
+
+\section{Question 1}
+Suppose we want $(M, \Tau)$ to be a topological manifold with an atlas 
+$$
+    \mathcal{C} = \set{(U_1, h_1), (U_2, h_2), (U_3, h_3)}
+$$
+what additional property/properties do we need to impose on $(h_j, U_j)$'s
+
+\textbf{Hint}: you have to change to codomain of each $h_j$
+
+\begin{proof}[Answer]
+    For $\mathcal{C}$ to be an atlas, we require each $h_j$ to be a homeomorphism from $U_j$ to an open subset of $\C^n$. Two properties for each $j$
+    \begin{enumerate}
+        \item $h_j: U_j \to U'_j$ where $U'_j$ is an open set in $\C^n$
+        \item $h_j$ is a homeomorphism
+    \end{enumerate}
+\end{proof}
+
+\section{Question 2}
+
+Suppose $(M, \Tau)$ is a topological manifold with atlas $\mathcal{C}$ as in Question 1.
+
+What additional property/properties do we need to impose on $\mathcal{C}$ so that $(M, \Tau)$ is a complex analytic manifold with atlas $\mathcal{C}$
+
+\begin{proof}[Answer]
+    For each $i, j$ such that $U := U_i \cap U_j \neq \emptyset$, the transition function
+    $$
+        t_{ij} = h_j h^{-1}_i: h_i(U) \to h_j(U) 
+    $$
+    is complex analytic.
+\end{proof}
+
+\section{Question 3}
+
+Suppose $(M, \Tau)$ is a complex analytic manifold with atlas $\mathcal{C}$ as in Question 2.
+
+Let $U_4$ be an open subset of $U_1$ and let $h_4$ be the restriction of $h_1$ on $U_4$. Let $U'_4 = \im h_4 \subseteq \C^n$. Is
+$$
+    \mathcal{D} = \set{(U_1, h_1), (U_2, h_2), (U_3, h_3), (U_4, h_4)}
+$$
+
+an atlas of $(M, \Tau)$ as a complex analytic manifold?
+
+\begin{proof}[Answer]
+    $\mathcal{D}$ is an atlas of $(M, \Tau)$ as a complex analytic manifold
+\end{proof}
+
+\begin{proof}
+    We will verify that (1) $h_4: U_4 \to U'_4$ is a homeomorphism from open set $U_4 \subseteq M$ to open set $U'_4 \subseteq \C^n$ and (2) $h_{i4}$ and $h_{4i}$ are complex holomorphic for all $i$ such that $U_i \cap U_4 \neq \emptyset$
+
+    (1) $h_4$ is a restriction of homeomorphism $h_1$, so $h_4$ is still a homeomorphism. Since $U_4$ open in $U_1$ and $U_1$ open in $M$, $U_4$ is also open in $M$, therefore, $U'_4$ is open set in $\C^n$ as it is the image of open set $U_4$ under open mapping $h_4$. Hence, $h_4: U_4 \to U'_4$ is a homeomorphism from open set $U_4 \subseteq M$ to open set $U'_4 \subseteq \C^n$
+
+    (2) Let $U_i \cap U_4 \neq \emptyset$, then $U_i \cap U_1 \neq \emptyset$, the transition functions $h_{1i}$ and $h_{i1}$ are complex holomorphic. As the transition $h_{4i}$ is restriction of $h_{1i}$ on open set $h_4(U_4 \cap U_i)$, the transition $h_{i4}$ is restriction of $h_{i1}$ on open set $h_i(U_4 \cap U_i)$, they are complex holomorphic
+    
+\end{proof}
+
+\section{Question 4}
+Question 3 provides a method of adding more charts to the atlas $\mathcal{C}$ by restricting the $h_j$’s to open subsets.
+Could you think of other method(s) of creating more charts to add to the atlas $\mathcal{C}$?
+
+\begin{proof}[Answer]
+    Some methods to creating more charts
+    \begin{enumerate}
+        \item Let $h_i: U_i \to U'_i \subseteq \C^n$ be a chart and $g: U'_i \to U''_i \subseteq \C^n$ be a homeomorphism such that for every chart $h_j: U_j \to U'_j$ with $U := U_j \cap U_i \neq \emptyset$, the composition $g t_{ji} = g h_i h^{-1}_j: h_j(U) \to g h_i (U)$ and $t_{ij} g^{-1} = h_j h^{-1}_i g^{-1}: g h_i(U) \to h_j (U)$ are still complex holomorphic.
+        \begin{center}
+\begin{tikzcd}
+\C^n                 & M                                                                                                & \C^n                                & \C^n                  \\
+U'_j \arrow[u, hook] & U_i \cap U_j \arrow[r, "h_i"] \arrow[rr, "g h_i"', bend right] \arrow[l, "h_j"'] \arrow[u, hook] & U'_i \arrow[u, hook] \arrow[r, "g"] & U''_i \arrow[u, hook]
+\end{tikzcd}
+        \end{center}
+        One example of compatible $g$ is the translation, let any $p \in U_i$, define $g(z) = z - h_i(p)$ so that the composition $g h_i$ maps $p$ to $0 \in \C^n$ (this is used in the proof of "global holomorphic functions are necessarily constant")
+
+        Once we can find $g$, define a new chart by
+        $$
+            (U_i, g h_i: U_i \to U''_i)
+        $$
+
+        Let $i = j$, we see that $g$ is necessarily holomorphic. Furthermore, composition of $n$-variables holomorphic functions are $n$-variables holomorphic, we conclude that $g$ is holomorphic homeomorphism \footnote{I am still not sure that $n$-variables holomorphic is necessarily homeomorphism}.
+
+        Proving composition of $n$-variables holomorphic functions are $n$-variables holomorphic. Let $y: A \to \C^n$, $x: y(A) \to \C^n$ be complex holomorphic. We will show that $xy: A \to \C^n$ is holomorphic.
+
+        For each $i=1, ..., n$, $y_i$ is holomorphic, for every $z^{(0)} = (z^{(0)}_1, ..., z^{(0)}_n) \in A$, there exists an open ball $B^z_i$ centered at $z^{(0)}$ of radius $r^z_i > 0$ such that for all $z \in B^z_i$, for each $i=1, ..., n$, the series below is absolutely convergent
+        $$
+            y_i(z) = \sum_{(a_1,...,a_n) \in \N^n} c_{a_1,...,a_n} (z_1 - z^{(0)}_1)^{a_1} ... (z_n - z^{(0)}_n)^{a_n}
+        $$
+
+        Similarly, for each $j=1, ..., n$, $z_j$ is holomorphic, there exists an open ball $B^y_j$ centered at $y(z^{(0)})$ of radius $r^y_j > 0$, for every $z \in y^{-1} B^y_j \cap B^z_1 \cap ... \cap B^z_n$, the series below is absolutely convergent
+
+        $$
+            x_j y(z) = \sum_{(b_1,...,b_n) \in \N^n} d_{b_1,...,b_n} (y_1(z) - y_1(z^{(0)}))^{b_1} ... (y_n(z) - y_n(z^{(0)}))^{b_n}
+        $$
+
+        By absolute convergence, rearrange the terms, $x_j y(z)$ is a convergent power series when $z \in y^{-1} B^y_j \cap B^z_1 \cap ... \cap B^z_n$. We choose an open ball $B_j$ centered at $z^{(0)}$, hence each $x_j y$ is holomorphic. Therefore, $xy$ is $n$-variables holomorphic.
+        
+    \end{enumerate}
+\end{proof}
+
+\section{Question 5}
+Suppose $(M,\Tau)$ is a complex analytic manifold with atlas $\mathcal{C}$ as in Question 2.
+Show that $(M,\Tau)$ is a real smooth manifold of (real) dimension $2n$.
+
+\begin{proof}
+    Let $g: \C^n \to \R^{2n}$ be the canonical homeomorphism from $\C^n$ to $\R^{2n}$ defined by
+    $$
+        g: (a_1 + ib_1, ..., a_n + ib_n) \mapsto (a_1, b_1, ..., a_n, b_n)
+    $$
+    Let $\mathcal{C} = \set{(U_i, h_i)}_{i \in I}$, define 
+    $$
+        \mathcal{D} = \set{(U_i, g h_i)}_{i \in I}
+    $$
+    We will prove that $\mathcal{D}$ makes $(M, \Tau)$ a real analytic manifold of dimension $2n$ by verifying transition function being real analytic.
+
+    Let $U := U_i \cap U_j \neq \emptyset$, the new transition function is $g h_j h^{-1}_i g^{-1}: gh_i(U) \to gh_j(U)$ where $h_j h^{-1}_i$ is complex holomorphic. Let $z^{(0)} = (a^{(0)}_1 + i b^{(0)}_1, ..., a^{(0)}_n + i b^{(0)}_n) \in h_i(U)$, there is an open ball $B$ centered at $z^{(0)}$ of radius $r > 0$ such that for all $z = (a_1 +ib_1, ..., a_n + ib_n) \in B$, the series below is absolutely convergent
+    \begin{align*}
+        h_j h^{-1}_i(z)
+        &= \sum_{(d_1, ..., d_n) \in \N^n} c_{d_1, ..., d_n} (z_1 - z^{(0)}_1)^{d_1} ... (z_n - z^{(0)}_n)^{d_n} \\
+        &= \sum_{(d_1, ..., d_n) \in \N^n} c_{d_1, ..., d_n} [(a_1 - a^{(0)}_1) + i (b_1 - b^{(0)}_1)]^{d_1} ... [(a_n - a^{(0)}_n) + i (b_n - b^{(0)}_n)]^{d_n}
+    \end{align*}
+
+    By absolute convergence, rearrange the terms, let $x^{(0)} = (a^{(0)}_1, b^{(0)}_1, ..., a^{(0)}_n, b^{(0)}_n)$ and $x = (a_1, b_1, ..., a_n, b_n)$,
+    $g h_j h^{-1}_i g^{-1} (x)$ can be written as an absolutely convergent power series. Hence, for all $x^{(0)} \in g h_i(U)$, there exists an open ball $B'$ centered at $z^{(0)}$ of radius $r > 0$ such that for all $x \in B'$, $g h_j h^{-1}_i g^{-1}$ can be written as an absolutely convergent power series. That is, $g h_j h^{-1}_i g^{-1}$ is analytic.
+
+    
+    
+\end{proof}
+
+\end{document}

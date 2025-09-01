@@ -1,0 +1,57 @@
+\subsection{Unstructured Data}
+
+\subsubsection{Example of Unstructured Data}
+\begin{frame}{Example of Unstructured Data}
+Any data not structured (\emph{human data})
+
+\begin{itemize}
+    \item Image
+    \item Audio
+    \item Video
+\end{itemize}
+Still represented in numbers, but those numbers are not directly correlated with outputs (e.g dog breed in image, transcript in audio) \\
+\emph{Human data} tend to have symmetric property, i.e invariant under some transformation also known as data augmentation.
+
+\end{frame}
+
+\subsubsection{Augmentation for image data}
+\begin{frame}{Augmentation for image data}
+    Spatial domain
+    \begin{itemize}
+        \item Random shift, crop, rotation, flip
+    \end{itemize}
+    Channel domain
+    \begin{itemize}
+        \item Color, brightness, contrast perturbation
+    \end{itemize}
+    Spectral domain
+    \begin{itemize}
+        \item Apply filter
+        \item Zoom-in, zoom-out
+    \end{itemize}
+\end{frame}
+
+\subsubsection{Augmentation for sound data}
+\begin{frame}{Augmentation for sound data}
+    Spatial domain
+    \begin{itemize}
+        \item Random shift, crop
+    \end{itemize}
+    Channel domain
+    \begin{itemize}
+        \item Speed, volume perturbation
+    \end{itemize}
+    Spectral domain
+    \begin{itemize}
+        \item Apply filter
+        \item Reverberation
+    \end{itemize}
+\end{frame}
+
+\subsubsection{Other methods}
+\begin{frame}{Other methods}
+    A very useful method for many \emph{human data}
+    \begin{itemize}
+        \item add noise
+    \end{itemize}
+\end{frame}

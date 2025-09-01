@@ -1,0 +1,229 @@
+\chapter{RIEMANNIAN MANIFOLD}
+
+\section{RIEMANNIAN MANIFOLD}
+
+\begin{definition}[Riemannian metric, Riemannian manifold]
+	A smooth manifold $M$ equipped with a Riemannian metric $g$ which is a positive definite and symmetric $(0, 2)$-tensor. That is,
+	\begin{enumerate}
+		\item $g_x(v, v) \geq 0$ for any $v \in T_x M$ and $g_x(v, v) = 0$ if and only if $v = 0$
+		\item $g_x(v, w) = g_x(w, v)$ for any $v, w \in T_x M$
+	\end{enumerate}
+\end{definition}
+
+\begin{definition}[Riemannian isometry]
+	A Riemannian isometry $f: (M, g_M) \to (N, g_N)$ is a diffeomorphism so that $f^* g_N = g_M$ where $f^*$ is the induced metric on $M$ from $N$. In other words, $g_M(v, w) = g_N(df_x(v), df_x(w))$ for all $v, w \in T_x M$
+	\begin{center}
+		\begin{tikzcd}
+			T_x M \times T_x M \arrow[r, "df_x \times df_x"] \arrow[rd, "g_M = f^* g_N"'] & T_{f(x)} N \times T_{f(x)} N \arrow[d, "g_N"] \\
+			& \R                                           
+		\end{tikzcd}
+	\end{center}
+	
+	Two manifolds are said to be isometric if there exists a Riemannian isometry between them. Moreover, being isometric is an equivalent relation.
+\end{definition}
+
+\begin{definition}[Riemannian immersion]
+	Let $f: (M, g_M) \to (N, g_n)$ be an immersion, $f$ is called a Riemannian immersion (or Riemannian embedding) if $f^* g_N = g_M$. Riemmannian immersion is also called isometric immersion.
+\end{definition}
+
+\begin{definition}[Riemannian submersion]
+	Let $f: (M, g_M) \to (N, g_N)$ be a submersion, $f$ is called a Riemannian submersion if  $f^* g_N = g_M$ on $(\ker df_x)^\perp$ for all $x \in M$.
+\end{definition}
+
+\begin{theorem}
+	Every differentiable manifold $M$ can be equipped with a Riemannian metric $g$
+\end{theorem}
+
+\section{PSEUDO-RIEMANNIAN MANIFOLD}
+
+\begin{definition}[pseudo-Riemannian metric, pseudo-Riemannian manifold]
+	A smooth manifold $M$ equipped with a pseudo-Riemannian metric $g$ which is a non-degenerate and symmetric $(0, 2)$-tensor. That is,
+	\begin{enumerate}
+		\item for any nonzero $v \in T_x M$, there exists a $w \in T_x M$ so that $g_x(v, w) \neq 0$
+		\item $g_x(v, w) = g_x(w, v)$ for any $v, w \in T_x M$
+	\end{enumerate}
+\end{definition}
+
+\begin{remark}[index]
+	Given a pseudo-Riemannian manifold $(M, g)$, for any $x \in M$, $T_x M$ admits a decomposition
+	$$
+		T_x M = P \oplus N
+	$$
+	such that $g$ is positive definite on $P$ and negative definite, that is
+	\begin{align*}
+		g(v, v) &> 0 \text{ for all nonzero } v \in P \\
+		g(w, w) &> 0 \text{ for all nonzero } w \in N
+	\end{align*}
+	
+	The decomposition is not unique but their dimensions are well-defined. For a connected pseudo-Riemannian manifold, the dimensions of decomposition is a constant and called index.
+\end{remark}
+
+\section{GROUP AND RIEMANNIAN MANIFOLD}
+
+\subsection{ISOMETRY GROUP}
+
+\begin{definition}[isometry group, isotropy subgroup, homogenenous Riemannian manifold]
+	Given a Riemannian manifold $(M, g)$, let $\Iso(M, g)$ denote the group of Riemannian isometries. For any $x \in M$, the isotropy subgroup (or stabilizer subgroup) of $\Iso(M, g)$ is defined by
+	$$
+		\Iso_x(M, g) = \set{f \in \Iso(M, g): f(x) = x}
+	$$
+	
+	A Riemannian manifold is said to be homogenenous if $\Iso(M, g)$ acts transitively on $M$, that is given any pair of points $x, y \in M$, there exists a isometry $f \in \Iso(M, g)$ so that $f(x) = y$
+\end{definition}
+
+\begin{remark}
+	The isometry group of $(\R^n, g_{\R^n})$ is
+	$$
+		\Iso(\R^n, g_{\R^n}) = \R^n \rtimes O(n)
+	$$
+	
+	where $\R^n \rtimes O(n)$ is the semi-direct product of $\R^n$ with $O(n)$ the orthogonal subgroup of $GL(n, \R)$. $\R^n$ and $O(n)$ are regarded as subgroup of $\Iso(\R^n, g_{\R^n})$ via the identification
+	\begin{align*}
+		\R^n &\hookrightarrow \Iso(\R^n, g_{\R^n})
+		&O(n) &\hookrightarrow \Iso(\R^n, g_{\R^n}) \\
+		v &\mapsto (x \mapsto x + v) &O &\mapsto (x \mapsto Ox)
+	\end{align*}
+	
+	Under that identification
+	$$
+		\R^n \cap O(n) = \set{1_{\R^n}}
+	$$
+	
+	Moreover, the isotropy subgroup at $x \in \R^n$ is isomorphic to $O(n)$
+	$$
+		\Iso_p(\R^n, g_{\R^n}) \cong O(n) \text{ and } \R^n \cong \frac{\Iso(\R^n, g_{\R^n})}{\Iso_x(\R^n, g_{\R^n})}
+	$$
+	
+	Furthermore, any homogeneous Riemannian manifold $(M, g)$ can be written as
+	$$
+		(M, g) \cong \frac{\Iso(M, g)}{\Iso_x(M, g)}
+	$$
+	
+	for any $x \in M$
+\end{remark}
+
+\section{COVERING MAP}
+
+\begin{definition}[covering map]
+	Let $\pi: M \to N$ be a smooth map between two smooth manifolds, then $\pi$ is said to be a covering map if for each $q \in N$, there exists an open neighbourhood $V$ of $q$ in $N$ so that $\pi^{-1}V$ is a disjoint union of open sets $\set{U_i}_{i \in I}$ in $M$ such that $\pi\vert_{U_i}: U_i \to V$ is a diffeomorphism for every $i \in I$
+\end{definition}
+
+\begin{definition}[deck transformation, normal covering]
+	Let $\pi: M \to N$ be a covering map, the group of deck transformations is
+	$$
+		\Gamma = \set{\phi: M \to M: \phi \text{ is a diffeomorphism such that } \pi \phi = \pi}
+	$$
+	A covering $\pi: M \to N$ is said to be a normal covering if $\Gamma$ acts transitively on the fibers, that is for each $q \in N$ and $p_1, p_2 \in \pi^{-1} q$, there exists $\phi \in \Gamma$ so that 
+	$$
+		\phi(q_1) = q_2
+	$$
+\end{definition}
+
+\begin{definition}[local isometry]
+	A smooth map $f: (M, g_M) \to (N, g_N)$ is said to be a local isometry if for each $p \in M$, there exists a neighbourhood $U$ of $p$ so that $f\vert_U: U \to f(U)$ is a Riemannian isometry
+\end{definition}
+
+\begin{definition}[Riemannian covering]
+	A map $\pi: (M, g_M) \to (N, g_N)$ is said to be a Riemannian covering if it is a covering map and a local isometry. If $\pi$ is a Riemannian covering, then each deck transformation $\phi \in \Gamma$ is a Riemannian isometry on $(M, g)$
+\end{definition}
+
+\section{LOCAL REPRESENTATION OF METRIC}
+
+\note{the writing of Peterson's book was too bad, I couldn't summarize what he/she tried to say. This section just contains some examples without any proper mathematics}
+
+\section{SOME TENSOR CONCEPTS}
+
+\subsection{TYPE CHANGE BY RIEMANNIAN METRIC}
+
+Given a Riemannian manifold $(M, g)$, a tensor of type $(s, t)$ can be turned into a $(s-k, t+k)$ for any $k \in \Z$, the operation is called type change and is done as follows: 
+
+Let $\set{E_1, E_2, ..., E_n}$ be a frame of $TM$ and $\set{\sigma_1, \sigma_2, ..., \sigma_n}$ be a frame of $T^*M$ so that $\sigma^j(E_i) = \delta_i^j$. Then any $v \in TM$ and $\omega \in T^* M$ can be written as
+\begin{align*}
+	&v = v^i E_i = \sigma^i(v) E_i \\
+	&\omega = \omega_j \sigma^j = \omega(E_j) \sigma^j
+\end{align*}
+
+Any $(s, t)$-tensor $T$ can be written as
+$$
+	T = T_{j_1 j_2 ... j_t}^{i_1 i_2 ... i_s} E_{i_1} \otimes ... \otimes E_{i_s} \otimes \sigma^{j_1} \otimes ... \otimes \sigma^{j_t}
+$$
+
+where each $T_{j_1 j_2 ... j_t}^{i_1 i_2 ... i_s} \in \E(M)$ is a smooth function on $M$. In particular, for a Riemannian metric $g$
+$$
+	g = g_{ij} \sigma^i \otimes \sigma^j
+$$
+
+One can use $g$ to \textit{change} a section in $TM$ into a section in $T^*M$ as follows: Let $v \in TM$, then the corresponding section in $T^* M$ is $g(v, -)$
+$$
+	w \mapsto g(v, w)
+$$
+
+Let $\omega \in T^* M$, then the corresponding section in $TM$ is the unique section $v \in TM$ so that
+$$
+	g(v, w) = \omega(w)
+$$
+
+for all $w \in TM$. Hence, one can \textit{change} $E_i$ into a section in $T^* M$ and $\sigma^j$ into a section in $TM$ by a Riemannian metric $g$ as follows:
+\begin{align*}
+	E_i &\mapsto g_{ij} \sigma^j \\
+	\sigma^j &\mapsto g^{ij} E_i
+\end{align*}
+
+Note that, $(g_{ij})$ is the matrix of $g$ with respect to frame $\set{\sigma_1, \sigma_2, ..., \sigma_n}$, then $(g^{ij}) = (g_{ij})^{-1}$. If one choose an orthonormal frame of $TM$, then $(g_{ij})$ is the identity matrix.
+
+\subsubsection{THE RICCI TENSOR}
+
+A Ricci tensor ($(1, 1)$-tensor) is of the form
+$$
+	\Ric = \Ric_j^i E_i \otimes \sigma^j
+$$
+
+Its type change as a $(0, 2)$-tensor is
+$$
+	\Ric = \Ric_{kj} \sigma^k \otimes \sigma^j = g_{ij} \Ric_j^i \sigma^k \otimes \sigma^j
+$$
+
+Its type as a $(2, 0)$-tensor is
+$$
+	\Ric = \Ric_{ik} E_i \otimes E_k = g^{kj} \Ric_j^i E_i \otimes E_k
+$$
+
+\subsubsection{THE CURVATURE TENSOR}
+
+A curvature tensor ($(1, 3)$-tensor) is of the form
+$$
+	R = R_{ijk}^l E_l \otimes \sigma^i \otimes \sigma^j \otimes \sigma^k
+$$
+
+As a $(0, 4)$-tensor, we have
+$$
+	R = R_{mijk} \sigma^m \otimes \sigma^i \otimes \sigma^j \otimes \sigma^k = g_{lm} R_{ijk}^l \sigma^m \otimes \sigma^i \otimes \sigma^j \otimes \sigma^k
+$$
+
+As a $(2, 2)$-tensor we have
+$$
+	R = R_{jk}^{lm} E_l \otimes E_m \otimes \sigma^j \otimes \sigma^k = g^{mi} R_{ijk}^l E_l \otimes E_m \otimes \sigma^j \otimes \sigma^k
+$$
+
+\subsection{CONTRACTION}
+
+Given an $(s, t)$-tensor $T$ for $s, t > 1$, contraction of $T$ is a $(s-1, t-1)$ tensor. Let 
+$$
+	T = T_{j_1 j_2 ... j_t}^{i_1 i_2 ... i_s} E_{i_1} \otimes ... \otimes E_{i_s} \otimes \sigma^{j_1} \otimes ... \otimes \sigma^{j_t}
+$$
+
+Then, the contraction of $T$ at index $(j_m, i_n)$ is
+$$
+	C(T) = T_{j_1 ... j_{m-1} k j_{m+1} ... j_t}^{i_1 ... i_{n-1} k i_{n+1} ... i_s} E_{i_1} \otimes ... \otimes E_{i_{n-1}} \otimes E_{i_{n+1}} \otimes ... \otimes E_{i_s} \otimes \sigma^{j_1} \otimes ... \otimes \sigma^{j_{m-1}} \otimes \sigma^{j_{m+1}} \otimes ... \otimes \sigma^{j_t}
+$$
+
+where each $T_{j_1 ... j_{m-1} k j_{m+1} ... j_t}^{i_1 ... i_{n-1} k i_{n+1} ... i_s} = \sum_k T_{j_1 ... j_{m-1} k j_{m+1} ... j_t}^{i_1 ... i_{n-1} k i_{n+1} ... i_s}$ in usual notation. Then the Ricci tensor ($(1, 1)$-tensor) is a contraction of the curvature tensor ($(1, 3)$-tensor)
+
+
+\subsection{INNER PRODUCT OF TENSOR}
+
+One can define an inner product of two tensors of the same type. \note{How to define it, the book didn't care enough to mention it rigorously }
+
+
+
+

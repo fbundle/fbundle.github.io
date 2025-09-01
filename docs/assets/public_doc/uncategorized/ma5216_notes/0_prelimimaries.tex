@@ -1,0 +1,452 @@
+\chapter{PRELIMINARIES}
+
+\section{DIFFERENTIABLE MANIFOLD}
+
+\begin{definition}[manifold, coordinate chart, atlas]
+	A manifold $M$ of dimension $n$ is a Hausdorff, second-countable topological space such that every point $p \in M$ has an open neighbourhood $U$ which is homeomorphic to an open subset $\Omega \subseteq \R^n$. Such an homeomorphism
+	$$
+		x: U \to \Omega
+	$$ 
+	is called (coordinate) chart. The component functions $x = (x_1, x_2, ..., x_n)$ are called local coordinates at the point $p$. An atlas $\mathcal{A}$ of $M$ is collection of coordinate charts so that the collection of domains is an open cover of $M$.
+\end{definition}
+
+\begin{remark}[invariance of domain]
+	When $M$ is connected, one can show that the dimension $n$ is uniquely determined. This is known as invariance of domain
+\end{remark}
+
+\begin{definition}[transition function, differentiable manifold]
+	An atlas $\mathcal{A} = \set{(U_\alpha, x_\alpha)}_{\alpha \in A}$ on a manifold $M$ is said to be differentiable if all the transition functions
+	$$
+		x_{\alpha \beta} = x_\beta x_\alpha^{-1}: x_\alpha (U_\alpha \cap U_\beta)
+	$$
+	
+	are differentiable functions where $x_\alpha: U_\alpha \to \Omega_\alpha$, $x_\beta: U_\beta \to \Omega_\beta$ with $U_\alpha \cap U_\beta \neq \emptyset$. A differentiable manifold is a manifold with a differentiable atlas.
+\end{definition}
+
+\begin{remark}[equivalent differentiable manifold]
+	Two manifolds $(M, \mathcal{A}_1)$ and $(M, \mathcal{A}_2)$ are equivalent if and only if $(M, \mathcal{A}_1 \cup \mathcal{A}_2)$ is a differentiable manifold. This equivalence relation defines equivalence classes on the collection of differentiable manifolds. In each equivalence class $\set{(M, \mathcal{A}_i)}_{i \in I}$, there is a unique maximal atlas $\bigcup_{i \in I} \mathcal{A}_i$. In other words, two differentiable manifolds are said to be equivalent if they are contained in the same maximal atlas. A manifold is uniquely characterized by its maximal atlas.
+\end{remark}
+
+\begin{definition}[smooth map, differentiable structure]
+	Let $M$ be a smooth manifold, a function $\phi: M \to \R$ is called smooth map on $M$ if for each $x \in M$ and a chart $x: U_x \to \Omega_x$, the restriction of $\phi$ on $U_x$ makes composition $\phi x^{-1}$ smooth
+	
+	\begin{center}
+		\begin{tikzcd}
+			U_x \arrow[r, "x"] \arrow[d, "\phi"'] & \Omega_x \arrow[ld, "\phi x^{-1}", dashed] \\
+			\R                                  &                                 
+		\end{tikzcd}
+	\end{center}
+	
+	The set of all smooth maps on $M$ is denoted by $\E(M)$. The set of all smooth maps on all open sets of $M$ is called differentiable structure of $M$ and denoted by $S_M$
+\end{definition}
+
+\begin{remark}
+	There is a one-to-one correspondence between the differentiable structure on $M$ and the maximal atlas on $M$
+\end{remark}
+
+\begin{remark}
+	Smooth maps on open sets of $M$ form a sheaf of rings denoted by $\E$. That is, for each open set $U$ in $M$, $\E(U)$ is the ring of smooth functions defined on $U$.
+\end{remark}
+
+\begin{definition}[oriented differentiable manifold]
+	An atlas $\mathcal{A} = \set{(U_\alpha, x_\alpha)}_{\alpha \in A}$ is said to be oriented if all chart transition functions have positive Jacobian determinant. A manifold is said to be orientable if it admits an oriented atlas
+\end{definition}
+
+\begin{definition}[map of differentiable manifolds]
+	A map $f: M \to N$ from a differentiable manifold into a differentiable manifold is said to be a map of differentiable manifolds if the induced map $S_N \to S_M$ is well-defined, that is, if $\phi: U_N \to \R$ is in the differentiable structure of $N$, then $\psi = \phi f: U_M \to \R$ is in the differentiable structure of $M$. If $h$ is a homeomorphism, then $h$ is said to be an isomorphism of differentiable manifolds (or diffeomorphism).
+	\begin{center}
+		\begin{tikzcd}
+			U_M \arrow[r, "f"] \arrow[rd, "\psi"', dashed] & U_N \arrow[d, "\phi"] \\
+			& \R                 
+		\end{tikzcd}
+	\end{center}
+\end{definition}
+
+\begin{lemma}[partition of unity]
+	Let $M$ be a differentiable manifold, and $\set{U_\alpha}_{\alpha \in A}$ be an open cover of $M$. Then there exists a partition of unity $\set{(U_\beta, \phi_\beta: M \to \R)}_{\beta \in B}$ subordinate to $\set{U_\alpha}_{\alpha \in A}$ such that
+	\begin{enumerate}
+		\item $\supp \phi_\beta$ is a compact subset of $U_\beta$ for all $\beta \in B$
+		\item $0 \leq \phi_\beta \leq 1$ for for all $\beta \in B$
+		\item $\sum_{\beta \in B} \phi_\beta = 1$
+	\end{enumerate}
+	
+	Note that, since the open cover $\set{U_\beta}_{\beta \in B}$ is locally finite, the sum is well-defined at every point $x \in M$
+\end{lemma}
+
+\section{VECTOR BUNDLE}
+
+\begin{definition}[smooth vector bundle]
+	A smooth vector bundle of rank $k$ is an surjective map of differentiable manifolds $\pi: E \to M$ so that for each $x \in M$, the fiber $E_x: \pi^{-1}(x)$ carries a structure of $k$-dimensional real vector space. Moreover, for each $x \in M$, there exists an open neighbourhood $U$ and an isomorphism $\phi: \pi^{-1} U \to U \times \R^k$ so that the diagram below commutes
+	\begin{center}
+		\begin{tikzcd}
+			\pi^{-1} U \arrow[d, "\pi", two heads] \arrow[r, "\phi"] & U \times \R^k \arrow[ld] \\
+			U                                              &                         
+		\end{tikzcd}
+	\end{center}
+	
+	The map $\phi$ is called a local trivialization. The smooth vector bundle $M \times R^k \to M$ is called trivial bundle.
+\end{definition}
+
+\begin{proposition}[smooth bundle induces transition function]
+	Let $\phi: E \to M$ be a smooth bundle. Let $\phi_\alpha: \pi^{-1} U_\alpha \to U_\alpha \times \R^k$ and $\phi_\beta: \pi^{-1} U_\beta \to U_\beta \times \R^k$ be two local trivializations with $U = U_\alpha \cap U_\beta \neq \emptyset$, then for each $x \in U$, the composition $\phi_\beta \phi_\alpha^{-1}$ define a map $\phi_{\alpha \beta}: U \to GL(k, \R)$
+	\begin{center}
+		\begin{tikzcd}
+			U \times \R^k \arrow[rd] \arrow[rr, dashed, bend left] & \pi^{-1} U \arrow[d, "\pi"'] \arrow[l, "\phi_\alpha"] \arrow[r, "\phi_\beta"'] & U \times \R^k \arrow[ld] \\
+			& U                                                                              &                         
+		\end{tikzcd}
+	\end{center}
+
+	with the following properties
+	\begin{enumerate}
+		\item $\phi_{\alpha \alpha} = 1_{\R^k}$
+		\item $\phi_{\alpha \beta} \phi_{\beta \alpha} = 1_{\R^k}$
+		\item $\phi_{\alpha \beta} \phi_{\beta \gamma} \phi_{\gamma \alpha} = 1_{\R^k}$
+	\end{enumerate}
+\end{proposition}
+
+\begin{proposition}[transition function induces smooth manifold]
+	Given a smooth manifold $M$ and a open cover $\set{U_\alpha}_{\alpha \in A}$. If for each pair $\alpha, \beta \in A$ with $U = U_\alpha \cap U_\beta \neq \emptyset$, we have a transition function $\phi_{\alpha \beta}: U \to GL(k, \R)$ with the properties 
+	\begin{enumerate}
+		\item $\phi_{\alpha \alpha} = 1_{\R^k}$
+		\item $\phi_{\alpha \beta} \phi_{\beta \alpha} = 1_{\R^k}$
+		\item $\phi_{\alpha \beta} \phi_{\beta \gamma} \phi_{\gamma \alpha} = 1_{\R^k}$
+	\end{enumerate}
+	Then, then the transition functions uniquely define a smooth vector bundle over $M$.
+\end{proposition}
+
+\begin{definition}[section]
+	A section $s: M \to E$ of a smooth bundle $\pi: E \to M$ is a map so that the composition $\pi s = 1_M$. The space of sections of $\pi: E \to M$ is an $\E(M)$-module and denoted by $\E(M, E)$
+\end{definition}
+
+\begin{remark}
+	The sections on open sets of $M$ form a sheaf of $\E$-module denoted by $\E(-, E)$, that is, for each open set $U$ in $M$, $\E(U, E)$ is the $\E(U)$-module of smooth sections defined on $U$
+\end{remark}
+
+\begin{definition}[frame]
+	A frame $\set{f_1, f_2, ..., f_k}$ of a smooth bundle $\pi: E \to M$ is a basis of the $\E(M)$-module $\E(M, E)$
+\end{definition}
+
+\begin{proposition}[dual space of smooth bundle]
+	Let $\pi: E \to M$ be a smooth bundle. There exists a smooth bundle $\pi^*: E^* \to M$ so that for each $x \in M$, the fiber $E_x^*$ is the dual space of $E_x$. Moreover, the transition at $x$ function is
+	$$
+		\phi^*(x) = (\phi(x)^{-1})^t
+	$$
+\end{proposition}
+
+\begin{proposition}[tensor product, wedge product of smooth bundle]
+	Let $\pi_E: E \to M$ and $\pi_F: F \to M$ be smooth bundles, then there exists a tensor product bundle denoted by $\pi_{E \otimes F}: E \otimes F \to M$ and wedge product bundles denoted by $\pi_{\wedge^n E}: \wedge^n E \to M$ so that for each $x \in M$, $(E \otimes F)_x \cong E_x \otimes F_x$, $(\wedge^n E)_x \cong \wedge^n E_x$. Moreover the transition functions at $x$ are
+	\begin{align*}
+		\phi_{E \otimes F}(x) &= \pi_E \otimes \pi_F \\
+		\phi_{\wedge^n E}(x) &= \wedge^n \pi_E
+	\end{align*}
+\end{proposition}
+
+\begin{remark}[vector bundle and locally free sheaf]
+	There is a one-to-one correspondence between vector bundles and locally free sheaves. Hence, dual of vector bundles, tensor product and wedge product of vector bundles can be defined using sheaf.
+\end{remark}
+
+\section{TANGENT BUNDLE, COTANGENT BUNDLE, TENSOR}
+
+\begin{definition}[germs of smooth functions]
+	On the sheaf of smooth functions of $M$, for each $x \in M$, the stalk of smooth functions at $x$ is called the set of germs of smooth functions at $x$ denoted by $\E_x$
+	$$
+		\E_x = \varinjlim_{U \ni x} \E(U)
+	$$
+	
+	Note that, $\E_x$ is a real vector space
+\end{definition}
+
+\begin{definition}[tangent space]
+	On a smooth manifold $M$ of dimension $n$, for each $x \in M$, the tangent space at $x$ denoted by $T_x M$ is the set of linear maps $D: E_x \to \R$ satisfy the product rule
+	$$
+		D([f], [g]) = D([f]) g(x) + f(x) D([g])
+	$$
+	
+	for all smooth maps $f: U_f \to \R$ and $g: U_g \to \R$ with $U_f, U_g \ni x$. Note that, $T_x M$ is a real vector space of dimension $n$
+\end{definition}
+
+\begin{remark}[alternative definition for tangent space]
+	On $\R^n$, for each $x \in \R^n$, define the tangent space at $x$ by
+	$$
+		T_x \R^n = \Span \set*{\frac{\partial}{\partial x_1}\bigg\vert_{x}, \frac{\partial}{\partial x_2}\bigg\vert_{x}, ..., \frac{\partial}{\partial x_n}\bigg\vert_{x}}
+	$$
+	
+	On a manifold $M$ of dimension $n$, for each $x \in M$, let $x_1: U_1 \to \Omega_1$ and $x_2: U_2 \to \Omega_2$ be two charts. Let the Jacobian $d(x_2 x_1^{-1})$ of $x_2 x_1^{-1}: \Omega_1 \to \Omega_2$ maps the tangent space at $x_1(x)$ into the tange space at $x_2(x)$ so that $\frac{\partial}{\partial x_i}\bigg\vert_x \mapsto \frac{\partial}{\partial y_i}\bigg\vert_x$ for all $i=1, 2, ..., n$.  This defines an equivalence relation, for any $v \in T_{x_1(x)} \Omega_1$ and $w \in T_{x_2(x)} \Omega_2$, $v \sim w$ if and only if $d(x_2 x_1^{-1})(v) = w$. The set of equivalence classes form the tangent space at $x$.
+\end{remark}
+
+\begin{definition}[differential]
+	A $f: M \to N$ be a smooth map naturally induces a linear map $df_x: T_x M \to T_{f(x)} N$ for each $x \in M$
+\end{definition}
+
+\begin{remark}[tangent bundle on $\R^n$]
+	On any open set $U$ of $\R^n$, the tangent bundle is defined by the trivial bundle $\pi: TU \to U$ with $TU = U \times \R^n$ and
+	$$
+		\pi^{-1}(x) = \set{x} \times \R^n \cong T_x \R^n = \Span \set*{\frac{\partial}{\partial x_1}\bigg\vert_{x}, \frac{\partial}{\partial x_2}\bigg\vert_{x}, ..., \frac{\partial}{\partial x_n}\bigg\vert_{x}}
+	$$
+\end{remark}
+
+\begin{definition}[tangent bundle, cotangent bundle]
+	On a manifold $M$ of dimension $n$ with atlas $\set{U_\alpha}_{\alpha \in A}$, the tangent bundle $TM \to M$ is the unique smooth bundle defined by transition functions
+	\begin{align*}
+		\phi_{\alpha \beta}: U_\alpha \cap U_\beta &\to \Hom(T_{x_\alpha(x)} \Omega_\alpha, T_{x_\beta(x)} \Omega_\beta) \xrightarrow{\sim} GL(k, \R) \\
+		x &\mapsto d(x_\beta x_\alpha^{-1})_x
+	\end{align*}
+	
+	As a set, the tangent bundle $TM$ can be identified with
+	$$
+		TM = \coprod_{x \in M} T_x M
+	$$
+	
+	The cotangent bundle $T^*M \to M$ is the dual of the tangent bundle.
+\end{definition}
+
+\begin{remark}[local coordinates of tangent bundle and cotangent bundle]
+	Let $M$ be a manifold of dimension $n$. Let
+	$$
+		\set{e_1, e_2, ..., e_n}
+	$$
+	
+	be a frame of $TM \to M$. Let
+	$$
+		\set{e^1, e^2, ..., e^n}
+	$$
+	be a frame of $T^*M \to M$
+\end{remark}
+
+\begin{definition}[tensor]
+	Let $p, q \geq 0$, a $p$-contravariant $q$-covariant tensor (or $(p, q)$-tensor) on $M$ is a section of the bundle
+	$$
+		\tuple*{\bigotimes^p TM} \otimes \tuple*{\bigotimes^q T^*M}
+	$$
+\end{definition}
+
+\begin{definition}[differential form]
+	Let $p \geq 0$, a $p$-form on $M$ is a section of the bundle
+	$$
+		\bigwedge^n T^* M
+	$$
+\end{definition}
+
+\begin{remark}
+	wedge product is a quotient space of tensor product, hence one can identify a $p$-form by its lift as a $(0, p)$-tensor
+\end{remark}
+
+\begin{remark}[local coordinates of tensor]
+	Let $T$ be a $(p, q)$-tensor, then $T$ can be written in local coordinates as follows:
+	$$
+		\sum_{i_1, ..., i_p, j_1, ..., j_q} T_{i_1 ... i_p}^{j_1 ... j_q} e_{i_1} \otimes ... \otimes e_{i_p} \otimes e^{j_1} \otimes ... \otimes e^{j_q}
+	$$
+	
+	In Einstein notation, we also write
+	$$
+		T_{i_1 ... i_p}^{j_1 ... j_q} e_{i_1} \otimes ... \otimes e_{i_p} \otimes e^{j_1} \otimes ... \otimes e^{j_q}
+	$$
+\end{remark}
+
+\section{IMMERSION AND SUBMERSION}
+
+\begin{definition}[immersion, differential embedding]
+	A map $f: M \to N$ is called an immersion for any $x \in M$, the differential
+	$$
+		df_x: T_x M \to T_{f(x)} N 
+	$$
+	is injective. If $f$ maps $M$ homeomorphically into $f(M)$, then $f$ is called a differential embedding and $f(M)$ is called a submanifold of $M$.
+\end{definition}
+
+\begin{lemma}
+	Let $f: M \to N$ be an immersion from manifold of dimension $m$ into a manifold of dimension $n$. For each $x \in M$, there exists a neighbourhood $U \ni x$ and a chart $(V, y)$ on $N$ so that $V \ni f(x)$ so that
+	\begin{enumerate}
+		\item $f\vert_U$ is a differential embedding
+		\item $y^{m+1} = y^{m+2} = ... = y^{n} = 0$ on $f(U) \cap N$
+	\end{enumerate}
+	
+	In other words, an immersion is locally differential embedding.
+\end{lemma}
+
+\begin{lemma}
+	Let $f: M \to N$ be map from manifold of dimension $m$ into a manifold of dimension $n$ with $m \geq n$. If $y \in N$ so that $df_x$ have full rank for all $x \in f^{-1}(y) \subseteq M$, then $f^{-1}(y)$ is a differentiable submanifold of $M$ of dimension $m-n$
+\end{lemma}
+
+\begin{definition}[submersion]
+	A map $f: M \to N$ is called an immersion for any $x \in M$, the differential
+	$$
+	df_x: T_x M \to T_{f(x)} N 
+	$$
+	is surjective
+\end{definition}
+
+\section{LIE BRACKET OF VECTOR FIELD}
+
+\begin{remark}[vector field as an operator on smooth function]
+	Given a smooth manifold $M$ and a vector field $X \in TM$, one can consider $X$ as an operator on $\E(M)$ as follows:
+	\begin{align*}
+		X: \E(M) &\to \E(M) \\
+		f &\mapsto (x \mapsto df_x X(x))
+	\end{align*}
+\end{remark}
+
+\begin{remark}[local representation of vector field as an operator on smooth function]
+	If we write $X = X^i \frac{\partial }{\partial x_i}$ where $\set*{\frac{\partial }{\partial x_1}, ..., \frac{\partial }{\partial x_n}}$ is the canonical frame, then 
+	$$
+		X(f) = X^i \frac{\partial f}{\partial x_i} \frac{\partial }{\partial x_i}
+	$$
+\end{remark}
+
+\begin{definition}[Lie bracket of vector field]
+	Let $X, Y \in TM$ be vector fields, define $[X, Y] \in TM$ by
+	$$
+		[X, Y](f) = X(Y(f)) - Y(X(f))
+	$$
+	
+	for any smooth function $f \in \E(M)$
+\end{definition}
+
+\begin{remark}[product rule of Lie bracket]
+	$$
+		[X, Y](f \cdot g) = [X, Y](f) \cdot g + f \cdot [X, Y](g)
+	$$
+\end{remark}
+
+\begin{proposition}[Jacobi identity]
+	$$
+		[X, [Y, Z]] + [Y, [Z, X]] + [Z, [X, Y]] = 0
+	$$
+\end{proposition}
+
+\section{LOCAL FLOW GENERATED BY VECTOR FIELD}
+
+\begin{proposition}[integral curve]
+	Given a vector field $X \in TM$ and $p \in M$, there exists a smooth curve $c: (-\epsilon, +\epsilon) \to M$ for some $\epsilon > 0$ with $c(0) = p$ and $c'(t) = X(c(t))$. Such smooth curve $c$ is called an integral curve for $X$ at $p$. Moreover, given any $\epsilon > 0$, if an integral curve exists then it is also unique.
+\end{proposition}
+
+\begin{proposition}[local flow generated by a vector field]
+	Given a vector field $X \in TM$ and $p \in M$ and an open neighbourhood $U$ of $p$ , there exists an open neighbourhood $W \subseteq U$ of $p$ and a smooth function $F: (-\epsilon, +\epsilon) \times W \to U$ so that $F(0, q) = q$ and
+	$$
+		dF_{(t, q)} \tuple*{\frac{\partial}{\partial t}, 0} = X(F(t, q))
+	$$
+	for any $(t, q) \in (-\epsilon, +\epsilon) \times W$. Such $F$ is called a local flow generated by the vector field $X$. In particular, $t \mapsto F(t, q)$ is an integral curve at $q \in W$. For any $t \in (-\epsilon, +\epsilon)$, define the smooth map
+	\begin{align*}
+		F_t: W &\to U \\
+				q &\mapsto F(t, q)
+	\end{align*}
+	
+	$F_t$ induces a group structure with $F_0 = 1_W$ and
+	$$
+		F_{t + s} = F_t \circ F_s
+	$$
+\end{proposition}
+
+\section{EXERIOR DIFFERENTIATION AND INTERIOR MULTIPLICATION}
+
+\subsection{EXTERIOR DIFFERENTIATION}
+
+Exterior derivative admits an axiomatic definition as follows:
+\begin{definition}[exterior derivative]
+	$d: \E^p(\R^n) \to \E^p(\R^n)$ is the unique $\R$-linear map satisfies the following:
+	\begin{enumerate}
+		\item for any $f \in \E^0(\R^n) = \E(\R^n)$
+		$$
+			df = \sum_{i=1}^n \frac{\partial f}{\partial x_i} dx_i
+		$$
+		
+		\item for any $a \in \E^p(\R^n)$ and $b \in \E^q(\R^n)$
+		$$
+			d(a \wedge b) = da \wedge b + (-1)^p a \wedge db
+		$$		
+	\end{enumerate}
+\end{definition}
+
+\begin{proposition}[Poincaré lemma]
+	$ d^2 = 0 $
+\end{proposition}
+
+\begin{proof}
+	The proof can be done by induction, when $p = 0$,
+	$$
+		d^2 f = \sum_{i=1}^n d\tuple*{\frac{\partial f}{\partial x_i}} \wedge dx_i = \sum_{i=1}^n \sum_{j=1}^n \frac{\partial^2 f}{\partial x_i \partial x_j} dx_j \wedge dx_i = 0
+	$$
+	
+	The last equality is due to $dx_j \wedge dx_i + dx_i \wedge dx_j = 0$ for all $0 \leq i, j \leq n$. When $p > 0$, any $p$-form can be written as $f dx_I = f \wedge dx_I = a \wedge b$ for some subset $I \subseteq [n]$, then
+	$$
+		d^2(a \wedge b) = d^2 a \wedge b + a \wedge d^2 b = 0
+	$$
+	The last equality is due to $a, b$ are of degree $< p$
+\end{proof}
+
+\subsection{INTERIOR MULTIPLICATION}
+
+\begin{definition}[interior multiplication]
+	Let $X$ be a vector field on manifold $M$, define
+	\begin{align*}
+		i_X: \E\tuple*{\bigwedge^p T^*M} &\to \E\tuple*{\bigwedge^{p-1} T^*M} \\
+				\omega &\mapsto (X_2, ..., X_k \mapsto \omega(X, X_2, ..., X_k))
+	\end{align*}
+	
+	where $\omega \in \E\tuple*{\bigwedge^p T^*M}$ is identified as a map $\prod^p TM \to \R$
+\end{definition}
+
+\section{LIE GROUP AND LIE ALGEBRA}
+
+\subsection{LIE GROUP}
+
+\begin{definition}[Lie group, left multiplication, right multiplication]
+	A Lie group is a topological group $G$ which is also a smooth manifold. For any $a \in G$, the map $L_a$ is called left multiplication, the map $R_a$ is called right multiplication
+	\begin{align*}
+		L_a: G &\to G &R_a: G &\to G \\
+		x &\mapsto ax &x &\mapsto  xa \\
+	\end{align*}
+	
+	Left multiplication and right multiplication are diffeomorphism
+\end{definition}
+
+\begin{definition}[Lie group homomorphism]
+	A Lie group homomorphism is a smooth group homomorphism $f: G \to H$, that is
+	$$
+		f(xy) = f(x) f(y)
+	$$
+	
+	or equivalently
+	$$
+		f L_x = L_{f(x)} f
+	$$
+\end{definition}
+
+\begin{remark}
+	Some examples of Lie groups
+	\begin{enumerate}
+		\item general linear group
+		$$
+			GL(n, \R) = \set{A \in M(n, \R): \det A \neq 0}
+		$$
+		
+		\item orthogonal group
+		$$
+			O(n) = \set{A \in M(n, \R): A^t A = 1}
+		$$
+	\end{enumerate}
+\end{remark}
+
+\subsection{LIE ALGEBRA}
+
+\begin{remark}[tangent space at identity]
+	Let $G$ be a Lie group with the identity element $e$, for each $g \in G$, $L_g: G \to G$ is a diffeomorphism, so its differential at $e$ 
+	$$
+	d(L_g)\vert_e: T_e G \to T_g G
+	$$ 
+	
+	is a vector space isomorphism. This defines an equivalent relation on the set of all tangent spaces of $G$ and the equivalence classes are precisely $T_e G$.
+\end{remark}
+
+\begin{remark}[pushforward of vector field by left multiplication]
+	Given a vector field $X$ and any $g, x \in G$, define the vector field $L_{g*} X$ by
+	$$
+		(L_{g*} X)(x) = d(L_g)\vert_{g^{-1} x} X(g^{-1}x)
+	$$
+\end{remark}
+
+\begin{definition}[left-invariant vector field]
+	A vector field $X$ on Lie group $G$ is called left-invariant if
+	$$
+		L_{g*} X = X
+	$$
+\end{definition}

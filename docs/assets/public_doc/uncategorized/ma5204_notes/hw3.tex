@@ -1,0 +1,305 @@
+\chapter{HOMEWORK 3}
+
+\begin{problem}[chapter 8 problem 2]
+	Let $A$ be a Noetherian ring. Prove that the following are equivalent
+	\begin{enumerate}
+		\item $A$ is Artinian
+		\item $\Spec A$ is discrete and finite
+		\item $\Spec A$ is discrete
+	\end{enumerate}
+\end{problem}
+
+\begin{longproof}
+	($1 \implies 2$) $A$ is Artinian then every prime ideal is maximal and it has finitely many maximal ideals, so $\Spec A$ is finite. Moreover, every maximal ideal in $\Spec A$ is closed, so any subset of $\Spec A$ is finite hence closed. $\Spec A$ admits the discrete topology
+	
+	($2 \implies 3$) by definition
+	
+	($3 \implies 1$) Suppose $\mf{p} \subsetneq \mf{m}$ be a prime ideal that is properly contained in a maximal ideal $\mf{m}$ in $A$. As $\Spec A$ is discrete, $\set{\mf{p}}$ is closed, hence $\set{\mf{p}} = V(\mf{a})$ for some ideal in $A$, hence $\mf{a} \subseteq \mf{p} \subseteq \mf{m}$, so $\mf{m} \in V(\mf{a})$, contradiction. So every prime ideal in $A$ is maximal, $\dim(A) = 0$. Since $A$ is Noetherian, $A$ is also Artinian
+\end{longproof}
+
+\begin{problem}[chapter 8 problem 3]
+	Let $k$ be a field and $A$ be a finite-type $k$-algebra. Prove that the following are equivalent
+	\begin{enumerate}
+		\item $A$ is Artinian
+		\item $A$ is a finite $k$-algebra (finitely generated as $k$-module)
+	\end{enumerate}
+\end{problem}
+
+
+\begin{longproof}
+	($2 \implies 1$) If $A$ is a finite $k$-algebra then $A$ is a $k$-vector space of finite dimension. Any ideal in $A$ is a vector subspaces. Since $A$ is of finite dimension, any decending chain stablizes. $A$ is Artinian
+	
+	($1 \implies 2$) $A$ is Artinian, then $A \cong \prod_{i=1}^m A_i$ for some Artinian local ring $A_i$. $A$ is finite-type $k$-algebra, then there exists a surjection $k[x_1, ..., x_n] \twoheadrightarrow A$. Hence, each $A_i$ is also finite-type k-algebra by the composition $k[x_1, ..., x_n] \twoheadrightarrow A \twoheadrightarrow A_i$. Note that each $A_i$ is Artinian, moreover if each $A_i$ is a finite $k$-algebra then $A$ is also a finite $k$-algebra by taking all generators in $\set{A_i}$.
+	
+	Without loss of generality, assume $(A, \mf{m})$ is Artinian local. Let $K = A / \mf{m}$ be the residue field, again $k[x_1, ..., x_n] \twoheadrightarrow A \twoheadrightarrow K$, so $K$ is finite-type $k$-algebra. Since $A$ is Artinian, $l_A(A) = n$ finite, there exists a finite chain of submodules
+	$$
+		0 = M_0 \subsetneq M_1 \subsetneq ... \subsetneq M_n = A
+	$$ 
+	
+	so that each $M_i / M_{i-1} = A / \mf{m}$ for some maximal ideal $\mf{m}$ of $A$. Since $A$ is local, each $M_i / M_{i-1} = K$. Moreover, 
+	$$
+		A \cong \bigoplus_{i=1}^n M_i / M_{i-1}
+	$$
+	
+	Hence, $A$ is finite $K$-algebra. Together with Nullstellensatz, $K$ a finite algebraic extension of $k$. So $A$ is a finite $k$-algebra.
+\end{longproof}
+
+\begin{problem}[chapter 9 problem 2]
+	Let $A$ be a Dedekind domain. If $f = a_0 + a_1 x + ... + a_n x^n$ is a polynomial with coefficients in $A$, the content of $f$ is the ideal $c(f) = (a_0, ..., a_n)$ in $A$. Prove Gauss's lemma that $c(fg) = c(f) c(g)$
+\end{problem}
+
+\begin{lemma}[being equal submodules is local]
+	\label{lemma0}
+	Let $M$ and $N$ be submodule of an $A$-module, if $M_\mf{m} = N_\mf{m}$ for every maximal ideal $\mf{m}$ of $A$ then $M = N$.
+\end{lemma}
+
+\begin{proof}[Proof of Lemma \ref{lemma0}]
+	Note that, $M \subseteq N$ if and only if $(M + N) / N = 0$. Localize at every maximal ideal $\mf{m}$, $M_\mf{m} \subseteq N_\mf{m}$ implies $((M + N) / N)_\mf{m} = (M_\mf{m} + N_\mf{m}) / N_\mf{m} = 0$ (localization commutes with sum and quotient of submodules). Since being zero is local, so $M \subseteq N$. The other direction is the same.
+\end{proof}
+
+\begin{proof}
+	Let $g = b_0 + b_1 x + ... + b_m x^m$, then
+	$$
+		fg = \sum_{l=0}^{m+n} \tuple*{\sum_{i=0}^l a_i b_{l-i}} x^l
+	$$
+	
+	Localize at every maximal ideal $\mf{m}$ of $A$, if we can show that
+	$$
+		c(fg) A_\mf{m} = c(f) A_\mf{m} \cdot  c(g) A_\mf{m} = c(f) c(g) A_\mf{m}
+	$$
+	
+	Then Lemma \ref{lemma0} implies $c(fg) = c(f) c(g)$. Note that, each $A_\mf{m}$ is a DVR.
+	
+	Without loss of generality, assume $(A, v)$ is a DVR with uniformizer $y \in A$, $v(y) = 1$. Let $c(f) = (y^s)$ and $c(g) = (y^t)$ for some $s, t \geq 1$, then $c(f) c(g) = (y^{s+t})$. Since $(y^s) = (a_0, ..., a_n)$, then $y^s$ is a $A$-linear combination of $\set{a_0, a_1, ..., a_n}$, then $s = v(y^s) \geq v(a_0)$, but $a_0 \in (y^s)$, so $v(a_0) \geq s$. Hence, $v(a_0) = s$. Similarly, $v(b_0) = t$. Hence, one of the coefficient of $c(fg)$ is $a_0 b_0$ has valuation $v(a_0 b_0) = s+t$, so $c(f) c(g) = (y^{s+t}) \subseteq c(fg)$. The other direction is shown above. Hence $c(f) c(g) = (y^{s+t}) = c(fg)$
+\end{proof}
+
+\begin{problem}[chapter 9 problem 3]
+	A valuation ring (other than a field) is Noetherian if and only if it is a discrete valuation ring.
+\end{problem}
+
+\begin{definition}
+	A domain $A$ is a valuation ring if every nonzero $x \in K = \Frac(A)$, it is either $x \in A$ or $x^{-1} \in A$
+\end{definition}
+
+\begin{lemma}[some facts about valuation ring]
+	\label{lemma1}
+	If $A$ is a valuation ring
+	\begin{enumerate}
+		\item there is a total ordering in $A$ by divisibility
+		\item there is a total ordering of ideals in $A$ by inclustion
+		\item $A$ is local
+		\item every finitely generated ideal is principal
+		\item every ideal $\mf{a}$ in $A$, if $\mf{a} \subsetneq \mf{m}^k$ then $\mf{a} \subseteq \mf{m}^{k+1}$ for any $k \geq 1$
+		\item (\note{is this true?}) every (prime) ideal in $A$ is of the form $\mf{m}^n$
+	\end{enumerate}
+\end{lemma}
+
+\begin{longproof}[Proof of Lemma \ref{lemma1}]
+	(1) For any nonzero $x, y \in A$, either $x / y \in A$ or $y / x \in A$. If $x / y \in A$, let $z / 1 = x / y$ for $z \in A$. So $t(zy - x) = 0$ for some nonzero $t \in A$. Since $A$ is a domain, $x = zy$. So either $x$ divides $y$ or $y$ divides $x$
+	
+	(2) Let $\mf{a}, \mf{b}$ be ideals in $A$. Suppose there exist $x \in \mf{a} - \mf{b}$ and $y \in \mf{b} - \mf{a}$ ($\mf{a} - \mf{b}$ is set elements in $\mf{a}$ and not in $\mf{b}$). (1) induces a contradiction.
+	
+	(3) If $A$ is not local, then two distinct maximal ideals $\mf{m}, \mf{n}$ must have $\mf{m} \subsetneq \mf{n}$ or $\mf{n} \subsetneq \mf{m}$. contradiction.
+	
+	(4) Let $\mf{a} = (a_1, ..., a_n)$ be ideal in $A$, then there exists a generator $a_i$ that divides every other generator, hence $\mf{a} = (a_i)$
+	
+	(5) Let $\mf{a} \subsetneq \mf{m}^k$ be any ideal in $A$ for some $k \geq 1$, let $x \in \mf{a}$ and $y \in \mf{m}^k - \set{a}$. Since $A$ is a valuation ring and $y \notin \mf{a}$, $x = ay$ for some $a \in A$. Moreover, if $a \notin \mf{m}$, that is $a$ is a unit, then $a^{-1} x = y$ contradicts with $y \notin A$. Hence, $x = ay$ for some $x \in \mf{m}$. So, $x \in \mf{m}^{k+1}$, $\mf{a} \subseteq \mf{m}^{k+1}$	
+
+	(6) 
+\end{longproof}
+
+\begin{longproof}[Main Proof]
+	($\impliedby$) DVR is PID, PID is Noetherian since every ideal is generated by finitely many elements.
+	
+	($\implies$) The valuation ring $A$ is Noetherian, then it is local with the unique maximal ideal $\mf{m}$. Since every ideal in $A$ is finitely generated, it is also principal, that is $A$ is PID. $A$ is a Noetherian, local domain with the unique maximal ideal being principal,it suffices to prove that dimension of $A$ is $1$, that is, every prime ideal is maximal.
+	
+	Let $\mf{m} = (y)$ and $(x)$ be a nonzero prime ideal in $A$, suppose that $(x) \subsetneq (y)$, that means $y \notin (x)$. We must have $x = ay$ for some $a \in \mf{m}$ (using the argument in Lemma \ref{lemma1}). Since $(x)$ is prime, and $y \notin (x)$, $a \in (x)$, write $a = bx$ for some nonzero $b \in A$. So
+	$$
+		x = byx
+	$$
+	
+	Since $A$ is a domain, using left cancellation, $by = 1$ that makes $y$ a unit, contradiction.
+\end{longproof}
+
+\begin{problem}[chapter 9 problem 5]
+	Let $M$ be a finitely generated module over a Dedekind domain. Prove that $M$ is flat $\iff$ $M$ is torsion-free
+\end{problem}
+
+\begin{definition}
+	Let $M$ be a module over a domain $A$, $M$ is torsion-free if for every nonzero $x \in M$ and nonzero $a \in A$, $ax \neq 0$
+\end{definition}
+
+\begin{lemma}[chapter 3 exercise 13]
+	\label{lemma2}
+	Let $M$ be a module over a domain $A$, then $M$ being torsion-free is a local property. 
+\end{lemma}
+
+\begin{lemma}[chapter 7 exercise 16]
+	\label{lemma3}
+	Let $M$ be a finitely generated module over a Noetherian ring $A$, then $M$ is flat if and only if $M_\mf{m}$ is a free $A_\mf{m}$-module for every maximal ideal $\mf{m}$
+\end{lemma}
+
+\begin{lemma}
+	\label{lemma4}
+	free module of finite rank over a domain is torsion free
+\end{lemma}
+
+\begin{proof}[Proof of Lemma \ref{lemma4}]
+	Let $M = A^n$, then every nonzero $m \in M$ can be written as $m = (a_1, ..., a_n) \in A^n$ for some $a_1, ..., a_n \in A$ and some $a_i \neq 0$. If nonzero $r \in A$ such that $0 = rm = (r a_1, ... r a_n)$, then  $r a_i = 0$, contradicts the premise $A$ being a domain.
+\end{proof}
+
+\begin{lemma}[Fundamental Theorem, Existence: Invariant Factor Form - Dummit Foote - chapter 12, section 12.1, theorem 5]
+	\label{lemma5}
+	Let $A$ be a PID, and $M$ be a finitely generated $A$-module, then $M$ is torsion-free implies $M$ is free.
+\end{lemma}
+
+\begin{proof}
+	\note{TODO}
+\end{proof}
+
+\begin{longproof}[Main Proof]
+	Localize at a maximal ideal $\mf{m} \subseteq A$
+	
+	($\implies$) $A$ is Dedekind domain, so $A$ is Noetherian. Since $M$ is finitely generated and flat, $M_\mf{m}$ is a free $A_\mf{m}$-module of finite rank. By Lemma \ref{lemma4}, $M_\mf{m}$ is torsion-free. Lemma \ref{lemma2} implies $M$ is torsion-free.
+	
+	($\impliedby$) $A$ is a domain, so $M_\mf{m}$ is also torsion-free as $A_\mf{m}$-module. Moreover, $A$ is Dedekind domain, then $A_\mf{m}$ is a DVR which is PID. By Lemma \ref{lemma5}, $M_\mf{m}$ is free. By Lemma \ref{lemma3}
+		
+\end{longproof}
+
+\begin{problem}[chapter 9 problem 7]
+	Let $A$ be a Dedekind domain and nonzero ideal $\mf{a}$ in $A$. Show that every ideal in $A / \mf{a}$ is principal. Deduce that every ideal in $A$ can be generated by at most two elements
+\end{problem}
+
+\begin{proof}
+	Every ideal $\mf{a}$ in Dedekind domain admits a unique decomposition
+	$$
+		\mf{a} = \mf{p}_1^{e_1} ... \mf{p}_n^{e_n}
+	$$
+	
+	for some prime ideals $\mf{p}_i$. In dimension $1$ domain $A$, every prime ideal is maximal, by chinese remainder theorem
+	$$
+		A / \mf{a} = A / \mf{p}_1^{e_1} \times ... \times A / \mf{p}_n^{e_n}
+	$$
+	
+	Every ideal in $A / \mf{a}$ is a Cartesian product of ideals in $A / \mf{p}_i^{e_i}$, so it suffices to show that ideals in $A / \mf{p}_i^{e_i}$ are principal.
+	
+	Let $\mf{p}^e$ be one of $\mf{p}_1^{e_1}, ..., \mf{p}_n^{e_n}$. Localize each $A / \mf{p}^e$ as quotient of $A$-modules at $\mf{p} \subseteq A$, we have
+	$$
+		(A / \mf{p}^e)_\mf{p} = A_\mf{p} / \mf{p}^e A_\mf{p}
+	$$
+	
+	as $A_\mf{p}$ modules. Since $A$ is a Dedekind domain, $A_\mf{p}$ is a DVR. In $A_\mf{p}$, $\mf{p} A_\mf{p}$ is the unique maximal ideal that is principal. So the the unique maximal ideal $\mf{p} A_\mf{p} \cap A_\mf{p} / \mf{p}^e A_\mf{p} \subseteq A_\mf{p} / \mf{p}^e A_\mf{p}$ is principal. It remains to show that $A_\mf{p} / \mf{p}^e A_\mf{p}$ is Artinian. It is straightforward since every ideal in DVR $A_\mf{p}$ is a power of its maximal ideal $\mf{p} A_\mf{p}$, any chain of ideals in $A_\mf{p}$ of the form 
+	$$
+		\mf{p} A_\mf{p} \supsetneq ... \supsetneq \mf{p}^e A_\mf{p}
+	$$
+	
+	is of length at most $e$. So any chain of ideals in $A_\mf{p} / \mf{p}^e A_\mf{p}$ is of length at most $e$
+	
+	Let $\mf{b} \subseteq A$ be an ideal generated by more than one element. Let $a \in \mf{b}$, then $(a) \subsetneq \mf{b}$. So $\mf{b} / (a)$ is a nonzero ideal in $A / (a)$, hence must be principal. Let $\mf{b} / (a)$ generated by $\bar{b}$ for some $b \in \mf{b}$. Then for any $x \in \mf{b}$, $\mf{b} / (a)$ is principal ideal generated by $\bar{b}$, so $\bar{x} = \bar{y} \bar{b}$ for some $y \in A$, so $x = yb + za$ for some $z \in A$. Hence, $\mf{b} = (a, b)$
+\end{proof}
+
+\begin{problem}[chapter 9 problem 8]
+	Let $\mf{a}, \mf{b}, \mf{c}$ be three ideals in a Dedekind domain. Prove that
+	\begin{align*}
+		\mf{a} \cap (\mf{b} + \mf{c}) &= (\mf{a} \cap \mf{b}) + (\mf{a} \cap \mf{c}) \\
+		\mf{a} + (\mf{b} \cap \mf{c}) &= (\mf{a} + \mf{b}) \cap (\mf{a} + \mf{c})
+	\end{align*}
+\end{problem}
+
+\begin{proof}
+	Localization commutes with finite intersection and sum of submodules, it suffices to prove for the case of DVR. Let $\mf{a}, \mf{b}, \mf{c}$ be ideals of a DVR $(A, v)$ with uniformizer $(y)$. Let $\mf{a} = (y^a), \mf{b} = (y^b), \mf{c} = (y^c)$, then either case $b = c$ or $b \neq c$,
+	\begin{align*}
+		\mf{b} + \mf{c} &= (y^b) + (y^c) = (y^{\min(b, c)}) \\
+		\mf{b} \cap \mf{c} &= (y^b) \cap (y^c) = (y^{\max(b, c)})
+	\end{align*}
+	
+	It is equivalent to show
+	\begin{align*}
+		\max(a, \min(b, c)) &= \min(\max(a, b), \max(a, c)) \\
+		\min(a, \max(b, c)) &= \max(\min(a, b), \min(a, c))
+	\end{align*}
+	
+	Assuming $b \leq c$, then $\max(a, b) \leq  \max(a, c)$ and $\min(a, b) \leq \min(a, c)$. We're done.
+\end{proof}
+
+
+\begin{problem}[Krull–Akizuki]
+	Let $A$ be a Dedekind domain with fractional field $K$. Let $L / K$ be a finite degree field extension and let $B$ be the integral closure of $A$ in $L$. Prove that $B$ is a Dedekind domain.
+\end{problem}
+
+\begin{lemma}[equivalent formulation for Dedekind domain]
+	\label{lemma6}
+	A ring $A$ is a Dedekind domain if and only if it is a dimension $1$ Noeatherian integrally closed domain
+\end{lemma}
+
+\begin{proof}[Proof of Lemma \ref{lemma6}]
+	this follows from Proposition 5.13: for a domain $A$ being integrally closed is local.
+\end{proof}
+
+
+
+\begin{proof}[Main Proof]
+	
+	$L$ is a finite degree field extension of $K$ which is a vector of finite dimension over $K$. $B \subseteq L$ is the integral closure of the ring extension $A \hookrightarrow L$
+	
+	\begin{center}
+		\begin{tikzcd}
+			A \arrow[r, hook] & B \arrow[r, hook] & L
+		\end{tikzcd}
+	\end{center}
+	
+	\begin{enumerate}
+		\item (Any ideal $I$ of $B$ intersects $A$ nontrivially)
+		Let nonzero $I \subseteq B$ be an ideal of $B$, let nonzero $x \in I$, then $x$ satisfies a monic polynomial of minimal degree
+		$$
+		p(x) = x^n + a_1 x^{n-1} + ... a_{n-1} x - a_n = 0
+		$$
+		
+		for some $a_1, ..., a_n \in A$. Since $p$ is of minimal degree, $a = a_n$ is a nonzero element of the ideal $I \cap A$. 
+		\item ($I / aB$ is of finite length as an $A$-module)
+		Now, $I / aB \subseteq B / aB$ as $R$-modules. It suffices to show that length $B / aB$ is of finite length. If $aB = B = I$, there is nothing to show. Suppose $a$ is not a unit in $B$
+		
+		If we can show that $a^n B \subseteq a^{n+1} B + A$ for some $n$, then 
+		$$
+			\frac{B}{aB} \cong \frac{a^n B}{a^{n+1} B} \subseteq \frac{a^{n+1} B + A}{a^{n+1} B} \cong \frac{A}{a^{n+1} B \cap A}
+		$$
+		
+		The left isomorphism is from first isomorphism theorem of the map $a^n(-): B \to a^n B / a^{n+1} B$ with $\ker a^n(-) = aB$ and the right isomorphism is the second isomorphism theorem for submodules over $A$. $A/(a^{n+1} B \cap A)$ is Artinian since $a^{n+1} B \cap A$ is nonzero, so $B / aB$ is of finite length as an $A$-module, hence $I / aB$ is of finite length
+		
+		\item ($a^n B \subseteq a^{n+1} B + A$ for some $n$) Using the argument in Lemma \ref{lemma0}, inclusion of submodules is a local, We can assume that $A$ is a DVR with uniformizer $\mf{m}$.
+		
+		For any nonzero $y \in B$, consider the "fractional ideal" $y^{-1} A = \set{z \in L: zy \in A} \subseteq L$ intersecting $A$ nontrivally using the same argument as above for integral element $y^{-1}$ over $A$. Since $A$ is a DVR, the ideal $Ay^{-1} \cap A$ of $A$ contains large power of $\mf{m}$. Since $a \in \mf{m}$, we choose smallest $N_1 \in \N$ so that $a^n y \in A$ for every $n \geq N_1$
+		
+		Consider the chain of ideals $I_n = a^n B \cap A + aA$ in $A / aA$. $A / aA$ is Artinian since $aA$ is nonzero, so it must stablize. Let $N_2 \in \N$ so that $I_n = I_{N_2}$ for every $n \geq N_2$. 
+		
+		Note that, $N_1$ is dependent on $y$ and $N_2$ is indepdent of $y$. We claim that $N_1 \leq N_2 + 1$ for every $y \in B$. Suppose the contrary that if $N_2 + 1 < N_1$, let $n = N_1 - 1$, then $I_{n+1} = I_n = I_{n-1}$, then $a^n y \notin A$ and $a^{n+1} y \in A$. Since $a^{n+1} y \in I_{n+1} = I_n = I_{n-1}$, then there exists $z \in B$ and $t \in A$ so that $a^{n-1} z \in A$ and
+		$$
+			a^{n+1} y = a^n z + at \in a^{n-1} B \cap A + aA
+		$$
+		
+		Hence, left cancellation implies $a^n y = a^{n-1} z + t \in A$, contradiction. Choose $n = N_2 + 1$, then $I_n = I_{n+1}$ and $a^n B \subseteq A$. Hence
+		$$
+			a^n B \subseteq I_n = I_{n+1} \subseteq a^{n+1} B + A 
+		$$
+		
+		\item ($B$ is Noetherian)
+		$I / aB$ is of finite length as an $A$-module, if $I$ is not finitely generated as an ideal in $B$, then let $I = (a, i_1, i_2, ...)$ for $i_1, i_2, ... \in B$, so the decending chain of ideals containing $aB$ in $B$ which is also a decending chain of submodule of $I / aB$ as an $A$-module
+		$$
+		(a, i_1, i_2, i_3, ...) \supseteq (a, i_2, i_3, ...) \supseteq ... \supseteq (a) \supseteq (0)
+		$$
+		
+		has infinitely many strict inclusions, contradiction.
+		
+		\item ($B$ is of dimension $1$) $A \hookrightarrow B$ is an integral ring extension with $A$ being a domain, by going-down theorem, any chain of prime ideals of strict inclusions  in $B$ has a corresponding chain of prime ideals of strict inclusions in $A$ by contraction. Since $A$ is of dimension $1$, by going-up theorem, all chain of prime ideals of strict inclusions in $B$ cannot be longer than $2$. Hence, since $B$ is subring of field $L$, $B$ is domain, $(0)$ is prime, $B$ is of dimension $1$
+		
+		\item ($B$ is integrally closed) $\Frac(B) \subseteq L$. Any $x \in \Frac(B)$ is integral over $B$ is also integral over $A$, so $x \in B$. Hence, $B$ is integrally closed.
+	\end{enumerate}
+\end{proof}
+
+\begin{problem}[optional]
+	In the notation of the previous problem, if in addition $L / K$ is a separable extension, we can always write $L = K(x)$ for some $x \in L$. Find an example where $L / K$ is separable but we CANNOT write $B = A[x]$ for some $x \in B$
+\end{problem}
+
+\begin{problem}[optional]
+	Is the ring $A = \C[x, y] / (y^2 - x^3 - x - 1)$ a PID?
+\end{problem}

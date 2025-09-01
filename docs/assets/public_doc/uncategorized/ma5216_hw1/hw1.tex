@@ -1,0 +1,419 @@
+
+\begin{problem}[Hopf fibration - Peterson Riemanian Geometry - Example 1.1.5]
+	The Hopf fibration is a Riemannian submersion
+	$$
+		H: S^3(1) \twoheadrightarrow S^2(1/2)
+	$$
+	with the canonical metric $g_{S^3(1)}$ and $g_{S^2(1/2)}$. Consider $S^{3}(1) \subseteq \C^2$ and $S^2(1/2) \subseteq \R \oplus \C$, then $H$ can be written explicitly by
+	\begin{align*}
+		H: S^3(1) &\to S^2(1/2) \\
+			(z, w) &\mapsto \tuple*{\frac{1}{2}(\abs{w}^2 - \abs{z}^2), z \bar{w}}
+	\end{align*}
+\end{problem}
+
+\begin{longproof}[Showing $H$ is an Riemannian submersion:]
+	\textbf{$H$ maps surjectively $S^3(1)$ into $S^2(1/2)$}
+	
+	Any point $(z, w) \in S^3(1) \subseteq \C^2$ with $z = a e^{ix}$ and $w = b e^{iy}$ for $a, b, x, y \in \R$, then we must have $\norm{(z, w)}^2 = a^2 + b^2 = 1$. Then
+	\begin{align*}
+		\norm{H(z, w)}^2 
+		&= \abs*{\frac{1}{2}(\abs{w}^2 - \abs{z}^2)}^2 + \abs{z \bar{w}}^2 \\
+		&= \abs*{\frac{1}{2}(a^2 - b^2)}^2 + \abs{ab e^{i(x-y)}}^2 \\
+		&= \frac{1}{2}(a^2 - b^2)^2 + (ab)^2 \\
+		&= \frac{1}{4} (a^2 + b^2)^2 = \frac{1}{4}
+	\end{align*}
+	
+	Hence, $H(S^3(1)) \subseteq S^2(1/2)$. On the other hand, any point $(t, v) \in S^2(1/2) \subseteq \R \oplus \C$, then we must have $t^2 + |v|^2 = \frac{1}{4}$, let $v = \sqrt{\frac{1}{4} - t^2} e^{ix}$ for some $x \in \R$, then $\tuple*{\sqrt{\frac{1}{2} - t} e^{ix}, \sqrt{\frac{1}{2} + t}} \in S^3(1)$ and 
+	$$
+		H\tuple*{\sqrt{\frac{1}{2} - t} e^{ix}, \sqrt{\frac{1}{2} + t}} = (t, v)
+	$$
+	
+	Hence, $H(S^3(1)) = S^2(1/2)$
+	
+	\textbf{tangent spaces and canonical metrics on $S^3(1)$ and $S^{2}(1/2)$}
+	
+	The canonical inner products in $\C^2$ and $\R \oplus \C$ are
+	\begin{align*}
+		\inner{(a_1, b_1), (a_2, b_2)}_{\C^2} &= \real(a_1 \bar{a}_2 + b_1 \bar{b}_2) \\
+		\inner{(t_1, v_1), (t_2, v_2)}_{\R \oplus \C} &= t_1 t_2 + \real(v_1 \bar{v}_2)
+	\end{align*}
+	
+	The tangent space at $p \in S^3(1)$ is canonically isomorphic to
+	$$
+		T_p S^3(1) \cong \set{v \in \C^2: \inner{p, v}_{\C^2} = 0}
+	$$
+	
+	The tangent space at $q \in S^2(1/2)$ is canonically isomorphic to
+	$$
+		T_q S^2(1/2) \cong \set{w \in \R \oplus \C: \inner{q, w}_{\R \oplus \C} = 0}
+	$$
+		
+	The induced metric from $\C^2$ at $p \in S^3(1)$ is
+	\begin{align*}
+		(g_{S^3(1)})_p: T_p S^3(1) \times T_p S^3(1) &\to \R \\
+		(v_1, v_2) &\mapsto \inner{v_1, v_2}_{\C^2}
+	\end{align*}
+	
+	The induced metric from $\R \oplus \C$ at $q \in S^2(1/2)$ is
+	\begin{align*}
+		(g_{S^2(1/2)})_q: T_q S^2(1/2) \times T_q S^2(1/2) &\to \R \\
+		(w_1, w_2) &\mapsto \inner{w_1, w_2}_{\R \oplus \C}
+	\end{align*}
+	
+	\textbf{kernel of the differential $dH_p$}
+	
+	For each point $p = (z, w) \in S^3(1)$, the fiber of $H$ containing $(z, w)$ consists of the points $(e^{i\theta} z, e^{i\theta} w)$ since
+	
+	\begin{align*}
+		H(e^{i\theta} z, e^{i\theta} w) = \tuple*{\frac{1}{2}(\abs{e^{i\theta} w}^2 - \abs{e^{i\theta} z}^2), e^{i\theta} z \overline{e^{i\theta} w}} = \tuple*{\frac{1}{2}(\abs{w}^2 - \abs{z}^2), z \bar{w}} = H(z, w)
+	\end{align*}
+	
+	Hence, the fiber of $(z, w)$ is isomorphic to a circle. For the curve $\gamma(t) = (e^{it} z, e^{it} w)$ on $S^3(1)$, its image $\tilde{\gamma}: (- \epsilon, + \epsilon) \to S^2(1/2)$ is the zero curve, hence $0 = \tilde{\gamma}'(0) = 
+	\frac{d}{dt}(H \gamma)\vert_{t=0} = (dH_p)(\gamma'(0))$, so
+	$$
+		\ker dH_p = \R i (z, w)
+	$$
+	
+	Hence,
+	
+	$$
+		(\ker dH_p)^\perp = \C(-\bar{w}, \bar{z})
+	$$	
+	
+	For any tangent vector $(-\lambda \bar{w}, \lambda \bar{z}) \in (\ker dH_p)^\perp$ where $\lambda \in \C$, its image on $T_q S^2(1/2)$ is (by considering the curve $\gamma(t) = (z - t \lambda \bar{w}, w + t \lambda \bar{z})$ on $S^3(1)$)
+	$$
+		(dH_p)(-\lambda \bar{w}, \lambda \bar{z}) = (2 \real(\bar{\lambda} z w), -\lambda \bar{w}^2 + \bar{\lambda} z^2 )
+	$$
+	
+	Since $(\ker dH_p)^\perp = \dim T_q S^2(1/2)$, then $dH_p$ is surjective, $H$ is a submersion.
+	
+	\textbf{$dH_p$ preserves metrics}
+	
+	Let $v_1 = ( - \lambda_1 \bar{w}, \lambda_1 \bar{z}) \in (\ker dH_p)^\perp$ and $v_2 = ( - \lambda_2 \bar{w}, \lambda_2 \bar{z}) \in (\ker dH_p)^\perp$, then 
+	$$
+		g_{S^3(1)}(v_1, v_2) = \real(- \lambda_1 \bar{w} \overline{- \lambda_2 \bar{w}} + \lambda_1 \bar{z} \overline{\lambda_2 \bar{z}}) = \real(\lambda_1 \bar{\lambda}_2 (\bar{w} w + \bar{z} z) = \real(\lambda_1 \bar{\lambda}_2)
+	$$
+	
+	On the other hand, 
+	\begin{align*}
+		&g_{S^2(1/2)}(dH_p(v_1), dH_p(v_2)) \\ 
+		&= g_{S^2(1/2)}((2 \real(\bar{\lambda}_1 z w), -\lambda_1 \bar{w}^2 + \bar{\lambda}_1 z^2 ), (2 \real(\bar{\lambda}_2 z w), -\lambda_2 \bar{w}^2 + \bar{\lambda}_2 z^2 )) \\
+		&= 4 \real(\bar{\lambda}_1 z w) \real(\bar{\lambda}_2 z w) + \real((-\lambda_1 \bar{w}^2 + \bar{\lambda}_1 z^2) \overline{(-\lambda_2 \bar{w}^2 + \bar{\lambda}_2 z^2)}) \\
+		&= 4 \real(\bar{\lambda}_1 z w) \real(\bar{\lambda}_2 z w) + \real((-\lambda_1 \bar{w}^2 + \bar{\lambda}_1 z^2) (-\bar{\lambda}_2 w^2 + \lambda_2 \bar{z}^2)) \\
+		&= 4 \real(\bar{\lambda}_1 z w) \real(\bar{\lambda}_2 z w) + \real(\lambda_1 \bar{\lambda}_2 \bar{w}^2 w^2 - \bar{\lambda}_1 \bar{\lambda}_2 z^2 w^2 - \lambda_1 \lambda_2 \bar{w}^2 \bar{z}^2 + \bar{\lambda}_1 \lambda_2 z^2 \bar{z}^2 ) 
+	\end{align*}
+	
+	Since $\bar{\lambda}_1 \bar{\lambda}_2 z^2 w^2$ is the conjugate of $\lambda_1 \lambda_2 \bar{w}^2 \bar{z}^2$, then 
+	$$
+		- \real(\bar{\lambda}_1 \bar{\lambda}_2 z^2 w^2 + \lambda_1 \lambda_2 \bar{w}^2 \bar{z}^2) = - \bar{\lambda}_1 \bar{\lambda}_2 z^2 w^2 - \lambda_1 \lambda_2 \bar{w}^2 \bar{z}^2
+	$$
+	
+	On the other hand, $2 Re(x) = x + \bar{x}$ for any $x \in \C$,
+	\begin{align*}
+		&4 \real(\bar{\lambda}_1 z w) \real(\bar{\lambda}_2 z w) \\
+		&= (\bar{\lambda}_1 z w + \lambda_1 \bar{z} \bar{w})(\bar{\lambda}_2 z w + \lambda_2 \bar{z} \bar{w}) \\
+		&= (\bar{\lambda}_1 \bar{\lambda}_2 z^2 w^2 + \lambda_1 \lambda_2 \bar{z}^2 \bar{w}^2) + (\lambda_1 \bar{\lambda}_2 z \bar{z} w \bar{w} + \bar{\lambda}_1 \lambda_2 z \bar{z} w \bar{w})
+	\end{align*}
+	
+	Since $\bar{\lambda}_1 \bar{\lambda}_2 z^2 w^2 + \lambda_1 \lambda_2 \bar{z}^2 \bar{w}^2$ is real $\lambda_1 \bar{\lambda}_2 z \bar{z} w \bar{w} + \bar{\lambda}_1 \lambda_2 z \bar{z} w \bar{w}$ is also real, then
+	\begin{align*}
+		&g_{S^2(1/2)}(dH_p(v_1), dH_p(v_2)) \\ 
+		&= (\lambda_1 \bar{\lambda}_2 z \bar{z} w \bar{w} + \bar{\lambda}_1 \lambda_2 z \bar{z} w \bar{w}) + \real(\lambda_1 \bar{\lambda}_2 \bar{w}^2 w^2 + \bar{\lambda}_1 \lambda_2 z^2 \bar{z}^2 ) \\
+		&= \real(\lambda_1 \bar{\lambda}_2 z \bar{z} w \bar{w} + \bar{\lambda}_1 \lambda_2 z \bar{z} w \bar{w} + \lambda_1 \bar{\lambda}_2 \bar{w}^2 w^2 + \bar{\lambda}_1 \lambda_2 z^2 \bar{z}^2 ) \\
+		&= \real(\lambda_1 \bar{\lambda}_2 \abs{z}^2 \abs{w}^2 + \bar{\lambda}_1 \lambda_2 \abs{z}^2 \abs{w}^2 + \lambda_1 \bar{\lambda}_2 \abs{w}^4 + \bar{\lambda}_1 \lambda_2 \abs{z}^4 )
+	\end{align*}
+	
+	Note that, $\real(\bar{\lambda}_1 \lambda_2 x) = \real(\lambda_1 \bar{\lambda}_2 \bar{x})$ for any $x \in \C$, then
+	\begin{align*}
+		&g_{S^2(1/2)}(dH_p(v_1), dH_p(v_2)) \\ 
+		&= \real(\lambda_1 \bar{\lambda}_2 (\abs{z}^2 \abs{w}^2 + \abs{z}^2 \abs{w}^2 + \abs{w}^4 + \abs{z}^4)) \\
+		&= \real(\lambda_1 \bar{\lambda}_2) (\abs{z}^2 + \abs{w}^2)^2 = \real(\lambda_1 \bar{\lambda}_2)
+	\end{align*}
+\end{longproof}
+
+
+\begin{problem}[Peterson Riemanian Geometry - Exercise 1.6.16 (1) (2) ]
+	The arc length of a curve $c(t): [a, b] \to (M, g)$ is defined by
+	$$
+		L(c) = \int_{[a, b]} |\dot{c}| dt
+	$$
+	
+	where $|\dot{c}|(t) = v(\dot{c})(t) = g_{c(t)}(\dot{c}(t), \dot{c}(t))$
+	
+	\begin{enumerate}
+		\item Show the arc length does not depend on the parameterization of $c$
+		\item Show that any curve with nowhere vanishing speed can be reparameterized to have unit speed
+	\end{enumerate}
+\end{problem}
+
+\begin{longproof}
+	Let $v$ denote the function mapping the set of smooth vector fields on $M$ into smooth functions on $M$ defined as follows: Let $p \in M$ and $x$ be a smooth vector field locally at $p$, define
+	$$
+		v(x) = g(x, x)
+	$$
+	
+	(arc length does not depend on the parameterization) Let $\gamma_1: [a, b] \to (M, g)$ be a smooth curve and an increasing function $\phi: [c, d] \to [a, b]$ be a diffeomorphic reparameterization of $\gamma_1$ resulting in $\gamma_2: [c, d] \to (M, g)$ where $\gamma_2 = \gamma_1 \phi$
+	
+	$$
+		L(\gamma_2) = \int_{[c, d]} (v \circ \dot{\gamma}_2) dt = \int_{[c, d]} (v \circ d \gamma_1 \circ d \phi) dt = \int_{[c, d]} (v \circ d \gamma_1 \circ |d \phi|) dt
+	$$
+	
+	The last equality is due to $v$ is a nonnegative function. By change of variables from measure space $[c, d]$ into measure space $[a, b]$, we have
+	$$
+		L(\gamma_2)= \int_{[a, b]} (v \circ \dot{\gamma}_1) dt = L(\gamma_1)
+	$$
+	
+	
+	(any curve with nowhere vanishing speed can be reparameterized to have unit speed)
+	Define $\tilde{\phi}: [a, b] \to [0, L(c)]$ by
+	$$
+		\tilde{\phi}(t) = \int_{[a, t]} (v \circ \dot{c}) dt
+	$$
+	
+	$\dot{c} > 0$, then $(v \circ \dot{c}) > 0$, then $\tilde{\phi}(t)$ is strictly increasing, hence it has an inverse $\phi: [0, L(c)] \to [a, b]$. Define a new curve $c_\phi: [0, L(c)] \to (M, g)$ by
+	$$
+		c_\phi(t) = (c \circ \phi)(t)
+	$$
+	
+	The speed of $c_\phi$ is
+	$$
+		v \circ \dot{c_\phi} = v \circ \dot{c} \circ d \phi = v \circ \dot{c} \circ (v \circ \dot{c})^{-1} = 1
+	$$ 
+\end{longproof}
+
+\begin{problem}[Peterson Riemanian Geometry - Exercise 1.6.17]
+	Show that arc length of curves is preserved by Riemannian immersions
+\end{problem}
+
+\begin{proof}
+	Let $F: (M, g_M) \to (N, g_N)$ be a Riemannian immersion. Let $\gamma: [0, 1] \to M$ be a smooth curve, the $F \gamma: [0, 1] \to N$ is also a smooth curve. For any $t \in [0, 1]$, $\dot{\gamma}(t)$ is the tangent vector on $T_{\gamma(t)} M$ and $d(F \gamma)_t = dF \dot{\gamma}(t)$ is the corresponding tangent vector on $T_{F\gamma(t)} N$. Immersion preserves metric, hence
+	$$
+		v_N d(F \gamma)_t = g_N(dF \dot{\gamma}(t), dF \dot{\gamma}(t)) = g_M(\dot{\gamma}(t), \dot{\gamma}(t)) = v_M \dot{\gamma}(t)
+	$$
+	
+	Hence, 
+	$$
+		L(F \gamma) = \int_{[0, 1]} v_N d(F \gamma) dt = \int_{[0, 1]} v_M \dot{\gamma} dt = L(\gamma)
+	$$	
+\end{proof}
+
+\begin{problem}[Peterson Riemanian Geometry - Exercise 1.6.18]
+	Let $F: (M, g_M) \to (N, g_N)$ be a Riemannian submersion and $c(t): [a, b] \to (M, g_M)$ be a curve. Show that $L(F \circ \gamma) \leq L(\gamma)$ with equality holding if and only if $\dot{\gamma}(t) \perp \ker DF_{\gamma(t)}$ for all $t \in [a, b]$ 
+\end{problem}
+
+\begin{proof}
+	Similar to last question, by the property of submersion
+	$$
+		v_N d(F \gamma)_t = g_N(dF \dot{\gamma}(t), dF \dot{\gamma}(t)) \leq g_M(\dot{\gamma}(t), \dot{\gamma}(t)) = v_M \dot{\gamma}(t)
+	$$
+	
+	The inequality is as follows: on the tangent space $T_{\gamma(t)} M$, $\dot{\gamma}(t)$ can be decomposed into
+	$$
+		\dot{\gamma}(t) = \dot{\gamma}(t)^0 + \dot{\gamma}(t)^1
+	$$
+	
+	where $ \dot{\gamma}(t)^0 \in \ker dF_{\gamma(t)}$ and $\dot{\gamma}(t)^1 \in \ker dF_{\gamma(t)}^\perp$. $g_M(-, -)$ is a norm, from triangle inequality
+	$$
+		g_M(\dot{\gamma}(t), \dot{\gamma}(t)) \geq g_M(\dot{\gamma}(t)^1, \dot{\gamma}(t)^1) = g_N(dF \dot{\gamma}(t)^1, dF \dot{\gamma}(t)^1) = g_N(dF \dot{\gamma}(t), dF \dot{\gamma}(t))
+	$$
+	
+	Hence,
+	$$
+		L(F \gamma) = \int_{[0, 1]} v_N d(F \gamma) dt \leq \int_{[0, 1]} v_M \dot{\gamma} dt = L(\gamma)
+	$$
+	
+	The equality holds when $\dot{\gamma}(t)^0 = 0$ for every $t \in [a, b]$
+\end{proof}
+
+\begin{problem}[Peterson Riemanian Geometry - Exercise 1.6.18]
+	Show directly any curve between two points in Euclidean space is longer than the Euclidean distance between points. Moreover, if the length agrees with the distance, then the curve lies on the straight line between those points.
+\end{problem}
+
+\begin{proof}
+	
+	On $\R^n$, denote $\inner{x, y} = g_{\R^n}(x, y)$. For any $A, B \in \R^n$, let $\gamma: [a, b] \to \R^n$ be a smooth curve from $A$ to $B$. Construct a new smooth curve $\tilde{\gamma}: [a, b] \to \R^n$ as follows: Let the unit vector $u = \frac{B - A}{\norm{B - A}} \in \R^n$
+	$$
+		\tilde{\gamma}(t) = \inner{\gamma(t) - A, u} u
+	$$
+	
+	Then
+	$$
+		\dot{\tilde{\gamma}}(t) = \inner{\dot{\gamma}(t), u} u
+	$$
+	
+	Hence
+	$$
+		\norm{\dot{\tilde{\gamma}}(t)}^2 = \norm{\inner{\dot{\gamma}(t), u} u}^2 = \abs{\inner{\dot{\gamma}(t), u}}^2 \leq \norm{\dot{\gamma}(t)}^2
+	$$
+	
+	Hence, 
+	$$
+		L(\tilde{\gamma}) = \int_{[a, b]} \norm{\dot{\tilde{\gamma}}} dt \leq \int_{[a, b]} \norm{\dot{\gamma}} dt = L(\gamma)
+	$$
+	
+	Since $\tilde{\gamma}$ lies on the straight line from $A$ to $B$, every curve is bounded below by a straight line curve and all straight curves from $A$ to $B$ are bounded below by all constant speed curves from $A$ to $B$. Hence, the shortest curves from $A$ to $B$ must lie on the straigtht line from $A$ to $B$ and have the length equals the distance from $A$ to $B$
+\end{proof}
+
+\begin{problem}[Peterson Riemanian Geometry - Exercise 1.6.19]
+	Let $H^n \subseteq \R^{n, 1}$ be hyperbolic space: $p, q \in H^n$ and $v \in T_p H^n$ a unit vector. Thus $|p|^2 = |q|^2 = -1$, $|v|^2 = 1$ and $p \cdot v = 0$
+	
+	\begin{enumerate}
+		\item Show that the hyperbola $t \mapsto p \cosh t + v \sinh t$ for $t \geq 0$ is a unit speed curve on $H^n$ that starts at $p$ and has initial velocity $v$
+		
+		\item Consider $F(r, v) = p \cosh r + v \sinh r$ for $r \geq 0$ and $v \cdot p = 0$, $|v|^2 = 1$. Show that this map defines a diffeomorphism $(0, \infty) \times S^{n-1} \to H^n - \set{p}$
+		
+		\item Define the radial field $\partial_r = F_*(\partial_r)$ on $H^n - \set{p}$. Show that if $q = F(r_0, v_0)$, then 
+		$$
+			\partial_r\vert_q = \frac{-p - (q \cdot p) q}{\sqrt{-1 + (q \cdot p)^2}} = p \sinh r_0 + v_0 \cosh r_0
+		$$
+		
+		\item Show that any curve from $p$ to $q$ is longer than $r_0$ where $q = F(r_0, v_0)$ unless it is part of the hyperbola.
+		
+		\item Show that there is no Riemannian immersion from an open set $U \subseteq \R^n$ into $H^n$
+	\end{enumerate}
+\end{problem}
+
+\begin{longproof}
+	Note, Minkowski pseudo-metric on $\R^{n, 1}$
+	$$
+		\inner{(x^1, x^2, ..., x^n, x^{n+1}), (y^1, y^2, ..., y^n, y^{n+1})} = x^1 y^1 + x^2 y^2 + ... + x^n y^n - x^{n+1} y^{n+1}
+	$$
+	
+	Let $H^n = \set{p \in \R^{n, 1}: \inner{p, p} = -1}$, then Minkowski pseudo-metric on $\R^{n, 1}$ induces a metric on tangent spaces of $H^n$. For any $p \in T_p H^n$. Given any curve $\gamma(t)$, differentiating $\inner{\gamma(t), \gamma(t)} = -1$ gives
+	$$
+		\inner{\gamma(t), \dot{\gamma}(t)} = 0
+	$$
+	
+	Hence, the tangent space at $p \in H^n$ is precisely
+	$$
+		T_p H^n = \set{v \in \R^{n, 1}: \inner{p, v} = 0}
+	$$
+	
+	
+	(1)
+	
+	$\gamma(t) = p \cosh t + v \sinh t$ is a smooth function $[0, \infty) \to \R^{n, 1}$, for all $t \geq 0$
+	\begin{align*}
+		\inner{\gamma(t), \gamma(t)}
+		&= \inner{p \cosh t + v \sinh t, p \cosh t + v \sinh t} \\
+		&= (\cosh t)^2 \inner{p, p} + (\sinh t)^2 \inner{v, v} + 2 (\cosh t)(\sinh t) \inner{p, v} \\
+		&= (\sinh t)^2 - (\cosh t)^2 = -1
+	\end{align*}
+	
+	Hence, $\im \gamma \subseteq H^n$, $\gamma$ is a smooth curve on submanifold $H^n$. We have $\dot{\gamma}(t) = p \sinh t + v \cosh t$, then for all $t \geq 0$
+	\begin{align*}
+		\inner{\dot{\gamma}(t), \dot{\gamma}(t)}
+		&= \inner{p \sinh t + v \cosh t, p \sinh t + v \cosh t} \\
+		&= (\sinh t)^2 \inner{p, p} + (\cosh t)^2 \inner{v, v} + 2 (\cosh t)(\sinh t) \inner{p, v} \\
+		&= (\cosh t)^2 - (\sinh t)^2 = 1
+	\end{align*}
+	
+	Hence, $\gamma$ is of unit speed. When $t = 0$, $\dot{\gamma}(0) = v$, thus $\gamma$ has initial velocity $v$
+	
+	(2)
+	
+	Since the induced metric on $T_p H^n$ is positive definite, the set of unit tangent vectors at $p$ is canonically isomorphic to $S^{n-1}$. Since $F$ is smooth, we will construct a smooth inverse as follows: given any $q \in H^n$ with $q \neq p$, let
+	\begin{align*}
+		r &= \arccosh (- \inner{p, q}) \\
+		v &= \frac{q - p \cosh r}{\sinh r}
+	\end{align*}
+	
+	This is a well-defined smooth function $H^n - \set{p} \to (0, \infty) \times S^{n-1}$ because $\inner{p, q} \leq -1 $ and the equality holds if and only if $q = p$ and $v(p, q)$ has norm $1$ as follows:
+	
+	 Let $p = (x^1, ..., x^n, x^{n+1})$ and $q = (y^1, ..., y^n, y^{n+1})$, let $a, b \in \R$
+	
+	$$
+		a = \sqrt{\sum_{i=1}^n (x^i)^2} \text{ and } b = \sqrt{\sum_{i=1}^n (y^i)^2}
+	$$
+	
+	Then, $x^{n+1} = \sqrt{1+a^2}$ and $y^{n+1} = \sqrt{1+b^2}$. We have
+	\begin{align*}
+		\inner{p, q} 
+		&= \tuple*{\sum_{i=1}^n x^i y^i} - x^{n+1} y^{n+1} \\
+		&\leq ab - x^{n+1} y^{n+1} \\
+		&= ab - \sqrt{1+a^2}\sqrt{1+b^2}
+	\end{align*}
+	
+	Hence
+	\begin{align*}
+		&\inner{p, q} \leq -1 \\
+		&\iff ab - \sqrt{1+a^2}\sqrt{1+b^2} \leq -1 \\
+		&\iff ab + 1 \leq \sqrt{1+a^2}\sqrt{1+b^2} \\
+		&\iff a^2 b^2 + 2ab + 1 \leq 1 + a^2 + b^2 + a^2 b^2 \\
+		&\iff 0 \leq (a - b)^2
+	\end{align*}
+	
+	\begin{align*}
+		\inner{v, v}
+		&= \frac{1}{(\sinh r)^2} \inner{q - p \cosh r, q - p \cosh r} \\
+		&= \frac{1}{(\sinh r)^2} (\inner{q, q} - 2 \inner{q, p} \cosh r + \inner{p, p} (\cosh r)^2) \\
+		&= \frac{1}{(\sinh r)^2} (- 1 - 2 \inner{q, p} \cosh r - (\cosh r)^2) \\
+		&= \frac{1}{(\sinh r)^2} (- 1 - 2 (- \cosh r) \cosh r - (\cosh r)^2) \\
+		&= \frac{(\cosh r)^2 - 1}{(\sinh r)^2} = 1
+	\end{align*}
+	
+	(3)
+	
+	$(\partial_r)_q$ at $q \in H^n - \set{p}$ is the image of $\partial_r$ under differential $dF$ which is the column of the Jacobian matrix corresponding to $r$
+	$$
+		(\partial_r)_q = dF\bigg\vert_{(r_0, v_0)} \partial_r = \frac{\partial F}{\partial r}\bigg\vert_{(r_0, v_0)} = p \sinh r_0 + v_0 \cosh r_0
+	$$
+	
+	Substituting $v_0$ with $\frac{q - p \cosh r_0}{\sinh r_0}$ and $r_0$ with $\arccosh (- \inner{p, q})$ gives the desired calculation of $(\partial_r)_q$ from $p$ and $q$
+	$$
+		(\partial_r)_q = p \sinh r_0 + v_0 \cosh r_0 = \frac{- p - q \inner{p, q}}{\sqrt{\inner{p, q}^2 - 1}}
+	$$
+
+	(4)
+	
+	The squared norm on $\partial_r$ in $T_q H^n$ is
+	\begin{align*}
+		\inner{\partial_r, \partial_r}
+		&= \inner{ p \sinh r + v \cosh r,  p \sinh r + v \cosh r} \\
+		&= \inner{p, p} (\sinh r)^2 + \inner{v, v}^2 (\cosh r)^2 + 2 \inner{p, v} (\sinh r) (\cosh r) \\
+		&= - (\sinh r)^2 + (\cosh r)^2 = 1
+	\end{align*}
+	
+	Let $\gamma: [a, b] \to (0, \infty) \times S^{n-1}$ be a curve with $\gamma(a) = (0, v)$ and $\gamma(b) = (r_0, v_0)$, then $F \gamma: [a, b] \to H^n$ is a curve from $p$ to $q$. We have
+	\begin{align*}
+		L(F \gamma) 
+		&= \int_{[a, b]} v \circ (dF \dot{\gamma}) dt  \\
+		&\geq \int_{[a, b]} v \circ \inner{dF \dot{\gamma},  \partial_r} dt &\text{($\partial_r$ has norm $1$ in $T_q H^n$)} \\
+		&= \int_{[a, b]} v \circ \inner{\dot{\gamma}, \partial_r} dt &\text{($F$ preserves metric)} \\
+	\end{align*}
+	
+	The last integral is precisely the length of the straight line from $(0, v)$ to $(r_0, v_0)$ in Euclidean space with polar coordinates
+	$$
+		L(F \gamma) \geq r_0
+	$$
+	
+	The equality holds if and only if $\dot{\gamma}$ is parallel to $\partial_r$ for all $t$. That is, $v(t) = v_0$, the curve is a parabola.
+	
+	(5)
+	
+	If there is an immersion from Euclidean space into $H^n$, metric preserving property implies that length of curve and angle (inner product) are preserved. Hence, the image of an equilateral triangle from Euclidean space into $H^n$ consists of three points with shortest curves (parabolas) between each pair of points and three curves in $H^n$ have the same length and equal the length of the side of the triangle in Euclidean space, we call it an \textit{equilateral triangle} in $H^n$. We will show that one angle of an equilateral triangle in $H^n$ is not $\pi / 3$, that is a contradiction.
+	
+	From previous question, length of parabola from $p$ to $q$ is
+	$$
+		d(p, q) = r_0 = \arccosh(- \inner{p, q}) 
+	$$
+	
+	Now, let two parabolas start from $p$ defined by $F_1(r) = p \cosh r + v_1 \sinh r$ with initial velocity $v_1$ and $F_2(r) = p \cosh r+ v_2 \sinh r$ with initial velocity $v_2$. Let $q_1 = F_1(r_1)$ and $q_2 = F_2(r_2)$ at a distance $r_1, r_2$ from $p$. We have
+	\begin{align*}
+		\inner{q_1, q_2}
+		&= \inner{p \cosh r_1 + v_1 \sinh r_1, p \cosh r_2 + v_2 \sinh r_2} \\
+		&= - (\cosh r_1)(\cosh r_2) +(\sinh r_1) (\sinh r_2) \inner{v_1, v_2}
+	\end{align*}
+	
+	Now, let $p, p_1, p_2$ form an equilateral triangle with side length $r$, that is $r_1 = r_2 = r$ and $\inner{q_1, q_2} = - \cosh r$, then
+	$$
+		- \cosh r = - (\cosh r)^2 + (\sinh r)^2 \inner{v_1, v_2}
+	$$
+	
+	Then, cosine of the angle between $p_1$ and $p_2$ at $p$ is
+	$$
+		\inner{v_1, v_2} = \frac{(\cosh r)^2 - \cosh r}{(\sinh r)^2} = \frac{(\cosh r)^2 - \cosh r}{(\cosh r)^2 - 1} = \frac{x}{x + 1}
+	$$
+	
+	where $x = \cosh r$. For any $r > 0$, the angle between $p_1$ and $p_2$ at $p$ less than $\pi / 3$, hence there is no Riemannian immersion from Euclidean space into $H^n$. Moreover, when the side length $r$ approaches $0$, $\cosh r$ approaches $1/2$,  approaches $\pi / 3$.
+\end{longproof}

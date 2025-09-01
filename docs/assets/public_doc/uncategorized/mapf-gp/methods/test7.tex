@@ -1,0 +1,38 @@
+\subsection{test7}
+
+test7 uses the same concept of indicator vector from test1. We modified the objective function as follow:
+
+\[
+O_7 = \sum_{k=1}^{K} \frac{x^{(k)T} (A - \alpha D) x^{(k)}}{x^{(k)T} x^{(k)} + \beta |V|}
+=
+\sum_{k=1}^{K} \frac{\sum_{i \in V_k} \sum_{j \in V_k} A_{ij}}{|V_k| + \beta |V|} - \alpha \frac{\sum_{i \in V_k} D_{ii}}{|V_k| + \beta |V|}
+\]
+
+Where $\alpha$ and $\beta$ are two non-negative hyper-parameters.
+
+Constant $\beta$ makes the partitions more balanced. Let $\alpha = 0$, consider a graph that all edges have unit length. A positive constant $\beta$ makes the unique minimum partition to be the balanced one. \footnote{Detailed analysis in Appendix}
+
+Constant $\alpha$ is intended to encourage large degree nodes to join the small partitions.
+
+If $\alpha = 0$ and $\beta = 0$, we obtain the objective function of test1. If $\alpha \in \{0, 1\}$ and $\beta \to +\infty$, we obtain the objective function of MAX-CUT problem.
+
+In the experiment, we have chosen $\alpha = 0$ and $\beta = 1$.
+
+Instead of the orthogonal constraint, we imposed a pair of constraints for the indicator vectors.
+
+\[
+x^{(k)} \succeq 0 \text{ and } \sum_{k=1}^{K} x^{(k)} = 1_{|V|}
+\]
+
+The pair of constraints is a soft indicator of each node belonging to a partition. In the experiment, we changed the second constraint to be inequality.
+
+\[
+x^{(k)} \succeq 0 \text{ and } \sum_{k=1}^{K} x^{(k)} \succeq 1_{|V|}
+\]
+
+Finally, the partition for each node is taken as:
+
+\[
+k_i = argmax_k \{x^{(k)}_i\}_{k=1}^{K} 
+\]
+

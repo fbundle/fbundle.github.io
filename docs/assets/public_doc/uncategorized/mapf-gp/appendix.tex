@@ -1,0 +1,219 @@
+\chapter{Appendix}
+
+\section{Informal proof of theorem \ref{theo:theorem1}}
+\subsection{problem \ref{prob:problem2} $\to$ problem \ref{prob:problem1}*}
+$V_P \to V$: nodes of problem \ref{prob:problem2} become nodes of problem \ref{prob:problem1}*\\
+$V_P \to V_P$: nodes of problem \ref{prob:problem2} become POIs of problem \ref{prob:problem1}*\\
+$E_P \to E$: edges of problem \ref{prob:problem2} become edges of problem \ref{prob:problem1}*\\
+$L \to L$: remains $L$\\
+
+If $S_1$ is the solution problem \ref{prob:problem1}*, $S_1$ is also a valid assignment for problem \ref{prob:problem2} ($|S_1| \geq |S_2|$).
+
+The claim is correct due to this procedure: let any $B$ appears more than once in $S_1$, $A \to B \to C$ becomes $A \to C$.
+
+If $S_2$ is the solution of problem \ref{prob:problem2}, $S_2$ is also a valid assignment for problem \ref{prob:problem1}* ($|S_2| \geq |S_1|$).
+
+Hence, problem \ref{prob:problem1}* is at least as hard as problem \ref{prob:problem2}
+
+\subsection{problem \ref{prob:problem1}* $\to$ problem \ref{prob:problem2}}
+
+$V_P \to V_P$: POIs of problem \ref{prob:problem1}* become nodes of problem \ref{prob:problem2}\\
+*: shortest paths of problem \ref{prob:problem1}* become edges of problem \ref{prob:problem2}\\
+$L \to L$: remains $L$\\
+
+If $S_2$ is the solution of problem \ref{prob:problem2}, $S_2$ is also a valid assignment for problem \ref{prob:problem1}* ($|S_2| \geq |S_1|$)
+
+If $S_1$ is the solution of problem \ref{prob:problem1}*, $S_1$is also a valid assignment for problem \ref{prob:problem2}
+
+The claim is correct by:
+
+If there is no node appears more than once, trivial.
+
+Otherwise, let any $B$ appears more than once in $S_1$, $|A \to B \to C| \geq |A \to C|$. If the inequality occurs, replacing $|A \to B \to C|$ by $|A \to C|$ yields a shorter solution that conflicts with $S_1$ is the solution of problem \ref{prob:problem1}*. The equality occurs, we replace $|A \to B \to C|$ by $|A \to C|$ until there is no more node appear more than once.
+
+Hence, problem \ref{prob:problem2} is at least as hard as problem \ref{prob:problem1}*
+
+\section{Informal proof of theorem \ref{theo:approximation}}
+
+
+Consider the program of minimizing a function $f: X \to \mathbb{R}$. In many scenarios, it is hard to find an optimal or it is even hard to compute the value of $f(x)$. Isaac Vandermeulen, Roderich Groß, Andreas Kolling \cite{vandermeulen2019balanced} has introduced a method that find a function $f_1: X \to \mathbb{R}$ such that $(1) f(x) = c(f_1(x)) + v$ where $c$ is a monotonically increasing function and $v$ is a random variable. 
+
+Let some bounds on $v$ as follows: $\alpha$ $\in$ (0, 0.5) and $b_\alpha^-$, $b_\alpha^+$ $\in$ $\mathbb{R}_+$
+
+\[
+\mathbb{P}[-b_\alpha^- \leq v] = \mathbb{P}[v \leq +b_\alpha^+] = 1 - \alpha
+\]
+
+Let $x^*$ and $x^*_1$ be the optimal values for $f$ and $f_1$.
+
+Consider 3 random events:
+\[
+(A): f(x^*_1) \leq f(x^*) + b_\alpha^- + b_\alpha^+
+\]
+\[
+(B): f(x^*_1) \leq c(f_1(x^*_1)) + b_\alpha^+
+\]
+\[
+(C): f(x^*) \geq c(f_1(x^*)) - b_\alpha^-
+\]
+
+\begin{theorem}[Approximation]:
+
+$\mathbb{P}[A] \geq (1 - \alpha)^2$
+
+\label{theo:approximation}
+\end{theorem}
+
+
+We have $f(x^*) \leq f(x^*_1)$ and $f_1(x^*_1) \leq f_1(x^*)$. $c$ is a monotonically increasing function, so $c(f_1(x^*_1)) \leq c(f_1(x^*))$. 
+
+If $(B)$ holds, 
+\[
+f(x^*_1) \leq c(f_1(x^*_1)) + b_\alpha^+ \leq c(f_1(x^*)) + b_\alpha^+
+\]
+
+If $(C)$ also holds,
+\[
+f(x^*_1) \leq c(f_1(x^*)) + b_\alpha^+ = (c(f_1(x^*)) - b_\alpha^-) + b_\alpha^- + b_\alpha^+
+\]
+
+Hence, 
+\[
+(A): f(x^*_1) \leq f(x^*) + b_\alpha^- + b_\alpha^+
+\]
+
+
+$(A)$ implies the upper-bound on how good the solution of $f_1$. By assuming $v$, $x^*$ and $x^*_1$ be independent, $\mathbb{P}[B \cap C] = \mathbb{P}[B] \times \mathbb{P}[C]$. Since $B \cap C \to A$, $\mathbb{P}[A] \geq \mathbb{P}[B] \times \mathbb{P}[C]$. From (1), $\mathbb{P}[B] = \mathbb{P}[C] = 1 - \alpha$. So, $\mathbb{P}[A] \geq (1 - \alpha)^2$
+
+In conclusion, if one can the proxy $f_1$, a good solution for $f$ can be obtained with high probability.
+
+The error on this approximation depends on how good we can find a function $f$ and a smoother $c$.
+
+\section{Analysis on constant $\beta$}
+
+Let $\alpha = 0$, $\beta > 0$, consider a graph that all edges have unit length. Objective function is
+
+\[
+O_7 = \sum_{k=1}^{K} \frac{x^{(k)T} (A - \alpha D) x^{(k)}}{x^{(k)T} x^{(k)} + \beta |V|}
+=
+\sum_{k=1}^{K} \frac{\sum_{i \in V_k} \sum_{j \in V_k} A_{ij}}{|V_k| + \beta |V|}
+= 
+\sum_{k=1}^{K} \frac{|V_k|(|V_k| - 1)}{|V_k| + \beta |V|}
+\]
+
+Subject to the constraint
+
+\[
+\sum_{k=1}^{K} |V_k| = |V| \text{ and } |V_k| > 0 \text{ } \forall k
+\]
+
+Let $x_k = \frac{|V_k|}{|V|}$ be a real variable, we have the problem of minimizing
+
+\[
+f(x) = \sum_{k=1}^{K} \frac{x_k (x_k-1)}{x_k+\beta |V|}
+\]
+
+Subject to 
+
+\[
+c_0(x) = \sum_{k=1}^{K} x - 1 = 0 \text{ and } c_k(x) = -x_k \leq 0 \text{ } \forall k
+\]
+
+We have:
+
+\[
+\frac{\partial f}{\partial x_k} = |V|(1 - \frac{\beta (\beta + 1/|V|)}{(x_k + \beta)^2})
+\]
+
+
+$\frac{\partial f}{\partial x_k}$ has this property if $\beta > 0$:
+
+\[
+\text{(1): } \text{$\frac{\partial f}{\partial x_k}$ is a monotonically increasing function for all $x_k \geq 0$}
+\]
+
+Theorem \ref{theo:unique} deduces the unique minimum of $O_7$ at $|V_k| = |V|/K$
+
+\section{Theorem \ref{theo:unique}}
+
+Given the program:
+
+\[
+\textbf{Minimize: } f(x)
+\textbf{ subject to: } c_0(x) = \sum_{i=1}^{n} x_i = 1 \text{ and } c_i(x) = -x_i \leq 0 \text{ } \forall i
+\]
+
+
+Such that $\frac{\partial f}{\partial x_i}$ has this property:
+
+\[
+\text{(1): } \text{$\frac{\partial f}{\partial x_i}$ is a monotonically increasing function for all $x_i \geq 0$}
+\]
+
+\[
+\frac{\partial f}{\partial x_i}(x_1) < \frac{\partial f}{\partial x_i}(x_2) \text{ } \forall \text{ } 0 \leq x_1 < x_2
+\]
+
+\begin{theorem}[Unique solution]
+\label{theo:unique}
+Program has unique solution at $x_i = \frac{1}{n}$ $\forall i$
+\end{theorem}
+
+Lagrangian function is
+
+\[
+L(x, \mu, \lambda) = f(x) + \sum_{i=1}^{n} \mu_i c_i(x) + \lambda c_0(x)
+\]
+
+If $x*$ is a minimum, KKT conditions:
+
+\[
+\textbf{Stationary: } \frac{\partial L}{\partial x}(x*) = 0_n
+\]
+\[
+\textbf{Primal feasibility: } c_0(x*) = 0 \text{ and } c_i(x*) \leq 0 \text{ } \forall i
+\]
+\[
+\textbf{Dual feasibility: } \mu_i \geq 0 \text{ } \forall i
+\]
+\[
+\textbf{Complementary slackness: } \mu_i c_i(x*) = 0 \text{ } \forall i
+\]
+
+We have:
+
+\[
+\frac{\partial L}{\partial x_k} = \frac{\partial f}{\partial x_k} - \mu_k + \lambda
+\]
+
+Consider 2 cases:
+
+\textbf{Case 1:} all $x_i > 0$, due to complementary slackness, all $\mu_i = 0$. So that, all $\frac{\partial f}{\partial x_i}$ must be equal. (1) deduces that the unique solution satisfying KKT conditions is $x_i = \frac{1}{n}$
+
+\textbf{Case 2:} some $x_i = 0$, let $x_{i1} = 0$
+
+\[
+\frac{\partial f}{\partial x_i}(x_{i1}) - \mu_{i1} + \lambda = 0
+\]
+
+\[
+\lambda = \mu_{i1} - \frac{\partial f}{\partial x_i}(0)
+\]
+
+Since dual feasibility, $\mu_{i1} \geq 0$, So
+
+\[
+\lambda \geq - \frac{\partial f}{\partial x_i}(0)
+\]
+
+There is at least one $x_i > 0$, let $x_{i2} > 0$, due to complementary slackness, $\mu_{i2} = 0$, So
+
+\[
+\frac{\partial f}{\partial x_i}(x_{i2}) + \lambda = 0
+\]
+
+\[
+\frac{\partial f}{\partial x_i}(x_{i2}) = - \lambda \leq \frac{\partial f}{\partial x_i}(0)
+\]
+
+(1) deduces contradiction.

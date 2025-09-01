@@ -1,0 +1,861 @@
+\chapter{SOME OTHER CLASSES OF RINGS}
+
+\section{ARTINIAN RING}
+
+
+\begin{definition}[Artinian ring]
+	A ring is Artinian if it satisfies the decending chain condition (DDC): any decending chain of ideals
+	$$
+		I_1 \supseteq I_2 \supseteq ...
+	$$
+	must stablize, that is, $I_n = I_{n + 1}$ for large $n$
+\end{definition}
+
+\begin{remark}
+	Some examples and non-examples
+	\begin{enumerate}
+		\item Let $k$ be a field, $k[x, y] / (x^3, xy, y^3)$ is Artinian because it is of finite dimension
+		\item For any nonzero integer $n$, $\Z / n \Z$ is Artinian
+		\item $\Z$ is not Artinian
+		\item If $A$ is Artinian and $I$ is an ideal of $A$, then $A / I$ is Artinian
+	\end{enumerate}
+\end{remark}
+
+\begin{proposition}
+	If $A$ is a domain and Artinian, then $A$ is a field
+\end{proposition}
+
+\begin{proof}
+	We will construct the inverse of any nonzero element $x \in A$. We have the decending chain
+	$$
+		(x) \supseteq (x^2) \supseteq ...
+	$$
+	
+	Hence, by DCC, $(x^n) = (x^{n+1})$ for some $n > 0$. $x^n \in (x^{n+1})$ implies $x^n = x^{n+1} y$ for some $y \in A$. Since $A$ is a domain, left cancellation works, $1 = xy$
+\end{proof}
+
+\begin{corollary}
+	Every prime ideal in an Artinian ring is maximal
+\end{corollary}
+
+\begin{proof}
+	Let $\mf{p}$ be a prime ideal in Artinian ring $A$, then $A / \mf{p}$ is also Artinian. Since $A / \mf{p}$ is a domain, then it is also a field. Hence $\mf{p}$ is maximal.
+\end{proof}
+
+\begin{proposition}
+	Aritinian ring has only finitely many maximal ideals
+\end{proposition}
+
+\begin{proof}
+	Let $\mf{m}_1, \mf{m}_2, ...$ be maximal ideals of an Artinian ring $A$, then
+	$$
+		\mf{m}_1 \supseteq \mf{m}_1 \mf{m}_2 \supseteq ...
+	$$
+	is a decending chain. Since each pair of maximal ideals are coprime (or comaximal), by CRT,
+	$$
+		\frac{A}{\mf{m}_1 ... \mf{m}_n} \cong \frac{A}{\mf{m}_1} \times ... \times  \frac{A}{\mf{m}_n}
+	$$
+	
+	Note that, the RHS admits precisely $n$ prime ideals of the form
+	$$
+		\frac{A}{\mf{m}_1} \times ... \times \frac{A}{\mf{m}_{i-1}} \times \set{0} \times  \frac{A}{\mf{m}_{i+1}} \times ... \times  \frac{A}{\mf{m}_n}
+	$$
+	Hence, $\frac{A}{\mf{m}_1 ... \mf{m}_n} \neq \frac{A}{\mf{m}_1 ... \mf{m}_{n+1}}$. That is, the decending chain consists of all strict inclusions. By DDC, the chain stablizes. Hence, $A$ has finitely many maximal ideals.
+\end{proof}
+
+\begin{corollary}
+	The nilradical and Jacobson radical of an Artinian ring is of the form
+	$$
+		\eta_A = J(A) = \bigcap_{1 \leq i \leq n} \mf{m}_i = \mf{m}_1 ... \mf{m}_n
+	$$
+	
+	where the last inequality is due to maximal ideals being comaximal
+\end{corollary}
+
+\begin{proposition}
+	If $A$ is Artinian, then $\eta_A^k = 0$ for some large $k$. In other words, let $\mf{m}_1, ..., \mf{m}_n$ be the maximal ideals of an Artinian ring $A$, then $\mf{m}_1^k ... \mf{m}_n^k = 0$ for large $k$	
+\end{proposition}
+
+\begin{proof}
+	By DDC, 
+	$$
+		\eta_A \supseteq \eta_A^2 \supseteq ...
+	$$
+	must stablize to some ideal $\mf{a}$. We will show that $\mf{a} = (0)$. Suppse $\mf{a} \neq 0$, observe that $\mf{a}^2 = (\eta_A^k)^2 = \eta_A^{2k} = \eta_A^k = \mf{a}$. Let 
+	$$
+		\Sigma = \set{\mf{b} \subseteq A: \mf{b} \text{ is ideal and } \mf{b} \mf{a} \neq 0}
+	$$
+	
+	then $\Sigma \neq 0$ since $A \in \Sigma$. Due to Zorn lemma and DCC, let $\mf{c}$ be a minimal element in $\Sigma$, pick $x \in \mf{c}$ so that $x \mf{a} \neq 0$. Since
+	$$
+		(x \mf{a}) \mf{a} = x (\mf{a} \mf{a}) = x \mf{a} \neq 0
+	$$
+	
+	then $(x) \in \Sigma$, but $(x) \subseteq \mf{c}$. By minimality of $\mf{c} = (x)$. Moreover, $x \mf{a} \in \Sigma$, then $\mf{c} = (x) = x \mf{a}$. Now, $x \in (x) = x \mf{a}$, then $x = xy$ for some $y \in \mf{a} \subseteq \eta_A$. Replace $x$ by $xy$, we have $x = xy = xy^2 = xy^3 = ...$. Since $y \in \eta_A$, we have $x = xy^n = 0$ for some $n$. This contradicts with $x \mf{a} \neq 0$
+\end{proof}
+
+
+\begin{corollary}
+	Let $A$ be an Aritinian ring, then 
+	$$
+		A \cong A_1 \times ... \times A_l
+	$$
+	where each $A_i$ is Artinian and local
+\end{corollary}
+
+\begin{proof}
+	$$
+		A = \frac{A}{(0)} = \frac{A}{\mf{m}_1^k, ..., \mf{m}_l^k}
+	$$
+	
+	since $\mf{m}_i^k$ and $\mf{m}_j^k$ are comaximal for $i \neq j$ (\note{TODO - exercise}), then by CRT
+	$$
+		A = \frac{A}{\mf{m}_1^k} \times ... \times \frac{A}{\mf{m}_l^k}
+	$$
+	
+	If $\mf{n}$ is a maximal ideal in $A / \mf{m}_i^k$, then it is maximal in $A$ and $\mf{n} \supseteq \mf{m}_i^k$, then $\mf{n} \supseteq \mf{m}_i$, hence $\mf{n} = \mf{m}_i$. That is, each $A / \mf{m}_i^k$ is local. Moreover, quotient of Artinian ring is Artinian.
+\end{proof}
+
+\section{LENGTH AND ARTINIAN RING}
+
+\begin{definition}[length]
+	Define the length of an $A$-module $M$ by
+	$$
+		l_A(M) = \sup \set{n \in \N: \text{ there exists a chain of submodules } M = M_n \supsetneq M_{n-1} \supsetneq ... \supsetneq M_0 = \set{0}}
+	$$
+\end{definition}
+
+\begin{remark}
+	A ring $A$ is Artinian if and only if $l_A(A) < \infty$
+\end{remark}
+
+\begin{remark}
+	Some examples
+	\begin{enumerate}
+		\item $l_\Z(\Z) = \infty$
+		\item $l_\Z(\Z / 6) = 2$ since the only chains in $\Z / 6$ are $\Z / 6 \supsetneq 3 \Z / 6 \supsetneq 0$ and $\Z / 6 \supsetneq 2 \Z / 6 \supsetneq 0$
+	\end{enumerate}
+\end{remark}
+
+\begin{remark}
+	Some facts about length
+	\begin{enumerate}
+		\item $l_A$ is uniquely characterized by two properties
+		\begin{enumerate}
+			\item $l_A(A / \mf{m}) = 1$ for any maximal ideal $\mf{m} \subseteq A$
+			\item If $0 \to K \to M \to Q \to 0$ is a short exact sequence of $A$-module, then $l_A(M) = l_A(K) + l_A(Q)$
+		\end{enumerate}
+		
+		\item $l_A(M) = n$ if and only if there exists a chain
+		$$
+			0 = M_0 \subsetneq M_1 \subsetneq ... \subsetneq M_n = M
+		$$
+		such that each $M_i / M_{i-1}$ is $A$-simple, that is $M_i / M_{i-1} = A / \mf{m}$ for some maximal ideal $\mf{m}$ of $A$ 
+	\end{enumerate}
+\end{remark}
+
+\begin{theorem}
+	The following are equivalent
+	\begin{enumerate}
+		\item $A$ is Noetherian and $(0) = \mf{n}_1 ... \mf{n}_l$ with each $\mf{n}_i$ is a maximal ideal (there are possibly duplicates)
+		\item $A$ is Noetherian and $\dim A = 0$
+		\item $A$ is Artinian
+	\end{enumerate}
+\end{theorem}
+
+\begin{longproof}
+	($1 \implies 2$) Let $\mf{p}$ be any prime ideal, then 
+	$$
+		(0) =  \mf{n}_1 ... \mf{n}_l \subseteq \mf{p}
+	$$
+	
+	Then at least one $\mf{n}_i \subseteq \mf{p}$, then $\mf{p} = \mf{n}_i$ maximal
+	
+	($2 \implies 3$) Let 
+	$$
+		\Delta = \set{I \subseteq A: l_A(A / I) = \infty}
+	$$
+	
+	Suppose $l_A(A) = \infty$, then $\Delta \neq \emptyset$ since $(0) \in \Delta$. Due $A$ being Notherian and Zorn lemma, Let $J$ be a maximal element of $\Delta$. We will show that $J$ is prime, or equivalently $S = A / J$ is a domain. Suppse $ab = 0$ for $a, b \in S$ being nonzero , then 
+	$$
+		l_S(S / a), l_S(S / b) < \infty
+	$$
+	
+	Because if $l_S(S / a) = \infty$, then $\infty = l_S(S / a) = l_A(A / (J, a))$, then $(J, a) \in \Delta$ which contradicts the maximality of $J$. \note{($S / a = S / (a) = S / aS$ is the quotient group of $S$ over the ideal generated by $a$ in $S$)}. Note that the natural map $S \to aS$ defined by $x \mapsto ax$ factors through $S / b$, so the map $S/b \to aS$ is surjective. The second row in the diagram below is exact
+	\begin{center}
+		\begin{tikzcd}
+			&               & S \arrow[rd, two heads] \arrow[d] &              &   \\
+			0 \arrow[r] & ... \arrow[r, hook] & S / b \arrow[r, two heads]        & aS \arrow[r] & 0
+		\end{tikzcd}
+	\end{center}
+	
+	Hence, $l_S(aS) \leq l_S(S / b) < \infty$. But, the sequence below is exact
+	\begin{center}
+		\begin{tikzcd}
+			0 \arrow[r] & aS \arrow[r, hook] & S \arrow[r, two heads] & S/a \arrow[r] & 0
+		\end{tikzcd}
+	\end{center}
+	
+	Hence, $l_S(S) = l_S(aS) + l_S(S / a) < \infty$. Due to the correspondence of ideals, $l_A(A / J) = l_S(S)$, this is a contradiction. So, $J$ is prime. So, $J$ is a maximal ideal, hence $l_A(A / J) = 1$ which is a contradiction. Hence, $l_A(A) < \infty$
+
+	($3 \implies 1$) proved earlier. $(0) = \eta_A^k = \mf{m}_1^k ... \mf{m}_n^k$
+	
+\end{longproof}
+
+\begin{remark}
+	Let $A \supseteq \mf{n}_1 \supseteq \mf{n}_1 \mf{n}_2 \supseteq \mf{n}_1 \mf{n}_2 \mf{n}_3 \supseteq ... \supseteq 0$ and
+	$$
+		\frac{A}{\mf{n}_{i+1}} = \frac{\mf{n}_1 ... \mf{n}_i}{\mf{n}_1 ... \mf{n}_i \mf{n}_{i+1}}
+	$$
+	is a field, that is a dimension $1$ vector space. Hence
+	$$
+		l_A(A) = \sum_{1 \leq i \leq l} \dim \tuple*{\frac{\mf{n}_1 ... \mf{n}_i}{\mf{n}_1 ... \mf{n}_i \mf{n}_{i+1}}}
+	$$
+	
+	which is finite. (\note{from characterization of length})
+\end{remark}
+
+\begin{remark}
+	Given a chain of ideals $0 \subseteq ... \subseteq I_{n-1} \subseteq I_n \subseteq ... \subseteq A$. Then
+	$$
+		0 \leq ... \leq l_A(I_{n-1}) \subseteq l_A(I_n) \subseteq ... \subseteq l_A(A)
+	$$
+\end{remark}
+
+\section{EUCLIDEAN DOMAIN \\ PRINCIPAL IDEAL DOMAIN \\ UNIQUE FACTORIZATION DOMAIN}
+
+\begin{definition}[Euclidean domain (ED)]
+	A ring $A$ is an Euclidean domain if there exists a norm function $f: A - \set{0} \to \N$ so that for every $a, b \in A$, there exist $q, r \in A$ so that
+	$$
+		a = qb + r
+	$$
+	
+	with $r = 0$ or $f(r) < f(b)$.
+\end{definition}
+
+\begin{definition}[principal ideal domain (PID)]
+	A ring $A$ is a principal ideal domain if every ideal of $A$ is principal
+\end{definition}
+
+\begin{definition}[irreducible, associate]
+	$a \in A$ is called irreducible if $a = bc$ implies $b$ or $c$ is unit. $a, b \in A$ are called associate if $a = ub$ for some unit $u$
+\end{definition}
+
+\begin{definition}[unique factorization domain (UFD)]
+	A ring $A$ is a unique factorization domain if every $a \in A$ can be written as
+	$$
+		a = a_1 a_2 ... a_n
+	$$
+	where each $a_i$ is irreducible and the decomposition is unique up to associate.
+\end{definition}
+
+\begin{proposition}
+	$$
+		\set{ED} \subsetneq \set{PID} \subsetneq \set{UFD}
+	$$
+\end{proposition}
+
+\begin{remark}
+	Some examples, non-examples
+	\begin{enumerate}
+		\item $k[x, y] \in \set{UFD} - \set{PID}$ for a field $k$
+		\item $\Z[\sqrt{-19}] \in \set{PID} - \set{ED}$
+		\item $\Z[i], k[x] \in \set{ED}$ for a field $k$
+	\end{enumerate}
+\end{remark}
+
+\begin{proof} \note{proof idea for $PID \subseteq UFD$}
+	Let $A$ be a PID, observe that a nonzero prime ideal $\mf{p}$, then $\mf{p}$ is maximal. This is because if $\mf{p} = (x) \subseteq (y)$, then there exists $a \in A$ so that $x = ay$. Thus, $y$ divides $0$ in $A / \mf{p}$. $A / \mf{p}$ is a domain, then $y = 0$ in $A / \mf{p}$. Hence $(y) = (x)$. Now, for any nonzero $x \in A$, $A / (x)$ is Noetherian and every prime ideal is maximal, so $A / (x)$ is Artinian. Hence, $A / (x)$ is a product of Artinian local rings
+	$$
+		A / (x) = \prod_{1 \leq i \leq l} (A_i, \mf{m}_i)
+	$$
+	
+	Let $I_i = (A \twoheadrightarrow A_i)^{-1} \mf{m}_i = (a_i)$ be the lift of $\mf{m}_1$ in $A$. If $e_i$ is the smallest integer so that $\mf{m}_i^{e_i} = 0$, then 
+	$$
+		x = a_1^{e_1} ... a_l^{e^l}
+	$$
+\end{proof}
+
+\section{PRIMARY IDEAL}
+
+A non-example for UFD is $\Z[\sqrt{-5}]$
+$$
+	6 = 2 \cdot 3 = (1 + \sqrt{-5})(1 - \sqrt{-5})
+$$
+
+and $2, 3, 1 + \sqrt{-5}, 1 - \sqrt{-5}$ are irreducible in $\Z[\sqrt{-5}]$. It can be seen by defining the norm function on $\Z[\sqrt{-5}]$ as follows
+\begin{align*}
+	N: \Z[\sqrt{-5}] &\to \Z \\
+	a + b\sqrt{-5} &\mapsto a^2 + 5 b^2
+\end{align*}
+
+norm is multiplicative, that is $N(xy) = N(x) N(y)$, and $N(x) = 1 \iff x $ is a unit. Suppose $2$ can be factored into $xy$, then $4 = N(2) = N(x) N(y)$, if $x = a + b\sqrt{-5}$ then $N(x) = 2$, then $a^2 + 5 b^2 = 2$, the equation does not have solution in $\Z$, so $N(x) = 1$ or $N(y) = 1$, that is, either $x$ or $y$ is a unit. Moreover, $2$ is not associate with $1 + \sqrt{-5}$ or $1 - \sqrt{-5}$ since $4 = N(2) \neq N(1 \pm \sqrt{-5}) = 6$. Hence, $6$ admits two different decompositions into irreducibles, $\Z[\sqrt{-5}]$ is not a UFD.
+
+Another non-example for $UFD$ is $\Z[\xi_n]$ where $\xi_n = e^{(2\pi i) / n}$ is the $n$-th root of unity. In $\Z[\xi_n]$, $x^n + y^n$ can be factorized into
+$$
+	x^n + y^n = (x + y) (x + \xi_n y) (x + \xi_n^2 y) ... (x + \xi_n^{n-1} y)
+$$
+
+If $\Z[\xi_n]$ is an UFD, then Fermat last theorem ($z^n = x^n + y^n$) holds for $n$. However, this is not the case for all $n$, $\Z[\xi_n]$ is an UFD for many $n \leq 90$ and no $n > 90$. This section is motivated by a solution for Fermat last theorem for many $n$ by defining a weaker notion of irreducible decomposition. The answer will be revealed at the end of Dedekind domain.
+
+
+\begin{definition}[primary ideal]
+	Given a ring $A$, an ideal $I$ is primary if $xy \in I$ implies $x \in I$ or $y^n \in I$ for some $n \geq 1$
+\end{definition}
+
+\begin{proposition}
+	An ideal $I$ is primary if and only if every zero divisor in $A / I$ is nilpotent
+\end{proposition}
+
+\begin{remark}
+	Some examples and non-examples
+	\begin{enumerate}
+		\item if $\mf{p}$ is a prime, then $\mf{p}$ is primary and also $\mf{p}$ is radical, that is $\mf{p} = \sqrt{\mf{p}}$
+		\item $(x^2, xy) \subseteq k[x, y]$ is primary for a field $k$
+		\item let $A = \set{p(T) \in \Z[T]: 3 \text{ divides } p'(0)}$, then $\mf{p} = (3T, T^2, T^3)$ is prime but $\mf{p}^2$ is not primary
+	\end{enumerate}
+\end{remark}
+
+
+\begin{definition}[$\mf{p}$-primary]
+	If $I$ is a primary ideal, then $\mf{p} = \sqrt{I}$ is prime, we call $I$ a $\mf{p}$-primary ideal.
+\end{definition}
+
+\begin{proposition}
+	Given any ideal $I$, if $\sqrt{I}$ is a maximal then $I$ is a primary ideal.
+\end{proposition}
+
+\begin{proof}
+	Let $\mf{m} = \sqrt{I}$, we have $\mf{m} / I \subseteq A / I$ is the unique prime ideal (every prime ideal containing $I$ must contain $\mf{m}$) if and only if all non-unit elements of $A / I$ are in $\mf{m} / I$. Then, any zero divisor of $A / I$ is in $\mf{m} / I$. But all elements of $\mf{m} / I$ are nilpotent, hence $I$ is primary.
+\end{proof}
+
+
+\begin{lemma}
+	Given a Notherian ring $A$
+	\begin{enumerate}
+		\item $I$ is $\mf{p}$-primary then $\mf{p}^N \subseteq I$ for large $N$
+		\item $I$ is $\mf{m}$-primary for some maximal ideal $\mf{m}$ if and only if $A / I$ is Artinian local
+		\item $I$ is $\mf{m}$-primary for some maximal ideal $\mf{m}$ and $I A_\mf{m} = \mf{m}^n A_\mf{m}$ for some $n$, then $I = \mf{m}^n$
+	\end{enumerate}
+\end{lemma}
+
+\begin{longproof}
+	(1) $A$ is Noetherian, then $\mf{p} = (a_1, ..., a_n)$. $I$ is $\mf{p}$-primary, then for every $i$, there exists $e_i \geq 1$ so that $a_i^{e_i} \in I$. Let $N = e_1 + ... + e_n$, then $\mf{p}^N \subseteq I$
+	
+	(2 $\impliedby$) Let $\mf{n} \subseteq A / I$ be the unique maximal ideal, so 
+	$$
+		\mf{m} = (A \twoheadrightarrow A / I)^{-1} \mf{n} = \mf{n} \cap A
+	$$
+	is the lift of $\mf{n}$ in $A$. Since $A / I$ is Artinian local, then $\mf{n}^k = 0$ for some $k$, then $\mf{m}^k \subseteq I$, that is $\mf{m} \subseteq \sqrt{I}$. Since $\mf{m}$ is maximal, $\mf{m} = \sqrt{I}$
+	
+	(2 $\implies$) Construct $N$ so that $\mf{m}^N \subseteq I$, then 
+	$$
+		A / \mf{m}^N \twoheadrightarrow A / I
+	$$
+	is surjective. Since $A / \mf{m}^N$ is Artinian local, then $A / I$ is also Artinian local.
+	
+	(3) Let $\phi: A \to A_\mf{m}$, then 
+	$$
+		I \subseteq \phi^{-1}(I A_\mf{m}) = \phi^{-1}(\mf{m}^n A_\mf{m}) = \ker (A \to A_\mf{m} \twoheadrightarrow A_\mf{m} / (\mf{m}^n A_\mf{m}))
+	$$
+	
+	Since $\mf{m}$ is maximal, there is an isomorphism $A_\mf{m} / (\mf{m}^n A_\mf{m}) \xrightarrow{\sim} A / \mf{m}^n$ and the composition $A \to A_\mf{m} \twoheadrightarrow A_\mf{m} / (\mf{m}^n A_\mf{m}) \xrightarrow{\sim} A / \mf{m}^n$ is precisely the projection $A \twoheadrightarrow A / \mf{m}^n$. Hence, $I \subseteq \mf{m}^n$ (\note{TODO - check})
+	
+	Let $Q = \mf{m}^n / I$ be a quotient module, will show that $Q = 0$. It suffices to show that $Q_\mf{n} = 0$ for all maximal ideal $\mf{n}$. Indeed, if $\mf{n} =  \mf{m}$, then $Q_\mf{m} = 0$ because $I A_\mf{m}  = \mf{m}^n A_\mf{m}$, if $\mf{n} \neq  \mf{m}$, then $Q_\mf{n} = A_\mf{n} / A_\mf{n} = 0$ (\note{TODO - check}).
+\end{longproof}
+
+\begin{theorem}
+	Let $A$ be a dimension $1$ Noetherian domain, then every nonzero ideal $I \subseteq A$ admits unique factorization
+	$$
+		I = \prod_{1 \leq i \leq l} I_i
+	$$
+	for $I_i$ be a primary ideal and $\sqrt{I_i} \neq \sqrt{I_j}$ for $i \neq j$
+\end{theorem}
+
+\begin{proof}
+	Note that, in $A$, every nonzero prime ideal is maximal. Then, $A / I$ is Noetherian and dimension $0$, hence $A / I$ is Artinian, hence
+	$$
+		A / I = \prod_{1 \leq j \leq l} A_j
+	$$
+	for some Artinian local ring $(A_j, \mf{m}_j)$. Let $I_j = \ker(A \twoheadrightarrow A / I \twoheadrightarrow A_j)$, then $A / I_j \cong A_j$. By the previous lemma, $I_j$ is $\mf{m}_j$-primary for some maximal ideal $\mf{m}_j \subseteq A$. Then
+	$$
+		I = \ker (A \twoheadrightarrow A / I) = I_1 ... I_l
+	$$
+\end{proof}
+
+\begin{remark}
+	$\Z[\xi_n]$ is a dimension $1$ Notherian domain.
+\end{remark}
+
+\section{DISCRETE VALUATION RING}
+
+\begin{definition}[valuation ring]
+	A domain $B$ is called a valuation ring of $K = \Frac(B)$ if for each nonzero $x \in K$, either $x \in B$ or $x^{-1} \in B$
+\end{definition}
+
+\begin{definition}[discrete valuation, discrete valuation ring]
+	A discrete valuation on a field $k$ is a map $V: k^\times \to \Z$ so that
+	\begin{enumerate}
+		\item $V(xy) = V(x) + V(y)$
+		\item $V(x + y) \geq \min\set{V(x), V(y)}$ and the equality holds if $V(x) \neq V(y)$
+	\end{enumerate}
+	
+	For convention, define $V(0) = \infty$. Let
+	$$
+		\mathcal{O}_V = \set{x \in k: V(x) \geq 0}
+	$$
+	be a subring of $k$. A ring of the form $\mathcal{O}_V$ is called discrete valuation ring (DVR).
+\end{definition}
+
+\begin{remark}
+	Some examples
+	\begin{enumerate}
+		\item On field $\Q$, let $p$ be a prime
+		\begin{align*}
+			V_p: \Q^\times &\to \Z \\
+					p^n \frac{a}{m} &\mapsto n
+		\end{align*}
+		Then, $\mathcal{O}_V = \Z / (p)$
+		
+		\item On field $k[t]$
+		\begin{align*}
+			V: k[t]^\times &\to \Z \\
+			t^n \frac{f(t)}{g(t)} &\mapsto n
+		\end{align*}
+		Then, $\mathcal{O}_V = k[t]_{(t)}$		
+	\end{enumerate}
+\end{remark}
+
+\begin{remark}[structure of ideals of DVR, uniformizer]
+	Let $(A, v)$ be a discrete valuation ring
+	\begin{enumerate}
+		\item for $x \in k^\times$, $0 = v(1) = v(x^{-1} x) = v(x^{-1}) + v(x)$
+		\item $u \in A^\times \iff v(u) = 0$
+		\item for $x, y \in A$, $(x) = (y) \iff x = uy \iff v(x) = v(y)$ for some unit $u \in A$
+		\item let $I \subseteq A$ be a nonzero ideal, let $x \in I$ with minimal valuation, then $x \in k^\times$, let $y \in I$, then $x^{-1} y \in k$ has valuation
+		$$
+			v(x^{-1} y) = v(y) - v(x) \geq 0
+		$$
+		
+		So, $x^{-1} y \in A$, hence $y = (x^{-1} y) x$ in $A$, so $y \in (x)$. That is, every ideal of $A$ is principal.
+	\end{enumerate}
+	Hence, every ideal in $A$ is of the form
+	$$
+		I_i = \set{x \in A: v(x) \geq i}_{i \geq 0}
+	$$
+	
+	Moreover, there exists an element $x \in A$ so that $v(x) = 1$ and $I_i = (x^i)$ and $x$ is called a uniformizer.
+\end{remark}
+
+\begin{lemma}
+	Let $(A, \mf{m}, k)$ be Artinian local ring, then the following are equivalent
+	\begin{enumerate}
+		\item every ideal is principal
+		\item $\mf{m}$ is principal
+		\item $\dim_k \mf{m} / \mf{m}^2 \leq 1$
+	\end{enumerate}
+\end{lemma}
+
+\begin{longproof}
+	($2 \implies 3$) Let $\mf{m} = (x)$, there exists a surjective map
+	\begin{align*}
+		k = \frac{A}{\mf{m}} &\twoheadrightarrow \frac{\mf{m}}{\mf{m}^2} = \frac{(x)}{(x^2)} \\
+		\bar{a} &\mapsto ax + x^2
+	\end{align*}
+	
+	hence, $\dim_k \mf{m} / \mf{m}^2 \leq \dim k = 1$
+	
+	($3 \implies 1$)
+	
+	If $\dim_k \mf{m} / \mf{m}^2$, then $\mf{m} / \mf{m}^2 = 0$, then $\mf{m} = 0$ by Nakayama lemma. Hence, $A$ is a field.
+	
+	If $\dim_k \mf{m} / \mf{m}^2 = 1$, then there exists $x \in \mf{m}$ whose image under the map $\mf{m} \twoheadrightarrow \mf{m} / \mf{m}^2$ generates $\mf{m} / \mf{m}^2$. By Nakayama lemma, $\mf{m} = (x)$. Now, suppose a nonzero ideal $I \subseteq A$ that is not principal, there exists $n \geq 1$ so that $I \subseteq \mf{m}^n$ but $I \nsubseteq \mf{m}^{n+1}$. Hence, there exists $y \in I$ so that $y  = x^n t$ for some $t \notin (x)$, but $(x) = \mf{m}$ is maximal, so $t$ is a unit, hence $I = (x^n)$. \note{$A$ is a DVR}
+\end{longproof}
+
+\begin{proposition}[characterization of discrete valuation ring]
+	Let $(A, \mf{m}, k)$ be a dimension $1$ Noetherian local ring, then the following are equivalent
+	\begin{enumerate}
+		\item $A$ is discrete valuation ring
+		\item $A$ is normal domain ($A_\mf{p}$ is integrally closed for every prime $\mf{p} \subseteq A$)
+		\item $\mf{m}$ is principal
+		\item $\dim_k \mf{m} / \mf{m}^2  = 1$
+		\item every ideal in $A$ is of the form $(x^l)$ for some $l \geq 1$ 
+	\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+	\note{TODO}
+\end{proof}
+
+\section{DEDEKIND DOMAIN}
+
+\begin{proposition}
+	Let $A$ be a dimension $1$ Notherian domain then the following are equivalent
+	\begin{enumerate}
+		\item $A$ is a normal domain
+		\item $A_\mf{m}$ is a normal domain for every maximal ideal $\mf{m}$
+		\item $A_\mf{m}$ is a discrete valuation ring for every maximal ideal $\mf{m}$
+	\end{enumerate}
+\end{proposition}
+
+\begin{definition}[Dedekind domain]
+	A ring $A$ is a Dedekind domain (DD) if it is a dimension $1$ Notherian normal domain
+\end{definition}
+
+\begin{remark}[equivalent formulation for Dedekind domain]
+	A ring $A$ is a Dedekind domain if and only if it is a dimension $1$ Noeatherian integrally closed domain
+\end{remark}
+
+\begin{remark}
+	$\Z[\xi_n]$ is a Dedekind domain for every $n$
+\end{remark}
+
+\begin{proposition}
+	Let $A$ be a Dedekind domain then any nonzero primary ideal is a power of primes
+\end{proposition}
+
+\begin{proof}
+	Let $I$ be a nonzero primary ideal, then $I$ is $\mf{m}$-primary for some maximal ideal $\mf{m}$. But $A_\mf{m}$ is DVR, then $I A_\mf{m} = \mf{m}^n A_\mf{m}$ for some $n$. Hence, $I = \mf{m}^n$ (\note{TODO - check})
+\end{proof}
+
+\begin{theorem}
+	Let $A$ be a Dedekind domain and $I$ be a nonzero ideal then $I$ admits a unique decomposition
+	$$
+		I = \prod_{1 \leq i \leq l} \mf{p}_i^{e_i}
+	$$
+	for some prime ideals $\mf{p}_i$ and $e_i \in \N$.
+	
+	\note{we proved this in section of primary ideal}
+\end{theorem}
+
+Relation to Fermat last theorem: By Kummer, for "regular" prime $p \in [0, 100]$, the structure of $\Z[\xi_p]$ implies Fermat last theorem for $n = p$. Back to $\Z[\sqrt{-5}]$, it is not a UFD but a DD, $6$ can be decomposed into irreducibles in at least two ways
+$$
+	6 = 2 \cdot 3 = (1 + \sqrt{-5})(1 - \sqrt{-5})
+$$
+
+We have a decomposition of ideals
+$$
+	(6) = (2) (3) = (1 + \sqrt{-5})(1 - \sqrt{-5})
+$$
+
+However, $(2), (3), (1 + \sqrt{-5}), (1 - \sqrt{-5})$ are not prime ideals. They can be decomposed further into product of prime ideals as follows:
+\begin{align*}
+	(2) &= (2, 1 + \sqrt{-5})^2 \\
+	(3) &= (3, 1 + \sqrt{-5})(3, 1 - \sqrt{-5}) \\
+	(1 + \sqrt{-5}) &= (3, 1 + \sqrt{-5})(2, 1 + \sqrt{-5}) \\
+	(1 - \sqrt{-5}) &= (3, 1 - \sqrt{-5})(2, 1 + \sqrt{-5})
+\end{align*}
+
+We have a decomposition of prime ideals
+$$
+	(6) = (2, 1 + \sqrt{-5})^2 (3, 1 + \sqrt{-5})(3, 1 - \sqrt{-5})
+$$
+
+\begin{remark}
+	Alexander Youcis - This is really a remarkable thing!
+\end{remark}
+
+\section{FRACTIONAL IDEAL, INVERTIBLE IDEAL}
+
+Since PID is both UFD and DD, next, we quantify the difference between DD and PID.
+
+\begin{definition}[fractional ideal]
+	Let $A$ be a domain and $K = \Frac(A)$, let $M$ be an $A$-submodule of $K$ (or any finite field extension of $K$) such that there exists $x \in A - \set{0}$ so that $xM \subseteq A$. $M$ is called a fractional ideal of $A$. We write
+	$$
+		(A:M) = \set{x \in A: xM \subseteq A}
+	$$
+	then $(A:M)$ is an ideal of $A$ and $(A:M) \neq 0$ if and only if $M$ is fractional
+\end{definition}
+
+\begin{remark}
+	$xM$ is a $A$-submodule of $A$ which is an ideal of $A$. $M \subseteq x^{-1} A$ is a $A$-submodule of $K$ generated by $x^{-1}$, hence $M = x^{-1} J$ for some ideal $J$ of $A$
+	
+	Some examples
+	\begin{enumerate}
+		\item Any ideal $I$ of $A$ is a fractional ideal
+		\item Any $y \in K$ generates a fractional ideal $M = yA$
+	\end{enumerate}
+	
+	Every finitely generated $A$-submodule of $K$ is a fractional ideal of $A$ because if $M = A \set*{\frac{a_1}{b_1}, ..., \frac{a_n}{b_n}}$ is a finitely generated submodule of $K$, then $x = b_1 ... b_n$ verifies $M$ being a fractional ideal.
+	
+	Conversely, if $A$ is Noetherian, every fractional ideal of $A$ is finitely generated because $xM$ is an ideal of $A$
+\end{remark}
+
+\begin{definition}[invertible ideal]
+	Let $A$ be a domain and $K = \Frac(A)$, let $M$ be an $A$-submodule of $K$ such that there exists a $A$-submodule $N$ of $K$ so that
+	$$
+		MN = A
+	$$
+	then, $M$ is called an invertible ideal of $A$
+\end{definition}
+
+\begin{remark}
+	Invertible ideals of $A$ form a group and the principal invertible ideals form a subgroup of invertible ideals. An the quotient is called class group $\Cl(A)$
+\end{remark}
+
+\begin{proposition}
+	Let $A$ be a domain and $K = \Frac(A)$, if $M$ is a invertible ideal and $MN = A$ for some $A$-submodule $N$ of $K$, then $N$ is unique and equal $(A : M)$
+\end{proposition}
+
+\begin{proof}
+	Since $(A: M) M \subseteq A$ for any submodule $M$, then
+	$$
+		N \subseteq (A:M) = (A : M) M N \subseteq AN \subseteq N
+	$$
+\end{proof}
+
+\begin{proposition}
+	Any invertible ideal is finitely generated $A$-module, so it is fractional
+\end{proposition}
+
+\begin{proof}
+	If $M$ is invertible, then $A = M (A : M)$, then
+	$$
+		1 = \sum x_i y_i
+	$$
+	for some $x_i \in M, y_i \in (A:M)$. If $x \in M$, then 
+	$$
+		x = 1 x = \sum x_i (y_i x)
+	$$
+	That is, $\set{x_i}$ generates $M$ as an $A$-module
+\end{proof}
+
+\begin{proposition}
+	Let $M \subseteq K$ be a fractional ideal, the following are equivalent
+	\begin{enumerate}
+		\item $M$ is invertible
+		\item $M$ is finitely generated and $M_\mf{p}$ is invertible in $A_\mf{p}$ for every prime ideal $\mf{p}$
+		\item $M$ is finitely generated and $M_\mf{m}$ is invertible in $A_\mf{m}$ for every maximal ideal $\mf{m}$
+	\end{enumerate}
+	
+	\note{($3 \implies 1$ without $M$ being finitely generated)}
+\end{proposition}
+
+\begin{longproof}
+	($1 \implies 2$) 
+	$ A = M (A : M)$ implies $A_\mf{p} = M_\mf{p} (A: M)_\mf{p} = M_\mf{p} (A_\mf{p}: M_\mf{p})$, then $M_\mf{p}$ is invertible (\note{TODO - check}) 
+	
+	($3 \implies 1$) Consider $I = M (A: M) \subseteq A$. It is equivalent to show that $I = A$ for every maximal ideal $\mf{m}$. Indeed, $I_\mf{m} = M_\mf{m} (A_\mf{m} : M_\mf{m}) = A_\mf{m}$, hence $I = A$ (recall that $M = 0 \iff M_\mf{m} = 0$ for all maximal ideal $\mf{m}$) 
+\end{longproof}
+
+\begin{lemma}
+	If $A$ is a local domain and every nonzero fractional ideal is invertible then $A$ is a principal ideal domain
+\end{lemma}
+
+\begin{proof}
+	\note{TODO}
+\end{proof}
+
+\begin{proposition}
+	If $A$ is a local domain, then $A$ is a discrete valuation ring if and only if every nonzero fractional ideal is invertible
+\end{proposition}
+
+\begin{longproof}
+	($\implies$)
+	Let $\mf{m} = (x)$, then every ideal of a local DVR is of the form $(x^n)$. Let $M$ be a nonzero fractional ideal, then $x^n M \subseteq A$ for some large $n$. As $x^n M$ is another ideal, then $x^n M = (x^t)$ for some $t$, hence $M = x^{t-n} A$. $M$ is invertible with
+	$$
+		(A : M) = x^{n-t} A
+	$$
+	
+	($\impliedby$)
+	
+	Any fractional ideal of $A$ is invertible, hence any ideal of $A$ is invertible, hence any ideal of $A$ is finitely generated, hence $A$ is Noetherian. Suppose $A$ is not DVR, let
+	$$
+		\Sigma = \set*{\text{nonzero proper ideal } I \subsetneq A: I \neq \mf{m}^r \text{for every } r}
+	$$
+	
+	Since $A$ is Noetherian, pick a maximal element $\Omega \in \Sigma$. Then $\Omega \subsetneq \mf{m}$, hence $\mf{m}^{-1} \Omega \subsetneq A$ is a proper ideal of $A$. If $\Omega = \mf{m}^{-1} \Omega$, then $\mf{m} \Omega = \Omega$, then $\Omega = 0$ by Nakayama lemma. So $\Omega \subseteq \mf{m}^{-1} \Omega$, hence by maximality of $\Omega$, $\mf{m}^{-1} \Omega = \mf{m}^r$, so $\Omega = \mf{m}^{r+1}$
+\end{longproof}
+
+\begin{theorem}
+	Let $A$ be a domain, then $A$ is a Dedekind domain if and only if all nonzero fractional ideals are invertible.
+\end{theorem}
+
+\begin{longproof}
+	($\implies$) If a nonzero $A$-module $M$ is fractional, then $M$ is finitely generated. For every prime ideal $\mf{p}$, $M_\mf{p}$ is a fractional ideal of $A_\mf{p}$. Hence, for every prime ideal $\mf{p}$, $M_\mf{p}$ is invertible, hence $M$ is invertible
+	
+	($\impliedby$) Every nonzero ideal $I$ of $A$ is invertible, hence $I$ is finitely generated, then $A$ is Noetherian. It is equivalent to show that for every nonzero prime ideal $\mf{p}$, $A_\mf{p}$ is DVR, that is every ideal $I \cap A_\mf{p}$ is invertible. Let $J = I \cap A$, then $J$ is invertible, then $I = J A_\mf{p} = J_\mf{p}$ is invertible.
+\end{longproof}
+
+\begin{corollary}
+	If $A$ is a Dedekind domain, then nonzero fractional ideals form an abelian group $I_A$ under multiplication. If $I \subseteq K = \Frac(A)$ is a fractional ideal, then for every nonzero prime ideal $\mf{p}$ of $A$, $I A_\mf{p}$ is fractional ideal of $A_\mf{p}$, hence 
+\end{corollary}
+
+
+\note{TODO}
+
+\section{PROJECTIVE MODULE}
+
+\begin{definition}[projective module]
+	An $A$-module $P$ is projective if one of the following
+	\begin{enumerate}
+		\item $P$ is a summand of a free $A$-module
+		\item $\Hom(P, -)$ is exact
+		\item for every diagram, there exists a unique map $P \to M$ making it commutes
+		\begin{center}
+			\begin{tikzcd}
+				& P \arrow[d] \arrow[ld, dashed] \\
+				M \arrow[r, two heads] & N                             
+ 			\end{tikzcd}
+		\end{center}
+	\end{enumerate}
+\end{definition}
+
+
+\begin{longproof}
+	\note{TODO}
+\end{longproof}
+
+\begin{proposition}
+	If $A$ is a Noetherian local ring and $M$ is a finitely generated and projective $A$-module, then $M$ is free
+\end{proposition}
+
+\begin{proof}
+	\note{TODO}
+\end{proof}
+
+\begin{proposition}[projective is locally free, rank of projective module]
+	Let $A$ be a Noetherian ring and $M$ is a finitely generated $A$-module, then $M$ is projective if and only if $M_\mf{p}$ is free for every prime ideal $\mf{p}$ of $A$
+	
+	The rank of $M$ is defined as the rank of free module $M_\mf{p}$
+\end{proposition}
+
+\begin{proof}
+	\note{TODO - looks like $M$ is locally free - OMG, it is locally free sheaf - see notes}
+\end{proof}
+
+\begin{definition}[rank of a module - \url{https://mathoverflow.net/a/30024/146879}]
+	Let $A$ be a domain and $K = \Frac(A)$, the rank of an $M$-module is defined by
+	$$
+		\rank M = \rank_K K \otimes_A M
+	$$
+	
+	when $M = A^I$ is a free module, then $\rank M = \abs{I}$, when $M$ is projective, then $\rank M = \rank A_\mf{p}$. For projective module $M$, $\rank M$ is also the size of maximal linearly independent set.
+	
+	\textit{Consider a projective module $P$ of finite type over a commutative ring $A$. It corresponds to a locally free sheaf $\mathcal F $ over $X=Spec(A)$. The rank of $\mathcal F $ at the prime ideal $\mathfrak p$ is that of the *free* $A_{\mathfrak p}$-module $\mathcal F_{\mathfrak p}$.}	
+\end{definition}
+
+\begin{remark}
+	If $A$ is a normal domain, any fractional ideal is a projective module of rank $1$, for Dedekind domain, it is easy to see that
+	$$
+		I_\mf{p} = \mf{p}^n A_\mf{p} \cong A_\mf{p}	
+	$$
+\end{remark}
+
+\begin{proposition}
+	If $P_1$, $P_2$, and $P_1 \otimes_A P_2$ are projective over a domain $A$ and $P_1$ and $P_2$ are finitely generated of rank $n_1$ and $n_2$, then $\rank (P_1 \otimes P_2) = n_1 n_2$
+\end{proposition}
+
+\begin{remark}
+	Rank $1$ projective modules form a monoid under tensor product, moreover, it is a group with inverse of $P$ defined by $P^* = \Hom_A(P, A)$. For a domain A, define the Picard group $\Pic(A)$ by the set of rank $1$ projective modules up to isomorphism.
+\end{remark}
+
+\begin{theorem}
+	If $A$ is a Dedekind domain, then
+	\begin{align*}
+		\Cl(A) &\xrightarrow{\sim} \Pic(A) \\
+		I &\mapsto [I]
+	\end{align*}
+\end{theorem}
+
+\section{GEOMETRY}
+
+Some applications/connections of commutative algebra in/to geometry
+
+\begin{definition}[finite-type algebra over field]
+	Let $k$ be a field, $A$ is a $k$-algebra of finite-type if there exists a surjection
+	$$
+		k[x_1, ..., x_n] \twoheadrightarrow A
+	$$
+\end{definition}
+
+\begin{proposition}
+	If $K$ is a field and a finite-type $k$-algebra, then $K$ is a finite field extension of $k$, that is, $K$ can be realized at a finite dimension $k$-vector space 
+\end{proposition}
+
+\begin{proof}
+	\note{TODO}
+\end{proof}
+
+\begin{theorem}[weak nullstellensatz]
+	Suppose $k$ is an algebraically closed field, then
+	\begin{enumerate}
+		\item every maximal ideal of $k[x_1, ..., x_n]$ is of the form
+		$$
+			(x_1 - a_1, ..., x_n - a_n)
+		$$
+		for some point $(a_1, ..., a_n) \in k^n$
+		
+		\item If $f_1, ..., f_m \in k[x_1, ..., x_n]$ are polynomials such that
+		$$
+			V(f_1, ..., f_m) = \set{x \in \A_k^n: f_i(x) = 0 \text{ for every } f_i} = \emptyset
+		$$
+		
+		then $(f_1, ..., f_m) = 1$
+	\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+	\note{TODO}
+\end{proof}
+
+
+
+\begin{remark}
+	Some remarks on nullstellensatz
+	\begin{enumerate}
+		\item $\A_k^n = k^n$ is called affine $n$-space over $k$
+		\item let $f_1, ..., f_m \in k[x_1, ..., x_n]$, then the set of common zeros (zero locus) of $f_1, ..., f_m$
+		$$
+			V(f_1, ..., f_m) = \set{x \in \A_k^n: f_i(x) = 0 \text{ for every } f_i}
+		$$
+		is called an affine variety.
+		\item nullstellensatz connects classical geometry in an elegant way. every maximal ideal in $k[x_1, ..., x_n]$ corresponding to a single point in $\A_k^n$, when the affine variety $V(f_1, ..., f_m)$ is empty, then there is no corresponding maximal ideal
+	\end{enumerate}
+\end{remark}
+
+\begin{theorem}[strong nullstellensatz]
+	Suppose $k$ is an algebraically closed field. Let $f, f_1, ..., f_m \in k[x_1, ..., x_n]$, and
+	$$
+	V(f_1, ..., f_m) \subseteq V(f)
+	$$
+	
+	then $f^d \in (f_1, ..., f_m)$ for some $d \in \N$
+\end{theorem}
+
+\begin{proof}
+	\note{TODO}
+\end{proof}
+
+\begin{remark}[geometric version of strong nullstellensatz]
+	Let $k$ be an algebraically closed field, $\mf{a} \subseteq k[x_1, ..., x_n]$ be an ideal. The variety $V(\mf{a})$ is the set of common zeros of polynomials in $\mf{a}$
+	$$
+		V(\mf{a}) = \set{x \in \A_k^n: f(x) = 0 \text{ for every } f \in \mf{a}} \subseteq \A_k^n
+	$$
+	
+	The ideal $I(V(\mf{a})) \subseteq k[x_1, ..., x_n]$ of a variety $V(\mf{a}) \subseteq \A_k^n$ is the set of polynomials that vanish on $V(\mf{a}) \subseteq \A_k^n$
+	$$
+		I(V(\mf{a})) = \set{f \in k[x_1, ..., x_n]: f(x) = 0 \text{ for every } x \in V(\mf{a})} \subseteq k[x_1, ..., x_n]
+	$$
+	
+	strong nullstellensatz states that $I$ is an isomorphism
+	\begin{align*}
+		I: \set{\text{algebraic sets in } \A_k^n} &\xrightarrow{\sim} \set{\text{radical ideals of } k[x_1, ..., x_n]} \\
+		V(\mf{a}) &\mapsto \sqrt{\mf{a}}
+	\end{align*}
+\end{remark}
+
+\begin{theorem}[Noether normalization theorem]
+	Let $k$ be a field and $A$ be a finite-type $k$-algebra, then there exists $x_1, ..., x_n \in A$ so that
+	\begin{align*}
+		\phi: k[X_1, ..., X_n] &\hookrightarrow A \\
+		X_i &\mapsto x_i
+	\end{align*}
+	
+	and $A$ is finitely generated as a module over the image or equivalently $A$ is integral over $k[x_1, ..., x_n]$. Moreover, $x_1, ..., x_n$ are algebraically independent over $k$, that is, $x_i$ does not satisfy any nontrivial polynomial equation with coefficients in $k$
+\end{theorem}
+
+\begin{proof}
+	\note{TODO - I have to skip many proofs since proof-reading requires a lot of time - while understanding the statement is more important.}
+\end{proof}
+

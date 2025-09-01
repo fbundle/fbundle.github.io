@@ -1,0 +1,24 @@
+\documentclass{report}
+
+\usepackage{../../latex_styles/tikz_externalize}
+\usepackage{../../latex_styles/color_template}
+\usepackage{../../latex_styles/symbol_def}
+
+\begin{document}
+	
+	\chapter{hgaha}
+	
+	\begin{center}
+
+	
+	\tikzset{external/force remake=true} % trigger remake all tikz figures on every compilation
+	\begin{tikzpicture}\node {
+		\begin{tikzcd}
+			0 \arrow[r, dashed] & M_x \arrow[r, "i"]                    & N \arrow[r, "p"]               & L \arrow[r, dashed]                  & 0           \\
+			0 \arrow[r]         & {\Hom(P, M)} \arrow[r, "i_1", hook] & {\Hom(P, N)} \arrow[r, "p_1"]  & {\Hom(P, L)}                         &             \\
+			& {\Hom(M, P)}                        & {\Hom(N, P)} \arrow[l, "i_2"'] & {\Hom(L, P)} \arrow[l, "p_2"', hook] & 0 \arrow[l]
+		\end{tikzcd}
+	};\end{tikzpicture}
+
+	\end{center}	
+\end{document}

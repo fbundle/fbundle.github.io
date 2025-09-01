@@ -1,0 +1,327 @@
+\chapter{HOMEWORK 5}
+
+\begin{problem}[prime avoidance lemma]
+	Let $A$ be a ring and let $I, J_1, J_2, ..., J_n \subseteq A$ be ideals such that at most two of $J_1, J_2, ..., J_n$ are not prime. If $I \nsubseteq J_i$ for all $i$, prove that $I \nsubseteq \bigcup_{1 \leq i \leq n} J_i$
+\end{problem}
+
+\begin{proof}
+	We will prove by induction on $n$
+	
+	\textbf{base case}: $n = 1$, clear
+	
+	\textbf{induction case}: $n \geq 2$
+	
+	Suppose that $I \subseteq \bigcup_{1 \leq i \leq n} J_i$. By induction hypothesis, for every $i$, we can pick an element $x_i$ so that
+	$$
+		x_i \in I \text{ and } x_i \notin \bigcup_{k \neq i} J_k
+	$$
+	
+	Assumption $I \subseteq \bigcup_{1 \leq i \leq n} J_i$ implies $x_i \in J_i$. Let
+	$$
+		y = x_1 ... x_{n-1} + x_n \in I \subseteq \bigcup_{1 \leq i \leq n} J_i
+	$$
+	
+	\textbf{subcase 1}: $n = 2$, then $y = x_1 + x_2 \in J_1 \cup J_2$. Without loss of generality, let $y \in J_1$, then $x_2 = y - x_1 \in J_1$, this is a contradiction by construction of $x_2$.
+	
+	\textbf{subcase 2}: $n \geq 3$. Without loss of generality, let $J_n$ be prime. If $y \in J_n$, then $x_1 ... x_{n-1} = y - x_n \in J_n$, then at least one of $x_1, ..., x_{n-1}$ is an element of $J_n$ which is a contradiction. If $y \in J_i$ for some $1 \leq i \leq n-1$, then $x_n = y - x_1 ... x_{n-1} \in J_i$ which is also a contradiction
+\end{proof}
+
+\begin{problem}
+	\label{problem2}
+	Problem consists of two parts
+	\begin{enumerate}
+		\item Let $A \hookrightarrow B$ be an integral ring extension of Noetherian rings. Prove that $\dim B = \dim A$
+		
+		\item Let $k$ be a field and let $A$ be a finitely generated $k$-algebra. Recalled that we prove \textit{Noetherian normalization} which say we can find an injective map $\phi: k[X_1, ..., X_n] \hookrightarrow A$ such that $A$ is finitely generated as a $k[x_1, ..., x_n]$-module where $x_i = \phi(X_i)$. Prove that $\dim A = n$, so $n$ is uniquely determined by $A$
+	\end{enumerate}
+\end{problem}
+
+\begin{longproof}[Proof of part 1]
+	Since both $A$ and $B$ are Noetherian, any ascending chain of primes of strict inclusions must be finite
+	\begin{itemize}
+		\item ($\dim A \leq \dim B$)
+		
+		For any finite chain of primes $\mf{p}_0 \subsetneq ... \subsetneq \mf{p}_n$ in $A$, by lying over theorem for integral ring extension, pick $\mf{q}_0$ in $B$ so that $\mf{q}_0 \cap A = \mf{p}_0$. Going-up theorem induces a chain of primes $\mf{q}_0 \subseteq ... \subseteq \mf{q}_n$ in $B$. Moreover, $\mf{q}_i = \mf{q}_{i+1}$ implies $\mf{p}_i = \mf{p}_{i+1}$. Hence, the chain of primes in $B$ is also of strict inclusions. Hence, $\dim A \leq \dim B$
+		
+		\item ($\dim B \leq \dim A$)
+		
+		For any finite chain of primes $\mf{q}_0 \subsetneq ... \subsetneq \mf{q}_n$ in $B$, let $\mf{p}_i = \mf{q}_i \cap A$, then $\mf{p}_0 \subseteq ... \subseteq \mf{p}_n$ is a chain of primes in $A$. By AM Corollary 5.9, $\mf{p}_i = \mf{p}_{i+1}$ implies $\mf{q}_i = \mf{q}_{i+1}$. Hence the chain of primes in $A$ is also of strict inclusions, so $\dim B \leq \dim A$
+	\end{itemize}
+\end{longproof}
+
+\begin{lemma}
+	Given a ring extension $A \hookrightarrow B$, let $x \in B$, the following are equivalent:
+	\begin{enumerate}
+		\item $x$ is integral over $A$
+		
+		\item \label{lemma3_2} the ring $A[x] \subseteq B$ is finitely generated $A$-module
+		
+		\item $A[x]$ is contained in a subring $C$ of $B$ such that $C$ is also a finitely generated $A$-module
+		
+		\item there exists a faithful $A[x]$-module $M$ which is finitely generated as an $A$-module
+		An $R$-module $M$ is faithful if and only if $\ann_R(M) = \set{r \in R: rM = 0} = 0$ if and only if $R \to \Hom_R(M, M)$ is injective.
+	\end{enumerate}
+\end{lemma}
+
+\begin{proof}[Proof of part 2]
+	Since $A$ is finitely generated as an $k[x_1, ..., x_n]$-module, for any $x \in A$, $k[x_1, ..., x_n][x] \subseteq A$ is also finitely generated as an $k[x_1, ..., x_n]$-module. By \ref{lemma3_2}, $x$ is integral over $k[x_1, ..., x_n]$. Therefore, $\phi: k[X_1, ..., X_n] \hookrightarrow A$ is an integral ring extension. By part 1, $\dim A = \dim k[X_1, ..., X_n] = n$
+\end{proof}
+
+
+\begin{problem}
+	Let $\mf{p}$ be a prime ideal in a Noetherian ring $A$. Prove that $\hgt \mf{p} + \dim A / \mf{p} \leq \dim A$
+\end{problem}
+
+\begin{proof}
+	Since $A$ is Noetherian, then $A / \mf{p}$ is also Noetherian, let $\mf{p}_0 \subsetneq ... \subsetneq \mf{p}_n = \mf{p}$ be a finite chain of primes in $A$ and $\mf{q}_0 \subsetneq ... \subsetneq \mf{q}_m$ be a finite chain of primes in $A / \mf{p}$. Let $\tilde{\mf{q}}_i \subseteq A$ be a lift of $\mf{q}_i$, then we have the chain of primes in $A$ of length at least $n + m$
+	$$
+		\mf{p}_0 \subsetneq ... \subsetneq \mf{p}_n = \mf{p} \subseteq \tilde{\mf{q}}_0 \subsetneq ... \subsetneq \tilde{\mf{q}}_m
+	$$
+	
+	Then, $\hgt \mf{p} + \dim A / \mf{p} \leq \dim A$
+\end{proof}
+
+\begin{problem}
+	Notation as in $3$, find an example with $\dim A = 2$, $\hgt \mf{p}  = 1$ and $\dim A / \mf{p} = 0$. In particular, deduce that the inequality in $3$ can be strict.
+\end{problem}
+
+\begin{proof}	
+	Consider the ideal $\mf{a} = (zx, zy) = (z) (x, y)$ in $\C[x, y, z]$, let $A = \C[x, y, z] / \mf{a}$. Note that $(z)$ and $(x, y)$ are the only minimal primes over $\mf{a}$ in $\C[x, y, z]$, hence
+	$$
+		\dim A = \max \set*{\dim \frac{\C[x, y, z]}{(z)}, \dim \frac{C[x, y, z]}{(x, y)}} = 2
+	$$
+	
+	Let $\mf{m} = (z-1, x, y) \supseteq \mf{a}$ be a maximal prime in $\C[x, y, z]$ which is also maximal in $A$, then
+	$$
+		A / \mf{m} = \frac{\C[x, y, z]}{(xz, zy, z-1, x, y)} = \frac{\C[x, y, z]}{(z-1, x, y)} \cong \C
+	$$
+	
+	Hence, $\dim A / \mf{m} = 0$. It remains to show that $\hgt_A \mf{m} = 1$. Since $(z)$ and $(x, y)$ are the only minimal primes over $\mf{a}$ in $\C[x, y, z]$, every prime $\mf{p}$ in $A$ lifted to $\C[x, y, z]$ must either contain $(z)$ or $(x, y)$. If $\mf{p} \subseteq \mf{m}$ in $A$, because $(z) \nsubseteq \mf{m}$, then $\mf{p}$ must contain $(x, y)$. Hence, 
+	
+	$$
+		\hgt_A \mf{m} = \hgt_{\C[x, y, z] / (x, y)} \mf{m} = \hgt_{\C[z]} (z-1) = 1
+	$$
+\end{proof} 
+
+\begin{problem}
+	\label{problem6}
+	Problem consists of three parts
+	\begin{enumerate}
+		\item Let $A$ be a Noetherian ring and let $x \in A$ be a non zero-divisor. Prove that $\dim A / (x) \leq \dim A - 1$
+		
+		\item Prove that if moreover $A$ is a local ring and $x$ is not a unit, then equality holds in 1
+
+		\item Deduce that if $A$ is any local Noetherian ring, then $\depth_A A \leq \dim A$
+	\end{enumerate}
+\end{problem}
+
+\begin{lemma}
+	If $A$ is Noetherian and $\mf{p} \subseteq A$ be a minimum prime, then any element of $\mf{p}$ is a zero divisor.
+\end{lemma}
+
+
+
+\begin{proof}[Proof of part 1]
+	(Assuming $0 < \dim A < +\infty$) Given any maximal chain of primes in $A / (x)$ of strict inclusions
+	$$
+		\mf{p}_0 \subsetneq ... \subsetneq \mf{p}_n
+	$$
+	the chain is  lifted into a chain of primes in $A$ of strict inclusions
+	$$
+		\tilde{\mf{p}}_0 \subsetneq ... \subsetneq \tilde{\mf{p}}_n
+	$$
+	
+	Since $x \in \tilde{\mf{p}}_0$ is a non zero-divisor, hence $\tilde{\mf{p}}_0$ is not a minimal prime, we can extend the lifted chain in $A$ by at least one. Hence
+	$$
+		\dim A / (x) \leq \dim A - 1
+	$$
+\end{proof}
+
+\begin{lemma}
+	\label{lemma8}
+	Let $(A, \mf{m})$ be a Noetherian local ring and $x_1, ..., x_m$ be some elements in $\mf{m}$ with $m \leq \dim A$, then the following are equivalent
+	\begin{enumerate}
+		\item $x_1, ..., x_m$ can be extended into a system of parameters
+		\item $\dim A / (x_1, ..., x_m) \leq \dim A - m$
+		\item $\dim A / (x_1, ..., x_m) = \dim A - m$
+	\end{enumerate}
+\end{lemma}
+
+\begin{proof}[Proof of part 2]
+	(Assuming $0 < \dim A < +\infty$) Since $x$ is not a unit, $x \in \mf{m}$. By part 1 and Lemma \ref{lemma8} ($2 \implies 3$), $\dim A / (x) = \dim A - 1$
+\end{proof}
+
+\begin{proof}[Proof of part 3]
+	We will prove by induction
+	
+	\textbf{base case:} If $\dim A = 0$, since $A$ is Noetherian local of dimension $0$, $A$ is Artinian local, so $\mf{m}$ is nilpotent, that is, element every element of $A$ must be either a unit or a zero-divisor. We need to show that $\depth_A A = 0$, that is there is no $A$-regular sequence in $A$. Suppose there is an  $A$-regular sequence $x_1, ..., x_r$, then $x_1$ cannot be unit since $A / (x_1, ..., x_r) A \neq 0$. Moreover, $x_1$ cannot be zero divisor since $x_1: A \to A$ is injective. So, no $A$-regular sequence exists in $A$, hence $\depth_A A = 0$
+	
+	\textbf{induction case:} when $\dim A = n > 0$, if $\depth_A A = 0$, we are done. If $\depth_A A = r > 0$, pick a maximal $A$-regular sequence $a, a_2, ..., a_r \in A$ of length $r$. Note that, 
+	$$
+		\frac{A / (a)}{(a_2, ..., a_i) A / (a)} = \frac{A}{(a, a_2, ..., a_i)} \neq 0
+	$$
+	
+	and each $a_i: A / (a, ..., a_i) \to A / (a, ..., a_i)$ injective imply $\bar{a}_2, ..., \bar{a}_r \in A / (a)$ is a $A / (a)$-regular sequence of length $r-1$, then
+	$$
+		\depth_A A - 1 \leq \depth_{A / (a)} A / (a)
+	$$
+	
+	Since $a$ is not a zero divisor, $\dim A / (a) \leq \dim A - 1 = n-1$, by induction hypothesis for $A / (a)$
+	$$
+		\depth_{A / (a)} A / (a) \leq \dim A / (a) \leq \dim A - 1 
+	$$
+	
+	Hence, 
+	$$
+		\depth_A A \leq \dim A
+	$$
+\end{proof}
+
+\begin{problem}
+	Let $(A, \mf{m}, k)$ be a Noetherian local ring. In class we define $\embdim A = \dim_k \mf{m} / \mf{m}^2$ and proved that $\dim A \leq \embdim A$. Prove that \textit{every} pair of nonnegative integers $(r, s)$ with $r \leq s$ occurs at $(\dim A, \embdim A)$ for some $A$
+\end{problem}
+
+\begin{proof}
+	We construct ring $A = \C[x_1, ..., x_s]_{(x_1, ..., x_s)}$ with $(\dim A, \embdim A) = (s, s)$ and ring $B = \frac{A}{(x_1^2, ..., x_{s-r}^2)}$ with $(\dim B, \embdim B) = (r, s)$ for every pair $r \leq s$
+	
+	\begin{enumerate}
+		\item $(s, s)$
+		
+		Consider $\C[x_1, ..., x_s]$ of dimension $s$, $\mf{m} = (x_1 , ..., x_s)$ is a maximal ideal of maximal height. Localizing at $\mf{m}$ gives $A = \C[x_1, ..., x_s]_{\mf{m}}$ and $A$ is also of dimension $s$. Since $\mf{m}$ is generated by $s$ elements, then $\dim A \leq \embdim A \leq s = \dim A$. So, $\embdim A = \dim A = s$
+		
+		\item $(r, s)$ for $r \leq s$
+		
+		Consider
+		$$
+			I_i = (x_1^2, ..., x_i^2)
+		$$
+		
+		Note that, $x_i^2$ is not a zero divisor in $A / I_{i-1} = (\C[x_1, ..., x_s] / I_{i-1})_\mf{m}$ because if a nonzero element $\bar{f}(x) / \bar{g}(x) \in (\C[x_1, ..., x_s] / I_{i-1})_\mf{m}$ for some $f(x) \in \C[x_1, ..., x_s], g(x) \in \C[x_1, ..., x_s] - \mf{m}$ satisfies
+		$$
+			x_i^2 \frac{f(x)}{g(x)} = 0 \in A / I_{i-1}
+		$$
+		
+		Then, $x_i^2 f(x) h(x) \in I_{i-1}$ for some $h(x) \in \C[x_1, ..., x_s] - \mf{m}$. But $\bar{f}(x) / \bar{g}(x)$ being nonzero implies $f(x) h(x) \notin I_{i-1}$, this is a contradiction.
+		
+		Moreover, $x_i^2$ is not a unit in $A / I_{i-1} = (\C[x_1, ..., x_s] / I_{i-1})_\mf{m}$ because if a nonzero element $\bar{f}(x) / \bar{g}(x) \in (\C[x_1, ..., x_s] / I_{i-1})_\mf{m}$ for some $f(x) \in \C[x_1, ..., x_s], g(x) \in \C[x_1, ..., x_s] - \mf{m}$ satisfies
+		$$
+		x_i^2 \frac{f(x)}{g(x)} = 1 \in A / I_{i-1}
+		$$
+		
+		Then, $x_i^2 f(x) h(x) - g(x) h(x) \in I_{i-1}$ some $h(x) \in \C[x_1, ..., x_s] - \mf{m} = \C$, this is a contradiction.
+		
+		Now, for each $i$, from Problem \ref{problem6}, $x_i^2$ is not a zero divisor and not a unit in $\dim A / I_{i-1}$, then
+		$$
+			\dim A / I_i = \dim A / I_{i-1} - 1
+		$$
+		
+		Let $B = A / I_{s-r}$, then
+		$$
+		\dim B = \dim A / I_{s-r} = \dim A - s + r = r
+		$$
+		
+		We want to show that $\embdim B = \embdim A = s$, let $\mf{m}_B$ denote the projection of $\mf{m}$ under the map $A \twoheadrightarrow B$ and $k_B = B / \mf{m}_B$. Note that, $I_{s-r} \subseteq \mf{m}^2 \subseteq \mf{m}$, then $\mf{m}_B / \mf{m}_B^2 = \mf{m} / \mf{m}^2$ and $k_B = B / \mf{m}_B = A / \mf{m} = k$ (third isomorphism theorem). So
+		$$
+			\embdim B = \dim_{k_B} \mf{m}_B / \mf{m}_B^2 = \dim_k \mf{m} / \mf{m}^2 = \embdim A = s
+		$$
+	\end{enumerate}
+\end{proof}
+
+\begin{problem}
+	Let $A$ be a Noetherian ring. Prove that $\dim A[[x]] = \dim A + 1$
+\end{problem}
+
+\begin{proof}
+	$x \in A[[x]]$ is not a zero-divisor and not a unit in the Noetherian ring $A[[x]]$, then $A \cong \frac{A[[x]]}{(x)}$ implies
+	$$
+		\dim A = \dim \frac{A[[x]]}{(x)} = \dim A[[x]] - 1
+	$$
+\end{proof}
+
+\begin{problem}
+	Let $k$ be a field and $A, B$ be finitely generated $k$-algebras, so then $A \otimes_k B$ is also a finitely generated $k$-algebra. Prove that $\dim A \otimes_k B = \dim A + \dim B$
+\end{problem}
+
+\begin{lemma}[Noether normalization theorem]
+	Let $k$ be a field and $A$ be a finite-type $k$-algebra, then there exists $x_1, ..., x_n \in A$ so that
+	\begin{align*}
+		\phi: k[X_1, ..., X_n] &\hookrightarrow A \\
+		X_i &\mapsto x_i
+	\end{align*}
+	
+	and $A$ is finitely generated as a module over the image or equivalently $A$ is integral over $k[x_1, ..., x_n]$. Moreover, $x_1, ..., x_n$ are algebraically independent over $k$, that is, $x_i$ does not satisfy any nontrivial polynomial equation with coefficients in $k$
+\end{lemma}
+
+\begin{lemma}
+	\label{lemma13}
+	Given an $A$-module $M$, $M$ is flat if and only if $I \otimes M \to A \otimes M \xrightarrow{\sim} M$ induced from $I \hookrightarrow A$ is injective. In particular, if $A = k$ is a field, then every $k$-module is flat.
+\end{lemma}
+
+\begin{proof}
+	By Noether normalization theorem, and Problem \ref{problem2},  we have $\dim A = n, \dim B = m$ and injective maps
+	\begin{align*}
+		\phi_A : k[X_1, ..., X_n] &\hookrightarrow A \\
+		\phi_B : k[Y_1, ..., Y_m] &\hookrightarrow B
+	\end{align*}
+	
+	Every $k$-module is flat, $k[Y_1, ..., Y_m]$ is flat,
+	$$
+		 k[X_1, ..., X_n, Y_1, ..., Y_m] = k[X_1, ..., X_n] \otimes k[Y_1, ..., Y_m] \hookrightarrow A \otimes k[Y_1, ..., Y_m]
+	$$
+	
+	is injective. Every $k$-module is flat, $A$ is flat
+	$$
+		A \otimes k[Y_1, ..., Y_m] \hookrightarrow A \otimes B
+	$$
+	
+	is injective. Hence, the composition is injective
+	$$
+		\phi: k[X_1, ..., X_n, Y_1, ..., Y_m] \hookrightarrow A \otimes B
+	$$
+	
+	Since each $A$ and $B$ is finitely generated as a module over $\phi(k[X_1, ..., X_n])$ and $\phi(k[Y_1, ..., Y_m])$ respectively. Hence, $A \otimes B$ is finitely generated over $\phi(k[X_1, ..., X_n, Y_1, ..., Y_m])$. By Problem \ref{problem2}, $\dim A \otimes B = n + m$
+\end{proof}
+
+\begin{problem}
+	Let $(A, \mf{m})$ be a Noetherian local ring, let $\hat{A}$ be the $\mf{m}$-adic completion of $A$. Prove that $\dim A = \dim \hat{A}$
+\end{problem}
+
+\begin{lemma}[Matsumura CRT p63 - some results for local Noetherian ring]
+	\label{lemma15}
+	Let $(A, \mf{m})$ be a local Noetherian ring, then
+	\begin{enumerate}
+		\item $\bigcap_{n \geq 1} \mf{m}^n = \ker (\psi: A \to \hat{A}) = 0$
+		
+		\item For $M$ a finitely generated $A$-module and $N \subseteq M$ a submodule
+		$$
+			\bigcap_{n \geq 1} (N + \mf{m}^n M) = N
+		$$
+		
+		\item The completion $\hat{A}$ of $A$ is faithfully flat over $A$; hence $A \subseteq \hat{A}$ and $I \hat{A} \cap A = I$ for any ideal $I$ of $A$
+		
+		\item $\hat{A}$ is again a Noetherian local ring, with maximal ideal $\mf{m} A$ and it has the same residue class field as $A$; moreover, $\hat{A} / \mf{m}^n \hat{A} = A / \mf{m}^n$ for all $n \geq 1$
+		
+		\item If $A$ is a complete local ring, the for any ideal $I \neq A$, $A / I$ is afgain a complete local ring.
+	\end{enumerate}
+	
+\end{lemma}
+
+\begin{lemma}[result from lecture April 4]
+	\label{lemma16}
+	A local homomorphism of Notherian rings $(A, \mf{m})$ and $(B, \mf{n})$ is a ring map $\phi: A \to B$ so that $\mf{m} = \mf{n} \cap A$, then
+	$$
+	\dim B \leq \dim A + \dim B / \mf{p} B
+	$$
+	
+	if the map is flat, then the equality holds.
+\end{lemma}
+
+\begin{proof}
+	By Lemma \ref{lemma15}, $A \to \hat{A}$ is a flat ring extension  of Noetherian local rings. By Lemma \ref{lemma16} and $\mf{m} \hat{A}$ is maximal in $\hat{A}$
+	$$
+		\dim \hat{A} = \dim A + \dim \hat{A} / \mf{m} \hat{A} = \dim A
+	$$
+\end{proof}
+ 
+ 
+ 

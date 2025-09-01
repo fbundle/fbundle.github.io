@@ -1,0 +1,767 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\input{header}
+
+\title{ma5259\_hw2}
+\author{Khanh Nguyen}
+\date{October 2024}
+
+\begin{document}
+
+\maketitle
+
+\section{Q1}
+
+Let $\xi_1, \xi_2, ...$ be a sequence of i.i.d coin tosses with bias $P(\xi_1 = H) = p$. (1) Find the probability that we will see $HH$ before seeing $TT$. (2) Conditioned on $\xi_1 \xi_2 = HT$, find the probability that we will see $HT$ again before seeing either $HH$ or $TT$
+
+\subsection{seeing $HH$ before seeing $TT$}
+
+Let $X_1, X_2, ...$ be a stochastic process with state space $S = (HH, HT, TH, TT)$ defined by $X_i = (\xi_i, \xi_{i+1})$. Then $X_1, X_2, ...$ is a Markov chain with transition matrix $\Pi$ defined by
+
+\begin{align*}
+    \Pi: S \times S &\to \R \\
+    (HH, HH) &\mapsto p \\
+    (HH, HT) &\mapsto 1-p \\
+    (HT, TH) &\mapsto p \\
+    (HT, TT) &\mapsto 1-p \\
+    (TH, HH) &\mapsto p \\
+    (TH, HT) &\mapsto 1-p \\
+    (TT, TH) &\mapsto p \\
+    (TT, TT) &\mapsto 1-p \\
+\end{align*}
+
+
+For $x \in S$, let $T_x = \min \set{n \geq 0: X_n = x}$ be the first time seeing $x$. We want to find $P(T_{HH} < T_{TT})$
+
+We have
+\begin{align*}
+    P_{HH}(T_{HH} < T_{TT}) &= 1 \\
+    P_{TT}(T_{HH} < T_{TT}) &= 0 \\
+\end{align*}
+
+For any $x \in S \setminus \set{HH, TT}$, we have 
+\begin{align*}
+    P_x(T_{HH} < T_{TT})
+    &= \sum_{y \in S} P_x(X_1 = y, T_{HH} < T_{TT}) \\
+    &= \sum_{y \in S} P_x(X_1 = y) P_x(T_{HH} < T_{TT} | X_1 = y) \\
+    &= \sum_{y \in S} \Pi(x, y) P_y(T_{HH} < T_{TT}) \\
+\end{align*}
+
+Then
+\begin{align*}
+    P_{HT}(T_{HH} < T_{TT})
+    &= \Pi(HT, TH) P_{TH}(T_{HH} < T_{TT}) + \Pi(HT, TT) P_{TT}(T_{HH} < T_{TT}) \\
+    &= p P_{TH}(T_{HH} < T_{TT}) \\
+    P_{TH}(T_{HH} < T_{TT})
+    &= \Pi(TH, HT) P_{HT}(T_{HH} < T_{TT})  + \Pi(TH, HH) P_{HH}(T_{HH} < T_{TT}) \\
+    &= (1-p) P_{HT}(T_{HH} < T_{TT}) + p
+\end{align*}
+
+Solve the system of two equations, we have
+\begin{align*}
+    P_{HT}(T_{HH} < T_{TT}) &= \frac{p^2}{1 - (1-p)p}\\
+    P_{TH}(T_{HH} < T_{TT}) &= \frac{p}{1 - (1-p)p} \\
+\end{align*}
+
+Hence
+\begin{align}
+    P(T_{HH} < T_{TT})
+    &= \sum_{x \in S} P(X_0 = x, T_{HH} < T_{TT}) \\
+    &= \sum_{x \in S} P(X_0 = x) P_x(T_{HH} < T_{TT}) \\
+    &= P(X_0 = HH) + P(X_0 = HT) \frac{p^2}{1 - (1-p)p} + P(X_0 = TH) \frac{p}{1 - (1-p)p} \\
+    &= p^2 + p(1-p) \frac{p^2}{1 - (1-p)p} + p(1-p) \frac{p}{1 - (1-p)p} \\
+    &= \frac{2 p^2 - p^3}{1 - p + p^2}
+\end{align}
+
+When $p = 1/2$, $P(T_{HH} < T_{TT}) = 1/2$
+
+\subsection{conditioned on $\xi_1 \xi_2 = HT$, seeing $HT$ again before seeing either $HH$ or $TT$}
+
+For $x \in S$, let $T_x = \min \set{n > 0: X_n = x}$ be the first time seeing $x$ in positive time. Let $A = \set{T_{HT} < T_{HH}, T_{TT}}$, we want to find $P_{HT}(A)$
+
+We have
+\begin{align*}
+    P_{HT}(A)
+    &= \sum_{x \in S} P_{HT}(X_1=x, A) \\
+    &= \sum_{x \in S} P_{HT}(X_1 = x) P_{HT}(A | X_1=x) \\
+    &= \sum_{x \in S} \Pi(HT, x) P_{HT}(A | X_1=x)
+\end{align*}
+
+As $P_{HT}(A | X_1=TT) = 0$, then
+\begin{align*}
+    P_{HT}(A)
+    &= \Pi(HT, TH) P_{HT}(A | X_1=TH) \\
+    &= p P_{TH}(A)
+\end{align*}
+
+On the other hand,
+\begin{align*}
+    P_{TH}(A)
+    &= \sum_{x \in S} P_{TH}(X_1 = x, A) \\
+    &= \sum_{x \in S} P_{TH}(X_1 = x) P_{TH}(A| X_1 = x) \\
+    &= \sum_{x \in S} \Pi(TH, x) P_{TH}(A| X_1 = x)
+\end{align*}
+
+As $P_{TH}(A| X_1 = HH) = 0$ and $P_{TH}(A| X_1 = HT) = 1$, then
+\begin{align*}
+    P_{TH}(A)
+    &= \Pi(TH, HT) P_{TH}(A| X_1 = HT) \\
+    &= 1-p
+\end{align*}
+
+Hence,
+$$
+    P_{HT}(A) = p P_{TH}(A) = p(1-p)
+$$
+
+\begin{remark}
+    This question is simple enough that we can enumerate all possible sequences length $4$ of coin flips and analyze the probability $\set{HTHH, HTHT, HTTH, HTTT}$
+\end{remark}
+
+\section{Q2}
+
+Consider a $3$-state Markov chain with transition $\Pi(1, 1) = 1 - \Pi(1, 2) = p$, $\Pi(2, 1) = 1 - \Pi(2, 3) = q$ and $\Pi(3, 3) = 1$. Let
+$$
+    G(x, y) = \Exp\bracket*{\sum_{n=0}^\infty 1_{\set{X_n = y}} \bigg\vert X_0 = x} = \sum_{n=0}^\infty \Pi^n(x, y)
+$$
+
+denote the expected number of visits to state $y$ given that the Markov chain starts at $x$. Find $G(1, 2)$ and $G(2, 1)$
+
+Transition matrix
+$$
+    \Pi = \begin{bmatrix}
+        p & 1-p & 0 \\
+        q & 0 & 1-q \\
+        0 & 0 & 1
+    \end{bmatrix}
+$$
+
+We have
+$$
+    G(x, y) = \Pi^0(x, y) + \sum_{n=1}^\infty \Pi^n(x, y) = \Pi^0(x, y) + \Pi(x, y) + \sum_{n=2}^\infty \Pi^n(x, y)
+$$
+
+We have
+
+\begin{align*}
+    &G(x, y) - \Pi^0(x, y) - \Pi(x, y) \\
+    &=\sum_{n=2}^\infty \Pi^n(x, y) \\
+    &= \sum_{n=2}^\infty P(X_n=y | X_0=x) \\
+    &= \sum_{n=2}^\infty \sum_{z \in S} P(X_n=y, X_1 = z| X_0=x) &\text{(marginalize)}\\
+    &= \sum_{n=2}^\infty \sum_{z \in S} P(X_1 = z| X_0=x) P(X_n=y | X_1 = z, X_0=x) &\text{(conditional probability)}\\
+    &= \sum_{n=2}^\infty \sum_{z \in S} \Pi(x, z) P(X_n=y | X_1 = z) &\text{(Markov)}\\
+    &= \sum_{z \in S} \Pi(x, z) \sum_{n=2}^\infty P(X_n=y | X_1 = z) &\text{(Tonelli)}\\
+    &= \sum_{z \in S} \Pi(x, z) \sum_{m=1}^\infty \Pi^{m}(z, y) &\text{($m = n-1$)}\\
+    &= \sum_{z \in S} \Pi(x, z) (G(z, y) - \Pi^0(z, y))
+\end{align*}
+
+If $x = y$, we have
+$$
+    (1 - \Pi(x, x)) G(x, x) =  1 + \sum_{z \in S - \set{x}} \Pi(x, z) G(z, x)
+$$
+
+If $x \neq y$, we have
+$$
+    (1 - \Pi(x, x)) G(x, y) =  \Pi(x, y) G(y, y) + \sum_{z \in S - \set{x, y}} \Pi(x, z) G(z, y)
+$$
+
+
+Given that $G(3, 1) = G(3, 2) = 0$, we have the following equations
+\begin{align*}
+    (1 - p) G(1, 1) &= 1 + (1-p) G(2, 1) \\
+    (1 - p) G(1, 2) &= (1-p) G(2, 2) \\
+    G(2, 1) &= q G(1, 1) \\
+    G(2, 2) &= 1 + q G(1, 2) \\
+\end{align*}
+
+Solve the system of equations, we have
+\begin{align*}
+    G(2, 1) &= \frac{q}{(1-p)(1-q)} \\
+    G(1, 2) &= \frac{1}{1-q}
+\end{align*}
+
+\section{Q3}
+
+Consider a random walk on $\set{0, 1, ..., L}$ with transition matrix $\Pi(i, i + 1) = \Pi(i, i - 1) = \frac{1}{2}$ for each $i \in \set{1, ..., L-1}$ and $\Pi(0, 0) = \Pi(L, L) = 1$. For each $i \in \set{0, 1, ..., L}$, find the return probability $f_{ii} = P(X_n = i \text{ for some $n \in \N$ } | X_0 = i)$
+
+
+Let $A_i^m = \set{X_n = i \text{ for some } n \in \N: n \geq m}$. It is clear that $f_{00} = f_{LL} = 1$, for any $i \in \set{1, ..., L-1}$, note that $\set{A_i^1, X_1 = i\pm1} = \set{A_i^2, X_1 = i\pm1}$, we have
+\begin{align*}
+    f_{ii}
+    &= P(A_i^1 | X_0 = i) \\
+    &= P(A_i^1, X_1 = i-1| X_0 = i) + P(A_i^1, X_1 = i+1| X_0 = i) \\
+    &= P(A_i^2, X_1 = i-1| X_0 = i) + P(A_i^2, X_1 = i+1| X_0 = i) \\
+    &= P(A_i^2 | X_1 = i-1, X_0 = i) P(X_1 = i-1| X_0 = i) \\ &+ P(A_i^2 | X_1 = i+1, X_0 = i) P(X_1 = i+1| X_0 = i)\\
+    &= P(A_i^2 | X_1 = i-1) \Pi(i, i-1) + P(A_i^2 | X_1 = i+1) \Pi(i, i+1) &\text{(Markov property)} \\
+    &= P(A_i^1 | X_0 = i-1) \Pi(i, i-1) + P(A_i^1 | X_0 = i+1) \Pi(i, i+1)
+\end{align*}
+
+For any $a, b, c \in \set{0, 1, ..., L}$ such that $a < b < c$. Starting from $a$, probability of visiting $a$ before visiting $c$ is $\frac{c-b}{c-a}$, probability of visiting $c$ before visiting $a$ is $\frac{b-a}{c-a}$, therefore
+\begin{align*}
+    P(A_i^1 | X_0 = i-1) &= \frac{i-1}{i} \\
+    P(A_i^1 | X_0 = i+1) &= \frac{L-i-1}{L-i} \\
+\end{align*}
+
+Hence, for $i \in \set{1, ..., L}$
+$$
+    f_{ii} = \frac{1}{2} \tuple*{\frac{i-1}{i} + \frac{L-i-1}{L-i}} = 1 - \frac{L}{2i(L-i)}
+$$
+
+
+\section{Q4}
+
+Let $X = (X_n)_{n \in \N_0}$ be a symmetric random walk on $\Z$. For $x \in \Z$, let $P_x(\cdot)$ respectively $\Exp_x[\cdot]$ denote the probability and expectation for $X$ with initial condition $X_0 = x$. Let $T_y = T_y(X) = \min\set{n \geq 0: X_n = y}$ be the first time $X$ visits the point $y \in \Z$. Let $L \in \N$ and define $T = \min\set{T_0, T_L}$ the first time hitting either $0$ or $L$. Show that for $0 \leq x \leq L$, $P_x(T < \infty) = 1$ and furthermore, $\Exp_x[T] < \infty$.
+
+When $X$ starts at either $0$ or $L$, $T = 0$. Suppose $F = \Z \cap [1, L-1]$ is non-empty and $X$ starts at $x \in F$. Let $T_{F^c} = \min\set{n \geq 0: X_n \notin F}$. Since the only transition from a state in $F$ to a state in $F^c$ is transitioning to $0$ or $L$. Hence, $T = T_{F^c}$. Therefore, there exists constant $C > 0$ and $\rho \in (0, 1)$ such that
+$$
+    P_x(T \geq n) \leq C \rho^n
+$$
+
+Then,
+$$
+    P_x(T < \infty) = 1 - P_x(T = \infty) = 1 - \lim_{n \to \infty} P_x(T \geq n) = 1
+$$
+
+Moreover, we have
+
+\begin{align*}
+    \Exp_x[T]
+    &= \sum_{n=0}^\infty n P_x(T=n) \\
+    &= \sum_{n=1}^\infty P_x(T \geq n) \\
+    &\leq \sum_{n=1}^\infty C \rho^n \\
+    &= \frac{C \rho}{1-\rho} < \infty
+\end{align*}
+
+\section{Q5}
+
+Let $X$ be a simple symmetric random walk on $\Z$ with $X_0 = 0$. Let $a \in \N$
+\begin{enumerate}[label=(\alph*)]
+    \item By conditioning on the Markov chain's first visit to $a$ and using the symmetry of the random walk, show that
+    $$
+        P_0\tuple*{\max_{0 \leq i \leq n} X_i \geq a} = P_0(X_n = a) + 2 P_0(X_n \geq a+1) = P_0(X_n \notin [-a, a-1])
+    $$
+
+    \item \label{q5b} Deduce from the above identity that for any $a \in \N$
+    $$
+        P_a(T_0 > n) = P_0\tuple*{\max_{0 \leq i \leq n} X_i \leq a-1} = P_0(X_n \in [-a, a-1])
+    $$
+
+    \item Deduce from \ref{q5b} that $E_a[T_0] = \infty$ for all $a \in \N$
+
+    \item Deduce from \ref{q5b} for all $n \in \N$
+    $$
+        P_0(X_1, ..., X_{2n} \neq 0) = P_0(X_{2n} = 0)
+    $$
+\end{enumerate}
+
+\subsection{a}
+
+Let $T_a = \min \set{n \geq 0: X_n = a}$ be the first time $X$ visits $a$. Then,
+$$
+    \set*{\max_{0 \leq i \leq n} X_i \geq a} = \set*{T_a \leq n}
+$$
+
+Moreover, we can write $\set*{T_a \leq n}$ as a disjoint union of events
+\begin{align*}
+    &\set*{T_a \leq n} \\
+    &= \set*{T_a \leq n, X_n = a} \amalg \set*{T_a \leq n, X_n > a} \amalg \set*{T_a \leq n, X_n < a} \\
+    &= \set{X_n = a} \amalg \set{X_n > a} \amalg \set*{T_a \leq n, X_n < a} \\
+\end{align*}
+
+We can write $\set*{T_a \leq n, X_n < a}$ as a disjoint union of events
+$$
+    \set*{T_a \leq n, X_n < a} = \coprod_{i=0}^n \set*{T_a = i, X_n < a}
+$$
+
+We have
+\begin{align*}
+    P_0(T_a \leq n, X_n < a)
+    &= \sum_{i=0}^n P_0(T_a = i, X_n < a) \\
+    &= \sum_{i=0}^n P_0(X_n < a | T_a = i) P_0(T_a = i) &\text{(conditional probability)}\\
+    &= \sum_{i=0}^n P_0(X_n < a | X_i = a) P_0(T_a = i) &\text{(Markov property)}\\
+    &= \sum_{i=0}^n P_0(X_n > a | X_i = a) P_0(T_a = i) &\text{(symmetric random walk)}\\
+    &= \sum_{i=0}^n P_0(X_n > a | T_a = i) P_0(T_a = i) &\text{(Markov property)}\\
+    &= \sum_{i=0}^n P_0(X_n > a, T_a = i) &\text{(conditional probability)}\\
+    &= P_0(X_n > a)
+\end{align*}
+
+Therefore,
+
+$$
+    P_0\tuple*{\max_{0 \leq i \leq n} X_i \geq a} = P_0(T_a \leq n) = P_0(X_n = a) + 2 P_0(X_n > a)
+$$
+
+\subsection{b}
+
+In previous part, $P_0(T_a \leq n)$ is the probability of visiting $a$ within $n$ steps starting from $0$. By symmetry, let $P_a(T_0 \leq n)$ be the probability of visiting $0$ within $n$ steps starting from $0$, then $P_a(T_0 \leq n) = P_0(T_a \leq n)$. We have
+$$
+    P_a(T_0 > n) = 1 - P_a(T_0 \leq n) = 1 - P_0(T_a \leq n) = 1 - P_0\tuple*{\max_{0 \leq i \leq n} X_i \geq a}
+$$
+
+\subsection{c}
+
+
+We have 
+\begin{align*}
+    \Exp_a[T_0]
+    &= \sum_{n=0}^\infty n P_a(T_0 = n) \\
+    &= \sum_{n=1}^\infty P_a(T_0 \geq n) \\
+    &= \sum_{n=0}^\infty P_a(T_0 > n) \\
+    &= \sum_{n=0}^\infty P_0(X_n \in [-a, a-1]) \\
+    &= \Exp_0\bracket*{\sum_{n=0}^\infty 1_{\set{X_n \in [-a, a-1]}}} \\
+    &\geq \Exp_0\bracket*{\sum_{n=0}^\infty 1_{\set{X_n=0}}}
+\end{align*}
+
+Since symmetric random walk is recurrent, starting from $0$, $X$ visits $0$ infinitely many times. Therefore, $\Exp_a[T_0] \geq \Exp_0\bracket*{\sum_{n=0}^\infty 1_{\set{X_n=0}}} = \infty$
+
+\subsection{d}
+
+Starting at $0$, at time $1$, $X_1 = 1$ or $X_1 = -1$. By symmetry, 
+$$
+    P_0(X_1, ..., X_{2n} \neq 0) = P_1(X_2, ..., X_{2n} \neq 0) = P_1(T_0 > 2n) = P_0(X_{2n} \in [-1, 0])
+$$
+
+Since, $2n$ is even $X_{2n}$ cannot be $-1$, $P_0(X_{2n} \in [-1, 0]) = P_0(X_{2n} = 0)$. Hence
+$$
+    P_0(X_1, ..., X_{2n} \neq 0) = P_0(X_{2n} = 0)
+$$
+
+\section{Q6}
+
+A general random walk $X$ on $\Z$ is a Markov chain on $\Z$ with transition probability $\Pi(x, y) = \Pi(0, y-x) = \mu(y - x)$ for all $x, y \in \Z$ where $\mu$ is a probability measure on $\Z$. In particular, the increment $X_1 - X_0$, $X_2 - X_1$, ... are i.i.d with distribution $\mu$. Find a stationary measure for $X$. Can $X$ be positive recurrent?
+
+\subsection{a stationary measure for $X$}
+
+Let $\nu: \Z \to [0, \infty)$ be a stationary measure on $\Z$ satisfying $\sum_{x \in \Z} \nu(x) > 0$. By stationary, we must have $\nu = \nu \Pi$, that is, for every $y \in \Z$,
+
+$$
+    \nu(y) = \sum_{x \in \Z} \nu(x) \Pi(x, y)
+$$
+
+
+We have
+\begin{align*}
+    \sum_{x \in \Z} \nu(0) \mu(-x)
+    = \nu(0) 
+    = \sum_{x \in \Z} \nu(x) \Pi(x, 0)
+    = \sum_{x \in \Z} \nu(x) \mu(-x)
+\end{align*}
+
+Therefore,
+$$
+    \sum_{z \in \Z} (\nu(x) - \nu(0)) \mu(-x) = 0
+$$
+
+A stationary measure for $x$ is one so that $x \mapsto \nu(x) - \nu(0)$ is orthogonal to $x \mapsto \mu(-x)$. In particular, one choice of $\nu$ is the uniform measure, that is $\nu(x) = 1$ for all $x \in \Z$
+
+\subsection{can $X$ be positive recurrent?}
+
+No in general. Because suppose $X$ is positive recurrent, then there exists a unique stationary distribution. Let $p: S \to \R$ be a non-zero vector that is orthogonal to $x \mapsto \mu(-x)$, then we can construct two stationary measures. Let $x \in S$ such that $p(x) > 0$, and take $\nu_1(0) = \nu_2(0) = 1$
+\begin{align*}
+    \nu_1(x) - \nu_1(0) = p(x) \\
+    \nu_2(x) - \nu_2(0) = 2p(x) \\
+\end{align*}
+
+then, 
+$$
+    \nu_2(x) = 1 + 2 (\nu_1(x) - 1)
+$$
+
+which is not linear.
+\section{Q7}
+
+Let $X$ be a random walk on $\set{0, 1, ..., L}$ with transition matrix $\Pi$ such that $\Pi(0, 1) = \Pi(L, L-1) = 1$, $\Pi(i, i+1) = 1 - \Pi(i, i-1) = p$ for all $1 \leq i \leq L-1$. Find the stationary distribution of this random walk. If $X_0 = 0$, find the expected number of visits to $L$ before returning $0$ as well as the expected time of returning.
+
+
+We can assume that $p \in (0, 1)$ as if $p=0$ or $p=1$, the answers are trivial. We can also assume that $L \geq 3$ as if $L = 1$ or $L=2$, the answers are trivial.
+
+It is clear that $X$ is irreducible since for any pair of states, there exists a path with positive probability connecting them. As the number of states are finite, therefore, $X$ is recurrent. Therefore, there exists a unique stationary distribution for $X$
+
+\subsection{stationary distribution of $X$}
+
+Let $\mu: \set{0, 1, ..., L} \to \R$ be the stationary measure of $X$. Then, we have $\mu = \mu \Pi$, that is, for every $y \in \set{0, 1, ..., L}$, 
+$$
+    \mu_y = \sum_{x \in \set{0, 1, ..., L}} \mu_x \Pi(x, y)
+$$
+
+We have the following
+\begin{align*}
+    \mu_0 &= \mu_1 \Pi(1, 0) = \mu_1 (1 - p) \\
+    \mu_1 &= \mu_0 \Pi(0, 1) + \mu_2 \Pi(2, 1) = \mu_0 + \mu_2 (1-p) \\
+    \mu_L &= \mu_{L-1} \Pi(L-1, L) = \mu_{L-1} p \\
+    \mu_{L-1} &= \mu(L-2) \Pi(L-2, L-1) + \mu_L \Pi(L, L-1) = \mu_{L-2} p + \mu_L \\
+    \mu_i &= \mu_{i-1} \Pi(i-1, i) + \mu_{i+1} \Pi(i+1, i) = \mu_{i-1} p + \mu_{i+1} (1-p) &\text{(if $i \in \set{2, ..., L-2}$)} 
+\end{align*}
+
+For convenient, let $\nu: \set{0, 1, ..., L} \to \R$ be defined by 
+$$
+    \nu_i = \begin{cases}
+        \frac{\mu_0}{p} &\text{if $y = 0$} \\
+        \mu_i &\text{if $y \in \set{1, ..., L-1}$} \\
+        \frac{\mu_L}{1-p} &\text{if $y = L$} \\
+    \end{cases}
+$$
+
+We have the relation, for all $i \in \set{1, ..., L-1}$,
+$$
+    \nu_i = \nu_{i-1} p + \nu_{i+1} (1-p)
+$$
+
+Let $r^i$ be a basic solution for $\nu_i$, then
+$$
+    1 = \frac{1}{r} p + r (1-p)
+$$
+
+Solve for $r$ we have
+$$
+    r_1 = 1 \text{ or } r_2 = \frac{p}{1-p}
+$$
+
+Hence, general solution for $\nu_i$ is
+$$
+    \nu_i = a r_1^i + b r_2^i = a + b \tuple*{\frac{p}{1-p}}^i
+$$
+
+Since, $\mu_0 = \mu_1(1-p)$ and $\mu_L = \mu_{L-1} p$, then
+$$
+    p \nu_0 = \nu_1(1-p) \text{ and } (1-p) \nu_L = \nu_{L-1} p
+$$
+
+We must have $a = 0$, then $\nu_i = b r_2^i$. As $\mu: \set{0, 1, ..., L} \to \R$ is a distribution, we must have
+\begin{align*}
+    1
+    &= \mu_0 + \mu_L + \sum_{i=1}^{L-1} \mu_i \\
+    &= p \nu_0 + (1-p) \nu_L + \sum_{i=1}^{L-1} \nu_i \\
+    &= p b + (1-p) b r_2^L + \sum_{i=1}^{L-1} b r_2^i \\
+    &= b \tuple*{p + (1-p) r_2^L + \sum_{i=1}^{L-1} r_2^i} \\
+    &= b \tuple*{p + (1-p) r_2^L + \frac{r_2 - r_2^L}{1 - r_2}} \\
+    &= b \frac{2p(1-p)(1-r_2^L)}{1 - 2p}
+\end{align*}
+
+Therefore,
+$$
+    b = \frac{1 - 2p}{2p(1-p)(1-r_2^L)} \text{ and } \nu_i = b r_2^i
+$$
+
+$$
+    \mu_i = \begin{cases}
+        p b &\text{if $i = 0$} \\
+        b r_2^i &\text{if $i \in \set{1, ..., L-1}$} \\
+        (1-p) b r_2^L &\text{if $i = L$} \\
+    \end{cases}
+$$
+
+\subsection{find the expected number of visits to L before
+returning to 0, as well as the expected time of returning}
+
+Let $T_x = \min\set{n > 0: X_n = x}$ be the first time $X$ visits $x \in S$ in positive time, then the cycle trick construction states that if $x$ is recurrent then, $\mu_x: S \to [0,\infty)$ defined by 
+$$
+    \mu_x(y) = \Exp_x\bracket*{\sum_{n=0}^{T_x - 1} 1_{\set{X_n = y}}} = \sum_{n=0}^\infty P_x(X_n = y, n < T_x)
+$$
+
+is a stationary measure and if $\Exp_x[T_x] < \infty$, then $\frac{\mu_x(y)}{\Exp_x[T_x]}$ is a stationary distribution. Since $X$ is recurrent, then stationary distribution exists and unique. That is, $\frac{\mu_x(y)}{\Exp_x[T_x]}$ coincides with the stationary distribution calculated in the previous part.
+
+Hence, we need to calculate $\mu_0(L)$ and $\Exp_0[T_0]$. We have
+\begin{align*}
+    \Exp_0[T_0]
+    &= \sum_{n=1}^\infty n P_0(T_0 = n) \\
+    &= \sum_{n=1}^\infty P_0(T_0 \geq n) \\
+\end{align*}
+
+if $n = 1$, $P_0(T_0 \geq 1) = 1$ and if $n = 2$
+$$
+    P_0(T_0 \geq 2) = P_0(X_1 \neq 0) = 1
+$$
+
+if $n \geq 3$, without loss of generality, let $X_i$ distributed according to the stationary distribution
+\begin{align*}
+    P_0(T_0 \geq n)
+    &= P_0(X_1 \neq 0, ..., X_{n-2} \neq 0, X_{n-1} \neq 0) \\
+    &= P(X_{n-1} \neq 0 | X_{n-2} \neq 0) P_0(X_1 \neq 0, ..., X_{n-2} \neq 0) &\text{(Markov property)}\\
+    &= P(X_1 \neq 0 | X_0 \neq 0) P_0(T_0 \geq n-1) &\text{(stationary)}
+\end{align*}
+
+We will calculate the constant $P(X_1 \neq 0 | X_0 \neq 0)$
+
+\begin{align*}
+    P(X_1 \neq 0 | X_0 \neq 0)
+    &= \frac{P(X_1 \neq 0, X_0 \neq 0)}{P(X_0 \neq 0)} \\
+    &= \frac{P(X_1 \neq 0) - P(X_1 \neq 0, X_0 = 0)}{P(X_0 \neq 0)} \\
+    &= \frac{P(X_1 \neq 0) - (P(X_0 = 0) - P(X_1 = 0, X_0 = 0))}{P(X_0 \neq 0)} \\
+    &= \frac{P(X_1 \neq 0) - P(X_0 = 0)}{P(X_0 \neq 0)} \\
+    &= \frac{1 - 2pb}{1-pb}
+\end{align*}
+
+Therefore, for $n \geq 3$,
+$$
+    P_0(T_0 \geq n) =  \tuple*{\frac{1 - 2pb}{1-pb}}^{n-2}
+$$
+
+Then,
+$$
+    \Exp_0[T_0] = 1 + 1 + \sum_{n=3}^\infty \tuple*{\frac{1 - 2pb}{1-pb}}^{n-2} = \frac{1}{pb} = \frac{2(1-p)(1-r_2^L)}{1 - 2p}
+$$
+
+Then, 
+$$
+    \mu_0(L) = \Exp_0[T_0] (1 - p) b r_2^L = r_2^{L-1} = \tuple*{\frac{p}{1-p}}^{L-1}
+$$
+
+\section{Q8}
+
+At each time $n \in \N$, we light up $\xi_n$ many candles where $(\xi_n)_{n \in \N}$ are i.i.d Poisson random variables with mean $1$. The lifetimes of candles are assume to be i.i.d integer-valued with a common probability mass function $f = (f_k)_{k \in \N}$. Assume that the mean lifetime $\lambda = \sum_{k=1}^\infty k f(k) < \infty$. Let $X_n$ denote the number of candles burning at time $n$. Is $X$ a Markov chain? Is it irreducible? Is it aperiodic? Find the stationary distribution if it exists.
+
+\subsection{is $X$ a Markov chain?}
+
+Let $A_t$ be the number of new candles at time $t \in \N_0$. At time $n$, let $z$ be the lifetime of a candle ($z=0$ means that a candle does not last until next time step), then the number of candles burning at time $t$ is
+\begin{align*}
+    X_t &= \sum_{i=1}^{A_0} 1_{\set{z_i^0 \geq t}} + ... + \sum_{i=1}^{A_n} 1_{\set{z_i^n \geq t-n}} + ... + \sum_{i=1}^{A_t} 1_{\set{z_i^t \geq 0}} \\
+    X_{t+1} &= \sum_{i=1}^{A_0} 1_{\set{z_i^0 \geq t+1}} + ... + \sum_{i=1}^{A_n} 1_{\set{z_i^n \geq t-n+1}} + ... + \sum_{i=1}^{A_t} 1_{\set{z_i^t \geq 1}} + \sum_{i=1}^{A_{t+1}} 1_{\set{z_i^{t+1} \geq 0}}
+\end{align*}
+
+Then, 
+$$
+    X_{t+1} = X_{t} - \tuple*{\sum_{i=1}^{A_0} 1_{\set{z_i^0 = t}} + ... + \sum_{i=1}^{A_n} 1_{\set{z_i^n= t-n}} + ... + \sum_{i=1}^{A_t} 1_{\set{z_i^t = 0}}} + \sum_{i=1}^{A_{t+1}} 1_{\set{z_i^{t+1} \geq 0}}
+$$
+
+That is, the number of burning candles at time $t+1$ is the number of candles at time $t$ that have positive remaining times plus a random variable. It is generally not a Markov chain unless we can infer the number of candles at time $t$ that have positive remaining times from the total number of candles at time $t$.
+
+Let's construct a counterexample. Suppose distribution of candle lifetime is
+$$
+    f(k) = \begin{cases}
+        0 &\text{if $k = 0$} \\
+        1 &\text{if $k = 1$}
+    \end{cases}
+$$
+
+Then, 
+\begin{align*}
+    P(X_2 = \cdot | X_1 = 1, X_0 = 0) &= 1 + Pois(1) \\
+    P(X_2 = \cdot | X_1 = 1, X_0 = 1) &= Pois(1) \\
+\end{align*}
+
+\subsection{is it irreducible?} 
+
+Yes, it is possible to go from a state to any other state. Let $X_n = N$, there is a positive probability such that $X_{n+1} = N + k$ for $k \in \N$ equals to probability of burning $k$ plus the number of candles at time $n$ with $0$ remaining time. To go to $0$, there is a finite number of steps so that all burning candles turn off, that's a positive probability transition ($(e^{-1})^{\text{time}}$)
+
+\subsection{is it aperiodic?}
+
+Yes, it is aperiodic since there is a positive probability of staying at the same state by burning exactly the number of candles with $0$ remaining time in the next time step.
+
+\subsection{find the stationary distribution if it exists}
+
+We have
+$$
+X_t = \sum_{i=1}^{A_0} 1_{\set{z_i^0 \geq t}} + ... + \sum_{i=1}^{A_n} 1_{\set{z_i^n \geq t-n}} + ... + \sum_{i=1}^{A_t} 1_{\set{z_i^t \geq 0}}
+$$
+
+Since $\infty > \lambda = \sum_{k=1}^\infty kf(k) = \sum_{k=1}^\infty P(z \geq k)$. Therefore, $P(z \geq k) \to 0$ as $k \to \infty$.  
+
+
+\note{TODO}
+
+
+\section{Q9}
+
+A birth-death chain is a Markov chain with state space $\N_0$ and transition probabilities $\Pi(0, 1) = p_0$, $\Pi(0, 0) = r_0 = 1 - p_0$ and for each $k \in \N$, we have $\Pi(k, k+1) = p_k$, $\Pi(k, k-1) = q_k$, $\Pi(k, k) = r_k$ with $p_k + q_k + r_k = 1$. Find a necessary and sufficient condition for this Markov chain to be irreducible. Show that when $X$ is irreducible, it is in fact reversible and identify the reversible measure. Find a necessary and sufficient condition for this Markov chain to be positive recurrent.
+
+\subsection{Find a necessary and sufficient condition for this Markov chain to be irreducible}
+
+Let $0 \leq m < n$, since the Markov chain can only transition to the adjacent natural numbers, a valid transition from $m$ to $n$ must go through $n - 1$, therefore, $\Pi(n-1, n) = p_{n-1} > 0$ for all $n > 0$. Similarly, let $0 \leq n < m$, all valid transition from $m$ to $n$ must go through $n+1$, therefore, $\Pi(n+1, n) = q_{n+1} > 0$ for all $n \geq 0$. Hence, there necessary condition is
+\begin{align*}
+    p_k > 0 &\text{ for all $k \geq 0$} \\
+    q_k > 0 &\text{ for all $k \geq 1$}  
+\end{align*}
+
+Moreover, it is also the sufficient condition. If $0 \leq m < n$, there exists a path with positive probability
+$$
+    \Pi(m, m+1) \Pi(m+1, m+2) ... \Pi(n-1, n) = p_m p_{m+1} ... p_{n-1} > 0
+$$
+
+If $0 \leq n < m$, there exists a path with positive probability
+$$
+    \Pi(n, n-1) \Pi(n-1, n-2) ... \Pi(m+1, m) = q_n q_{n-1} ... q_{m+1} > 0
+$$
+
+\subsection{Show that when $X$ is irreducible, it is in fact reversible and identify the reversible measure}
+
+When $X$ is irreducible, it satisfies the loop condition since probability of every loop is a product of terms $\Pi(k, k+1) \Pi(k, k-1)$. If we reverse direction, the probability stays the same.
+
+Detailed balance condition for reversible measure $\nu: \N_0 \to \R$
+$$
+    \nu(k) \Pi(k, k+1) = \nu(k+1) \Pi(k+1, k)
+$$
+
+therefore $\frac{\nu(k+1)}{\nu(k)} = \frac{\Pi(k, k+1)}{\Pi(k+1, k)} = \frac{p_k}{q_{k+1}}$. Let $\nu(0) = 1$, then
+$$
+    \nu(n) = \prod_{k=0}^n \frac{p_k}{q_{k+1}}
+$$
+
+\subsection{Find a necessary and sufficient condition for this Markov chain to be positive recurrent}
+
+In order to avoid confusion, we define the following definitions: 
+\begin{enumerate}
+    \item \textbf{irreducible}: there exists a positive probability path from any state to any state
+    \item \textbf{recurrent}: starting from any state, the probability of returning in finite time is $1$
+    \item \textbf{positive recurrent}: for all $x \in S$, $\Exp_x[T_x] < \infty$
+\end{enumerate}
+
+It easy to see that \textbf{positive recurrent} implies \textbf{recurrent}, since if there exists a probability of escaping, $\Exp_x[T_x] = \infty$. Moreover, \textbf{recurrent} does not imply \textbf{irreducible} as we can make probability of staying in state being $1$, so that $\Exp_x[T_x] = 1$
+
+
+The question is to find the necessary and sufficient condition so that $X$ is all of \textbf{irreducible} and \textbf{positive recurrent}.
+
+\subsubsection{necessary part}
+
+If $X$ is \textbf{irreducible} and \textbf{recurrent}, then it has a stationary distribution, since the reversible measure is stationary, then it can be normalized. i.e. $\sum_{n \in \N_0} \nu(v) < \infty$. Let $\mu: \N_0 \to \R$ be the stationary distribution
+$$
+    \mu(v) = \frac{\nu(v)}{\sum_{n \in \N_0} \nu(v)}
+$$
+
+We have
+$$
+\Exp_x[T_x]
+    = \sum_{n=1}^\infty n P_x(T_x = n)
+    = \sum_{n=1}^\infty P_x(T_x \geq n)
+$$
+
+Note that $P_x(T_x \geq 2m-1) = P_x(T_x \geq 2m)$, then 
+$$
+    \Exp_x[T_x] = 2 \sum_{m=1} P_x(T_x \geq 2m)
+$$
+
+We will calculate $P_x(T_x \geq 2m)$,
+
+$$
+    P_x(T_x \geq 2) = 1 - P_x(T_x < 2) = P_x(T_x = 0) = r_0
+$$
+
+If $m \geq 2$, suppose $X$ is distributed according to the stationary distribution, we have
+
+\begin{align*}
+    P_x(T_x \geq 2m)
+    &= P_x(T_x \geq 2m-1) \\
+    &= P_x(X_1 \neq 0, ..., X_{2m-2} \neq 0) \\
+    &= P(X_{2m-2} \neq 0 | X_{2m-3} \neq 0) P_x(X_1 \neq 0, ..., X_{2m-3} \neq 0) \\
+    &= P(X_{2m-2} \neq 0 | X_{2m-3} \neq 0) P_x(T_x \geq 2m-2) \\
+    &= P(X_{2m-2} \neq 0) P_x(T_x \geq 2m-2) &\text{($\set{X_{2m-3} \neq 0}$ is a sure event)}\\
+    &= (1 - \mu(0)) P_x(T_x \geq 2m-2)
+\end{align*}
+
+Therefore,
+$$
+    \Exp_x[T_x] = 2 \sum_{m=1} P_x(T_x \geq 2m) = 2 \sum_{m=1} r_0 (1 - \mu(0))^{m-1}
+$$
+
+As long as $\mu(0) < 1$, the series converges. Therefore, the necessary condition
+is all of (1) $X$ is \textbf{irreducible} (2) $\sum_{n \in \N_0} \nu(v) < \infty$ and (3) $\mu(0) < 1$.
+
+\subsubsection{sufficient part}
+
+On the other hand, if $X$ is (1) \textbf{irreducible} and (2) $\sum_{n \in \N_0} \nu(v) < \infty$, the stationary distribution is defined. Moreover, if (3) $\mu(0) < 1$ is true, for all $x \in \N_0$, $\Exp_x[T_x] < 0$, then $X$ is \text{positive recurrent}. Therefore, (1) (2) (3) is the sufficient condition.
+
+\section{Question 10}
+Consider a knight jumping randomly on a $5 \times 5$ square. At each step, it picks one of the admissible moves with equal probability. Find the stationary distribution for this Markov chain by identifying Markov chain as a random walk on a graph.
+
+The Markov chain is finite state and irreducible, therefore, there exists a stationary distribution. Construct the graph and set all conductances to $1$. So that the reversible measure of a node is the number edges on that node.
+
+We denote the symmetry by the matrix below:
+
+$$
+    \begin{bmatrix}
+        d & e & f & e & d \\
+        e & b & c & b & e \\
+        f & c & a & c & f \\
+        e & b & c & b & e \\
+        d & e & f & e & d
+    \end{bmatrix}
+$$
+
+The reversible measure $\nu: \set{a,b,c,d,e,f} \to \R$ is as follows
+\begin{align*}
+    \nu(a) &= 8 \\
+    \nu(b) &= 4 \\
+    \nu(c) &= 6 \\
+    \nu(d) &= 2 \\
+    \nu(e) &= 3 \\
+    \nu(f) &= 4
+\end{align*}
+
+The stationary distribution $\mu: \set{a,b,c,d,e,f} \to \R$ is as follows with $s = \nu(a) + 4 \nu(b) + 4 \nu(c) + 4 \nu(d) + 8 \nu(e) + 4 \nu(f) = 96$
+\begin{align*}
+    \mu(a) &= \frac{\nu(a)}{s} = \frac{1}{12} \\
+    \mu(b) &= \frac{\nu(b)}{s} = \frac{1}{24} \\
+    \mu(c) &= \frac{\nu(c)}{s} = \frac{1}{16} \\
+    \mu(d) &= \frac{\nu(d)}{s} = \frac{1}{48} \\
+    \mu(e) &= \frac{\nu(e)}{s} = \frac{1}{32} \\
+    \mu(f) &= \frac{\nu(f)}{s} = \frac{1}{24}
+\end{align*}
+
+\section{Question 11}
+Suppose that the knight starts at the center
+\begin{enumerate}
+    \item Find the probability that the knight will reach one of the corners before returning to the center
+    \item Find the expected time it takes for the knight to reach one of the corners
+\end{enumerate}
+
+\subsection{the knight will reach one of the corners before returning to the center}
+
+Let $D$ be the set of corners, $a$ the center, and $A = \set{a}$. Let $T_A = \min\set{n \geq 0: X_n \in A}$ be the first time $X$ visits $A$, $T_D = \min\set{n \geq 0: X_n \in D}$ be the first time $X$ visits $D$. Since starting from $a$, it must go to one of the 8 squares labelled by $e$, then the probability of hitting $D$ before $A$ is
+
+$$
+    \phi(e) = P_e(T_D < T_A)
+$$
+
+
+We have, for any $x \notin A \cup D$,
+\begin{align*}
+    \phi(x) = P_x(T_D < T_A)
+    &= \sum_{y \in S} P_x(X_1 = y, T_D < T_A) \\
+    &= \sum_{y \in S} P_x(T_D < T_A| X_1 = y) P(X_1 = y | X_0 = x) \\
+    &= \sum_{y \in S} \phi(y) \Pi(x, y) \\
+\end{align*}
+
+We have the following system of equations
+\begin{align*}
+    \phi(a) &= 0 \\
+    \phi(b) &= 2 \phi(e) \Pi(b, e) + 2 \phi(c) \Pi(b, c) = \frac{1}{2}\phi(e) + \frac{1}{2}\phi(c) \\
+    \phi(c) &= 2 \phi(d) \Pi(c, d) + 2 \phi(f) \Pi(c, f) + 2 \phi(b) \Pi(c, b) = \frac{1}{3}\phi(d) + \frac{1}{3}\phi(f) + \frac{1}{3}\phi(b) \\
+    \phi(d) &= 1 \\
+    \phi(e) &= \phi(b) \Pi(e, b) + \phi(a) \Pi(e, a) + \phi(f) \Pi(e, f) = \frac{1}{3}\phi(b) + \frac{1}{3}\phi(a) + \frac{1}{3}\phi(f) \\
+    \phi(f) &= 2 \phi(e) \Pi(f,e) + 2 \phi(c) \Pi(f, c) = \frac{1}{2}\phi(e) + \frac{1}{2}\phi(c)
+\end{align*}
+
+Solving the system of equations, we have $\phi(e) = \frac{1}{3}$
+
+\subsection{the expected time it takes for the knight to reach one of the corners}
+
+Let $D$ be the set of corners, $T_D = \min\set{n \geq 0: X_n \in D}$ be the first time $X$ visits $D$. We want to find
+$$
+    \Exp_a[T_D]
+$$
+
+We have, for any $x \notin D$,
+\begin{align*}
+    \psi(x)
+    &= \Exp_x[T_D] \\
+    &= \sum_{y \in S} \Exp_x[T_D 1_{\set{X_1 = y}}] \\
+    &= 1 + \sum_{y \in S} \Exp_x[(T_D - 1) 1_{\set{X_1 = y}}] \\
+    &= 1 + \sum_{y \in S} P(X_1 = y | X_0 = x) \Exp_x[\Exp_x[T_D - 1 | X_1 = y]] \\
+    &= 1 + \sum_{y \in S} P(X_1 = y | X_0 = x) \Exp_y[T_D] \\ 
+    &= 1 + \sum_{y \in S} \Pi(x, y) \psi(y) \\ 
+\end{align*}
+
+We have the following system of equations
+\begin{align*}
+    \psi(a) &= 1 + 8 \psi(e) \Pi(a, e) = 1 + \psi(e) \\
+    \psi(b) &= 1 + 2 \psi(e) \Pi(b, e) + 2 \psi(c) \Pi(b, c) = 1 + \frac{1}{2} \psi(e) + \frac{1}{2} \psi(c) \\
+    \psi(c) &= 1 + 2 \psi(d) \Pi(c, d) + 2 \psi(f) \Pi(c, f) + 2 \psi(b) \Pi(c, b) = 1 + \frac{1}{3} \psi(d) + \frac{1}{3} \psi(f) + \frac{1}{3} \psi(b) \\
+    \psi(d) &= 0 \\
+    \psi(e) &= 1 + \psi(b) \Pi(e, b) + \psi(a) \Pi(e, a) + \psi(f) \Pi(e, f) = 1 + \frac{1}{3}\psi(b) + \frac{1}{3}\psi(a) + \frac{1}{3}\psi(f) \\
+    \psi(f) &= 1 + 2 \psi(e) \Pi(f,e) + 2 \psi(c) \Pi(f, c) = 1 + \frac{1}{2}\psi(e) + \frac{1}{2}\psi(c)
+\end{align*}
+
+Solving the system of equations, we have $\psi(a) = 18$
+
+\end{document}

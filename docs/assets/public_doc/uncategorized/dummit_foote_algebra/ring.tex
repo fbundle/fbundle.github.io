@@ -1,0 +1,703 @@
+\chapter{RING THEORY}
+
+\section{INTRODUCTION TO RINGS}
+
+\subsection{BASIC DEFINITIONS AND EXAMPLES}
+
+\begin{definition}[ring]
+	A non-unital $R$ is a set together with two binary operations $+$ and $\times$ (called addition and multiplication) satisfying the following axioms
+	\begin{enumerate}
+		\item $(R, +)$ is an abelian group
+		\item $\times$ is associative, that is
+		$$
+			(ab) c = a (bc)
+		$$
+		
+		for all $a, b, c \in R$
+		
+		\item the distributive laws hold in $R$, that is, for all $a, b, c \in R$, 
+		$$
+			(a + b)c = ac + bc \text{ and } a(b+c) = ab + ac
+		$$
+	\end{enumerate}
+	
+	If $\times$ is commutative, then $R$ is called a commutative ring. If there is an element $1 \in R$ such that $1 \neq 0$ and
+	$$
+		1a = a1 = a
+	$$
+	
+	for all $a \in R$, then $R$ is called a unital ring and $1$ is called multiplicative identity.
+\end{definition}
+
+\begin{remark}
+	From now on, whenever we refer to a ring $R$, $R$ is a non-unital ring.
+\end{remark}
+
+\begin{definition}[division ring, field]
+	A unital ring $R$ is called a division ring if every nonzero element in $R$ has a multiplicative inverse. A commutative division ring is called a field.
+\end{definition}
+
+\begin{proposition}
+	Let $R$ be a ring, then
+	\begin{enumerate}
+		\item $0a = a0 = 0$ for all $a \in R$
+		\item $(-a)b = a(-b) = -(ab)$ for all $a, b \in R$
+		\item $(-a)(-b) = ab$ for all $a, b \in R$
+		\item if $R$ is unital, then the multiplicative identity is unique and $(-1)a = -a$
+	\end{enumerate}
+\end{proposition}
+
+\begin{definition}[zero divisor]
+	Let $R$ be a ring, then
+	\begin{enumerate}
+		\item A nonzero element $a \in R$ is called a zero divisor if there is a nonzero element $b \in R$ such that either $ab = 0$ or $ba = 0$
+		\item If $R$ is unital, an element $u \in R$ is called unit if there is an element $v \in R$ such that $uv = vu = 1$. The set of units is denoted by $R^\times$. With respect to muliplication, $R^\times$ is a group called multiplicative group of units
+	\end{enumerate}
+\end{definition}
+
+\begin{definition}[integral domain]
+	A commutative unital ring is called an integral domain if it has no zero divisors.
+\end{definition}
+
+\begin{proposition}[cancellation property]
+	Let $R$ be a ring and $a, b, c \in R$. If $a$ is not a zero divisor, then
+	$$
+		ab = ac \implies a (b - c) = 0 \implies a = 0 \text{ or } b = c
+	$$
+\end{proposition}
+
+\begin{corollary}
+	Any finite integral domain is a field \footnote{seems not trivial https://math.stackexchange.com/a/62551/700122}
+\end{corollary}
+
+\begin{definition}[subring]
+	A subring of the ring $R$ is a subgroup of $R$ that is closed under multiplication. That is, a subset of $R$ that is also a ring.
+\end{definition}
+
+\subsection{EXAMPLES: POLYNOMIAL RINGS, MATRIX RINGS, AND GROUP RINGS}
+
+\subsubsection{POLYNOMIAL RINGS}
+
+\note{there is a dedicated section this polynomial rings}
+
+\subsubsection{MATRIX RINGS}
+
+\begin{proposition}[matrix ring]
+	Let $R$ be a ring and $n \in \N$, the set of all $n \times n$ matrices $M_{n \times n}[R]$ with coefficients in $R$ is a ring. If $n \geq 2$, then $M_{n \times n}[R]$ is not a commutative ring.
+\end{proposition}
+
+\note{TODO - there are more things in here}
+
+\subsubsection{GROUP RINGS}
+
+\begin{definition}[group ring]
+	Let $R$ be a commutative unital ring and $G = \set{g_1, g_2, ..., g_n}$ be a finite group. Define group ring $RG$ of $G$ with coefficients in $R$ be the set of all formal sums
+	$$
+		a_1 g_1 + a_2 g_2 + ... + a_n g_n
+	$$
+	
+	for $a_i \in R$ with addition defined by
+	$$
+		\tuple*{\sum_{i=1}^n a_i g_i} + \tuple*{\sum_{i=1}^n b_i g_i} = \sum_{i=1}^n (a_i + b_i) g_i
+	$$
+	
+	and multiplcation defined by
+	$$
+		\tuple*{\sum_{i=1}^n a_i g_i} \times \tuple*{\sum_{i=1}^n b_i g_i} = \sum_{k=1}^n \tuple*{\sum_{i, j: g_i g_j = g_k} a_i b_j} g_k
+	$$
+\end{definition}
+
+\begin{proposition}
+	$RG$ is commutative if and only if $G$ is commutative
+\end{proposition}
+
+\subsection{RING HOMOMORPHSIMS AND QUOTIENT RINGS}
+
+\begin{definition}[ring homomorphism]
+	Let $R, S$ be rings
+	\begin{enumerate}
+		\item A ring homomorphism is a map $\phi: R \to S$ such that
+		\begin{enumerate}
+			\item $\phi$ is a group homomorphism on additive groups
+			\item $\phi(ab) = \phi(a) \phi(b)$, if $R$ is unital, then $\phi(1_R) = 1_S$
+		\end{enumerate}
+		
+		\item The kernel of $\phi$, denoted by $\ker \phi$, is the set of elements of $R$ that is mapped to $0$ by $\phi$.
+		
+		\item A bijective ring homomorphism is called an isomorphism
+	\end{enumerate}
+\end{definition}
+
+\begin{proposition}
+	Let $R, S$ be rings and $\phi: R \to S$ be a ring homorphism
+	\begin{enumerate}
+		\item The image of $\phi$ is a subring of $S$
+		\item The kernel of $\phi$ is a subring of $R$. Moreover, if $r \in R$, $\alpha \in \ker \phi$, then $r \alpha \in \ker \phi$ and $\alpha r \in \ker \phi$, that is, $\ker phi$ is an (two-sided) ideal of $R$
+	\end{enumerate}
+\end{proposition}
+
+\begin{definition}[ideal]
+	Let $R$ be a ring, $I$ be a subring of $R$, and $r \in R$
+	\begin{enumerate}
+		\item $rI = \set{ra: a \in R}$ and $Ir = \set{ar: a \in R}$
+		
+		\item A subring $I$ of $R$ is a left ideal of $R$ if $rI \subseteq I$, that is, $I$ is closed under left multiplication by elements from $R$
+		
+		\item A subring $I$ of $R$ is a right ideal of $R$ if $Ir \subseteq I$, that is, $I$ is closed under right multiplication by elements from $R$
+			
+		\item A subring $R$ is called an (two-sided) ideal if it is both a left ideal and right ideal
+	\end{enumerate}
+	
+	\note{$2\Z$, $3\Z$, $4\Z$, $5\Z$, $6\Z$ are ideals of $\Z$}
+\end{definition}
+
+\begin{proposition}
+	Let $R$ be a ring and $I$ be an ideal of $R$, then the additive quotient group $R/I$ is a ring under the binary operations
+	$$
+		(r + I) + (s + I) = (r + s) + I \text{ and } (r + I) \times (s + I) = (rs) + I
+	$$
+	
+	for all $r, s \in R$. Conversely, if any subgroup $I$ of $R$ having the above operations well-defined then $I$ is an ideal of $R$.
+\end{proposition}
+
+\begin{definition}[quotient ring]
+	When $I$ is an ideal of $R$, the ring $R/I$ is called quotient ring of $R$ by $I$
+\end{definition}
+
+\begin{theorem}[the first isomorphism theorem for rings]
+	If $\phi: R \to S$ is a homomorphism of rings, then the kernel of $\phi$ is an ideal of $R$, the image of $\phi$ is a subring of $S$ and 
+	$$
+		R / \ker \phi \cong \im \phi
+	$$
+	
+	If $I$ is any ideal of $R$, then the map 
+	\begin{align*}
+		R &\to R/I \\
+		r &\mapsto r + I
+	\end{align*}
+	
+	is a surjective ring homomorphism with kernel $I$ (this homomorphism is called the natural projection of $R$ onto $R/I$). Thus, every ideal is the kernel of a ring homomorphism and vice versa.
+\end{theorem}
+
+\begin{theorem}[other isomorphism theorems for rings]
+	Let $R$ be a ring
+	\begin{enumerate}
+		\item (the second isomorphism theorem) Let $A$ be a subring and $B$ be an ideal of $R$, then
+		$$
+			\frac{A + B}{B} \cong \frac{A}{A \cap B}
+		$$
+		
+		where subrings being ideals as necessary	
+	
+		\item (the third isomorphism theorem) Let $I, J$ be ideals of $R$ with $I \subseteq J$, then
+		$$
+			\frac{R/I}{J/I} = \frac{R}{J}
+		$$
+		
+		where subrings being ideals as necessary
+		
+		\item (the forth isomorphism theorem, the lattice isomorphism theorem) Let $I$ be an ideal of $R$. Then there is a one-to-one correspondence between the set of subrings of $R$ containing $I$ and the set of subrings of $R/I$. Let $A$ be a subring of $R$ containing $I$, then the corresponding subring of $R/I$ is $\overline{A} = A/I$. Moreover, $A$ is an ideal if and only if $\overline{A}$ is an ideal.	
+\end{enumerate}
+\end{theorem}
+
+\begin{definition}[sum, product]
+	Let $I, J$ be ideals of $R$
+	\begin{enumerate}
+		\item Define the sum of $I$ and $J$ by
+		$$
+			I + J = \set{a + b: a \in I, b \in J}
+		$$
+		
+		\item Define the product of $I$ and $J$ by
+		$$
+			IJ = \inner{ab: a \in I, b \in J}
+		$$
+		
+		That is, the additive group generated by $\set{ab: a \in I, j \in J}$
+		
+		\item For any $n \geq 1$, define the $n$-th power of $I$ by $I^n = I I^{n-1}$ and $I^1 = I$
+	\end{enumerate}
+\end{definition}
+
+\subsection{PROPERTIES OF IDEALS}
+
+\begin{remark}
+	Through out this section, let $R$ be a nontrivial unital ring.
+\end{remark}
+
+\begin{definition}[ideal generated by a set, principal ideal, finitely generated ideal]
+	Let $A$  be any subset of $R$
+	\begin{enumerate}
+		\item Let $(A)$ be the smallest ideal of $R$ containing $A$, that is called the ideal generated by $A$
+		
+		\item 
+		\begin{align*}
+			RA = \inner{ra: r \in R, a \in A} \\
+			AR = \inner{ar: r \in R, a \in A}
+		\end{align*}
+		
+		\item An ideal generated by a single element is called a principal ideal
+		
+		\item An ideal generated by a finite set is called a finitely generated ideal.
+	\end{enumerate}
+	
+	\note{$(A)$ is the collection of all finite linear combinations of elements in $A$ with coefficients in $R$}
+	
+	\note{as the intersection of arbitrary number of ideals is an ideal, the smallest ideals containing $A$ is defined as the intersection of all ideals containing $A$}
+\end{definition}
+
+\begin{proposition}
+	Let $I$ be an ideal of $R$
+	\begin{enumerate}
+		\item $I = R$ if and only if $I$ contains a unit
+		\item If $R$ is commutative, then $R$ is a field if and only if its only ideals are $0$ and $R$
+	\end{enumerate}
+\end{proposition}
+
+\begin{corollary}
+	If $R$ is a field then any nonzero ring homomorphism from $R$ into another ring is an injection.
+\end{corollary}
+
+\begin{definition}[maximal ideal]
+	An ideal $M$ in a ring $S$ is called a maximal ideal if $M \neq S$ and the only ideals containing $M$ are $M$ and $S$
+	
+	\note{$2\Z \supset 6\Z$, then $6\Z$ is not maximal in $\Z$. $2\Z$ is}
+\end{definition}
+
+\begin{proposition}
+	In an unital ring, every proper ideal is contained in a maximal ideal. \note{Zorn lemma argument}
+\end{proposition}
+
+\begin{proposition}
+	If $R$ is commutative, the ideal $M$ in $R$ is maximal if and only if the quotient ring $R/M$ is a field.
+\end{proposition}
+
+\begin{definition}[prime ideal]
+	If $R$ is commutative, an ideal $P$ is called prime ideal if $P \neq R$ and if $ab \in P$ for $a, b \in R$, then at least one of $a$ and $b$ is an element of $P$.
+	
+	\note{$p$ prime, $p\Z$ is a prime ideal of $\Z$ and these are the only prime ideals of $\Z$}
+\end{definition}
+
+\begin{proposition}
+	If $R$ is commutative, then $P$ is a prime ideal if and only if the quotient ring $R/P$ is an integral domain.
+\end{proposition}
+
+\begin{corollary}
+	If $R$ is commutative, then every maximal ideal is prime.
+\end{corollary}
+
+\subsection{RING OF FRACTIONS}
+
+\begin{theorem}[ring of fractions]
+	Let $R$ be a commutative ring and $D$ by any nonempty subset of $R$ that does not contain $0$, does not contain any zero divisors, and closed under multiplication. Then, there is a commutative unital ring $Q$ such that $Q$ contains $R$ as a subring and every element of $D$ is a unit in $Q$. The ring has the following additional properties
+	\begin{enumerate}
+		\item every element of $Q$ is of the form $r d^{-1}$ for some $r \in R$ and $d \in D$. In particular, if $D = R - \set{0}$, then $Q$ is a field.
+		
+		\item (uniqueness of $Q$) the ring $Q$ is the smallest ring containing $R$ in which all elements of $D$ become units, in the following sense. Let $S$ be any commutative unital ring, let $\phi: R \to S$ be any injective ring homomorphism such that $\phi(d)$ is a unit in $S$ for every $d \in D$. Then there is an injective homomorphism $\Phi: Q \to S$ such that $\Phi\vert_R = \phi$
+		\begin{center}
+			\begin{tikzcd}
+				R \arrow[r, "\phi", hook] \arrow[d, hook] & S \\
+				Q \arrow[ru, "\Phi"', dotted, hook]       &  
+			\end{tikzcd}
+		\end{center}
+	\end{enumerate}
+	\begin{proof}[Construction of $Q$:]
+		Let $\mathcal{F} = R \times D = \set{(r, d): r \in R, d \in D}$, define an equivalence relation of $\mathcal{F}$ by
+		$$
+			(r, d) \sim (s, e) \text{ if and only if } re = sd
+		$$
+		
+		Denote the equivalence class of $(r, d)$ by
+		$$
+			[(r, d)] = \frac{r}{d} = \set{(a, b) \in R \times D: rb = ad}
+		$$
+		
+		Addition and multiplication are defined by
+		$$
+			\frac{a}{b} + \frac{c}{d} = \frac{ad + bc}{bd} \text{ and } \frac{a}{b} \times \frac{c}{d} = \frac{ac}{bd}
+		$$
+	\end{proof}
+\end{theorem}
+
+\begin{definition}[ring of fractions, field of fractions, quotient field]
+	The ring $Q$ is called the ring of frations of $D$ with respect to $R$ and denoted by $D^{-1} R$. If $R$ is an integral domain ($R$ has no zero divisors), $D = R - \set{0}$, then $Q$ is a field and called field of fractions or quotient field of $R$
+\end{definition}
+
+\begin{corollary}
+	Let $R$ be an integral domain and $Q$ be the field of fractions. If any field $F$ containing a subring $R'$ isomorphic to $R$ and the subfield of $F$ generated by $R'$ is isomorphic to $Q$
+\end{corollary}
+
+\subsection{THE CHINESE REMAINDER THEOREM}
+
+\begin{remark}
+	In this section, we assume that all rings are commutative unital
+\end{remark}
+
+\begin{definition}[comaximal]
+	The ideals $A$ and $B$ of a ring $R$ is called comaximal if $A + B = R$
+\end{definition}
+
+\begin{theorem}[chinese remainder theorem]
+	Let $A_1, A_2, ..., A_k$ be ideals in $R$. The map
+	\begin{align*}
+		R &\to R / A_1 \times R / A_2 \times ... \times R / A_k \\
+		r &\mapsto (r + A_1, r + A_2, ..., r + A_k)
+	\end{align*}
+	
+	is a ring homomorphism with kernel $A_1 \cap A_2 \cap ... \cap A_k$. For each $i, j \in \set{1, 2, ..., k}$ with $i \neq j$ the ideals $A_i$ and $A_j$ are comaximal, then this map is surjective and
+	$$
+		A_1 \cap A_2 \cap ... \cap A_k = A_1 A_2 ... A_k
+	$$
+	
+	so,
+	$$
+		R / (A_1 A_2 ... A_k) = R / (A_1 \cap A_2 \cap ... \cap A_k) \cong R / A_1 \times R / A_2 \times ... \times R / A_k
+	$$
+\end{theorem}
+
+\begin{corollary}
+	Let  $m, n$ be relatively prime $(m ,n) = 1$, then
+	$$
+		\Z / mn\Z \cong (\Z / m\Z) \times (\Z / n\Z)
+	$$
+	Moreover, the multiplicative groups of units are isomorphic
+	$$
+		(\Z / mn\Z)^\times \cong (\Z / m\Z)^\times \times (\Z / n\Z)^\times
+	$$
+\end{corollary}
+
+\section{EUCLIDEAN DOMAINS, PRINCIPAL IDEAL DOMAINS, \\ UNIQUE FACTORIZATION DOMAINS}
+
+\begin{remark}
+	All rings in this section are commutative
+\end{remark}
+
+\subsection{EUCLIDEAN DOMAINS}
+
+\begin{definition}[norm, positive norm]
+	Any function $N: R \to \N_0$ with $N(0) = 0$ on the integral domain $R$ (no zero divisor) is called norm. If $N(a) > 0$ for all $a \neq 0$, then $N$ is called a positive norm.
+\end{definition}
+
+\begin{definition}[Euclidean domain, division algorithm]
+	The integral domain $R$ is called Euclidean domain (or posses a division algorithm) if there is a norm $N: R \to \N_0$ such that for any two elements $a, b \in R$ with $b \neq 0$, there exists two elements $q, r \in R$ such that
+	$$
+		a = qb + r \text{ with } r = 0 \text{ or } N(r) < N(b)
+	$$
+	
+	The element $q$ is called quotient and the element $r$ is called remainder.
+\end{definition}
+
+\begin{remark}[Euclidean algorithm]
+	The existence of a division algorithm on an integral domain enables a Euclidean algorithm for two elements $a, b \in R$ as follows:
+	\begin{align*}
+		a &= q_0 b + r_0 \\
+		b &= q_1 r_0 + r_1 \\
+		r_0 &= q_2 r_1 + r_2 \\
+		r_1 &= q_3 r_2 + r_3 \\
+		&... \\
+		r_{n-2} &= q_n r_{n-1} + r_n \\
+		r_{n-1} &= q_{n+1} r_n
+	\end{align*}
+	
+	with $N(b) > N(r_0) > N(r_1) > ... > N(r_n)$. And the algorithm terminates in a finite number of steps $n$
+\end{remark}
+
+\begin{proposition}
+	Every ideal in an Euclidean domain is principal, that is, if $I$ is a nonzero ideal in an Euclidean domain $R$ then $I = (d)$ where $d$ is a nonzero element of $I$ with minimum norm.
+\end{proposition}
+
+\begin{definition}[multiple, divide, divisor, greatest common divisor]
+	Let $R$ be a commutative ring and $a, b \in R$ with $b \neq 0$
+	\begin{enumerate}
+		\item $a$ is called a multiple of $b$ if there exists an element $x \in R$ such that $a = xb$. In this case, $b$ is said to divide $a$ or $b$ is a divisor of $a$, denoted by $b | a$
+		
+		\item A greatest common divisor of $a, b$ is a nonzero element $d$ such that
+		\begin{enumerate}
+			\item $d | a$ and $d | b$
+			\item if $d' | a$ and $d' | b$ then, $d' | d$
+		\end{enumerate}
+		
+		A greatest common divisor of $a, b$ is denoted by $\gcd(a, b)$ or $(a, b)$.
+		
+		\note{note, $b | a \iff a \in (b) \iff (a) \subseteq (b)$. Hence, if $d$ is a divisor of $a$ and $b$, then $(d)$ contains both $(a)$ and $(b)$ hence must contain the ideal $(a, b)$}
+	\end{enumerate}
+\end{definition}
+
+\begin{proposition}
+	If $a, b$ are nonzero elements of a commutative ring $R$ such that the ideal $(a, b)$ generated by $a$ and $b$ is a principal ideal $d$, then $d$ is a greatest commondivisor of $a$ and $b$
+	
+	\note{$(a, b) = (d) \iff d = \gcd(a, b)$}
+\end{proposition}
+
+\begin{proposition}
+	Let $R$ be in integral domain, if two elements $d, d' \in R$ generate the same principal ideal, that is, $(d) = (d')$ then $d' = ud$ for some unit $u$. In particular, if both $d$ and $d'$ are greatest common divisor of $a$ and $b$, then $d$ and $d'$ differ by a unit.
+	
+	\note{the set of units in $R[x]$ is $R^\times$}
+\end{proposition}
+
+\begin{theorem}
+	Let $R$ be an Euclidean domain and let $a, b \in R$ be nonzero elements. Let $d = r_n$ be the last nonzero remainder in the Euclidean algorithm for $a$ and $b$. Then
+	\begin{enumerate}
+		\item $d$ is the greatest common divisor of $a$ and $b$
+		\item the principal ideal $(d)$ is the ideal generated by $a$ and $b$. In particular, $d$ can be written as an $R$-linear combination of $a$ and $b$, that is, there exist $x, y \in R$ such that
+		$$
+			d = xa + yb
+		$$
+	\end{enumerate}
+\end{theorem}
+
+\begin{definition}[universal side divisor]
+	Let $R$ be a ring, then $\Tilde{R} = R^\times \cup \set{0}$ is the collection of units together with zero. An element $u \in R - \Tilde{R}$ is called universal side divisor if there is a type of "division algorithm" for $u$, that is, every $x \in R$ can be written as $x = qu + z$ where $z$ is either zero or a unit.
+\end{definition}
+
+\begin{proposition}
+	Let $R$ be an integral domain that is not a field, if $R$ is an Euclidean domain then there are universal side divisors in $R$
+\end{proposition}
+
+\subsection{PRINCIPAL IDEAL DOMAINS (PID)}
+
+\begin{definition}[principal ideal domain]
+	A principal ideal domain (PID) is an integral domain in which every ideal is principal
+\end{definition}
+
+\begin{proposition}
+	Let $R$ be a PID and $a, b$ be nonzero elements of $R$. Let $d$ be a generator for the principal ideal generated by $a$ and $b$. Then
+	\begin{enumerate}
+		\item $d$ is a greatest common divisor of $a$ and $b$
+		\item $d$ can be written as an $R$-linear combination of $a$ and $b$, that is, there exist $x, y \in R$ such that
+		$$
+			d = xa + yb
+		$$
+		\item $d$ is unique up to multiplication by a unit of $R$
+	\end{enumerate}
+\end{proposition}
+
+\begin{proposition}
+	Every nonzero prime ideal in a PID is a maximal ideal
+\end{proposition}
+
+\begin{definition}[Dedekind-Hasse norm]
+	A positive norm $N$ is a Dedekind-Hasse norm if for every nonzero $a, b \in R$, either $a \in (b)$ or there is a nonzero element in $(a, b)$ of norm strictly smaller than the norm of $b$
+\end{definition}
+
+\begin{proposition}
+	The integral domain $R$ is a PID if and only if $R$ has a Dedekind-Hasse norm
+\end{proposition}
+
+\begin{corollary}
+	The norm in Euclidean domain is a Dedekind-Hasse norm, hence, every Euclidean domain is a PID
+\end{corollary}
+
+\subsection{UNIQUE FACTORIZATION DOMAINS (UFD)}
+
+\begin{definition}[irreducible, prime, associate]
+	Let $R$ be an integral domain
+	\begin{enumerate}
+		\item If $r \in R$ is nonzero and not a unit, then $r$ is called irreducible if whenever $r = ab$ for $a, b \in R$, then at least one of $a$ or $b$ must be a unit. Otherwise, $r$ is called reducible. That is, every element in $R$ can be written as a product of irreducble elements
+		
+		\item The nonzero element $p \in R$ is called prime in $R$ if the ideal $(p)$ is a prime ideal. That is, if $p$ divides $ab$, then $p$ must divide at least one of $a$ or $b$
+		
+		\item Two elements $a$ and $b$ differing by a unit ($a = ub$ for some unit $u$) is called associate.
+	\end{enumerate}
+\end{definition}
+
+\begin{proposition}
+	In an integral domain, a prime element is irreducible
+\end{proposition}
+
+\begin{proposition}
+	In a PID, a nonzero element is a prime if and only if it is irreducible.
+\end{proposition}
+
+\begin{proposition}
+	In a UFD, a nonzero element is a prime if and only if it is irreducible
+\end{proposition}
+
+\begin{proposition}
+	Let $R$ be a UFD, $a, b$ be two nonzero elements of $R$, and
+	$$
+		a = u p_1^{e_1} p_2^{e_2} ... p_n^{e_n} \text{ and } b = v p_1^{f_1} p_2^{f_2} ... p_n^{f_n}
+	$$
+	
+	are prime factorizations for $a$ and $b$ where $u, v$ are units and the primes $p_1, p_2, ..., p_n$ are distinct and the exponents $e_1, e_2, ..., e_n$, $f_1, f_2, ..., f_n$ are nonnegative. Then
+	$$
+		d = p_1^{\min\set{e_1, f_1}} p_2^{\min\set{e_2, f_2}} ... p_n^{\min\set{e_n, f_n}}
+	$$
+	
+	is a greatest common divisor of $a$ and $b$
+\end{proposition}
+
+\begin{theorem}
+	Every PID is a UFD
+\end{theorem}
+
+\begin{corollary}[fundamental theorem of arithmetic]
+	The integers $\Z$ is a UFD
+\end{corollary}
+
+\begin{corollary}
+	Let $R$ is a PID, then there eixsts a multiplicative ($N(ab) = N(a) N(b)$) Dedekind-Hasse norm on $R$
+\end{corollary}
+
+\subsubsection{Factorization in the Gaussian Integers}
+
+\note{number theory shit, skip for now}
+
+\section{POLYNOMIAL RINGS}
+
+\begin{remark}
+	In this section, all rings are commutative unital
+\end{remark}
+
+\begin{definition}[polynomial over a commutative ring]
+	Let $R$ be a commutative unital ring, a function $f: \N \to R$ such that $\im f$ is a finite set is called a polynomial over $R$, given an indeterminate $x$, $f$ is denoted by the formal sum
+	$$
+	a_0 + a_1 x + a_2 x^2 + ... a_n x^n
+	$$
+	
+	where $a_i  = f(i) \neq 0$ and $f(m) = 0$ for all $m > n$. $a_i$ is called the $i$-coefficient, $n$ is called degree, $a_n$ is called leading coefficient, if $a_n = 0$, the polynomial is called monic. The set of all polynomials in the variable $x$ over $R$ is denoted by $R[x]$. \note{TODO: definition of addition and multiplication on $R[x]$}
+\end{definition} 
+
+\begin{proposition}
+	$R[x]$ is a ring \note{moreover, it is a graded-ring}
+\end{proposition}
+
+\begin{proposition}
+	Let $R$ be an integral domain
+	\begin{enumerate}
+		\item $\deg p(x) q(x) = \deg p(x) + \deg q(x)$ if $p(x)$ and $q(x)$ are nonzero
+		\item the set of units of $R[x]$ is the set of units of $R$, that is, $R[x]^\times = R^\times$
+		\item $R[x]$ is an integral domain.
+	\end{enumerate}
+\end{proposition}
+
+\begin{proposition}
+	Let $I$ be an ideal of the ring $R$ and let $(I) = I[x]$ denote the ideal in $R[x]$ generated by $I$, then
+	$$
+		R[x] / (I) \cong (R / I)[x]
+	$$
+	
+	In particular, if $I$ is a prime ideal of $R$, then $(I)$ is a prime ideal of $R[x]$
+\end{proposition}
+
+\begin{definition}[polynomial ring of multivariate over a commutative ring]
+	The polynomial ring in the variable $x_1, x_2, ..., x_n$ with coefficients in $R$ denoted by $R[x_1, x_2, ..., x_n]$ is defined by
+	$$
+		R[x_1, x_2, ..., x_n] = R[x_1, x_2, ..., x_{n-1}][x_n]
+	$$
+\end{definition}
+
+\subsection{POLYNOMIAL RINGS OVER FIELDS I}
+
+\begin{theorem}[polynomial ring over field is an Euclidean domain]
+	Let $F$ be a field, the polynomial ring $F[x]$ is an Euclidean domain. That is, the norm on $F[x]$ is the degree of a polynomial, if $a(x), b(x) \in F[x]$ with $b(x)$ nonzero, then there are unique $q(x), r(x) \in F[x]$ such that
+	$$
+		a(x) = q(x) b(x) + r(x) \text{ with } r(x) = 0 \text{ or } \deg r(x) < \deg b(x)
+	$$
+\end{theorem}
+
+\begin{corollary}
+	If $F$ is a field, then $F[x]$ is a PID and UFD
+\end{corollary}
+
+
+\subsection{POLYNOMIAL RINGS THAT ARE \\ UNIQUE FACTORIZATION DOMAINS}
+
+\begin{proposition}[Gauss lemma]
+	Let $R$ be a UFD with field of fractions $F$ and let $p(x) \in R[x]$. If $p(x)$ is reducible in $F[x]$ then $p(x)$ is reducbile in $R[x]$
+\end{proposition}
+
+\begin{proof}
+	Let $p(x) = a(x) b(x)$ with $a(x), b(x) \in F[x]$. $a(x), b(x)$ are polynomials with coefficients in $F$ which are fractions of elements in $R$. Let $d$ be the common denominators of all these coefficients, then $d p(x) = a'(x) b'(x)$ for $a'(x), b'(x) \in R[x]$. \note{TODO - continue}
+\end{proof}
+
+\begin{corollary}
+	Let $R$ be a UFD, $F$ be its field of fractions, and $p(x) \in R[x]$. If the greatest common divisor of coefficients of $p(x)$ is $1$, then $p(x)$ is irreducible in $R[x]$ if and only if it is irreducible in $F[x]$. In particular, if $p(x)$ is a monic polynomial that is irreducible in $R[x]$, then $p(x)$ is irreducible in $F[x]$
+\end{corollary}
+
+\begin{theorem}
+	$R$ is a UFD if and only if $R[x]$ is a UFD
+\end{theorem}
+
+\subsection{IRREDUCIBILITY CRITERIA}
+ 
+ \begin{proposition}
+	Let $F$ be a field and let $p(x) \in F[x]$, then $p(x)$ has a factor of degree one if and only if $p(x)$ has a root in $F$, that is, there is an $\alpha \in F$ such that $p(\alpha) = 0$ 
+ \end{proposition}
+ 
+ \begin{proposition}
+	A polynomial of degree two or three over a field $F$ is reducible if and only if it has a root in $F$
+ \end{proposition}
+ 
+ \begin{proposition}
+	Let $p(x) = a_n x^n + a_{n-1} x^{n-1} + ... + a_1 x + a_0$ be a polynomial of degree $n$ with integer coefficients. If $r, s \in \Z$ are relatively prime integers and $r / s \in \Q$ is a root of $p(x)$, the $r$ divides the constant term and $s$ divides the leading coefficient of $p(x)$, that is, $r | a_0$ and $s | a_n$. In particular, if $p(x)$ is monic and $p(d) \neq 0$ for all integers $d$ dividing the constant term of $p(x)$ then $p(x)$ has no root in $\Q$ 
+	
+	\note{there is a version in my secondary school books when $R = \Z$, $F = \Q$}
+ \end{proposition}
+ 
+ \begin{proposition}
+	Let $I$ be a proper ideal in the integral domain $R$ and let $p(x)$ be a nonconstant monic polynomial in $R[x]$. If the image of $p(x)$ under the map induced by natural projection $R \to R/I$ in $(R/I)[x]$ cannot be factored in $(R/I)[x]$ into two polynomials of smaller degree, then $p(x)$ is irreducible in $R[x]$
+	
+	\note{polynomial of integers coefficients is irreducible if it is irreducible in $\mod{p}$}
+ \end{proposition}
+ 
+ \begin{proposition}[Eisenstein Criterion]
+	Let $P$ be a prime ideal of integral domain $R$ and let $f(x) = x^n + a_{n-1} x^{n-1} + ... + a_1 x + a_0$ be a polynomial $R[x]$ (here $n > 1$). Suppose $a_{n-1}, ..., a_1, a_0$ are all elements of $P$ and suppose $a_0$ is not an element of $P^2$. Then, $f(x)$ is irreducible in $R[x]$
+ \end{proposition}
+ 
+\begin{proposition}[Eisenstein Criterion for integer polynomials]
+	Let $p$ be a prime for $\Z$ and let $f(x) = x^n + a_{n-1} x^{n-1} + ... + a_1 x + a_0 \in \Z[x], n \geq 1$. Suppose $p$ divides $a_i$ for all $i \in \set{0, 1, ..., n-1}$ but that $p^2$ does not divide $a_0$. Then $f(x)$ is irreducible in both $\Z[x]$ and $\Q[x]$
+\end{proposition}
+
+\subsection{POLYNOMIAL RINGS OVER FIELD II}
+ 
+\begin{proposition}
+	The maximal ideals in $F[x]$ are the ideals $(f(x))$ generated by irreducible polynomials $f(x)$. In particular, $F[x] / (f(x))$ is a field if and only if $f(x)$ is irreducible.
+\end{proposition}
+ 
+\begin{proposition}
+	Let $g(x)$ be a nonconstant element $F[x]$ and let 
+	$$
+		g(x) = f_1(x)^{n_1} f_2(x)^{n_2} ... f_k(x)^{n_k}
+	$$
+	be its factorization into irreducibles where $f_i(x)$ are distinct. Then we have the following ring isomorphism
+	$$
+		F[x] / (g(x)) \cong F[x] / (f_1(x)^{n_1}) \times F[x] / (f_2(x)^{n_2}) \times ... \times F[x] / (f_k(x)^{n_k})
+	$$
+\end{proposition}
+ 
+\begin{proposition}
+	If the polynomial $f(x)$ has roots $\alpha_1, \alpha_2, ..., \alpha_k$ in $F$ (not necessary distinct), then $f(x)$ has $(x - \alpha_1)(x - \alpha_2) ... (x - \alpha_k)$ as a factor. In particular, a polynomial of degree $n$ over $F$ has at most $n$ roots in $F$ even counted with multiplicities.
+\end{proposition}
+ 
+\begin{proposition}
+	Any finite subgroup of a multiplicative group of a field is cyclic. In particular, if $F$ is a finite field, then the multiplicative group $F^\times$ of nonzero elements of $F$ is a cyclic group.
+\end{proposition}
+ 
+\begin{corollary}
+	Let $p$ be a prime, then the multiplicative group $(\Z / p\Z)^\times$ of nonzero residue classes $\mod p$ is cyclic.
+\end{corollary}
+
+\begin{corollary}
+	Let $n \geq 2$ be integer with factorization $n = p_1^{\alpha_1} p_2^{\alpha_2} ... p_r^{\alpha_r}$ where $p_1, p_2, ..., p_r$ are distinct primes, we have the following isomorphisms of multiplicative groups.
+	\begin{enumerate}
+		\item 
+		$
+			(\Z / n\Z)^\times \cong (\Z / p_1^{\alpha_1} \Z)^\times \times (\Z / p_2^{\alpha_2} \Z)^\times  \times ... \times (\Z / p_r^{\alpha_r} \Z)^\times
+		$
+		
+		\item $(\Z / 2^\alpha \Z)^\times$ is the direct product of a cyclic group of order $2$ and a cyclic group of order $2^{\alpha - 2}$ for all $\alpha \geq 2$
+		
+		\item $(\Z / p^\alpha \Z)^\times$ is a cyclic group of order $p^{\alpha-1}(p-1)$ for all odd primes $p$
+	\end{enumerate}
+\end{corollary}
+
+\subsection{POLYNOMIALS IN SEVERAL VARIABLES OVER A FIELD AND GRÖBNER BASES}
+
+\note{TODO}
+
+
+ 
+ 
+ 
+ 

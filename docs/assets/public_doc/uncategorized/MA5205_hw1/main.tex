@@ -1,0 +1,749 @@
+%! TEX program = pdflatex
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{unicode-math-input}
+
+\InputIfFileExists{local.tex}{}{}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+%% math package
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{tikz-cd}
+\usepackage{mathtools}
+\usepackage{comment}
+\usepackage{mathrsfs}
+
+
+
+%% operator
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\grad}{grad}
+\DeclareMathOperator{\curl}{curl}
+\DeclareMathOperator{\Div}{div}
+\DeclareMathOperator{\diam}{diam}
+
+%% theorems
+\newtheorem{axiom}{Axiom}
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{lemma}{Lemma}
+\newtheorem{remark}{Remark}
+\newtheorem{claim}{Claim}
+\newtheorem{problem}{Problem}
+
+%% empty set
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+% mathcal symbols
+\newcommand\Tau{\mathcal{T}}
+\newcommand\Ball{\mathcal{B}}
+\newcommand\bigO{\mathcal{O}}
+
+% mathbb symbols
+\newcommand\N{\mathbb{N}}
+\newcommand\Z{\mathbb{Z}}
+\newcommand\Q{\mathbb{Q}}
+\newcommand\R{\mathbb{R}}
+
+% mathrsfs symbols
+\newcommand\Borel{\mathscr{B}}
+
+
+\title{MA5205 Homework 1}
+\author{Bui Hong Duc (A0236460J) \and Nguyen Ngoc Khanh (A0275047B) \and Nigel Lim (A0154379U)}
+\date{August 2023}
+
+\allowdisplaybreaks
+
+\usepackage{hyperref}
+
+\begin{document}
+
+
+\ifdefined\LOCAL
+\typstmathinputenable{\$}
+\typstmathinputprepare[\LOCALoutputfile]{\$}
+\else
+\input{typstmathinput-prepared.tex}
+\fi
+\typstmathinputdisable{\$}
+
+\hfuzz=10pt
+
+\maketitle
+
+\section{Chapter 1}
+
+\subsection{Exercise 1 (o)} %% khanh
+% (reviewed by Hong Duc)
+Let $E$ be a compact set in $\R^n$ and $f$ be continuous in $E$ relative to $E$. Then the following are true.
+\begin{enumerate}
+    \item $f$ is bounded on $E$ \label{e1i1}
+    \item $f$ attains its supremum and infimum on $E$ \label{e1i2}
+    \item $f$ is uniformly continuous on $E$ relative to $E$ \label{e1i3}
+\end{enumerate}
+
+\textbf{Proof} % ← could use amsthm but well okay...
+
+$f$ be continuous in $E$ relative to $E$; that is, for all $x_0 \in E$, $f(x_0)$ is finite and either $x_0$ is an isolated point or $x_0$ is a limit point of $E$ and $\lim_{x \to x_0; x \in E} f(x) = f(x_0)$.
+
+This can be written as: Given $f: E \to \R$, for all $x \in E$, for all $\epsilon > 0$, there exists a open ball $\Ball_\delta(x)$ such that $f(E \cap \Ball_\delta(x)) \subseteq \Ball_{\epsilon}(f(x))$. This is equivalent to $f$ being continuous.
+
+The three points are consequences of compactness.
+
+\textbf{Proof of \ref{e1i1}}
+
+$f$ is continuous then $f$ maps compact sets to compact sets, i.e. $f(E)$ is compact. By \emph{Heine-Borel theorem}, $f(E)$ is closed and bounded in $\R$
+
+\textbf{Proof of \ref{e1i2}}
+
+As $f(E)$ is bounded, $\sup f(E)$ and $\inf f(E)$ are finite and limit points of $f(E)$. As $f(E)$ is closed, it contains all of its limit points, including $\sup f(E)$ and $\inf f(E)$
+
+\textbf{Proof of \ref{e1i3} (\emph{Heine–Cantor theorem})}
+
+For all $\epsilon > 0$, we will construct $\delta > 0$ such that $||x - y|| < \delta \implies |f(x) - f(y)| < ε$
+for all $x, y \in E$
+
+For all $x \in E$, since $f$ is continuous, there is a ball $\Ball_{\delta_x}(x)$ such that $f(E \cap \Ball_{\delta_x}(x)) \subseteq \Ball_{\epsilon / 2}(f(x))$. The collection $B = \{ \Ball_{\delta_x / 2}(x): x \in E \}$ covers $E$. Since $E$ is compact, there is a finite subcover $B_N = \{ \Ball_{\delta_{x_i} / 2}(x_i): i \in \{1, 2, ..., N \} \}$. Let $\delta = \min \{\delta_{x_i} / 2: i \in \{1, 2, ..., N \} \}$
+
+For any $x, y \in E$ with $||x - y|| < \delta$. $x$ must lie within a ball of $B_N$, namely $\Ball_{\delta_{x_i} / 2}(x_i)$. The distance between $x_i$ and $y$ is
+
+\begin{align*}
+    ||y - x_i|| &\leq ||y - x|| + ||x - x_i|| &\text{(triangle inequality)}\\
+                &\leq  \delta + \frac{\delta_{x_i}}{2} \\
+                &\leq  \frac{\delta_{x_i}}{2} + \frac{\delta_{x_i}}{2} &\text{($\delta = \min \{\delta_{x_i} / 2: i \in \{1, 2, ..., N \} \}$)}\\
+                &= \delta_{x_i} 
+\end{align*}
+
+Hence, $x, y \in \Ball_{\delta_{x_i}}(x_i)$. By the premise of $f$ being continuous, $\{ f(x), f(y) \} \subseteq \Ball_{\epsilon / 2}(f(x_i))$.
+Hence, $|f(x) - f(y)| < \epsilon$.
+
+
+\subsection{Exercise 15}% khanh
+% reviewed by Nigel (fine)
+% approved by Hong Duc
+
+Let $\Gamma_1, \Gamma_2$ be any two partitions, we always have $L_{\Gamma_1} \leq L_{\Gamma_1 \cup \Gamma_2} \leq U_{\Gamma_1 \cup \Gamma_2} \leq U_{\Gamma_2}$. Therefore,
+
+\[
+    \sup_\Gamma L_\Gamma \leq \inf_\Gamma U_\Gamma
+\]
+
+($\implies$)
+From exercise 1.r, $f$ is bounded Riemann integrable implies $\sup_\Gamma L_\Gamma = \inf_\Gamma U_\Gamma = A$. Therefore, there exists $\Gamma_1$ and $\Gamma_2$ such that $A + \epsilon/2 > U_{\Gamma_1} \geq U_{\Gamma_1 \cup \Gamma_2} \geq L_{\Gamma_1 \cup \Gamma_2} \geq L_{\Gamma_2} \geq A - \epsilon/2$. Hence, $U_{\Gamma_1 \cup \Gamma_2} - L_{\Gamma_1 \cup \Gamma_2} < \epsilon$
+
+($\impliedby$)
+
+By the premise, $\sup_\Gamma L_\Gamma = \inf_\Gamma U_\Gamma$. From Exercise 1.r, the Riemann integral of $f$ exists.
+
+\begin{comment}
+    
+
+
+
+Suppose a bounded $f$ is Riemann integrable on $I$, then $\inf_{\Gamma}U_{\Gamma}=\sup_{\Gamma}L_{\Gamma}=A$ where 
+\begin{align*}
+    U_{\Gamma}=\sum_{k=1}^{m}\sup_{x\in I_{k}} f(x)v(I_{k})\mbox{ , }\quad L_{\Gamma}=\sum_{k=1}^{m}\inf_{x\in I_{k}}f(x)v(I_{k}).
+\end{align*}
+
+By definition, we know that $U_{\Gamma}\geq L_{\Gamma}$. Thus, 
+\begin{equation*}
+    0\leq U_{\Gamma}-L_{\Gamma} = \sum_{i=1}^{m}\left(\sup_{x\in I_{k}}f(x)-\inf_{x\in I_{k}}f(x)\right)v(I_{k})
+\end{equation*}
+Taking limit of $|\Gamma|\to 0$, we have
+\begin{align*}
+     \lim_{|\Gamma|\to 0}(U_{\Gamma}-L_{\Gamma}) &= \lim_{|\Gamma|\to 0}\left(\sum_{k=1}^{m}\left(\sup_{x\in I_{k}}f(x)-\inf_{x\in I_{k}}f(x)\right)v(I_{k})\right) \\
+     &= A-A \\
+     &=0<\epsilon \mbox{ , since }f\mbox{ is Riemann integrable on } I.
+\end{align*}
+Thus, there is some $Γ$ such that $U_Γ - L_Γ < ϵ$. %TODO added by Hong Duc
+
+Conversely, suppose that given $\epsilon>0$, there is a partition $P$ of $I$ such that $0\leq U_{P}-L_{P}<\epsilon$. Suppose that $f$ is not Riemann-Integrable on $I$. Then
+\[
+\inf_{P}U_{P}>\sup_{P}L_{P}\implies \inf_{P}U_{P}-\sup_{P}L_{P}>0.
+\]
+Take $\inf_{P}U_{P}-\sup_{P}L_{P}=2\epsilon$, observe that
+\begin{align*}
+    U_{P}-L_{P}\geq \inf_{P}U_{P}-\sup_{P}L_{P}=2\epsilon>\epsilon,
+\end{align*}
+which is a contradiction. Therefore, $f$ is Riemann-Integrable on the interval $I$.
+
+% TODO this part doesn't make sense to me at all -- Hong Duc
+%Edited: I have edited the proof for the second part -- Zheng Xian
+\end{comment}
+
+\subsection{Exercise 18} % tietze extension theorem
+% Hong Duc
+% reviewed by khanh - approved
+
+\typstmathinputenable{\$}
+
+If $F$ is empty, the statement is trivial.
+
+Otherwise, the set $ℝ ∖ F$ is open and not the whole of $ℝ$, thus by theorem 1.10 it can be written as a countable disjoint union of (possibly infinite) intervals of the form $(-∞, b)$, $(a, b)$, or $(a,+∞)$ for $a, b ∈ ℝ$.
+
+We define $g$ to equal $f$ in $F$, and outside $F$ it's defined as follows (where $x$ is an arbitrary point in the possibly infinite interval):
+\begin{itemize}
+    \item on an infinite interval of the form $(-∞, b)$, $g(x) = f(b)$,
+    \item on an infinite interval of the form $(a,+∞)$, $g(x)=f(a)$,
+    \item on an interval of the form $(a, b)$, $g(x)$ interpolates linearly between the 2 endpoints, specifically $g(x)=f(a) + (f(b)-f(a)) ⋅ (x-a)/(b-a)$. Note that the linear function on the right hand side is equal to $f(a)$ when $x=a$ and equal to $f(b)$ when $x=b$.
+\end{itemize}
+Thus, because $f$ is continuous relative to $F$, $g$ is continuous on $ℝ$.
+
+For the second part, it's clear that, by construction, in all cases then all values of $|g(x)|$ is $≤ M$ for any $M$ such that $|f(y)|≤ M ∀y ∈ ℝ$.
+
+\typstmathinputdisable{\$}
+
+\section{Chapter 2}
+
+\subsection{Exercise 4}% Nigel, reviewed by Hong Duc
+% reviewed by khanh - approved
+Suppose $V[f; a, b] > M$; put $V = V[f; a, b]$. Let $0 < \epsilon < V - M$. Then there is a partition $\Gamma = \{a = x_{0}, x_{1}, \dots, x_{n} = b \}$ with $S_{\Gamma}[f; a, b] > M + \epsilon$. 
+
+By pointwise convergence, we can choose $K$ such that for all $0 \leq j \leq n$, $\lvert f_{k}(x_{j}) - f(x_{j}) \rvert < \epsilon / (2n)$, for $k \geq K$. Then for $k \geq K$, $0 \leq j \leq n-1$, 
+\begin{align*}
+	&\lvert f_{k}(x_{j+1}) - f_{k}(x_{j}) \rvert \\
+    &\geq - \lvert f_{k}(x_{j+1}) - f(x_{j+1}) \rvert + \lvert f(x_{j+1}) - f(x_{j}) \rvert - \lvert f(x_{j}) - f_{k}(x_{j}) \rvert \\
+	&> \lvert f(x_{j+1}) - f(x_{j}) \rvert - \frac{\epsilon}{n}.
+\end{align*}
+Thus 
+\begin{align*}
+	S_{\Gamma}[f_{k}; a, b] &= \sum_{j = 0}^{n-1} \lvert f_{k}(x_{j+1}) - f_{k}(x_{j}) \rvert \\
+	&> \sum_{j = 0}^{n-1} \lvert f(x_{j+1}) - f_{k}(x_{j}) \rvert - \frac{\epsilon}{n} \cdot n \\
+	&= S_{\Gamma}[f; a, b] - \epsilon.
+\end{align*}
+Therefore
+\begin{equation*}
+	S_{\Gamma}[f_{k}; a, b] > M + \epsilon - \epsilon = M,
+\end{equation*}
+which contradicts $V[f_{k}; a, b] \leq M$.
+
+Thus under the hypotheses of the problem, $V[f; a, b] \leq M$. This completes the proof.
+
+We construct an example of a convergent sequence of functions of bounded variation whose limit is not of bounded variation. Put $a = 0$, $b = 1$.
+
+We define a sequence of functions $f_{k}$:
+\[ f_{k}(x) = \begin{cases*}
+		1 & if $x \in \{ 2^{-j} \mid 1 \leq j \leq k \}$ \\
+		0 & otherwise. 
+		\end{cases*} \]
+% roughly speaking, f_k is identically zero except at k points, where it's 1
+% thus f_k has k "spikes" and variation 2k
+% f_k → f, f has "infinitely many spikes" and thus infinite variation
+
+Then $f_{k} \rightarrow f$ pointwise, where
+\[ f(x) = \begin{cases*}
+		1 & if $x \in \{ 2^{-j} \mid j \in \mathbb{Z}^{+} \}$ \\
+		0 & otherwise. 
+		\end{cases*} \]
+
+We compute the variation of $f_{k}$. Put $x_{k} = \frac{1}{2}(2^{-k} + 2^{-(k-1)})$.
+\begin{align*}
+	V[f_{k}; 0, 1] &= V[f_{k}; 0, x_{k}] + V[f_{k}; x_{k}, x_{k-1}] + \cdots + V[f_{k}; x_{3}, x_{2}] + V[f_{k}; x_{2}, 1] \\
+	&= 2k,
+\end{align*}
+as each interval in the sum contains one point in its interior where $f_{k} = 1$, $f_{k} = 0$ elsewhere in the interval, and there are $k$ intervals.
+
+We similarly compute the variation of $f$. For any $n \geq 2$, 
+\begin{align*}
+	V[f; 0, 1] &= V[f; x_{2}, 1] + \sum_{j = 2}^{n} V[f; x_{j+1}, x_{j}] + V[f; 0, x_{n+1}] \\
+	&\geq \sum_{j = 2}^{n} V[f; x_{j+1}, x_{j}] + V[f; 0, x_{n+1}] \\
+	&= 2(n-1)
+\end{align*}
+by the same reasoning as for $f_{k}$.
+
+This holds for arbitrary $n \geq 2$, so $V[f; 0, 1] = +\infty$.
+
+\subsection{Exercise 5}
+\iffalse
+% khanh
+
+Given any partition $\Gamma = \{a = x_0 < a + \epsilon = x_1 < x_2 < ...< x_m = b \}$ on $[a, b]$
+\begin{align*}
+    S_\Gamma
+    &= |f(a+\epsilon) - f(a)| + S_{\Gamma_1} &\text{($\Gamma_1 = \{x_1, x_2, ..., x_m \}$)}\\
+    &\leq |f(a+\epsilon) - f(a)| + M\\
+    &\leq |f(a+\epsilon) - f(b)| + |f(b) - f(a)| + M &\text{(triangle inequality)}\\
+    &\leq |f(b) - f(a)| + 2M &\text{($\{ a + \epsilon, b \}$ is a partition on $[a + \epsilon, b]$)}\\
+\end{align*}
+
+$S_\Gamma$ is bounded, then $f$ is bounded variation
+
+Given $\epsilon > 0$, let $|f(a) - f(a + \epsilon)| > M$. Then
+
+\begin{align*}
+    V[f; a, b]
+        &= V[f; a, a+\epsilon] + V[f; a + \epsilon, b] \\
+        &> M + V[f; a + \epsilon, b] > M \\
+\end{align*}
+
+So, in general, it is possible that $V[f; a, b] > M$.
+One sufficient condition (not necessary) for $V[f; a, b] \leq M$ is $f$ being continuous at $a$. Given any $\eta > 0$, pick $\epsilon > 0$ such that $x, y \in [a, a+\epsilon] \implies |f(y) - f(x)| < \eta$. Given any partition $\Gamma = \{a = x_0 < a + \epsilon = x_1 < x_2 < ...< x_m = b \}$
+% TODO I think what you want is just $x \in [a, a+\epsilon] \implies |f(x) - f(a)| < \eta$? though the condition you stipulated is certainly possible by triangle inequality, it's unnecessary
+
+\begin{align*}
+    S_\Gamma
+    &= |f(a + \epsilon) - f(a)| + S_{\Gamma_1} &\text{($\Gamma_1 = \{x_1, x_2, ..., x_m \}$)} \\
+    &\leq \eta + M \\ 
+\end{align*}
+
+So $V[f; a, b] < \eta + M$. Send $\eta$ to $0$ implies, $V[f; a, b] \leq M$
+
+
+
+
+\hrule
+\fi
+
+%Hong Duc
+
+\typstmathinputenable{\$}
+
+We can assume $a<b$, otherwise the question is trivial.
+
+We will prove: $V[f; a, b] = X+Y$, where $X=lim_(ε → 0) V[f; a+ε, b]$ and $Y=lim_(ε → 0) sup_(x ∈[a, a+ε]) |f(x)-f(a)|$.
+
+From now on, assume $0<ε ≤ b-a$.
+
+As $ε$ decreases to $0$, $V[f; a+ε, b]$ increases monotonically and bounded above by $M$, thus the limit $X$ exists and is $≤ M$.
+
+For any $ε>0$, then $|f(a+ε)-f(b)|≤ M$, thus $|f(a+ε)-f(a)|≤ M+|f(b)-f(a)|$, thus $f$ is bounded on $(a, b]$, because $f$ is furthermore finite at $a$, then $f$ is bounded on $[a, b]$. Thus $sup_(x ∈[a, a+ε]) |f(x)-f(a)|$ is finite for any $ε>0$.
+
+As $ε$ decreases to $0$, then $sup_(x ∈[a, a+ε]) |f(x)-f(a)|$ decreases monotonically and bounded below by $0$, thus the limit $Y$ exists and is $≥ 0$. (in fact $Y=limsup_(x → a+) |f(x)-f(a)|$)
+
+Pick any $δ>0$.
+
+First we prove $V[f; a, b] ≥ X+Y - δ$. Pick $ε>0$ small enough such that 
+$sup_(x ∈[a, a+ε]) |f(x)-f(a)| ≥ Y-δ/4$ and $V[f; a+ε, b]≥ X-δ/2$,
+then pick $x ∈[a, a+ε]$ such that $|f(x)-f(a)|≥ Y-δ/2$,
+thus $V[f; a, x] ≥ Y-δ/2$, so $V[f; a, b]=V[f; a, x]+V[f; x, a+ε]+V[f; a+ε,b] ≥ Y-δ/2 + X-δ/2 = X+Y-δ$.
+
+Then we prove $V[f; a, b] ≤ X+Y+δ$.
+By definition of $Y$, then there exist $ε$ such that for all $0<ε'≤ε$, then $|f(a)-f(a+ε')|<Y+δ$.
+Consider any partition $Γ={x₁, x₂, …, x_m}$ of $[a, b]$.
+Let $Γ'=Γ ∪ {a+ε} = {y₁, y₂, …, y_n}$ which is another partition of $[a, b]$, then $y₂ ≤ a+ε$.
+% TODO $y₂ ≤ a+ε$
+% fixed--Hong Duc
+Then $S_(Γ') ≤ |f(a)-f(y₂)| + V[f; y₂, b] ≤ Y+δ + V[f; y₂, b]$. Note that $V[f; y₂, b] ≤ X$ because $V[f; a+ε, b]$ monotonically increases to $X$ as $ε → 0+$, so $S_Γ ≤ S_(Γ') ≤ X+Y+δ$. Taking the supremum over all $Γ$, we get $V[f; a, b] ≤ X+Y+δ$.
+
+Since the above holds for all $δ>0$, then $V[f; a, b]=X+Y$ as desired.
+
+Clearly $X ≤ M$.
+
+It is not necessary that $V[f; a, b] ≤ M$. Take for example the function $ f(x)=cases(1" if "x=0, 0" otherwise"), $and $a=0$, $b=1$. It's easy to check $M=0$ satisfies the assumptions, but $X=0$, $Y=1$, $V[f; a, b]=1$.
+% TODO to fix the text in the cases
+
+In case $X=M$, then for $V[f; a, b] ≤ M$, then $Y=0$ must hold. But $Y=0$ is clearly equivalent to that $f$ is continuous from the right at $a$. (in conclusion, $f$ is continuous from the right at $a$ ensures that $V[f; a, b] ≤ M$)
+\typstmathinputdisable{\$}
+
+
+
+
+\iffalse
+Consider the partition $\Gamma=\{a+\epsilon,b\}$ of $[a+\epsilon,b]$, we see that 
+\begin{align*}
+    |f(b)-f(a+\epsilon)|\leq M &\implies |f(a+\epsilon)|-|f(b)|\leq |f(b)-f(a+\epsilon)|\leq M\\
+                               &\implies |f(a+\epsilon)|\leq M+|f(b)|.
+\end{align*}
+Take another partition $\overline{\Gamma}=\{x_{i}\}_{i=0}^{m}$ where $x_{0}=a,x_{m}=b$ of $[a,b]$. Then,
+\begin{align*}
+    S_{\overline{\Gamma}}&=|f(x_{1})-f(a)|+\sum_{i=2}^{m}|f(x_{i})-f(x_{i-1})| \\
+    &\leq |f(x_{1})|+|f(a)|+V[f;x_{1},b] \\ %TODO ϵ is not defined here, you mean x₁?
+    &\leq |f(a)|+|f(b)|+2M.
+\end{align*}
+Note that $f$ is finite and hence, $|f(a)|, |f(b)|<+\infty$, taking supremum, $V[f;a,b]\leq |f(a)|+|f(b)|+2M$.
+
+$V[f;a,b]$ not necessarily $\leq M$. Consider the function $g$ as such
+\[
+g(x)=\begin{cases}
+    1 & 0<x\leq 1, \\
+    0 & x=0.
+\end{cases}
+\]
+Then we can see that for any $\epsilon>0$, $g$ is of bounded variation on $[\epsilon,1]$ where $V[f;\epsilon,1]=0$. However, $g$ is of bounded variation on $[0,1]$ where $V[f;0,1]=1\neq 0$.  
+
+% TODO give an explicit counterexample? -- Hong Duc
+% Considered the step function as a counterexample -- Zheng Xian
+For $V[f;a,b]\leq M$, we need $f$ to be continuous at $a$. Define a sequence of function $\{f_{k}\}$ such that it is pointwise convergent to $f$ where
+
+\begin{comment}
+    -- khanh
+    f being continuous at a might be deduced directly from "S_{\overline{\Gamma}}&=|f(x_{1})-f(a)|+\sum_{i=2}^{m}|f(x_{i})-f(x_{i-1})|"
+    no need to make a sequence f_k
+\end{comment}
+
+\[
+f_{k}(x)=\begin{cases}
+    f(x) & x\in[a+\epsilon,b] \\
+    f(a) & x\in[a,a+\epsilon)
+\end{cases},
+\]
+
+\begin{comment}
+    -- khanh
+    f(x) = f(x) ?
+    maybe what you meant is f_k(x) = f(x)
+\end{comment}
+
+
+for $\epsilon=\frac{1}{k}$.
+Then,
+\begin{align*}
+    V[f_{k};a,b]&=V\left[f_{k};a,a+\frac{1}{k}\right]+V\left[f_{k};a+\frac{1}{k},b\right] \\
+    &=V\left[f_{k};a,a+\frac{1}{k}\right]+V\left[f;a+\frac{1}{k},b\right] \\
+    &\leq V\left[f_{k};a,a+\frac{1}{k}\right]+M \\
+    &= \left|f\left(a+\frac{1}{k}\right)-f(a)\right|+M \mbox{ , (based on construction).}
+    % side note, usually \text{...} is better semantically than \mbox{...}, but okay
+\end{align*}
+Choose $K_{j}$ such that for all $k\geq K_{j}$
+, $|f(a+\frac{1}{k})-f(a)|<\frac{1}{j}$, this is possible
+by continuity of $f$ at $a$. Therefore,
+\[
+V[f_{k};a,b]<\frac{1}{j}+M.
+\]
+By Exercise $4$, $V[f;a,b]\leq\frac{1}{j}+M$. Since this is true for all $j$, $V[f;a,b]\leq M$.
+\fi
+
+\subsection{Exercise 15}% Hong Duc
+% reviewing by khanh - approved
+% reviewed by Nigel (looks good)
+% edited -- Hong Duc
+
+\typstmathinputenable{\$}
+\begin{lemma}
+    If $f$ is continuous on $[p, q]$, and $M$ is some constant $≥0$ such that $|f(x)|≤ M$ for all $x ∈[a, b]$, and $φ$ is of bounded variation on $[p, q]$, then $|∫_p^q f dif φ| ≤ M ⋅ V[φ; p, q]$.
+\end{lemma}
+\begin{proof}
+    Clearly the integral on the left hand side exists.
+
+    Pick any partition $Γ={x₀, x₁, …, x_m}$ of $[p, q]$ where $x₀=p$ and $x_m=q$, and a selection of points $ξ₁, …, ξ_m$. Then $|R_Γ| = |∑_(i=1)^m f(ξ_i) ⋅ (φ(x_i) - φ(x_(i-1)))| ≤ ∑_(i=1)^m |f(ξ_i)| ⋅ |φ(x_i) - φ(x_(i-1))| ≤ M ⋅ ∑_(i=1)^m |φ(x_i)-φ(x_(i-1))| ≤ M ⋅ V[φ; p, q]$.
+\end{proof}
+
+Since $f$ is continuous and $[a, b]$ is compact, $f$ is bounded, let's say $|f(x)|≤ M$ for all $x ∈[a, b]$, and $M≥0$.
+
+We will show that $V[ψ; a, b] ≤ M ⋅ V[φ; a, b]$.
+
+Pick any partition $Γ={x₀, x₁, …, x_m}$ of $[a, b]$. We will show $S_Γ [ψ; a, b] ≤ M ⋅ V[φ; a, b]$.
+
+Indeed, 
+$
+S_Γ [ψ; a, b] &= ∑_(i=1)^m |ψ(x_i) - ψ(x_(i-1))| \
+       &= ∑_(i=1)^m |∫^(x_i)_(x_(i-1)) f dif φ|.
+$
+For each $i$, let $p=x_(i-1)$ and $q=x_i$, then
+$ |∫^q_p f dif φ| ≤ M ⋅ V[φ; p, q]$ by the lemma above.
+Adding together over all values of $i$, we get the desired statement.
+
+Thus $ψ$ is of bounded variation on $[a, b]$.
+
+Now, consider $g$ continuous on $[a, b]$. We want to prove $∫_a^b g dif ψ = ∫_a^b g f dif φ$ -- clearly both integrals exist, because both $g$ and $g f$ are continuous, and both $ψ$ and $φ$ are of bounded variation.
+
+Since $[a, b]$ is compact and $g$ is continuous, there exist $N>0$ such that $|g(x)|≤ N$ for all $x ∈[a, b]$.
+
+We know $f$ is uniformly continuous. Fix $ε>0$, there exist $δ>0$ such that for all $x, y ∈[a, b]$, if $|x-y|<δ$ then $|f(x)-f(y)|<ε$.
+
+Consider any partition $Γ={x₀, …, x_m}$ of $[a, b]$ and selection of intermediate points ${ξ₁, …, ξ_m}$, such that $x_i-x_(i-1) < δ$ for all $i$; in other words, $diam Γ < δ$.
+
+Then, the Riemann-Stieltjes sum $R_Γ$ correspond to $∫_a^b g dif ψ$ (the left hand side) is equal to $∑_(i=1)^m g(ξ_i) ⋅ (ψ(x_i) - ψ(x_(i-1)))$, and the sum correspond to $∫_a^b g f dif φ$ (the right hand side) is $∑_(i=1)^m g(ξ_i) f(ξ_i) ⋅ (φ(x_i) - φ(x_(i-1)))$.
+
+
+The absolute difference of the 2 expressions is:
+$
+& quad |∑_(i=1)^m
+g(ξ_i) ⋅ (ψ(x_i) - ψ(x_(i-1)) - f(ξ_i) ⋅ (φ(x_i) - φ(x_(i-1))))| \
+&= |∑_(i=1)^m g(ξ_i) ⋅ ( ∫_(x_(i-1))^(x_i) f dif φ  - f(ξ_i) ⋅ (φ(x_i) - φ(x_(i-1))))| \
+&≤ ∑_(i=1)^m N ⋅ |∫_(x_(i-1))^(x_i) (f(x)-f(ξ_i)) dif φ(x)| \
+&≤ ∑_(i=1)^m N ⋅ V[φ; x_(i-1), x_i] ⋅ ε.
+$
+
+The last inequality is by noting that $|f(x)-f(ξ_i)| ≤ ε$ for all $x ∈ [x_(i-1), x_i]$, and applying the lemma.
+
+Thus, this expression is $≤
+N ⋅ ε ⋅ ∑_(i=1)^m  V[φ; x_(i-1), x_i] = N ⋅ ε ⋅ V[φ; a, b]$.
+
+Set $P = N ⋅ ε ⋅ V[φ; a, b]$.
+Since $ε$ can be arbitrarily small, we conclude that: for all $P>0$, there exist $δ>0$ such that, for any $Γ$ where $diam Γ < δ$, then the difference between $R_Γ$ for the left integral and $R_Γ$ for the right integral is $≤ P$.
+
+From this, we conclude the two integrals, since they exist, must be equal -- specifically, assume they aren't, that is $|∫_a^b g dif ψ - ∫_a^b g f dif φ| > ε$ for some $ε>0$.
+Then we can find $Γ₁$ and $Γ₂$ such that, for any partition $Γ₁'$ finer than $Γ₁$ and $Γ₂'$ finer than $Γ₂$, then
+$
+cases(
+|∫_a^b g dif ψ - R_(Γ₁')| < ε/3,
+|∫_a^b g f dif φ - R_(Γ₂')| < ε/3
+).
+#forcetag("equation-1")
+$
+(in both cases, the Riemann-Stieltjes sum is for the corresponding integral).
+Now pick $P=ε/3$ and construct $δ$ as above, and pick $Γ=Γ₁'=Γ₂'$ being finer than a common refinement of both $Γ₁$ and $Γ₂$,
+and with diameter $< δ$. Then,
+\begin{itemize}
+    \item $diam Γ < δ$ guarantees that the difference between the two Riemann-Stieltjes sums are less than $ε/3$,
+    \item $Γ$ is finer than both $Γ₁$ and $Γ₂$ ensures that Equation~\ref{equation-1} holds.
+\end{itemize}
+This is a contradiction by triangle inequality.
+\typstmathinputdisable{\$}
+
+\subsection{Exercise 16}% Nigel
+% reviewing by khanh
+% reviewed -- Hong Duc
+
+If $f$ has no jump discontinuity, the statement is trivial.
+Otherwise, by the definition of jump discontinuity, the points of discontinuity must occur in $(a, b)$.
+
+Suppose the jump discontinuities of $f$ are at $\{ x_{1}, \dotsc, x_{n} \}$, with $x_{i} < x_{i+1}$.
+
+Put $x_{0} = a$ and $x_{n+1} = b$. We can express
+\begin{equation*}
+	\int_{a}^{b} f d\phi =
+    \int_{x_{0}}^{\frac{x_{0} + x_{1}}{2}} 
+    f d\phi + \int_{\frac{x_{0} + x_{1}}{2}}^{\frac{x_{1} + x_{2}}{2}} f d\phi + \cdots + \int_{\frac{x_{n-1} + x_{n}}{2}}^{\frac{x_{n} + x_{n+1}}{2}} f d\phi + \int_{\frac{x_{n} + x_{n+1}}{2}}^{x_{n+1}} f d\phi
+\end{equation*}
+if each of the integrals on the RHS exist.
+
+Observe that $f$ is continuous on $[x_{0}, \frac{x_{0} + x_{1}}{2}]$ and on $[\frac{x_{n} + x_{n+1}}{2}, x_{n+1}]$, while $\phi$ is of bounded variation on them. Thus the first and last integrals on the RHS exist. The remaining integrals are on intervals $I_{k}$ with $f$ having a single jump discontinuity (say at $x_{k}$) in the interior of their intervals,
+and continuous elsewhere; $\phi$ continuous at $x_{k}$, and of bounded variation on the interval.
+
+Thus it suffices to prove that for $f$ bounded and continuous on $[a, b]$ except for a jump discontinuity at $c \in (a, b)$, $\phi$ of bounded variation on $[a, b]$ and continuous at $c$, the integral $\int_{a}^{b} f d \phi$ exists.
+
+Fix $\epsilon > 0$. Suppose $\lvert f \rvert \leq M$ on $[a, b]$.
+Note $M > 0$ (otherwise there are no jump discontinuities). By continuity of $\phi$ at $c$, choose $\delta > 0$ such that $[c - \delta, c + \delta] \subset [a, b]$ and for $x, y \in (c - \delta, c + \delta)$, $\lvert \phi(x) - \phi(y) \rvert < \epsilon / (24M)$.
+
+Define $f_{1}$ on $[a, c]$ by
+\[ f_{1}(x) = \begin{cases*}
+		f(x) & if $x < c$ \\
+		f(c-) & if $x = c$. 
+		\end{cases*} \]
+
+% khanh - is this c^- not c-
+
+Then $f_{1}$ is continuous and agrees with $f$ on $[a, c)$. There is a partition $P' = \{a, x_{1}, \cdots, x_{k-1}, x_{k} = c \}$ such that $U(P, f_{1}, \phi) - L(P, f_{1}, \phi) < \epsilon / 3$ for $P$ finer than $P'$. Refine $P'$ if necessary so that the point $x'$ preceding $c$ in it satisfies $c - \delta < x' < c$.
+
+% khanh - $U(P, f_{1}, \phi) - L(P, f_{1}, \phi) < \epsilon / 3$ I don't recall we have this for non-monotone function \phi
+
+Similarly define $f_{2}$ on $[a, c]$ by
+\[ f_{2}(x) = \begin{cases*}
+		f(x) & if $x > c$ \\
+		f(c+) & if $x = c$. 
+		\end{cases*} \]
+
+% khanh - is this c^+ not c+
+
+Then $f_{2}$ is continuous and agrees with $f$ on $(c, b]$. There is a partition $P'' = \{x_{k} = c, x_{k+1}, \cdots, x_{n}, b \}$ such that $U(P, f_{2}, \phi) - L(P, f_{2}, \phi) < \epsilon / 3$ for $P$ finer than $P''$. Refine $P''$ if necessary so that the point $x''$ succeeding $c$ in it satisfies $c < x' < c + \delta$.
+
+Put $P''' = P' \cup P''$. For $P$ finer than $P'''$, with $x'$ the point preceding $c$ in $P'$ and $x''$ the point succeeding $c$ in $P''$, 
+\begin{align*}
+	U(P, f, \phi) - L(P, f, \phi) &= U(P', f_{1}, \phi) - L(P', f_{1}, \phi) \\
+    &+ U(P'', f_{2}, \phi) - L(P'', f_{2}, \phi) \\
+	&+ [M_{f}' - m_{f}' - (M_{f_{1}} - m_{f_{1}})][\phi(c) - \phi(x')] \\
+	&+ [M_{f}'' - m_{f}'' - (M_{f_{2}} - m_{f_{2}})][\phi(x'') - \phi(c)],
+\end{align*}
+where $M_{f}' = \sup \{ f(x) \mid x \in [x', c] \}$, $M_{f_{1}} = \sup \{ f_{1}(x) \mid x \in [x', c] \}$, $M_{f}'' = \sup \{ f(x) \mid x \in [c, x''] \}$, $M_{f_{2}} = \sup \{ f_{2}(x) \mid x \in [c, x''] \}$, and $m_{f}'$, $m_{f_{1}}$, $m_{f}''$, $m_{f_{2}}$ are defined analogously, as infima rather than suprema.
+
+By choice of $x'$ and $x''$, $\lvert \phi(c) - \phi(x') \rvert < \epsilon/(24M)$ and $\lvert \phi(x'') - \phi(c) \rvert < \epsilon/(24M)$, so
+\begin{align*}
+	&\lvert [M_{f}' - m_{f}' - (M_{f_{1}} - m_{f_{1}})][\phi(c) - \phi(x')] \rvert \\
+    &+ \lvert [M_{f}'' - m_{f}'' - (M_{f_{2}} - m_{f_{2}})][\phi(x'') - \phi(c)] \rvert \\
+	&\leq \epsilon /(24M) \cdot 8M = \epsilon / 3.
+\end{align*}
+
+Thus $U(P, f, \phi) - L(P, f, \phi) < \epsilon / 3 + \epsilon / 3 + \epsilon / 3 = \epsilon$, for all partitions $P$ finer than $P'''$. This proves that $\int_{a}^{b} f d\phi$ exists.
+
+\subsection{Exercise 31}% Hong Duc
+% reviewed by khanh - approved
+
+For the first statement, for all partition \(Γ\) of \([a,b]\) we can trivially check \(R_{Γ}=f(b)−f(a)\), so the limit is also \(f(b)−f(a)\).
+
+For the second statement, fix a partition \(Γ\). Let \(x_{i−1},x_{i}\) be two consecutive points in the partition, by mean value theorem there exist a choice \(ξ_{i}\) in the segment such that \(f′(ξ_{i})(x_{i}−x_{i−1})=f(x_{i})−f(x_{i−1})\), if such selection is made over all intervals of the partition then \(R_{Γ}=∫^{b}_{a}\hspace{0.16666666666666666em}\mathrm{d}f\); because \(f′\) is Riemann integrable on \([a,b]\), the integral must thus be equal to \(∫^{b}_{a}\hspace{0.16666666666666666em}\mathrm{d}f\).
+
+\begin{comment}
+    -- khanh
+    better establish that f' is Riemann integrable before making the choice of \xi
+\end{comment}
+
+Combine the 2 statements we get the desired result.
+
+\section{Chapter 3}
+
+\subsection{Exercise 9}% Nigel
+% reviewed by khanh, approved
+% approved by Hong Duc
+
+Put $A_{j} = \bigcup_{k = j}^{\infty} E_{k}$. We have $A_{1} \supset A_{2} \supset \cdots$, and $\lvert A_{1} \rvert_{e} \leq \sum_{k=1}^{\infty} \lvert E_{k} \rvert_{e} < \infty$. 
+
+Therefore putting $A = \cap_{j=1}^{\infty} A_{j} = \lim \sup E_{k}$, we have 
+\begin{align*}
+\lvert A \rvert_{e} &\leq \lim_{j \rightarrow \infty} \lvert A_{j} \rvert_{e} \\
+	&\leq \lim_{j \rightarrow \infty} \sum_{k=j}^{\infty} \lvert E_{k} \rvert_{e} \\
+	&= 0,
+\end{align*}
+
+The first inequality follows from the fact that $A \subset A_{j}$ for all $j$, whence $\lvert A \rvert_{e} \leq \lvert A_{j} \rvert_{e}$ for all $j$.
+
+The last equality is due to $\sum_{k=1}^{\infty} \lvert E_{k} \rvert_{e} < \infty$.
+
+Thus $\lvert \lim \sup E_{k} \rvert_{e} = \lvert A \rvert_{e} = 0$.
+
+\subsection{Exercise 12}%Hong Duc
+% reviewed by Nigel (added some comments)
+% reviewed by khanh (looks ok)
+
+We rewrite the statement:
+\begin{quote}
+    If $A$ and $B$ are measurable subsets of $ℝ¹$, show that $A × B$ is a measurable subset of $ℝ²$ and $|A × B|=|A|⋅|B|$. (Interpret $0 ⋅ ∞$ as $0$.)
+\end{quote}
+
+\textbf{Case 1.}
+If both $A$ and $B$ are (finite) intervals, the statement is trivial.
+
+\textbf{Case 2.}
+If $A$ and $B$ are open sets with finite measure, we write $A=⨆ A_i$ and $B=⨆ B_j$ and $A_i$ and $B_j$ are half-open interval (assume $i$ and $j$ runs over all of $ℕ$ from now on), then $|A|=∑_i |A_i|$ and $|B|=∑_j |B_j|$ are finite (the sum converges). Then $A × B = ⨆ A_i × B_j$ (we see that the $A_i × B_j$ intervals are disjoint, because we can prove that, for any sets $A_i, B_j, A_{i'}, B_{j'}$, if $A_i ∩ A_{i'}=∅$ or $B_j ∩ B_{j'}=∅$, then $(A_i × B_j)∩(A_{i'}× B_{j'})=∅$), because each $A_i × B_j$ is measurable as shown above, thus $A × B$ is measurable and $|A × B|=∑_i ∑_j |A_i| |B_j| = (∑_i |A_i|) (∑_j |B_j|) = |A| |B|$.
+
+\textbf{Case 3.}
+If $A$ and $B$ are $G_δ$ sets with finite measure, then pick a sequence of finite-measure open sets $A_i ↘ A$ and $B_i ↘ B$.
+
+This is possible, because, by definition of $G_δ$ sets, $A=⋂_{i ∈ ℤ⁺} A_i$ for each $A_i$ open, because $A$ has finite measure we can pick $C$ open, finite measure, and containing $A$, then the sequence $\{ C ∩ ⋂_{j=1}^i A_i \}_{i ∈ ℤ⁺}$ is open, finite measure, and decreases to $A$. Similar for $B$.
+
+Then we must have that $A_i × B_i ↘ A × B$, so:
+\begin{itemize}
+    \item $A × B$ is the countable intersection of measurable sets, thus measurable,
+    \item because $|A_i||B_i|$ is finite, then we must have $|A_i × B_i|↘|A × B|$, but the left hand side is equal to $|A_i||B_i|$, because $|A_i|↘|A|$ and $|B_i|↘|B|$, then $|A_i||B_i|↘|A||B|$, we get the desired result.
+\end{itemize}
+
+\textbf{Case 4.} If $A$ and $B$ are $G_δ$ sets with possibly-infinite measure (assume either $|A|$ or $|B|$ is infinite otherwise we have done it above), then for each $i, j ∈ ℤ$, write $A_i=A ∩[i, i+1)$ and $B_j=B ∩[j, j+1)$.
+\begin{itemize}
+    \item Note that $[i, i+1)=⋂_{k ∈ ℤ⁺} (i-\frac{1}{k}, i+1)$, thus $[i, i+1)$ is of type $G_δ$, and so is $A_i$. Similar for $B_j$.
+    \item Thus $A_i$ and $B_j$ are $G_δ$ sets with finite measure, we can apply the point above, so $A_i × B_j$ are measurable with measure $|A_i||B_j|$.
+    \item As $A=⨆_i A_i$ and $B=⨆_j B_j$, then $|A|=∑_i |A_i|$ and $|B|=∑_j |B_j|$. Also, $A × B = ⨆_{i, j} A_i × B_j$, then $A × B$ is measurable and $|A × B|=∑_{i, j} |A_i||B_j|$ -- each term is nonnegative and finite, but the sum may not converge.
+\end{itemize}
+
+Now, without loss of generality assume $|A|=∞$.
+\begin{itemize}
+    \item If $|B|=0$, then $|B_j|=0$ for all $j$, thus all the terms in the sum $∑_{i, j} |A_i||B_j|$ is $0$, thus $|A × B|=0=∞ ⋅ 0=|A|⋅|B|$ as desired.
+    \item If $|B|>0$, then there exist some $j₀∈ ℤ$ such that $|B_{j₀}|>0$, then $∑_{i, j} |A_i||B_j| ≥ ∑_i |A_i| |B_{j₀}| = |B_{j₀}| ⋅ (∑_i |A_i|) = |B_{j₀}| ⋅ |A| = ∞$.
+\end{itemize}
+In all cases, we get $|A × B|=|A|⋅|B|$.
+
+\textbf{Case 5.} $A$ and $B$ are arbitrary measurable sets. Then write $G_A = A ⊔ Z_A$, $G_B = B ⊔ Z_B$, such that $G_A$ and $G_B$ are of type $G_δ$, and $Z_A$ and $Z_B$ has measure zero.
+
+Further write $Z_A  ⊆ T_A$ and $Z_B ⊆ T_B$, where $T_A$ and $T_B$ are of type $G_δ$ and have measure zero.
+
+Then, $|G_A × G_B| = |G_A||G_B|=|A||B|$ by the case above.
+
+Write $C=G_A × G_B$ and $D=(G_A × G_B) ∖ ((ℝ × T_B) ∪(T_A × ℝ))$.
+
+By the part above, $C$ and $D$ are both measurable, and $|C ∖ D|=0$.
+
+We see $D ⊆ A × B ⊆ C$. So $(A × B) ∖ D ⊆ C ∖ D$, because $|C ∖ D|=0$ then $(A × B) ∖ D$ is measurable and have measure zero.
+
+Therefore, $A × B = D ⊔ ((A × B) ∖ D)$ is measurable and have the same measure as $C$ or $D$, which is equal to $|A||B|$. We get the desired result.
+
+\subsection{Exercise 17} %% khanh -- checked by Hong Duc
+
+Give an example that shows the image of a measurable set under a continuous transformation may not be measurable.
+
+\textbf{Proof}
+
+Given a measure zero set $Z$, if there is a continuous mapping $\phi$ that maps $Z$ into a positive measure set $\phi(Z)$, i.e. $|\phi(Z)| > 0$%
+. By Corollary 3.39, $\phi(Z)$ contains a non-measurable set, namely $N$. Then the set $\phi^{-1}(N) \cap Z$ is a measure zero set and has its image being non-measurable.
+
+We will construct a continuous mapping that maps \emph{Cantor set} into a positive measure set.
+Let $f$ be the \emph{Cantor-Lebesgue function}, define $g$ on $[0, 1]$ onto $[0, 2]$ by
+\[
+    g(x) = f(x) + x
+\]
+
+$g$ is strictly increasing continuous function because $f$ is a increasing continuous and $x$ is strictly increasing continuous. Therefore, $g$ is a homeomorphism. Let $C$ be the \emph{Cantor set}, $O = [0, 1] \setminus C$ is a union of open intervals, so $O$ is open and $C$ is closed. The image of $[0, 1]$ under $g$ can be written as
+
+$$
+    g([0, 1]) = g(O \cup  C) = g(O) \cup g(C) = [0, 2]
+$$
+
+$g(O)$ and $g(C)$ are disjoint since $O$ and $C$ are disjoint. $g(O)$ is open and $g(C)$ is closed since $g$ is a homeomorphism. Therefore, the two sets $g(O)$ and $g(C)$ are measurable.
+
+Let $\{ I_k\}$ be the collection of open intervals removed in the construction of \emph{Cantor set}. Since $f$ is constant on each $I_k$, so $g(I_k)$ is a translation of $I_k$. Furthermore, $g$ is bijective, implying the intervals $g(I_k)$ are disjoint. So
+
+\begin{align*}
+    |g(O)|  &= \left|\bigcup \{ g(I_k)\}\right| \\
+            &= \sum |g(I_k)| &\text{(measure additivity of disjoint sets)}\\
+            &= \sum |I_k| &\text{(translation preserves measure)}\\
+            &= \left|\bigcup \{ I_k\}\right| &\text{(measure additivity of disjoint sets)}\\
+            &= |O| \\
+            &= |[0, 1]| - |C|   &\text{($[0, 1], C, O$ is measurable)}\\
+            &= 1
+\end{align*}
+
+Since, $g(O)$ and $g(C)$ are measurable
+
+$$
+    |g(C)| = |[0, 2]| - |g(O)| = 1
+$$
+
+By Corollary 3.39, $|g(C)| > 0$ contains a non-measurable set, namely $D$. Then, $g^{-1}(D) \cap C$ is a subset of $C$ that has measure zero.
+
+\subsection{Exercise 23}%Hong Duc
+% reviewed by khanh, approved
+
+\typstmathinputenable{\$}
+Consider $n ∈ ℤ⁺$, write $Z_n = Z ∩ (-n, n)$. We will show ${x²: x ∈ Z_n}$ has measure zero.
+
+For any $ε>0$, cover $Z_n ∖ {0}$ with a countable union of open intervals, $Z_n = ⋃_k I_k$ (assume $k ∈ ℤ⁺$ from now on), such that $∑_k |I_k| < ε$ (this is possible because $Z$ has measure 0, so is $Z_n$). Without loss of generality, assume each interval $I_k$ is either contained in $(0,n)$ or $(-n, 0)$.
+
+Note that for any open interval $(a, b)$ where $0 ≤ a < b ≤ n$, we have ${x²: x ∈(a, b)}= (a², b²)$, the latter has measure $b²-a² = (b-a)(b+a) ≤ 2n ⋅ (b-a) = 2n ⋅ |(a, b)|$. A similar argument applies to show that for any open interval $I ⊆ (-n, 0)$, then $|{x²: x ∈ I}|≤ 2n ⋅ |I|$.
+
+In conclusion, $|{x²: x ∈ Z_n}| ≤ |{0} ∪ ⋃_k {x²: x ∈ I_k}| ≤ ∑_k |{x²: x ∈ I_k}| ≤ ∑_k (2n ⋅ |I_k|) < 2n ⋅ ε$. Since $ε$ can be arbitrarily small, we conclude $|{x²: x ∈ Z_n}|=0$ as desired.
+
+Using the above, because $Z = ⋃_(n ∈ ℤ⁺) Z_n$, then ${x²: x ∈ Z}= ⋃_(n ∈ ℤ⁺) {x²: x ∈ Z_n}$, each term in the countable union on the right has measure zero, thus the union also has measure zero as desired.
+\typstmathinputdisable{\$}
+
+\subsection{Exercise 28} %% khanh
+% reviewed by Nigel (looks good)
+% reviewed by Hong Duc (approved)
+
+If $T: \R^n \to \R^n$ is a Lipschitz transformation, then there is a constant $c' > 0$ such that $|TI| \leq c'|I|$ for every interval $I$.
+
+\textbf{Proof}
+
+If $c = 0$, the problem is trivial, let $c >0$. Set $c'=(2 c \sqrt{n})^n$, then $c'>0$.
+
+Consider the case of a closed cube $Q$ of edge length $d$, then $|Q| = d^n$ and $\diam Q = d \sqrt{n}$. For all $x, y \in Q$, we have $|Tx - Ty| \leq c|x - y|$. Then
+\begin{align*}
+    \sup \{|Tx - Ty|: x, y \in Q\}  &\leq \sup \{ c|x - y|: x, y \in Q\} \\
+    \diam TQ &\leq c \diam Q
+\end{align*}
+
+Therefore, $\diam TQ \leq c \diam Q$, that is, $TQ$ is contained in a closed ball of radius $c \diam Q$, which is contained in a closed cube of edge length $2 c \diam Q = 2cd\sqrt{n}$. So by subset property of outer measure, \[|TQ|_e \leq (2 c d\sqrt{n})^n = (2 c \sqrt{n})^n |Q| = c' |Q|.\]
+
+For any $\epsilon > 0$. By Theorem 3.6, let $O$ be an open set containing $I$ with $|O| \leq |I| + \frac{\epsilon}{c'}$.
+By theorem 1.11, $O$ can be written as a countable union of non-overlapping closed cubes $Q_k$, i.e. $O = \bigcup_{k=1}^\infty Q_k$. We have
+
+
+\begin{align*}
+    |TI|_e
+        &\leq | TO |_e &\text{(subset property of outer measure)} \\
+        &= \left| T\bigcup_{k=1}^\infty Q_k \right|_e\\
+        &= \left| \bigcup_{k=1}^\infty T Q_k \right|_e \\
+        &\leq \sum_{k=1}^\infty |T Q_k|_e &\text{(sub-additivity of outer measure)} \\
+        &\leq \sum_{k=1}^\infty c'|Q_k| &\text{(Lipschitz image of cube)} \\
+        &= c' \sum_{k=1}^\infty |Q_k|\\
+        &= c' |O| &\text{(non-overlapping closed cubes)} \\
+        &\leq c' |I| + \epsilon.
+\end{align*}
+
+Sending $\epsilon$ to $0$ gives $|TI|_e \leq c' |I|$.
+
+If $I$ is closed, as $T$ is continuous, $TI$ is compact, hence measurable. We have $|TI| \leq c' |I|$. This implies theorem 3.33.
+Otherwise, by theorem 3.33, $TI$ is measurable. We have the same conclusion.
+
+
+
+\end{document}
