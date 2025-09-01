@@ -15,7 +15,7 @@ PUBLIC_DOC_DESC_PATH="data/public_doc_desc.json"
 TEXT_TEMPLATE_PATH="docs/pages/posts/text.template.html"
 TEXT_OUTPUT_PATH="docs/pages/posts/text.html"
 
-all: vitae pages text
+all: vitae pages text javascript
 
 run:
 	go run bin/fileserver.go docs
@@ -57,6 +57,9 @@ text: pages public_doc
 		--text_template_path $(TEXT_TEMPLATE_PATH) \
 		--text_output_path $(TEXT_OUTPUT_PATH)
 
+javascript:
+	# compile ts to js
+	tsc src/post-script.ts --outDir docs/js --target ES2020 --module ES2020 --strict
 
 clean:
 	rm -rf $(TMP_DIR)
