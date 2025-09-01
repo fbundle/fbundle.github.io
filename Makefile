@@ -20,7 +20,7 @@ all: vitae pages text
 run:
 	go run bin/fileserver.go docs
 
-ai_desc: public_doc
+ai_desc:
 	# generate ai description
 	python bin/generate_desc.py \
 		--html_root_dir $(HTML_ROOT_DIR) \

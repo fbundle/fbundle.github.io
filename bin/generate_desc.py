@@ -40,7 +40,7 @@ def generate_public_doc_desc(
             loaded.add((desc.name, desc.model))
 
     # model_name = "openai_gpt_oss_20b"
-    model_name = "deepseekr1_distill_qwen1p5b"
+    model_name = "deepseekr1_distill_qwen32b"
     device_name_list = ["cuda:0", "cuda:1", "cuda:2", "cuda:3", "cuda:4", "cuda:5", "cuda:6", "cuda:7"]
 
     name_list = list(os.listdir(doc_dir))
