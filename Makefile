@@ -15,6 +15,9 @@ PUBLIC_DOC_DESC_PATH="data/public_doc_desc.json"
 TEXT_TEMPLATE_PATH="docs/pages/posts/text.template.html"
 TEXT_OUTPUT_PATH="docs/pages/posts/text.html"
 
+TS_INPUT_PATH="src/post-script.ts"
+JS_OUTPUT_DIR="docs/js"
+
 all: vitae pages text javascript
 
 run:
@@ -59,12 +62,13 @@ text: pages public_doc
 
 javascript:
 	# compile ts to js
-	tsc src/post-script.ts --outDir docs/js --target ES2020 --module ES2020 --strict
+	tsc $(TS_INPUT_PATH) --outDir $(JS_OUTPUT_DIR) --target ES2020 --module ES2020 --strict
 
 clean:
 	rm -rf $(TMP_DIR)
 	rm -rf $(VITAE_OUTPUT_DIR)
 	rm -rf $(PAGES_OUTPUT_DIR)
+	rm -rf $(JS_OUTPUT_DIR)
 
 
 
