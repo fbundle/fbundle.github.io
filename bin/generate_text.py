@@ -51,7 +51,7 @@ def get_pdfs_from_dir(doc_htmldir: HtmlPath) -> dict[str, list[DocInfo]]:
             creation_date, modified_date = get_pdf_dates(path)
 
             description = get_pdf_text(path)
-            description = " ".join(description.split()[:20])
+            description = " ".join(description.split()[:20]) + " ..."
 
             if category not in doc_info_dict:
                 doc_info_dict[category] = []
