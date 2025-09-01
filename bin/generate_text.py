@@ -66,6 +66,9 @@ def get_pdfs_from_dir(doc_htmldir: HtmlPath) -> dict[str, list[DocInfo]]:
     return doc_info_dict
 
 
+def blur_html_text(text: str) -> str:
+    return f'<text style="opacity: 0.6; color: #666; font-style: italic; filter: blur(0.3px);"> {text}</text>'
+
 def generate_text_html(
         doc_htmldir: HtmlPath,
         text_template_path: str,
@@ -82,9 +85,9 @@ def generate_text_html(
         for item in item_list:
             content += f"""
             <li>
-                {datetime_to_str(item.modified_date)}: <a href="{item.htmlpath}">{item.name}</a>
+                <a href="{item.htmlpath}">{item.name}</a> {blur_html_text(f"(last compiled {datetime_to_str(item.modified_date)})")}
                 <br>
-                <div style="opacity: 0.6; color: #666; font-style: italic; filter: blur(0.3px);"> ({item.description})</div>
+                {blur_html_text(f"({item.description})")}
             </li>
             """
 
