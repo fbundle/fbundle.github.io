@@ -1,5 +1,0 @@
-Summarize the following document in a clear, concise way.
-Focus on the main results, methods, and key ideas, avoiding excessive technical detail.
-Assume the reader has a strong background in computer science (undergraduate level) and pure mathematics (graduate level).
-The summary should be short (no more than a few paragraphs)
-precise, and highlight the essential contributions or concepts without unnecessary elaboration
