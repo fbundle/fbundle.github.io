@@ -7,8 +7,8 @@ import os
 import pathlib
 
 
-def generate_pages(input_dir: str,output_dir: str, template: str):
-    template: str = open(template).read()
+def generate_pages(input_dir: str,output_dir: str, template_path: str):
+    template: str = open(template_path).read()
 
     total_pages = 0
     for path in pathlib.Path(input_dir).rglob("*.html"):
@@ -39,7 +39,7 @@ if __name__ == "__main__":
     generate_pages(
         input_dir=args.input_dir,
         output_dir=args.output_dir,
-        template=args.template,
+        template_path=args.template,
     )
 
 
