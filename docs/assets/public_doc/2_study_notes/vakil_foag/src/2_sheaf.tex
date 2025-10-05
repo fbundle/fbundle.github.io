@@ -1,0 +1,252 @@
+\section{SHEAVES}
+
+\subsection{MOTIVATING EXAMPLE: THE SHEAF OF SMOOTH FUNCTIONS}
+
+\note{TODO}
+
+\subsection{DEFINITION OF SHEAVES AND PRESHEAVES}
+
+\begin{definition}[presheaf, section]
+	A presheaf of sets $\ms{F}$ on a topological space $X$ is the following data:
+	\begin{enumerate}
+		\item for each open $U \subseteq X$, there is a set $\ms{F}(U)$, the elements of $\ms{F}(U)$ are called sections of $\ms{F}$ over $U$
+		
+		\item for each open set inclusion $U \hookrightarrow V$, there is a restriction map
+		\begin{align*}
+			\res_{V, U}: \ms{F}(V) &\to \ms{F}(U) \\
+											   f &\mapsto f\vert_U
+		\end{align*}
+	\end{enumerate}
+	
+	The data is required to satisfy the following:
+	\begin{enumerate}
+		\item for each open set $U \subseteq X$, the restriction map $\res_{U, U}$ is identity$\res_{U, U} = \id_{\ms{F}(U)}$
+		\item if $U \hookrightarrow V \hookrightarrow W$ are inclusions of open sets, then the diagram below commutes
+		\begin{center}
+			\begin{tikzcd}
+				\ms{F}(W) \arrow[r, "\res"] \arrow[rr, "\res"', bend right] & \ms{F}(V) \arrow[r, "\res"] & \ms{F}(U)
+			\end{tikzcd}
+		\end{center}
+	\end{enumerate}
+	
+	In other words, presheaf is a functor from the category of open sets on $X$ with restriction maps into the category of sets $\Set$
+\end{definition}
+
+\begin{definition}[germ, stalk]
+	For any $p \in X$, consider the collection of sections of $\ms{F}$ over all open sets containing $p$
+	$$
+		\set{(f, U): p \subseteq U, f \in \ms{F}(U)}
+	$$
+	together with an equivalence relation $\sim$ as follows: $(f, U) \sim (g, V)$ if and only if there exists $W \subseteq U \cap V$ containing $p$ and $f\vert_W = g\vert_W$. The equivalence class of $f \in \ms{F}(U)$ is called the germ of $f$ at $p$. The collection of all germs at $p$ is called stalk of $\ms{F}$ at $p$ and denoted by $\ms{F}_p$
+\end{definition}
+
+\begin{remark}[filtered colimit, an equivalent definition of stalk]
+	(The Stacks project - 4.19 Filtered colimit) A diagram $M: \mc{I} \to \mc{C}$ is called directed (or filtered) if the following conditions hold:
+	\begin{enumerate}
+		\item the category $\mc{I}$ has at least one object
+		\item for every pair of objects $x, y$ of $\mc{I}$, there exists an object $z$ and morphisms $x \to z$ and $y \to z$
+		\item for every pair of morphisms $a, b: x \to y$ of $\mc{I}$, there exists a morphism $c: y \to z$ so that $M(c \circ a) = M(c \circ b)$ as morphisms in $\mc{C}$ 
+	\end{enumerate}
+	
+	\note{after some gibberish} - the colimit of $M$ (filtered colimit) always exists. In particular, when $\mc{C}$ is $\Set$, then
+	$$
+		\colim_{\mc{I}} M = \tuple*{\coprod_{i \in \mc{I}} M_i} / \sim
+	$$
+	
+	where $m_i \sim m_j$ if and only if there exists $k \in \mc{I}$, $\phi_{ik}: i \to k$, $\phi_{jk}: j \to k$, and $M(\phi_{ik})(m_i) = M(\phi_{jk})(m_j)$. In formally, two elements are equal if they eventually become equal. When $\mc{I}$ is the category of open sets on $X$ with restriction maps containing $p$ and $M$ is $\ms{F}$, then stalk of $\ms{F}$ at $p$ is precisely the colimit of the corresponding diagram.
+\end{remark}
+
+\begin{remark}
+	For any category $\mc{C}$, presheaf of $\mc{C}$ on $X$ is also defined similarly
+\end{remark}
+
+\begin{definition}[sheaf]
+	A presheaf is called a sheaf if it satisfies two additional axioms: for any open set $U$ with open cover $\set{U_i}_{i \in I}$
+	\begin{enumerate}
+		\item (identity axiom) if two sections $f, g \in \ms{F}(U)$ have $f\vert_{U_i} = g\vert_{U_i}$ for every $i \in I$, then $f = g$
+		
+		\item (gluability axiom) if for each $i \in I$, there is a section $f_i \in \ms{F}(U_i)$ so that for every intersection $U = U_i \cap U_j$, $f_i\vert_U = f_j\vert_U$, then there exists a section $f \in \ms{F}(U)$ so that $f\vert_{U_i} = f_i$ for every $i \in I$
+	\end{enumerate}
+\end{definition}
+
+\begin{remark}
+	Some remarks on sheaf
+	\begin{enumerate}
+		\item Informally, identity axiom says there is at most one way to glue and gluability axiom says there is at least one way to glue.
+		
+		\item From the two axioms for sheaf, one can show that $\ms{F}(\emptyset)$ must be the final object in the target category. There is also a version of presheaf and sheaf where the empty set $\emptyset$ is not included.
+		
+		\item germ and stalk on sheaf is germ and stalk on presheaf
+		
+		\item The axioms of sheaf is equivalent to say $\ms{F}\tuple*{\bigcup_{i \in I} U_i}$ is the limit of the diagram consists of $\set{\ms{F}(U_i)}_{i \in I}$, all finite intersections of them, and restriction maps
+		\begin{center}
+			\begin{tikzcd}
+				\ms{F}\tuple*{\bigcup_{i \in I} U_i} \arrow[d] \arrow[rdd] \arrow[rrd] &                               &                            \\
+				\ms{F}(U_\alpha) \arrow[rr] \arrow[rd]                                 &                               & \ms{F}(U_\beta) \arrow[ld] \\
+				& \ms{F}(U_\alpha \cap U_\beta) &                           
+			\end{tikzcd}
+		\end{center}
+	\end{enumerate}
+\end{remark}
+
+\begin{definition}[restriction of sheaf]
+	Suppose $\ms{F}$ is a sheaf on topological $X$ and $U \subseteq X$ is an open set, then the collection of $\set{\ms{F}(V): V \subseteq U}$ forms a sheaf on the subspace $U$ of topological space $X$
+\end{definition}
+
+\begin{remark}[skyscraper sheaf]
+	Let $X$ be a topological space, $p \in X$, and a set $S$. Let $i_p: p \hookrightarrow X$ be the inclusion, then define $i_{p, *} S$ by
+	$$
+		(i_{p, *} S)(U) = \begin{cases}
+			S &\text{ if } p \in U \\
+			\set{\bullet} &\text{ if } p \notin U \\
+		\end{cases}
+	$$
+	together with evident restriction maps, they form a sheaf and called skyscraper sheaf supported at $p$
+\end{remark}
+
+\begin{remark}[constant presheaf, locally constant sheaf]
+	Let $X$ be a topological space and $S$ be any set, then $\underline{S}_{pre}(U) = S$ for all $U \subseteq S$ together with evident restriction maps, they form a presheaf and called constant presheaf.
+	
+	Let $X$ be a topological space and $S$ be any set, let $\ms{F}(U)$ be the set of maps $U \to S$ that are locally constant, i.e. for any $p \in U$, there is an open neighbourhood of $p$ where the function is constant, then together with evident restriction maps, they form a sheaf and called (locally) constant sheaf and denoted by $\underline{S}$
+\end{remark}
+
+\begin{definition}[pushforward sheaf]
+	Let $\pi: X \to Y$ be a continuous map and $\ms{F}$ be a presheaf on $X$. Define the presheaf $\pi_* \ms{F}$ on $Y$ by
+	$$
+		(\pi_* \ms{F})(V) = \ms{F}(\pi^{-1} V)
+	$$
+	for every open set $V \subseteq Y$. Then, $\pi_* \ms{F}$ is a presheaf on $Y$ and called pushforward of $\ms{F}$. If $\ms{F}$ is a sheaf on $X$ then $\pi_* \ms{F}$ is a sheaf on $Y$.
+\end{definition}
+
+\begin{proposition}[pushforward induces maps of stalks]
+	Let $\pi: X \to Y$ be a continuous map and $\ms{F}$ be a presheaf on $X$. Let $\ms{G}$ be the pushforward of $\ms{F}$ on $Y$. If $p \in X$ and $q = \pi(p)$, then there is a natural map of stalks $\ms{G}_q \to \ms{F}_p$ induced from the map of representatives
+\end{proposition}
+
+\begin{definition}[ringed space, $\ms{O}_X$-module]
+	Let $\ms{O}_X$ be a sheaf of rings on topological space $X$, then $(X, \ms{O}_X)$ is called a ringed space. $\ms{O}_X$ is called the structure sheaf of the ringed space. Sections of the structure sheaf $\ms{O}_X$ over an open set $U \subseteq X$ are called functions on $U$.
+	
+	A sheaf $\ms{F}$ of abelian groups on ring spaced $(X, \ms{O}_X)$ is called sheaf of $\ms{O}_X$-modules if each $\ms{F}(U)$ is an $\ms{O}_X(U)$-module and the structure compatible with restriction maps, that is, for every restriction of open sets $U \to V$, the diagram below commutes
+	\begin{center}
+		\begin{tikzcd}
+			\ms{O}_X(U) \times \ms{F}(U) \arrow[d, "{(\res, \res)}"'] \arrow[r, "\times"] & \ms{F}(U) \arrow[d, "\res"] \\
+			\ms{O}_X(V) \times \ms{F}(V) \arrow[r, "\times"]                              & \ms{F}(V)                  
+		\end{tikzcd}
+	\end{center}
+\end{definition}
+
+\begin{remark}[$\Z$-modules and $\underline{\Z}$-modules]
+	a sheaf of $\underline{\Z}$-modules is precisely a sheaf of abelian groups where $\underline{\Z}$ denotes the locally constant sheaf to $\Z$.
+\end{remark}
+
+\begin{remark}[vector bundle]
+	a vector bundle is precisely a locally free sheaf of $\E$-modules where $\E$ is the sheaf of functions on the base space.
+\end{remark}
+
+\subsection{MORPHISMS OF PRESHEAVES AND SHEAVES}
+
+\begin{definition}[morphism of presheaves, morphism of sheaves]
+	A morphism $\phi: \ms{F} \to \ms{G}$ of presheaves of sets on $X$ is the data of maps $\phi(U): \ms{F}(U) \to \ms{G}(U)$ for every open set $U \subseteq X$ and compatible with restriction maps, that is, for every restriction of open sets $U \to V$, the diagram below commutes
+	\begin{center}
+		\begin{tikzcd}
+			\ms{F}(U) \arrow[r, "\phi(U)"] \arrow[d, "\res"] & \ms{G}(U) \arrow[d, "\res"] \\
+			\ms{F}(V) \arrow[r, "\phi(V)"]                   & \ms{G}(V)                  
+		\end{tikzcd}
+	\end{center}
+	
+	A morphism of sheaves of sets is a morphism of the underlying presheaves. Morphisms of (pre)sheaves make (pre)sheaves a category and called category of (pre)sheaves.
+	
+	Let $\Set_X$, $\Ab_X$, etc denote the categories of sheaves of sets, abelian groups, etc.
+\end{definition}
+
+\begin{proposition}[morphisms of (pre)sheaves induce morphisms of stalks]
+	If $\phi: \ms{F} \to \ms{G}$ is a morphism of presheaves on $X$. If $p \in X$, then there is a natural map $\phi_p: \ms{F}_p \to \ms{G}_p$ induced from the map of representatives. On other words, there is a functor $\Set_X \to \Set$ and called stalkification functor.
+\end{proposition}
+
+\begin{proposition}
+	Suppose $\pi: X \to Y$ is a continuous map of topological spaces, the pushforward gives a functor $\pi_*: \Set_X \to \Set_Y$
+\end{proposition}
+
+\begin{definition}[sheaf Hom]
+	Suppose $\ms{F}$ and $\ms{G}$ are two sheaves of sets on $X$, let $Hom(\ms{F}, \ms{G})$ \footnote{\note{TODO - figure out how to write notation Hom correctly}} be defined as follows: for every open set $U \subseteq X$, let
+	$$
+		Hom(\ms{F}, \ms{G})(U) := \Hom(\ms{F}\vert_U, \ms{G}\vert_U)
+	$$
+	be the collection of morphisms of the restriction sheaves $\ms{F}\vert_U$, $\ms{G}\vert_U$. It is a sheaf and called "sheaf Hom"
+\end{definition}
+
+\subsubsection{presheaves of abelian groups form an abelian category - kernel and cokernel in category of presheaves}
+
+\begin{definition}[presheaf kernel, cokernel]
+	If $\phi: \ms{F} \to \ms{G}$ is a morphism of presheaves. Define the presheaf kernel $\ker_{pre} \phi$ and the presheaf cokernel $\coker_{pre} \phi$ by
+	\begin{align*}
+		(\ker_{pre} \phi)(U) &= \ker \phi(U) \\
+		(\coker_{pre} \phi)(U) &= \coker \phi(U)
+	\end{align*}
+	for every open set $U$. Presheaf kernel and presheaf cokernel are presheaves and kernel and cokernel in the category of presheaves.
+\end{definition}
+
+\begin{remark}
+	presheaves of abelian groups form an abelian category and work "open set by open set". subpresheaf, image presheaf, quotient presheaf are then defined "open set by open set"
+\end{remark}
+
+\begin{proposition}
+	Given a topological space $X$, if $U$ is an open set on $X$, then $\ms{F} \mapsto \ms{F}(U)$ defines an exact functor from presheaves of abelian groups into abelian groups.
+\end{proposition}
+
+\begin{proposition}
+	A sequence of presheaves $0 \to \ms{F}_1 \to \ms{F}_2 \to ... \to \ms{F}_n \to 0$ is exact if and only if $0 \to \ms{F}_1(U) \to \ms{F}_2(U) \to ... \to \ms{F}_n(U) \to 0$ is exact for every open set $U$.
+\end{proposition}
+
+\subsubsection{problem with sheaves}
+
+\begin{proposition}
+	If $\phi: \ms{F} \to \ms{G}$ is a morphism of sheaves, then the presheaf kernel $\ker_{pre} \phi$ is a sheaf and the kernel in the category of sheaves.
+\end{proposition}
+
+\begin{remark}[presheaf cokernel is \note{not cokernel} in the category of sheaves]
+	Let $\Omega \subseteq \C$ be an open set, a holomorphic function $f: \Omega \to \C$ is called admitting holomorphic logarithm if there exists a holomorphic function $g: \Omega \to \C$ so that $\exp g = f$.
+	
+	Let $X = \C$ with the usual topology, let $\ms{O}_X$ be the sheaf of holomorphism functions and $\ms{F}$ be the presheaf of functions admitting a holomorphic logarithm, then there is an exact sequence of presheaves on $X$
+	$$
+		0 \to \underline{\Z} \to \ms{O}_X \to \ms{F} \to 0
+	$$
+	
+	where $\underline{\Z}$ is the constant sheaf (to $\Z$) on $X$, for each open set $U \subseteq X$, $\underline{Z}(U) = \Z$. $\underline{\Z} \to \ms{O}_X$ is the natural inclusion, and $\ms{O}_X \to \ms{F}$ is given by $f \mapsto \exp(2 \pi i f)$.
+	
+	Then, $\ms{F}$ is not a sheaf. In other words, there is a holomorphic function that locally has holomorphic logarithm but does not have global logarithm
+\end{remark}
+
+\begin{proof}
+	Let $A = \set{z \in \C: 10 < |z| < 11} \cap \set{(x, y) \in \C: -1 < y}$ and $B = \set{z \in \C: 10 < |z| < 11} \cap \set{(x, y) \in \C: y < +1}$, then the identity function $z \mapsto z$ has logarithm on $A$ and $B$ but not on $A \cup B$
+\end{proof}
+
+\subsection{PROPERTIES DETERMINED AT THE LEVEL OF STALKS AND SHEAFIFICATION}
+
+\subsubsection{properties determined at the level of stalks}
+
+\begin{proposition}[section is determined by germs]
+	Given a sheaf of sets $\ms{F}$ on $X$ and any open set $U \subseteq X$, there exists an injective natural map
+	$$
+		\ms{F}(U) \hookrightarrow \prod_{p \in U} \ms{F}_p
+	$$
+\end{proposition}
+
+\begin{proof}
+	Let $U \subseteq X$ be an open set. For every $p \in U$, since $\ms{F}_p$ is the colimit of the diagram containing $\ms{F}(V)$ for all $V$ containing $p$, hence there is a map $\ms{F}(U) \to \ms{F}_p$. Therefore, there is a map $\ms{F}(U) \to \prod_{p \in U} \ms{F}_p$. We will show that this map is injective. Suppose two distinct functions $f, g \in \ms{F}(U)$, $f \neq g$ in $\ms{F}(U)$ but $f = g$ in $\prod_{p \in U} \ms{F}_p$. Then, $f = g$ in $\ms{F}_p$ for every $p \in U$. For each $p \in U$, since $f = g$ in $\ms{F}_p$, there exists an open set $V_p \subseteq U$ containing $p$ so that $f = g$ in $\ms{F}(V_p)$. By identity axiom, $\bigcup_{p \in U} V_p = U$ and $f = g$ in $\ms{F}(V_p)$ for every $p$, then $f = g$ in $\ms{F}(U)$. Contradiction.
+\end{proof}
+
+\begin{remark}
+	this proposition gives the feeling that sheaf is just a "sheaf" of "stalks" stick together
+\end{remark}
+
+\begin{definition}[compatible germs]
+	An element $(s_p)_{p \in U} \in \prod_{p \in U} \ms{F}_p$ is called compatible germs if for each $p \in U$, there exists an open set $U_p \subseteq U$ containing $p$ and a representative $\tilde{s}_p \in \ms{F}(U_p)$, that is $\tilde{s}_p = s_p$ in $\ms{F}_p$
+\end{definition}
+
+\begin{proposition}
+	The set of compatible germs on $\prod_{p \in U} \ms{F}_p$ is precisely the image of $\ms{F}(U) \hookrightarrow \prod_{p \in U} \ms{F}_p$
+\end{proposition}
+
+\begin{proof}
+	content...
+\end{proof}

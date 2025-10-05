@@ -1,0 +1,269 @@
+\section{JUST ENOUGH CATEGORY THEORY TO BE DANGEROUS}
+
+\subsection{AN INTRODUCTION TO ABELIAN CATEGORIES}
+
+\begin{definition}[additive category, additive functor]
+	A category $\mc{C}$ is said to be additive if it satisfies the following properties
+	\begin{enumerate}
+		\item for each $A, B \in \mc{C}$, $\Hom(A, B)$ is an abelian group and composition distributes over addition of morphisms
+		\begin{align*}
+			f \circ (g + h) &= f \circ g + g \circ h \\
+			(g + h) \circ f &= g \circ f + h \circ f
+		\end{align*}
+		for every morphisms $f, g, h$ in $\mc{C}$
+		
+		\item $\mc{C}$ has a zero object
+		
+		\item $\mc{C}$ has biproduct of finitely many objects
+	\end{enumerate}
+	
+	A functor $F: \mc{C} \to \mc{D}$ from an additive category $\mc{C}$ to another additive category $\mc{D}$ is called additive if it preserves additive structure
+	\begin{align*}
+		F(f \circ g) &= F(f) \circ F(g) \\
+		F(f + g) &= F(f) + F(g)
+	\end{align*}
+\end{definition}
+
+\begin{definition}[kernel, cokernel, image, coimage]
+	Let $f: A \to B$ be a morphism in a category $\mc{C}$ with a zero object
+	\begin{enumerate}
+		\item a kernel for $f$ is an object $K \in \mc{C}$ together with a universal map $i: K \to A$ so that $f \circ i = 0$
+		
+		\item a cokernel for $f$ is an object $Q \in \mc{C}$ together with a universal map $p: B \to Q$ so that $p \circ f = 0$. the object of cokernel of $f: A \to B$ is also written as $A / B$
+		\begin{center}
+			\begin{tikzcd}
+				Z \arrow[rd, "j"'] \arrow[rrd, "0", bend left] \arrow[d, "\exists!"', dashed] &                  &   & A \arrow[r, "f"'] \arrow[rr, "0", bend left] \arrow[rrd, "0"', bend right] & B \arrow[r, "p"'] \arrow[rd, "q"] & Q \arrow[d, "\exists!", dashed] \\
+				K \arrow[r, "i"] \arrow[rr, "0"', bend right]                                 & A \arrow[r, "f"] & B &                                                                            &                                   & Z                              
+			\end{tikzcd}
+		\end{center}
+		
+		\item image/coimage for $f$ are defined by
+		$$
+		\im f = \ker \coker f \text{,} \coim f = \coker \ker f
+		$$
+		
+	\end{enumerate}
+	
+\end{definition}
+
+\begin{definition}[abelian category]
+	An abelian category is an additive category satisfying additional properties
+	\begin{enumerate}
+		\item every map has a kernel and a cokernel
+		\item every monomorphism is the kernel of its cokernel
+		\item every epimorphism is the cokernel of its kernel
+	\end{enumerate}
+	
+	\begin{center}
+		\begin{tikzcd}
+			\im f \arrow[rd] \arrow[rrd, "0"]         &             &          & \ker f \arrow[r] \arrow[rrd, "0"'] & A \arrow[r, "f", two heads] \arrow[rd] & B \arrow[d, "\sim"] \\
+			A \arrow[r, "f"', hook] \arrow[u, "\sim"] & B \arrow[r] & \coker f &                                    &                                        & \coim f            
+		\end{tikzcd}
+	\end{center}
+\end{definition}
+
+\begin{theorem}[Frey-Mitchell Embedding Theorem]
+	If $\mc{C}$ is an abelian category whose objects form a set, then there is a ring $A$ and an exact, fully faithful functor $\mc{C} \to \Mod_A$ which embeds $\mc{C}$ as a full subcategory ($A$ is not necessary commutative)
+\end{theorem}
+
+By Frey-Mitchell Embedding Theorem, to prove something about diagram in some abelian category, we may assume that it is a diagram of modules over ring and use diagram chasing techniques
+
+\begin{definition}[complex, exactness, homology]
+	Given a sequence of morphisms in an abelian category
+	$$
+	... \to A \xrightarrow{f} B \xrightarrow{g} C \to ...
+	$$
+	
+	The sequence is said to be a complex at $B$ if $g \circ f = 0$, the sequence is said to be exact at $B$ if $\ker g = \im f$. Note that, being exact at $B$ implies being complex at $B$. If the sequence is complex/exact everywhere, then it is called complex/exact. if the sequence is complex at $B$, then its homology at $B$ is defined by $\ker g / \im f$
+\end{definition}
+
+\begin{proof}
+	$\ker g / \im f$ is well-defined by the folllowing:
+	\begin{center}
+		\begin{tikzcd}
+			\im f \arrow[rd] \arrow[dd, "\exists!"', dashed, bend right] \arrow[rr, "0"] &                             & \coker f \arrow[d, "\exists!", dashed] \\
+			A \arrow[r, "f"] \arrow[u, "\exists!"', dashed]                              & B \arrow[r, "g"] \arrow[ru] & C                                      \\
+			\ker g \arrow[ru]                                                            &                             &                                       
+		\end{tikzcd}
+	\end{center}
+	
+	The composition $A \to B \to \coker f$ is zero, $\im f$ is the kernel of $B \to \coker f$, hence $f: A \to B$ factors through $\im f$ by a unique map $A \to \im f$
+	
+	The composition $A \to B \to C$ is zero, $\coker f$ is the kernel of $f: A \to B$, hence $g: B \to C$ factors through $\coker f$ by a unique map $\coker f \to C$
+	
+	The composition $\im f \to B \to coker f \to C$ is zero, hence the composition $\im f \to B \to C$ is zero, $\ker g$ is the kernel of $g: B \to C$, hence, $\im f \to B$ factors through $\ker g$ by a unique map $\im f \to \ker g$
+	
+	Homology at $B$ is defined by the cokernel of the map $\im f \to \ker g$
+\end{proof}
+
+
+\begin{proposition}[factoring a long exact sequence into short exact sequences]
+	Given a long exact sequence $A^\bullet$
+	$$
+	... \to A^{i-1} \xrightarrow{f^{i-1}} A^i \xrightarrow{f^i} A^{i+1} \to ...
+	$$
+	
+	Then it can be factored into short exact sequences
+	$$
+	0 \to \ker f^i \to A^i \to \ker f^{i+1} \to 0
+	$$
+	
+	More generally, if $A^\bullet$ is only a complex then it can be factored into 
+	\begin{center}
+		\begin{tikzcd}
+			0 \arrow[r] & \ker f^i \arrow[r]       & A^i \arrow[r]            & \im f^i \arrow[r]        & 0 \\
+			0 \arrow[r] & \im f^{i-1} \arrow[r]    & \ker f^i \arrow[r]       & H^i(A^\bullet) \arrow[r] & 0 \\
+			0 \arrow[r] & \im f^i \arrow[r]        & A^{i+1} \arrow[r]        & \coker f^i \arrow[r]     & 0 \\
+			0 \arrow[r] & H^i(A^\bullet) \arrow[r] & \coker f^{i-1} \arrow[r] & \im f^i \arrow[r]        & 0
+		\end{tikzcd}
+	\end{center}
+\end{proposition}
+
+\begin{definition}[category of complexes]
+	Suppose $\mc{C}$ is an abelian category, then the category of complexes in $\mc{C}$ consists of objects being infinite complexes in $\mc{C}$ and morphisms $A^\bullet \to B^\bullet$ being commutative diagrams
+	\begin{center}
+		\begin{tikzcd}
+			... \arrow[r] & A^{i-1} \arrow[r] \arrow[d] & A^i \arrow[r] \arrow[d] & A^{i+1} \arrow[r] \arrow[d] & ... \\
+			... \arrow[r] & B^{i-1} \arrow[r]           & B^i \arrow[r]           & B^{i+1} \arrow[r]           & ...
+		\end{tikzcd}
+	\end{center}
+	
+	The object and morphism are also called chain complex and chain map. The category of complexes in $\mc{C}$ is an abelian category.
+\end{definition}
+
+\begin{proposition}[chain map induces a map in homology]
+	A chain map $f: A^\bullet \to B^\bullet$ induces maps in homology $f^*: H^i(A^\bullet) \to H^i(B^\bullet)$
+	\begin{center}
+		\begin{tikzcd}
+			\ker f^i \arrow[r] \arrow[d, dashed] & A^i \arrow[r, "f^i"] \arrow[d] & A^{i+1} \arrow[d] \\
+			\ker g^i \arrow[r]                   & B^i \arrow[r, "g^i"]           & B^{i+1}          
+		\end{tikzcd}
+	\end{center}
+\end{proposition}
+
+\begin{definition}[homotopic, homotopy, homotopy equivalence]
+	Two chain maps $f: A^\bullet \to B^\bullet$ and $g: A^\bullet \to B^\bullet$ are called homotopic if there exists a homotopy $h$ from $f$ into $g$, that is a sequence of maps $h: A^{i} \to B^{i-1}$ so that $f - g = dh + hd$
+	\begin{center}
+		\begin{tikzcd}
+			... \arrow[r] & A^{i-1} \arrow[r, "d"] \arrow[ld] & A^i \arrow[r, "d"] \arrow[ld, "h"'] & A^{i+1} \arrow[ld, "h"'] & ... \arrow[l] \arrow[ld] \\
+			... \arrow[r] & B^{i-1} \arrow[r, "d"']           & B^i \arrow[r, "d"']                 & B^{i+1} \arrow[r]        & ...                     
+		\end{tikzcd}
+	\end{center}
+	
+	Being homotopic is an equivalence realtion. If $f$ and $g$ are homotopic, we write $f \sim g$. 
+	
+	If there is another chain map $f': B^\bullet \to A^\bullet$ so that $f \circ f' \sim 1_{B^\bullet}$ and $f' \circ f \sim 1_{A^\bullet}$, then $A^\bullet$ and $B^\bullet$ are called homotopy equivalence which is also an equivalence relation.
+\end{definition}
+
+\begin{proposition}[homotopic maps induce the same map in homology]
+	If $f \sim g$ where $f: A^\bullet \to B^\bullet$ and $g: A^\bullet \to B^\bullet$ are two chain maps, then $f^* = g^*$ where $f^*: H^i(A^\bullet) \to H^i(B^\bullet)$ and $g^*: H^i(A^\bullet) \to H^i(B^\bullet)$ are the induced maps in homology
+\end{proposition}
+
+\begin{theorem}[short exact sequence of chain complexes induces a long exact sequence in homology]
+	A short exact sequence of chain complexes
+	$$
+	0 \to A^\bullet \to B^\bullet \to C^\bullet \to 0
+	$$
+	
+	induces a long exact sequence in homology
+	
+	\begin{center}
+		\begin{tikzcd}
+			H^{i+1}(A^\bullet) \arrow[r] & ...                      &                                \\
+			H^i(A^\bullet) \arrow[r]     & H^i(B^\bullet) \arrow[r] & H^i(C^\bullet) \arrow[llu]     \\
+			& ... \arrow[r]            & H^{i-1}(C^\bullet) \arrow[llu]
+		\end{tikzcd}
+	\end{center}
+\end{theorem}
+
+\begin{definition}[exactness of functors]
+	Exactness of functor is characterized as follows:
+	\begin{enumerate}
+		\item If $F: \mc{A} \to \mc{B}$ is an additive covariant functor from abelian category to abelian category then
+		\begin{enumerate}
+			\item $F$ is right-exact if the top sequence being exact imples the bottom sequence being exact
+			\begin{center}
+				\begin{tikzcd}
+					A_1 \arrow[r]    & A_2 \arrow[r]    & A_3 \arrow[r]    & 0 \\
+					F(A_1) \arrow[r] & F(A_2) \arrow[r] & F(A_3) \arrow[r] & 0
+				\end{tikzcd}
+			\end{center}
+			
+			\item $F$ is left-exact if the top sequence being exact imples the bottom sequence being exact
+			\begin{center}
+				\begin{tikzcd}
+					0 \arrow[r] & A_1 \arrow[r]    & A_2 \arrow[r]    & A_3    \\
+					0 \arrow[r] & F(A_1) \arrow[r] & F(A_2) \arrow[r] & F(A_3)
+				\end{tikzcd}
+			\end{center}
+		\end{enumerate}
+		
+		\item If $F: \mc{A} \to \mc{B}$ is an additive contravariant functor from abelian category into abelian category, then
+		\begin{enumerate}
+			\item $F$ is right-exact if the top sequence being exact imples the bottom sequence being exact
+			\begin{center}
+				\begin{tikzcd}
+					0 \arrow[r] & A_1 \arrow[r]    & A_2 \arrow[r]    & A_3              &   \\
+					& F(A_3) \arrow[r] & F(A_2) \arrow[r] & F(A_1) \arrow[r] & 0
+				\end{tikzcd}
+			\end{center}
+			
+			\item $F$ is left-exact if the top sequence being exact imples the bottom sequence being exact
+			\begin{center}
+				\begin{tikzcd}
+					& A_1 \arrow[r]    & A_2 \arrow[r]    & A_3 \arrow[r] & 0 \\
+					0 \arrow[r] & F(A_3) \arrow[r] & F(A_2) \arrow[r] & F(A_1)        &  
+				\end{tikzcd}
+			\end{center}
+		\end{enumerate}
+	\end{enumerate}
+	
+	A functor is exact if it is both left-exact and right-exact
+\end{definition}
+
+\begin{proposition}
+	additive functor preserves chain complex, exact functor preserves exact sequence
+\end{proposition}
+
+\begin{remark}
+	If $A$ is a ring, $S \subseteq A$ is a multiplicative subset, and $M$ is an $A$-module, then
+	\begin{enumerate}
+		\item Localization $(S^{-1} -)$ is an exact covariant functor $\Mod_A \to \Mod_{S^{-1} A}$
+		\item Tensor product $(- \otimes_A M)$ is a right-exact covariant functor $\Mod_A \to \Mod_A$
+		\item $\Hom(M, -)$ is a left-exact covariant functor $\Mod_A \to \Mod_A$
+		\item $\Hom(-, M)$ is a left-exact contravariant functor $\Mod_A \to \Mod_A$
+	\end{enumerate}
+\end{remark}
+
+\begin{theorem}[FernbaHnHoF theorem, FHHF theorem]
+	Suppose $F: \mc{A} \to \mc{B}$ is a covariant functor from abelian category into abelian category and $C^\bullet$ is a chain complex in $\mc{A}$, then
+	\begin{enumerate}
+		\item If $F$ is right-exact then there is a natural map
+		$$
+			F H^\bullet \rightarrow H^\bullet F
+		$$
+		that is, for each $i$, there is a natural map $F(H^i(C^\bullet)) \to H^i(F(C^\bullet))$
+		
+		\item If $F$ is left-exact then there is a natural map
+		$$
+			F H^\bullet \leftarrow H^\bullet F
+		$$
+		that is, for each $i$, there is a natural map $F(H^i(C^\bullet)) \leftarrow H^i(F(C^\bullet))$
+		
+		\item If $F$ is exact then there is a natural isomorphism
+		$$
+			F H^\bullet \xrightarrow{\sim} H^\bullet F
+		$$
+		that is, exact functor preserves homology
+	\end{enumerate}
+\end{theorem}
+
+\begin{remark}[interaction of adjoint, limit, colimit, left-exact, right-exact]
+	interaction of adjoint, limit, colimit, left-exact, right-exact
+	\begin{enumerate}
+		\item limit commutes with limit and right adjoint functor. In particular, in abelian category, kernel is limit, hence both limit and right adjoint functor are left-exact
+		\item colimit commutes with colimit and left adjoint functor. In particular, in abelian category, cokernel is colimit, hence both colimit and left adjoint functor are right-exact
+	\end{enumerate}
+\end{remark}
+
+\note{TODO - add some derived functor}
