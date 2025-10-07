@@ -64,13 +64,15 @@
 	For any category $\mc{C}$, presheaf of $\mc{C}$ on $X$ is also defined similarly
 \end{remark}
 
-\begin{definition}[sheaf]
+\begin{definition}[sheaf, separated presheaf]
 	A presheaf is called a sheaf if it satisfies two additional axioms: for any open set $U$ with open cover $\set{U_i}_{i \in I}$
 	\begin{enumerate}
 		\item (identity axiom) if two sections $f, g \in \ms{F}(U)$ have $f\vert_{U_i} = g\vert_{U_i}$ for every $i \in I$, then $f = g$
 		
 		\item (gluability axiom) if for each $i \in I$, there is a section $f_i \in \ms{F}(U_i)$ so that for every intersection $U = U_i \cap U_j$, $f_i\vert_U = f_j\vert_U$, then there exists a section $f \in \ms{F}(U)$ so that $f\vert_{U_i} = f_i$ for every $i \in I$
 	\end{enumerate}
+	
+	A presheaf satisfying only identity axiom is called separated presheaf
 \end{definition}
 
 \begin{remark}
@@ -263,7 +265,7 @@
 \subsubsection{properties determined at the level of stalks}
 
 \begin{proposition}[section is determined by germs]
-	Given a sheaf of sets $\ms{F}$ on $X$ and any open set $U \subseteq X$, there exists an injective natural map
+	Given a seprated presheaf of sets $\ms{F}$ on $X$ and any open set $U \subseteq X$, there exists an injective natural map
 	$$
 		\ms{F}(U) \hookrightarrow \prod_{p \in U} \ms{F}_p
 	$$
@@ -272,7 +274,7 @@
 \begin{proof}
 	Let $U \subseteq X$ be an open set. For every $p \in U$, since $\ms{F}_p$ is the colimit of the diagram containing $\ms{F}(V)$ for all $V$ containing $p$, hence there is a map $\ms{F}(U) \to \ms{F}_p$. The product of those maps is $\ms{F}(U) \to \prod_{p \in U} \ms{F}_p$.
 	
-	We will show that this map is injective. Suppose two distinct functions $f, g \in \ms{F}(U)$, $f \neq g$ in $\ms{F}(U)$ but $f = g$ in $\prod_{p \in U} \ms{F}_p$. Then, $f = g$ in $\ms{F}_p$ for every $p \in U$. For each $p \in U$, since $f = g$ in $\ms{F}_p$, there exists an open set $V_p \subseteq U$ containing $p$ so that $f = g$ in $\ms{F}(V_p)$. By identity axiom, $\bigcup_{p \in U} V_p = U$ and $f = g$ in $\ms{F}(V_p)$ for every $p$, then $f = g$ in $\ms{F}(U)$. Contradiction.
+	We will show that this map is injective. Suppose two distinct functions $f, g \in \ms{F}(U)$, $f \neq g$ in $\ms{F}(U)$ but $f = g$ in $\prod_{p \in U} \ms{F}_p$. Then, $f = g$ in $\ms{F}_p$ for every $p \in U$. For each $p \in U$, since $f = g$ in $\ms{F}_p$, there exists an open set $V_p \subseteq U$ containing $p$ so that $f = g$ in $\ms{F}(V_p)$. By \textbf{identity axiom}, $\bigcup_{p \in U} V_p = U$ and $f = g$ in $\ms{F}(V_p)$ for every $p$, then $f = g$ in $\ms{F}(U)$. Contradiction.
 \end{proof}
 
 \begin{remark}
@@ -295,7 +297,7 @@
 
 
 \begin{proposition}[isomorphism are determined by stalks]
-	If $\phi_1, \phi_2: \ms{F} \to \ms{G}$ are morphisms of presheaves of sets that induce the same map on each stalk, show that $\phi_1 = \phi_2$
+	If $\phi_1, \phi_2: \ms{F} \to \ms{G}$ are morphisms from presheaf of sets $\ms{F}$ to sheaf of sets $\ms{G}$ that induce the same map on each stalk, show that $\phi_1 = \phi_2$
 \end{proposition}
 
 \begin{proof}
@@ -303,7 +305,7 @@
 	
 	\begin{center}
 		\begin{tikzcd}
-			\ms{F}(U) \arrow[r, "\phi_1(U)"'] \arrow[r, "\phi_2(U)", bend left] \arrow[d, hook] & \ms{G}(U) \arrow[d, hook] \\
+			\ms{F}(U) \arrow[r, "\phi_1(U)"'] \arrow[r, "\phi_2(U)", bend left] \arrow[d] & \ms{G}(U) \arrow[d, hook] \\
 			\prod_{p \in U} \ms{F}_p \arrow[r, "\bar{\phi}_p"]                                  & \prod_{p \in U} \ms{G}_p 
 		\end{tikzcd}
 	\end{center}
@@ -315,6 +317,17 @@
 	A morphism of sheaves of sets is an isomorphism if and only if it induces an isomorphism of all stalks
 \end{proposition}
 
-\begin{proof}
-	content...
-\end{proof}
+\begin{longproof}
+	($\implies$) By uniqueness of the induced map, for each $p \in X$, $\bar{\phi}_p: \ms{F}_p \to \ms{G}_p$ is an isomorphism.
+	
+	\begin{center}
+		\begin{tikzcd}
+			\ms{F}(U) \arrow[r, "\phi(U)"'] \arrow[d] \arrow[rr, "\id", bend left]            & \ms{G}(U) \arrow[d] \arrow[r, "\psi(U)"']  & \ms{F}(U) \arrow[d] \\
+			\ms{F}_p \arrow[r, "\bar{\phi}_p", dashed] \arrow[rr, "\id"', dashed, bend right] & \ms{G}_p \arrow[r, "\bar{\psi}_p", dashed] & \ms{F}_p           
+		\end{tikzcd}
+	\end{center}
+	
+	($\impliedby$)
+	
+	\note{TODO}
+\end{longproof}
