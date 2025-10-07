@@ -172,14 +172,20 @@
 		\begin{tikzcd}
 			\ms{F}(U) \arrow[r, "\phi(U)"] \arrow[d, "\res"] \arrow[dd, bend right] & \ms{G}(U) \arrow[d, "\res"] \arrow[dd, bend left] \\
 			\ms{F}(V) \arrow[r, "\phi(V)"] \arrow[d]                                & \ms{G}(V) \arrow[d]                               \\
-			\ms{F}_p \arrow[r, dashed]                                              & \ms{G}_p                                         
+			\ms{F}_p \arrow[r, "\bar{\phi}_p", dashed]                              & \ms{G}_p                                         
 		\end{tikzcd}
 	\end{center}
 	
 	$\ms{G}_p$ is the colimit on the right side, by the property of $\ms{F}_p$ being a colimit, there is a map $\ms{F}_p \to \ms{G}_p$ that is compatible with the diagram.
 	
-	\note{TODO - naturality}
+	\begin{center}
+		\begin{tikzcd}
+			\ms{F}(U) \arrow[r, "\phi(U)"'] \arrow[rr, "(\psi \phi)(U)", bend left]   & \ms{G}(U) \arrow[r, "\psi(U)"']            & \ms{H}(U) \\
+			\ms{F}_p \arrow[r, "\bar{\phi}_p", dashed] \arrow[rr, dashed, bend right] & \ms{G}_p \arrow[r, "\bar{\psi}_p", dashed] & \ms{H}_p 
+		\end{tikzcd}
+	\end{center}
 	
+	The process of passing $\phi$ into $\bar{\phi}_p$ is a functor due to the uniqueness of the induced maps.
 \end{proof}
 
 \begin{proposition}
@@ -217,9 +223,17 @@
 	Given a topological space $X$, if $U$ is an open set on $X$, then $\ms{F} \mapsto \ms{F}(U)$ defines an exact functor from presheaves of abelian groups into abelian groups.
 \end{proposition}
 
+\begin{proof}
+	\note{TODO}
+\end{proof}
+
 \begin{proposition}
 	A sequence of presheaves $0 \to \ms{F}_1 \to \ms{F}_2 \to ... \to \ms{F}_n \to 0$ is exact if and only if $0 \to \ms{F}_1(U) \to \ms{F}_2(U) \to ... \to \ms{F}_n(U) \to 0$ is exact for every open set $U$.
 \end{proposition}
+
+\begin{proof}
+	\note{TODO}
+\end{proof}
 
 \subsubsection{problem with sheaves}
 
@@ -244,7 +258,7 @@
 	Let $A = \set{z \in \C: 10 < |z| < 11} \cap \set{(x, y) \in \C: -1 < y}$ and $B = \set{z \in \C: 10 < |z| < 11} \cap \set{(x, y) \in \C: y < +1}$, then the identity function $z \mapsto z$ has logarithm on $A$ and $B$ but not on $A \cup B$
 \end{proof}
 
-\subsection{PROPERTIES DETERMINED AT THE LEVEL OF STALKS AND SHEAFIFICATION}
+\subsection{PROPERTIES DETERMINED AT THE LEVEL OF STALKS \\ SHEAFIFICATION}
 
 \subsubsection{properties determined at the level of stalks}
 
@@ -281,9 +295,26 @@
 
 
 \begin{proposition}[isomorphism are determined by stalks]
-	If $\phi_1, \phi_2: \ms{F} \to \ms{G}$ are morphism of presheaves of sets that induce the same map on each stalk, show that $\phi_1 = \phi_2$
+	If $\phi_1, \phi_2: \ms{F} \to \ms{G}$ are morphisms of presheaves of sets that induce the same map on each stalk, show that $\phi_1 = \phi_2$
 \end{proposition}
 
 \begin{proof}
-		\note{using morphism of sheaves to morphism of stalks a functor}
+	For every open set $U \subseteq X$, the diagram below commutes
+	
+	\begin{center}
+		\begin{tikzcd}
+			\ms{F}(U) \arrow[r, "\phi_1(U)"'] \arrow[r, "\phi_2(U)", bend left] \arrow[d, hook] & \ms{G}(U) \arrow[d, hook] \\
+			\prod_{p \in U} \ms{F}_p \arrow[r, "\bar{\phi}_p"]                                  & \prod_{p \in U} \ms{G}_p 
+		\end{tikzcd}
+	\end{center}
+	
+	$\ms{G}(U) \to \prod_{p \in U}\ms{G}_p$ being injective implies $\phi_2(U) = \phi_1(U)$
+\end{proof}
+
+\begin{proposition}[isomorphisms are determined by stalks]
+	A morphism of sheaves of sets is an isomorphism if and only if it induces an isomorphism of all stalks
+\end{proposition}
+
+\begin{proof}
+	content...
 \end{proof}
