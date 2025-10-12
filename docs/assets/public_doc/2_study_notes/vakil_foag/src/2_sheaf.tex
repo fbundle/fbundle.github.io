@@ -327,7 +327,48 @@
 		\end{tikzcd}
 	\end{center}
 	
-	($\impliedby$)
+	($\impliedby$) Since $\ms{G}(U) \to \prod_{p \in U} \ms{G}_p$ is injective, if $\phi(U)$ is not injective witnessed by distinct $a, b \in \ms{F}(U)$ being $\phi(U)(a) = \phi(U)(b)$, the diagram being commutative induces a contradiction from isomorphism $\prod_{p \in U} \ms{F}_p \to \prod_{p \in U} \ms{G}_p$ and composition $\ms{F}(U) \to \prod_{p \in U} \ms{F}_p \to \prod_{p \in U} \ms{G}_p$
 	
-	\note{TODO}
+	\begin{center}
+		\begin{tikzcd}
+			\ms{F}(U) \arrow[r, "\phi(U)"'] \arrow[d, hook] & \ms{G}(U) \arrow[d, hook] \\
+			\prod_{p \in U} \ms{F}_p \arrow[r, "\sim"]      & \prod_{p \in U} \ms{G}_p 
+		\end{tikzcd}
+	\end{center}
+
+	\note{TODO - show $\phi(U)$ being surjective}
 \end{longproof}
+
+
+\subsubsection{sheafification}
+
+\begin{definition}[sheafification]
+	If $\ms{F}$ is a presheaf on $X$, then a  morphism of presheaves $\sh: \ms{F} \to \ms{F}^{\sh}$ on $X$ is a sheafification of $\ms{F}$ if $\ms{F}^{\sh}$ is a sheaf and for any sheaf $\ms{G}$ and any presheaf morphism $g: \ms{F} \to \ms{G}$, there exists a unique morphism of sheaves $f: \ms{F}^{\sh} \to \ms{G}$ making the diagram below commutes
+	\begin{center}
+		\begin{tikzcd}
+			\ms{F} \arrow[r, "\sh"] \arrow[rd, "g"'] & \ms{F}^{\sh} \arrow[d, "f", dashed] \\
+			& \ms{G}                            
+		\end{tikzcd}
+	\end{center}
+\end{definition}
+
+\begin{remark}[sheafification as a left adjoint functor]
+	Given a topological sapce, let $U: \Sh \to \PSh$ be the forgetful functor from the category of sheaves into the category of presheaves, then $\sh: \PSh \to \Sh$ is the unique functor that is left adjoint to $U$, that is
+	$$
+		\Hom_{\Sh}(\sh A, B) \xrightarrow{\sim} \Hom_{\PSh}(A, U B)
+	$$
+	
+	for any presheaf $A$ and any sheaf $B$
+\end{remark}
+
+\begin{proposition}
+	Sheafification is a functor. Sheafification is unique up to isomorphism if exists. If $\ms{F}$ is a sheaf, then the sheafification is $\id: \ms{F} \to \ms{F}$
+\end{proposition}
+
+\begin{proof}
+	The proof is a direct consequence of universal property of sheafification.
+\end{proof}
+
+\begin{remark}[construction of sheafification]
+	\note{TODO}
+\end{remark}
