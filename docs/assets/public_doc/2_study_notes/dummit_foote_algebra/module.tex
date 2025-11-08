@@ -707,12 +707,15 @@ Consider whether given two $R$-modules $A$ and $B$, there exists a module $B$ su
 		
 		\item Two other equivalent characterizations of short exact sequence: Let $R$ be a ring, a short exact sequence \begin{tikzcd}0 \arrow[r] & A \arrow[r, "i", hook] & B \arrow[r, "p", two heads] & C \arrow[r] & 0\end{tikzcd} is called split if one of the following is true
 		\begin{enumerate}
-			\item there exists a map $\eps: B \to A$ such that $\eps i = 1_A$
+			\item there exists a map $\epsilon: B \to A$ such that $\epsilon i = 1_A$
+			\begin{comment}
 			\begin{center}
 				\begin{tikzcd}
 					0 \arrow[r] & A \arrow[r, "i", hook] & B \arrow[r, "p", two heads] \arrow[l, "\eps",  two heads, bend left] & C \arrow[r] & 0
 				\end{tikzcd}
 			\end{center}
+			\end{comment}
+
 			
 			\item there exists a map $\sigma: C \to B$ such that $p \sigma = 1_C$
 			\begin{center}
