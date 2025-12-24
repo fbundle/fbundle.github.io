@@ -2,6 +2,69 @@
 
 \section{DEFINITION OF SCHEME}
 
-\begin{definition}[scheme]
-	A scheme is a locally ringed space $(X, \ms{O})$ such that for every point $x \in X$, there is an open neighbourhood $U_x$ containing $x$ so that $(U_x, \ms{O}\vert_{U_x})$ is an affine scheme
+\begin{definition}[scheme, morphism of schemes]
+	A scheme is a locally ringed space $(X, \ms{O})$ such that for every point $x \in X$, there is an open neighbourhood $U_x$ containing $x$ so that $(U_x, \ms{O}\vert_{U_x})$ is an affine scheme. Morphism of schemes is morphism of locally ringed spaces.
 \end{definition}
+
+We obtain the category of schemes, denoted by $\Sch$
+
+\begin{definition}[scheme over $S$]
+	Let $S$ be a scheme, the category $(\Sch / S)$ of schemes over $S$ is the category where an object is a morphism of schemes $X \to S$ and a morphism is a morphism of schemes $X \to Y$ so that $X \to S$ factors through $Y$ by the map $X \to Y$
+	\begin{center}
+		\begin{tikzcd}
+			X \arrow[rr] \arrow[rd] &   & Y \arrow[ld] \\
+			& S &             
+		\end{tikzcd}
+	\end{center}
+	
+	The collection of morphisms from $X \to S$ into $Y \to S$ is denoted by $\Hom_S(X, Y)$. If $S = \Spec A$, we also call scheme over $S$ as scheme over $A$
+\end{definition}
+
+Since $\Spec \Z$ is a terminal object in the category of schemes, the category of schemes is canonically equivalent the category of schemes over $\Z$ \note{(proof for $\Spec \Z$ is terminal in next section)}
+
+\section{MORPHISM INTO AFFINE SCHEMES, GLUING OF MORPHISMS}
+
+\begin{definition}[open subscheme]
+	Let $(X, \ms{O}_X)$ be a scheme and $U \subseteq X$ be an open subset. Then, the locally ringed space $(U, \ms{O}_{X}\vert_U)$ is a scheme and we call it an open subscheme of $X$. If the 
+\end{definition}
+
+\begin{lemma}
+	Let $X$ be a scheme and $U, V$ be affine open subschemes of $X$. Then for every $x \in U \cap V$, there exists an open subscheme $W \subseteq U \cap V$ containing $x$ such that $W$ is principal open in $U$ as well as in $V$.
+\end{lemma}
+
+\begin{proposition}[gluing of morphisms]
+	Let $X, Y$ be locally ringed spaces. Then $U \mapsto \Hom(U, Y)$ sending open subset $U \subseteq X$ into the set of morphisms $(U, \ms{O}_X\vert_U) \to (Y, \ms{O}_Y)$ is a sheaf of sets on $X$.
+\end{proposition}
+
+In other words, if $X = \bigcup_i U_i$ is an open covering, then a family of morphisms $U_i \to Y$ glues into a morphism $X \to Y$ if and only if the morphisms coincide on intersections $U_i \cap U_j$ and the resulting morphism $X \to Y$ is uniquely determined.
+
+\note{TODO - proof idea - one can identify the morphism by map between stalks, it feels local hence gluable}
+
+\begin{proposition}
+	Let $X$ be a locally ringed space and $Y = \Spec A$ an affine scheme. Then, the natural map
+	\begin{align*}
+		\Hom(X, Y) &\to \Hom(A, \Gamma(X)) \\
+		(f, f^\flat) &\mapsto f^\flat_Y
+	\end{align*}
+	is a bijection.
+\end{proposition}
+
+\begin{proof}
+	\note{(TODO - use lemma above to prove for the case X is a scheme, full proof in EGAInew 1.6.3)}
+\end{proof}
+
+$\Spec \Z$ being terminal object in the category of schemes follows this proposition. Moreover, when $A = \Gamma(X)$, there corresponds to $\id_{\Gamma(X)}$ a morphism
+$$
+	c_X: X \to \Spec \Gamma(X)
+$$
+
+which we call canonical.
+
+\section{MORPHISM FROM $\Spec k$ INTO SCHEMES}
+
+
+
+
+
+
+
