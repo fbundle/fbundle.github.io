@@ -1,6 +1,6 @@
 \chapter{SCHEME}
 
-\section{DEFINITION OF SCHEME}
+\section{DEFINITION OF SCHEME AND MORPHISM OF SCHEMES}
 
 \begin{definition}[scheme, morphism of schemes]
 	A scheme is a locally ringed space $(X, \ms{O})$ such that for every point $x \in X$, there is an open neighbourhood $U_x$ containing $x$ so that $(U_x, \ms{O}\vert_{U_x})$ is an affine scheme. Morphism of schemes is morphism of locally ringed spaces.
@@ -22,7 +22,7 @@ We obtain the category of schemes, denoted by $\Sch$
 
 Since $\Spec \Z$ is a terminal object in the category of schemes, the category of schemes is canonically equivalent the category of schemes over $\Z$ \note{(proof for $\Spec \Z$ is terminal in next section)}
 
-\section{MORPHISM INTO AFFINE SCHEMES, GLUING OF MORPHISMS}
+\section{GLUING OF MORPHISMS}
 
 \begin{definition}[open subscheme]
 	Let $(X, \ms{O}_X)$ be a scheme and $U \subseteq X$ be an open subset. Then, the locally ringed space $(U, \ms{O}_{X}\vert_U)$ is a scheme and we call it an open subscheme of $X$. If the 
@@ -60,7 +60,9 @@ $$
 
 which we call canonical.
 
-\section{MORPHISM FROM AFFINE POINT}
+\section{SOME BASIC MORPHISMS}
+
+\subsection{MORPHISM FROM AFFINE POINT}
 
 Let $X$ be a scheme. Let $x \in X$ and $U \subseteq X$ be an affine open subscheme of $x$, let $U = \Spec A$. Let $\mf{p} \in \Spec A$ corresponds to $x$. Then, the natural map $A \to A_\mf{p}$ induces a morphism
 $$
@@ -106,7 +108,7 @@ Moreover, $f: \Spec k \to X$ factors through $i_x: \kappa(x) \to X$ \note{(this 
 	$$
 \end{proposition}
 
-\section{MORPHISM INTO AFFINE POINT}
+\subsection{MORPHISM INTO AFFINE POINT}
 
 \note{(from Borcherds lecture on gluing schemes)}
 
@@ -165,7 +167,7 @@ Gluing of morphisms implies the universal property of gluing schemes
 
 \note{(the book requires each $\xi_i$ is an isomorphism into its image but it's clearly not required)}
 
-\section{SOME EXAMPLES OF GLUING SCHEMES}
+\subsection{SOME EXAMPLES OF GLUING SCHEMES}
 
 \textbf{example:} (gluing two schemes) When the index set $I = \set{1, 2}$, any two open subsets $U_{12} \subseteq U_1$ and $U_{21} \subseteq U_2$ and an isomorphism $\phi: U_{12} \xrightarrow{\sim} U_{21}$ is a gluing of schemes. Let $X$ be the glued scheme, for any open subset $V \subseteq X$, we have
 $$
@@ -193,7 +195,9 @@ $$
 
 This scheme is called projective space of relative dimension $n$ over $R$. We consider the open subscheme $U_i$ of $\PP^n_R$ and denoted them by $D_+(X_i)$. The canonical ring morphism $R \to \Gamma(\PP^n_R)$ is an ismorphism. Hence, projective space is not affine.
 
-\section{BASIC PROPERTIES - TOPOLOGICAL PROPERTIES}
+\section{BASIC PROPERTIES OF SCHEME AND MORPHISM OF SCHEMES}
+
+\subsection{TOPOLOGICAL PROPERTIES}
 
 \begin{definition}[connected, quasi-compact, irreducible]
 	A scheme is called connected/quasi-compact/irreducible if the underlying topological space is connected/quasi-compact/irreducible.	
@@ -207,7 +211,7 @@ This scheme is called projective space of relative dimension $n$ over $R$. We co
 	A morphism of schemes $f: X \to Y$ is called open/closed/homeomorphism if the underlying continuous map is open/closed/homeomorphism.
 \end{definition}
 
-\section{BASIC PROPERTIES - NOETHERIAN SCHEMES}
+\subsection{NOETHERIAN SCHEMES}
 
 
 
