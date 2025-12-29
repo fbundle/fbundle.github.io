@@ -36,7 +36,7 @@ Since $\Spec \Z$ is a terminal object in the category of schemes, the category o
 	Let $X, Y$ be locally ringed spaces. Then $U \mapsto \Hom(U, Y)$ sending open subset $U \subseteq X$ into the set of morphisms $(U, \ms{O}_X\vert_U) \to (Y, \ms{O}_Y)$ is a sheaf of sets on $X$.
 \end{proposition}
 
-In other words, if $X = \bigcup_i U_i$ is an open covering, then a family of morphisms $U_i \to Y$ glues into a morphism $X \to Y$ if and only if the morphisms coincide on intersections $U_i \cap U_j$ and the resulting morphism $X \to Y$ is uniquely determined.
+In other words, if $X = \bigcup_i U_i$ is an open covering, then a family of morphisms $U_i \to Y$ glues into a morphism $X \to Y$ if and only if the morphisms coincide on intersections $U_i \cap U_j$. Moreover, in that case, the resulting morphism $X \to Y$ is uniquely determined.
 
 \note{TODO - proof idea - one can identify the morphism by map between stalks, it feels local hence gluable}
 
@@ -60,7 +60,166 @@ $$
 
 which we call canonical.
 
-\section{MORPHISM FROM $\Spec k$ INTO SCHEMES}
+\section{MORPHISM FROM AFFINE POINT}
+
+Let $X$ be a scheme. Let $x \in X$ and $U \subseteq X$ be an affine open subscheme of $x$, let $U = \Spec A$. Let $\mf{p} \in \Spec A$ corresponds to $x$. Then, the natural map $A \to A_\mf{p}$ induces a morphism
+$$
+	j_x: \Spec \ms{O}_{X, x} = \Spec A_\mf{p} \to \Spec A = U \subseteq X
+$$
+
+(\note{here, stalk at $x \in X$ is the same as stalk at $x \in X$ because stalk is defined as colimit, so it doesn't matter if we restrict to $U$ or not - Görtz - Wedhorn didn't explain it clearly, so below is my attempt \footnote{math.SE \url{https://math.stackexchange.com/q/5116709/700122}}})
+
+\begin{proof}[proof for $j_x: \Spec \ms{O}_{X, x} \to X$ being independent of choice of $U$]
+	Let $U$ and $V$ be two open affine subschemes containing $x$, let $U = \Spec A$ and $V = \Spec B$, let $\mf{p} \in \Spec A$ and $\mf{q} \in \Spec B$ correspond to $x$. Then $A_\mf{p} = B_\mf{q}$ and we have two maps $j^U_{x}: \Spec \ms{O}_{X, x} \to U$ and $j^V_{x}: \Spec \ms{O}_{X, x} \to V$. By definition, $\ms{O}_{X, x}$ is the colimit of functor $\ms{O}_X$ from the category of open sets containing $x$. Since the contravariant functor $\Spec$ is fully faithful, it preserves limits, $\Spec \ms{O}_{X, x}$ is the limit of the functor $\Spec \ms{O}_X$. By universal property of limit, let $W = U \cap V$, then $j^U_x$ and $j^V_x$ factor through a unique map $\Spec \ms{O}_{X, x} \to W$ into their intersection and inclusions of schemes $W \hookrightarrow U$ and $W \hookrightarrow V$
+	\begin{center}
+		\begin{tikzcd}
+			& \ms{O}_{X}(U) \arrow[d] \arrow[ld] &                                                               & U                                 \\
+			{\ms{O}_{X, x}} & \ms{O}_{X}(W) \arrow[l, dashed]    & {\Spec \ms{O}_{X, x}} \arrow[ru] \arrow[rd] \arrow[r, dashed] & W \arrow[u, hook] \arrow[d, hook] \\
+			& \ms{O}_{X}(V) \arrow[u] \arrow[lu] &                                                               & V                                
+		\end{tikzcd}
+	\end{center}
+\end{proof}
+
+Image of $j_x$ in $X$ is the intersection of all open subsets containing $x$ \note{(consider the map $A \to A_\mf{p}$, its kernel is $\mf{a} = \set{a \in A: as = 0 \text{ for some } s \notin \mf{p}}$. Hence, the image of $j_x$ are those primes in $A$ containing $\mf{a}$, ...)}
+
+Let $\kappa(x) = \ms{O}_{X,x} / \mf{m}_x$ be the residue field at $x$, we obtain the map of schemes
+$$
+	i_x: \Spec \kappa(x) \to \Spec \ms{O}_{X,x} \to X
+$$
+
+which is called canonical. The image point of $i_x$ in $X$ is $x$.
+
+Now let $k$ be a field and $f: \Spec k \to X$ be a map, let $x$ be the image point on $X$ of the singleton $p \in \Spec k$. The map $f$ induces a map on stalks $f^\#_p: \ms{O}_{X, x} \to \ms{O}_{\Spec k, p} = k$. Since $\ms{O}_{X, x}$ is local, $\ms{O}_{X, x} \to k$ factors through $\ms{O}_{X, x} \to \kappa(x)$. Hence, $\Spec k \to \Spec \ms{O}_{X, x}$ factors through $\Spec \kappa(x) \to \Spec \ms{O}_{X, x}$.
+\begin{center}
+	\begin{tikzcd}
+		\kappa(x) \arrow[d, dashed] & {\ms{O}_{X, x}} \arrow[ld, "f^\#_p"] \arrow[l] & \Spec \kappa(x) \arrow[r] \arrow[rr, "i_x", bend left] & {\Spec \ms{O}_{X, x}} \arrow[r] & X \\
+		k                           &                                                & \Spec k \arrow[ru] \arrow[u, dashed] \arrow[rru, "f"'] &                                 &  
+	\end{tikzcd}
+\end{center}
+
+Moreover, $f: \Spec k \to X$ factors through $i_x: \kappa(x) \to X$ \note{(this is very nice but the book didn't explain clearly why $i_x$ has such a nice property - I guess what's outside a proof is informal)}
+
+\begin{proposition}
+	There is a bijection of sets
+	$$
+		\Hom(\Spec k, X) \to X \times \Hom(\kappa(x), k)
+	$$
+\end{proposition}
+
+\section{MORPHISM INTO AFFINE POINT}
+
+\note{(from Borcherds lecture on gluing schemes)}
+
+Let $k$ be a field and $R$ be a ring, the map $\Spec R \to \Spec k$ that factors through $\Spec k[x]$ corresponds to an element of $R$, that is, a regular function on the global section of $\Spec R$
+
+\begin{center}
+	\begin{tikzcd}
+		R                             &                         & {k[x]} \arrow[ll]       &                         &         &                         \\
+		& k \arrow[lu] \arrow[ru] &                         &                         &         &                         \\
+		\Spec R \arrow[rr] \arrow[rd] &                         & {\Spec k[x]} \arrow[ld] & X \arrow[rr] \arrow[rd] &         & {\Spec k[x]} \arrow[ld] \\
+		& \Spec k                 &                         &                         & \Spec k &                        
+	\end{tikzcd}
+\end{center}
+
+Similar, any map from scheme $X$ into $\Spec k$ that factors through $\Spec k[x]$ is a regular function on global section of $X$ since $X$ can be covered by affine open subschemes.
+
+\section{GLUING SCHEMES, DISJOINT UNION OF SCHEMES}
+
+\begin{definition}[gluing of schemes]
+	A gluing of schemes consists of the following data: given an index set $I$
+	\begin{itemize}
+		\item for all $i \in I$, a scheme $U_i$
+		\item for all $i,j  \in I$, an open subscheme $U_{ij} \subseteq U_i$ such that $U_{ii} = U_i$ for all $i \in I$
+		\item for all $i, j \in I$, an isomorphism $\phi_{ji}: U_{ij} \to U_{ji}$ of schemes such that the cocycle condition holds
+		$$
+			\phi_{kj} \phi_{ji} = \phi_{ki}
+		$$
+		
+		on $U_{ij} \cap U_{ik}$ for all $i, j, k \in I$ if $\phi_{ji}(U_{ij} \cap U_{ik}) \subseteq U_{jk}$
+	\end{itemize}
+\end{definition}
+
+For $i = j = k$, the cocycle condition implies that $\phi_{ii} = \id_{U_i}$ and for $i = k$, $\phi^{-1}_{ij} = \phi_{ji}$ and that $\phi_{ji}$ is an isomorphism $U_{ij} \cap U_{ik} \to U_{ji} \cap U_{jk}$
+
+\note{(it looks like we can make the definition a bit stronger by imposing cocycle condition on those overlapped region where it makes sense, for example $\phi_{ji}(U_{ij} \cap U_{ik}) \cap U_{jk}$, but somehow the authors didn't do so, I don't understand now, will do later)}
+
+\begin{proposition}
+	Given a gluing of schemes, there exists a scheme $X$ together with morphism $\psi: U_i \to X$ such that
+	\begin{itemize}
+		\item for all $i \in I$, the map $\psi_i$ is an isomorphism from $U_i$ into an open subscheme of $X$
+		\item $\psi_j \phi_{ji} = \psi_i$ on $U_{ij}$ for all $i, j \in I$
+		\item $X = \bigcup_{i \in I} \psi_i(U_i)$
+		\item $\psi_i (U_i) \cap \psi_j (U_j) = \psi_i (U_{ij}) = \psi_j (U_{ji})$ for all $i, j \in I$
+	\end{itemize}
+	
+	Furthermore, $(X, \psi_i)$ is unique up to unique isomorphism.
+\end{proposition}
+
+\note{(there's a similar result in differential manifold using sheaf. it seems like sheaf is the categorical notion tool for gluing, just like morphism is the categorial notion of mapping, (co)limit is the categorical notion of sequential limit)}
+
+Gluing of morphisms implies the universal property of gluing schemes
+
+\begin{remark}[universal property of gluing schemes]
+	If $T$ is a scheme and for every $i \in I$, there is a map $\xi_i: U_i \to T$ such that $\xi_j \phi_{ji} = \xi_i$ on $U_{ij}$ for all $i, j \in I$, then there exists a unique morphism $\xi: X \to T$ with $\xi \psi_i = \xi_i$ for every $i \in I$
+\end{remark}
+
+\note{(the book requires each $\xi_i$ is an isomorphism into its image but it's clearly not required)}
+
+\section{SOME EXAMPLES OF GLUING SCHEMES}
+
+\textbf{example:} (gluing two schemes) When the index set $I = \set{1, 2}$, any two open subsets $U_{12} \subseteq U_1$ and $U_{21} \subseteq U_2$ and an isomorphism $\phi: U_{12} \xrightarrow{\sim} U_{21}$ is a gluing of schemes. Let $X$ be the glued scheme, for any open subset $V \subseteq X$, we have
+$$
+	\Gamma(V, \ms{O}_X) = \set{(s1, s2) \in \Gamma(V \cap U_1, \ms{O}_{U_1}) \times \Gamma(V \cap U_2, \ms{O}_{U_2}): \phi^\flat(s_2\vert_{V \cap U_{21}}) = s_1 \vert_{V \cap U_{12}}}
+$$
+
+\note{(this is just a pushout/colimit in schemes and pullback/limit in rings)}
+
+\textbf{example:} (affine line with double origin) Let $k$ be a field, let $U_1 = U_2 = \Spec k[x]$, let $U_{12} = U_{21} = \Spec k[x] - \set{(x)}$ and the gluing morphism $U_{12} \to U_{21}$ the identity map. The global section is $\Gamma(\ms{O}_X) = k[x]$ (\note{exercise 3.26 -> showing $X$ is not affine})
+
+\textbf{example:} (projective space) Let $R$ be a ring. Define the projective space $\PP^n_R$ over $R$ by gluing $n+1$ copies of affine space $\Aff^n_R$, that is, $U_i = \Aff^n_R$ for $i=0, ..., n$. For convenience, let
+$$
+	A^i =R[y_0, ..., \hat{y}_i, ..., y_n]
+$$
+
+($\hat{y}_i$ means $y_i$ is ommited) and we can view these rings as subring of $R[x_0, ..., x_n, x_0^{-1}, ..., x_n^{-1}]$ by the inclusion $y_j \mapsto x_j x_i^{-1}$, then $U_i = \Spec A^i$. For each pair $i \neq j$, set $U_{ij}$ to be the principal open set $D(y_j) = A^i_{y_j} = A^i[y_j^{-1}]$, let the gluing map $\phi_{ji}: U_{ij} \to U_{ji}$ be induced by the equality $A^i_{y_j} \to A^j_{y_i}$ in $R[x_0, ..., x_n, x_0^{-1}, ..., x_n^{-1}]$ as follows:
+
+\begin{center}
+	\begin{tikzcd}
+		{A^i_{y_j} = R[y_0, ..., \hat{y}_i, ..., y_n, y_j^{-1}]} \arrow[rrdd] &              &                                             &              & {A^j_{y_i} = R[y_0, ..., \hat{y}_i, ..., y_n, y_i^{-1}]} \arrow[lldd] \\
+		y_j^{-1} \arrow[rd, maps to]                                          &              &                                             &              & y_i^{-1} \arrow[ld, maps to]                                          \\
+		& x_j^{-1} x_i & {R[x_0, ..., x_n, x_0^{-1}, ..., x_n^{-1}]} & x_i^{-1} x_j &                                                                      
+	\end{tikzcd}
+\end{center}
+
+This scheme is called projective space of relative dimension $n$ over $R$. We consider the open subscheme $U_i$ of $\PP^n_R$ and denoted them by $D_+(x_i)$. The canonical ring morphism $R \to \Gamma(\PP^n_R)$ is an ismorphism. Hence, projective space is not affine.
+
+\section{BASIC PROPERTIES - TOPOLOGICAL PROPERTIES}
+
+\begin{definition}[connected, quasi-compact, irreducible]
+	A scheme is called connected/quasi-compact/irreducible if the underlying topological space is connected/quasi-compact/irreducible.	
+\end{definition}
+
+\begin{definition}[injective, surjective, bijective]
+	A morphism of schemes $f: X \to Y$ is called injective/surjective/bijective if the underlying set function is injective/surjective/bijective.
+\end{definition}
+
+\begin{definition}[open, closed, homeomorphism]
+	A morphism of schemes $f: X \to Y$ is called open/closed/homeomorphism if the underlying continuous map is open/closed/homeomorphism.
+\end{definition}
+
+\section{BASIC PROPERTIES - NOETHERIAN SCHEMES}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

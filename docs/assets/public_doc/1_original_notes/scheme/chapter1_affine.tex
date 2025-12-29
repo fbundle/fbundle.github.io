@@ -35,9 +35,58 @@ If $D(g) \subseteq D(f)$, that is $g \in \sqrt{(f)}$, $g^n = fh$ for some $h \in
 
 Under this construction, $(X, \ms{O})$ is an affine scheme. An element $f \in A$ is called \textbf{function}, a element $x \in X$ is called \textbf{point}, when refering $x$ as a prime ideal in $A$, we write $\mf{p}_x \subseteq A$, and function evaluation is equivalent to sending $f$ to the residue field of stalk $\ms{O}_X = A_{\mf{p}_x}$.
 
-When $A$ is a polynomial ring of $n$ variables over ring $R$, we write $\A^n_R = \Spec A$
+When $A$ is a polynomial ring of $n$ variables over ring $R$, we write $\Aff^n_R = \Spec A$
+
+\note{(I see many proofs, people assumed that open set is just principle open set. maybe the argument generalizes easily to general open set. anyway, if needed, below is the defintion of sheaf on open set)}
+
+On $\Spec A$, any open set is of the form
+$$
+	D(S) = \set{\mf{p} \in \Spec A: \mf{p} \cap S = \emptyset}
+$$
+
+for some multiplicatively closed subset $S \subseteq A$. An the ring over $D(S)$ is
+$$
+	\ms{O}(D(S)) = S^{-1} A
+$$
+
+If $D(T) \subseteq D(S)$, then $S \subseteq T$, the restriction map is the canonical map
+\begin{align*}
+	\ms{O}(D(S)) &\to \ms{O}(D(T)) \\
+	S^{-1} A &\to T^{-1} A \\
+	\frac{a}{s} &\mapsto \frac{a}{s}
+\end{align*}
+
+Note that, this map corresponds to the inclusion of affine schemes
+$$
+	D(T) \hookrightarrow D(S)
+$$
+
+
 
 \section{SOME EXAMPLES OF AFFINE SCHEME}
+
+\begin{remark}[irreducible]
+	A topological space $X$ is reducible if it can be written as a union $X = X_1 \cup X_2$ of two non-empty proper closed subsets.
+	
+	\begin{enumerate}
+		\item A topological space is irreducible if it is not reducible. Equivalently, $X$ is irreducible if all non-empty open sets of $X$ are dense or any two non-empty open sets have non-empty intersection.
+		
+		\item A subset $F$ of topological space $X$ is reducible or irreducible if $F$ as a subspace is reducible or irreducible, respectively.
+		
+		\item An irreducible component is a maximal irreducible subset.	
+	\end{enumerate}
+
+\end{remark}
+
+\begin{remark}[closed, generic, specialization, generization, maximal]
+	Let $X$ be a topological space
+	\begin{enumerate}
+		\item A point $x \in X$ is called closed if $\set{x} \subseteq X$ is closed
+		\item A point $\eta \in X$ is called generic if $\overline{\set{\eta}} = X$
+		\item Let $x, y \in X$, $y$ is called a specialization of $x$ if $y \in \overline{\set{x}}$. In that case, $x$ is called generization of $y$
+		\item A point $x \in X$ is called maximal if $\overline{\set{x}}$ is an irreducible component of $X$
+	\end{enumerate}
+\end{remark}
 
 \textbf{example:} (integers) Let $A = \Z$, then
 $$
@@ -53,7 +102,7 @@ $$
 
 is a singleton set.
 
-\textbf{example:} (polynomial ring of two variables over an algebraically closed field) Let $A$ be an arbitrary ring, maximal ideals are closed points and other non-maximal primes are generic points. Moreover, the closure of a point $\mf{p}$ is the set of prime ideals containing $\mf{p}$
+\textbf{example:} (polynomial ring of two variables over an algebraically closed field) Let $A$ be an arbitrary ring, maximal ideals are closed points. Moreover, the closure of a point $\mf{p}$ is the set of prime ideals containing $\mf{p}$
 $$
 	V(\mf{p}) = \set{\mf{q} \in \Spec A: \mf{p} \subseteq \mf{q}}
 $$
@@ -179,3 +228,19 @@ Categorically, $A \times B$ is product in rings and $\Spec A \amalg \Spec B$ is 
 \end{align*}
 
 for every $a, b \in k$ and $f$ is irreducible other than multiple of $y^2 - x$. \note{(check this carefully)}. 
+
+
+\textbf{example:} (inclusion of open subschemes) Let $A$ be a ring, and $U \subseteq V \subseteq \Spec A$ be open sets. Then, the inclusion map of open affine subschemes corresponds to the canonical ring map between global sections.
+
+\begin{align*}
+	U &\hookrightarrow V \\
+	\ms{O}(U) &\leftarrow \ms{O}(V)
+\end{align*}
+
+If $U = D(T)$ and $V = D(S)$, then $S \subseteq T$ and the canonical ring map is
+\begin{align*}
+	S^{-1} A = \ms{O}(V) &\to T^{-1} A = \ms{O}(U) \\
+		\frac{a}{s} &\mapsto \frac{a}{s}
+\end{align*}
+
+In particular, the affine scheme map induced from $\Spec A \to S^{-1} A = \Spec \ms{O}(V)$ is precisely $V \hookrightarrow \Spec A$
