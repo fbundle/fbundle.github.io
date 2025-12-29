@@ -178,20 +178,20 @@ $$
 
 \textbf{example:} (projective space) Let $R$ be a ring. Define the projective space $\PP^n_R$ over $R$ by gluing $n+1$ copies of affine space $\Aff^n_R$, that is, $U_i = \Aff^n_R$ for $i=0, ..., n$. For convenience, let
 $$
-	A^i =R[y_0, ..., \hat{y}_i, ..., y_n]
+	A^i = R[Y_0, ..., \widehat{Y}_i, ..., Y_n]
 $$
 
-($\hat{y}_i$ means $y_i$ is ommited) and we can view these rings as subring of $R[x_0, ..., x_n, x_0^{-1}, ..., x_n^{-1}]$ by the inclusion $y_j \mapsto x_j x_i^{-1}$, then $U_i = \Spec A^i$. For each pair $i \neq j$, set $U_{ij}$ to be the principal open set $D(y_j) = A^i_{y_j} = A^i[y_j^{-1}]$, let the gluing map $\phi_{ji}: U_{ij} \to U_{ji}$ be induced by the equality $A^i_{y_j} \to A^j_{y_i}$ in $R[x_0, ..., x_n, x_0^{-1}, ..., x_n^{-1}]$ as follows:
+($\widehat{Y}_i$ means $Y_i$ is ommited) and we can view these rings as subring of $R[X_0, ..., X_N, X_0^{-1}, ..., X_N^{-1}]$ by the inclusion $Y_j \mapsto X_j X_i^{-1}$, then $U_i = \Spec A^i$. For each pair $i \neq j$, set $U_{ij}$ to be the principal open set $D(Y_j) = A^i[Y_j^{-1}]$, let the gluing map $\phi_{ji}: U_{ij} \to U_{ji}$ be induced by the equality $A^i_{Y_j} \to A^j_{Y_i}$ in $R[X_0, ..., X_N, X_0^{-1}, ..., X_N^{-1}]$ as follows:
 
 \begin{center}
 	\begin{tikzcd}
-		{A^i_{y_j} = R[y_0, ..., \hat{y}_i, ..., y_n, y_j^{-1}]} \arrow[rrdd] &              &                                             &              & {A^j_{y_i} = R[y_0, ..., \hat{y}_i, ..., y_n, y_i^{-1}]} \arrow[lldd] \\
-		y_j^{-1} \arrow[rd, maps to]                                          &              &                                             &              & y_i^{-1} \arrow[ld, maps to]                                          \\
-		& x_j^{-1} x_i & {R[x_0, ..., x_n, x_0^{-1}, ..., x_n^{-1}]} & x_i^{-1} x_j &                                                                      
+		{A^i[Y_j^{-1}] = R[Y_0, ..., \widehat{Y}_I, ..., Y_N, Y_j^{-1}]} \arrow[rdd] &                                             & {A^j[Y_i^{-1}] = R[Y_0, ..., \widehat{Y}_I, ..., Y_N, Y_i^{-1}]} \arrow[ldd] \\
+		Y_j^{-1} \arrow[d, maps to]                                              &                                             & Y_i^{-1} \arrow[d, maps to]                                              \\
+		X_j^{-1} X_i                                                             & {R[X_0, ..., X_N, X_0^{-1}, ..., X_N^{-1}]} & X_i^{-1} X_j                                                            
 	\end{tikzcd}
 \end{center}
 
-This scheme is called projective space of relative dimension $n$ over $R$. We consider the open subscheme $U_i$ of $\PP^n_R$ and denoted them by $D_+(x_i)$. The canonical ring morphism $R \to \Gamma(\PP^n_R)$ is an ismorphism. Hence, projective space is not affine.
+This scheme is called projective space of relative dimension $n$ over $R$. We consider the open subscheme $U_i$ of $\PP^n_R$ and denoted them by $D_+(X_i)$. The canonical ring morphism $R \to \Gamma(\PP^n_R)$ is an ismorphism. Hence, projective space is not affine.
 
 \section{BASIC PROPERTIES - TOPOLOGICAL PROPERTIES}
 
@@ -208,6 +208,8 @@ This scheme is called projective space of relative dimension $n$ over $R$. We co
 \end{definition}
 
 \section{BASIC PROPERTIES - NOETHERIAN SCHEMES}
+
+
 
 
 
