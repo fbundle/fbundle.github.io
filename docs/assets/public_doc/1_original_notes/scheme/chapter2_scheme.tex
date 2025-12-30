@@ -29,7 +29,7 @@ Since $\Spec \Z$ is a terminal object in the category of schemes, the category o
 \end{definition}
 
 \begin{lemma}
-	Let $X$ be a scheme and $U, V$ be affine open subschemes of $X$. Then for every $x \in U \cap V$, there exists an open subscheme $W \subseteq U \cap V$ containing $x$ such that $W$ is principal open in $U$ as well as in $V$.
+	Let $X$ be a scheme and $U, V$ be open affine subschemes of $X$. Then for every $x \in U \cap V$, there exists an open subscheme $W \subseteq U \cap V$ containing $x$ such that $W$ is principal open in $U$ as well as in $V$.
 \end{lemma}
 
 \begin{proposition}[gluing of morphisms]
@@ -64,7 +64,7 @@ which we call canonical.
 
 \subsection{MORPHISM FROM AFFINE POINT}
 
-Let $X$ be a scheme. Let $x \in X$ and $U \subseteq X$ be an affine open subscheme of $x$, let $U = \Spec A$. Let $\mf{p} \in \Spec A$ corresponds to $x$. Then, the natural map $A \to A_\mf{p}$ induces a morphism
+Let $X$ be a scheme. Let $x \in X$ and $U \subseteq X$ be an open affine subscheme of $x$, let $U = \Spec A$. Let $\mf{p} \in \Spec A$ corresponds to $x$. Then, the natural map $A \to A_\mf{p}$ induces a morphism
 $$
 	j_x: \Spec \ms{O}_{X, x} = \Spec A_\mf{p} \to \Spec A = U \subseteq X
 $$
@@ -99,7 +99,7 @@ Now let $k$ be a field and $f: \Spec k \to X$ be a map, let $x$ be the image poi
 	\end{tikzcd}
 \end{center}
 
-Moreover, $f: \Spec k \to X$ factors through $i_x: \kappa(x) \to X$ \note{(this is very nice but the book didn't explain clearly why $i_x$ has such a nice property - I guess what's outside a proof is informal)}
+Moreover, $f: \Spec k \to X$ factors through $i_x: \kappa(x) \to X$ \note{(this is very nice but GW didn't explain clearly why $i_x$ has such a nice property - I guess what's outside a proof is informal)}
 
 \begin{proposition}
 	There is a bijection of sets
@@ -123,7 +123,7 @@ Let $k$ be a field and $R$ be a ring, the map $\Spec R \to \Spec k$ that factors
 	\end{tikzcd}
 \end{center}
 
-Similar, any map from scheme $X$ into $\Spec k$ that factors through $\Spec k[x]$ is a regular function on global section of $X$ since $X$ can be covered by affine open subschemes.
+Similar, any map from scheme $X$ into $\Spec k$ that factors through $\Spec k[x]$ is a regular function on global section of $X$ since $X$ can be covered by open affine subschemes.
 
 \section{GLUING SCHEMES, DISJOINT UNION OF SCHEMES}
 
@@ -165,7 +165,7 @@ Gluing of morphisms implies the universal property of gluing schemes
 	If $T$ is a scheme and for every $i \in I$, there is a map $\xi_i: U_i \to T$ such that $\xi_j \phi_{ji} = \xi_i$ on $U_{ij}$ for all $i, j \in I$, then there exists a unique morphism $\xi: X \to T$ with $\xi \psi_i = \xi_i$ for every $i \in I$
 \end{remark}
 
-\note{(the book requires each $\xi_i$ is an isomorphism into its image but it's clearly not required)}
+\note{(GW requires each $\xi_i$ is an isomorphism into its image but it's clearly not required)}
 
 \subsection{SOME EXAMPLES OF GLUING SCHEMES}
 
@@ -197,11 +197,65 @@ This scheme is called projective space of relative dimension $n$ over $R$. We co
 
 \section{BASIC PROPERTIES OF SCHEME AND MORPHISM OF SCHEMES}
 
+
+\subsection{ON LOCAL PROPERTIES}
+
+In commutative algebra, one often observes many properties called local property in which a property on ring $A$ propagate into its prime ideals and maximal ideals. Below is an example
+\begin{remark}[being zero is a local property]
+	Let $A$ be a ring, let $x \in A$, then the following are equivalent
+	\begin{enumerate}
+		\item $x = 0$ in $A$
+		\item $x = 0$ in $A_\mf{p}$ for every prime ideal $\mf{p}$
+		\item $x = 0$ in $A_\mf{m}$ for every maximal $\mf{m}$
+	\end{enumerate}
+\end{remark}
+
+There is an equivalent notion of local property. Since GW did not discuss it, Vakil only briefly mentioned it, below is my attempt to properly define local property: A property $P$ on some collection of objects is a subset of the collection, if an object $X$ belong to the subset, we said $X$ has property $P$ or $X$ is $P$ or $P(X)$
+
+
+\begin{definition}[stalk-local]
+	Let $X$ be a scheme and let $P$ be a property on schemes. $P$ is called stalk-local if there exists a property $Q$ on stalks of schemes such that $P(X) \iff Q(\ms{O}_{X, x})$ for every $x \in X$
+\end{definition}
+
+stalk-local property on schemes are the equivalence of local property on rings.
+
+\begin{definition}[affine-local]
+	Let $X$ be a scheme and let $P$ be a property on schemes $P$ is called affine-local if
+	\begin{enumerate}
+		\item (locality) if $P(X)$, then $P(U)$ for every open affine subscheme $U \subseteq X$
+		\item (gluability) if $\set{U_i}_{i \in I}$ is an open affine cover of $X$ and $P(U_i)$ for every $i \in I$, then $P(X)$
+	\end{enumerate}
+\end{definition}
+
+If we replace open affine subsets by open set, we say that $P$ is open-local. However,  the open affine sets generate the topology on $X$, it is easy to show that open-local and affine-local are equivalent. It is also clear that stalk-local implies affine-local.
+
+Side note on sheaf: \note{(somehow I just randomly admire the beauty of sheaf)}
+\begin{proposition}[sections are determined by germs]
+	Let $\ms{F}$ be a sheaf on $X$ and $U \subseteq X$ be an open set, then the canonical map from sections to stalks is injective
+	$$
+	\ms{F}(U) \to \prod_{x \in U} \ms{F}_x
+	$$
+\end{proposition}
+
+This property has two important implications:
+\begin{enumerate}
+	\item A sheaf $\ms{F}$ on $X$ is completely determined by its étale space $E = \coprod_{x \in X} \ms{F}_x$ \footnote{topologized by the weakest topology generated by all compatible germs $(s_x)_{x \in U}$ for some $s \in \ms{F}(U)$}
+	
+	\item A section $s \in \ms{F}(U)$ is zero if and only if $s$ is zero on all stalks on $U$
+\end{enumerate}
+
+Back to local property, when $X = \Spec A$, then being zero is stalk-local.
+
+\note{(I will mumble something that I am not an expert in, so this is likely wrong)}
+Another subtle issue is these local definitions use higher order logic.
+
 \subsection{TOPOLOGICAL PROPERTIES}
 
 \begin{definition}[connected, quasi-compact, irreducible]
 	A scheme is called connected/quasi-compact/irreducible if the underlying topological space is connected/quasi-compact/irreducible.	
 \end{definition}
+
+All affine schemes are quasi-compact.
 
 \begin{definition}[injective, surjective, bijective]
 	A morphism of schemes $f: X \to Y$ is called injective/surjective/bijective if the underlying set function is injective/surjective/bijective.
@@ -213,10 +267,113 @@ This scheme is called projective space of relative dimension $n$ over $R$. We co
 
 \subsection{NOETHERIAN SCHEMES}
 
+\begin{definition}[locally Noetherian, Noetherian]
+	A scheme $X$ is called locally Noetherian if every open affine subscheme $U \subseteq X$ is a Noetherian ring. A quasi-compact locally Noetherian scheme is called Noetherian.
+\end{definition}
 
+Localization of Noetherian rings is Noetherian, hence a stalk of a locally Noetherian scheme is a Noetherian ring and every affine scheme of a Noetherian ring is Noetherian. However, being Noetherian scheme is not stalk-local, the converse statement is false.
 
+\begin{proposition}
+	An affine scheme $X$ is Noetherian if and only if it is a Noetherian ring.
+\end{proposition}
 
+\begin{lemma}
+	Let $A$ be a ring and $\Spec A = \bigcup_{i \in I} D(f_i)$ be a finite open cover of $\Spec A$ by principal open subsets \footnote{that is, the ideal generated by $f_i$ is the whole ring $A$}. Let $M$ be an $A$-module, then $M$ is finitely generated if and only if for all $i \in I$, the localization $M_{f_i}$ is a finitely generated $A_{f_i}$-module.
+\end{lemma}
 
+\begin{remark}[Noetherian topological space]
+	A topological space $X$ is called Noetherian if one of the following conditions satisfies:
+	\begin{enumerate}
+		\item Every nonempty collection of open sets has a maximal element
+		\item Decending chain condition for closed sets.
+	\end{enumerate}
+	
+	A finite covering $X = \bigcup_{i \in I} X_i$ of Noetherian spaces is Notherian.
+\end{remark}
+
+Hence, the topological space of an Noetherian scheme is Noetherian but the converse statement is false.
+
+\begin{remark}[subsets of Noetherian topological space]
+	Let $X$ be a Noetherian topological space
+	\begin{enumerate}
+		\item Every subspace of $X$ is Noetherian
+		\item Every open subset of $X$ is quasi-compact
+		\item Every closed subset of $X$ has only finitely many irreducible components.
+	\end{enumerate}
+\end{remark}
+
+\begin{proposition}
+	Let $X$ be a (locally) Noetherian scheme, then every open subscheme $U \subseteq X$ is (locally) Noetherian.
+\end{proposition}
+
+\subsection{GENERIC POINTS}
+
+\begin{remark}
+	Let $X$ be a topological space, a subspace $Z \subseteq X$ is irreducible if and only if its closure is irreducbile
+\end{remark}
+
+\begin{remark}
+	Let $X$ be a topological space and $Z \subseteq X$, a point $z \in Z$ is called a generic point of $Z$ if $\overline{\set{z}} = Z$. 
+\end{remark}
+
+As closure of an irreducible subset is irreducible, if a subset of $X$ contains a generic point, it is irreducible. Moreover
+
+\begin{proposition}
+	Let  $X$ be a scheme, the map
+	\begin{align*}
+		X &\to \set{\text{closed irreducible subsets of $X$}} \\
+		x &\mapsto \overline{\set{x}}
+	\end{align*}
+	is a bijection.
+\end{proposition}
+
+\begin{proposition}
+	Let $f: X \to Y$ be an open morphism of schemes and $Y$ be irreducible with generic point $\eta$. Then $X$ is irreducible if and only if the fiber $f^{-1}(\eta)$ is irreducible.
+\end{proposition}
+
+\begin{proof}
+	\note{(the proof in GW was too short, skipped many point-set topology things, this is a better version)}
+	
+	It's clear that $\overline{f^{-1}(\eta)} \subseteq f^{-1}(\overline{\set{\eta}})$ since $f$ is continuous. Moreover, since $f$ is open, any open set $U \subseteq X$ is mapped into an open set $f(U) \subseteq Y$. $\set{\eta}$ is dense in $Y$, hence $\eta \in f(U)$, so $U \cap f^{-1}(\eta) \neq \emptyset$. $f^{-1}(\eta)$ cuts all open sets in $X$, so it is dense in $X$.
+\end{proof}
+
+Although schemes are never Hausdorff, they at least satisfy some weaker separation property.
+
+\begin{proposition}
+	Let $X$ be a scheme, then the underlying topological space $X$ is Kolmogorov ($T_0$-space), that is, for any two distinct point $x, y \in X$, there exists an open subset of $X$ containing exactly one of the points.
+\end{proposition}
+
+\subsection{REDUCED SCHEME, INTEGRAL SCHEME, FUNCTION FIELD}
+
+A reduced ring is a ring with no nilpotent
+
+\begin{definition}[reduced scheme, integral scheme]
+	A scheme is called reduced if every stalk is reduced. A scheme is called integral if it is reduced and irreducible.
+\end{definition}
+
+\note{(from here, we diverted from GW a bit so that it is easier to internalize)}
+
+By definition, being reduced is a stalk-local property, hence also an affine-local and open-local. Since being reduced ring is a local property, there for an affine scheme is reduced if and only if it is a reduced ring. One can characterized reduced scheme as follows:
+
+\begin{remark}
+	A reduced scheme is characterized by the following two conditions:
+	\begin{enumerate}
+		\item being reduced scheme is an affine-local property
+		\item an affine scheme is reduced if and only if it is a reduced ring.
+	\end{enumerate}
+\end{remark}
+
+\begin{proposition}
+	An affine scheme is integral if and only if it is an integral domain.
+\end{proposition}
+
+\begin{proof}
+	\note{TODO}
+\end{proof}
+
+\begin{proposition}
+	Let $X$ be a scheme, $X$ is integral if and only if the global sections of every nonempty open subscheme is an integral domain. If $X$ is integral then every stalk is an integral domain. However, the converse does not hold, that is, being integral is not a stalk-local property.
+\end{proposition}
 
 
 
