@@ -335,12 +335,11 @@ Hence, the topological space of an Noetherian scheme is Noetherian but the conve
 As closure of an irreducible subset is irreducible, if a subset of $X$ contains a generic point, it is irreducible. Moreover
 
 \begin{proposition}
-	Let  $X$ be a scheme, the map
+	Let  $X$ be a scheme, there is a bijection map
 	\begin{align*}
 		X &\to \set{\text{closed irreducible subsets of $X$}} \\
 		x &\mapsto \overline{\set{x}}
 	\end{align*}
-	is a bijection.
 \end{proposition}
 
 \begin{proposition}
@@ -359,7 +358,7 @@ Although schemes are never Hausdorff, they at least satisfy some weaker separati
 	Let $X$ be a scheme, then the underlying topological space $X$ is Kolmogorov ($T_0$-space), that is, for any two distinct point $x, y \in X$, there exists an open subset of $X$ containing exactly one of the points.
 \end{proposition}
 
-\subsection{REDUCED SCHEME, INTEGRAL SCHEME, FUNCTION FIELD}
+\subsection{REDUCED SCHEME, INTEGRAL SCHEME}
 
 A reduced ring is a ring with no nilpotent
 
@@ -379,6 +378,16 @@ By definition, being reduced is a stalk-local property, hence also an affine-loc
 	\end{enumerate}
 \end{remark}
 
+Moreover, a reduced scheme is also decided by its global sections of open subschemes
+
+\begin{proposition}
+	A scheme is reduced if and only if the global sections of every open subscheme is a reduced ring.
+\end{proposition}
+
+\begin{proof}
+	The converse is easy since every open affine subscheme is an open subscheme. We will show the implication. Since sections are determined by germs, let $U \subseteq X$ be an open subscheme of a reduced scheme $X$, let $f \in \Gamma(U, \ms{O}_X)$, then $f = 0$ if and only if $f_x = 0$ in every stalk $\ms{O}_{X, x}$ with $x \in U$. Since every stalk is reduced, $f^n = 0$ implies $f_x^n = 0$ for every $x \in U$ implies $f_x = 0$ for every $x \in U$ implies $f = 0$. Hence, $\Gamma(U, \ms{O}_X)$ is reduced.
+\end{proof}
+
 Integral affine scheme is the equivalence to integral domain in ring theory.
 
 \begin{definition}[integral scheme]
@@ -395,12 +404,157 @@ Integral affine scheme is the equivalence to integral domain in ring theory.
 	($\implies$) When $X = \Spec A$ is integral, let $a, b \in A$ so that $ab = 0$, note that $D(a) \cap D(b) = D(ab) = 0$. Since $X$ is irreducible, either $D(a)$ or $D(b)$ is empty. Suppose $D(a)$ is empty, then $a$ belongs to every prime ideal. In other words, $a$ belongs to the nilradical of $A$. On the other hand, $X$ being reduced implies $A$ being reduced, the nilradical of $A$ is $\set{0}$. Hence $a = 0$.
 \end{longproof}
 
+In an affine scheme, there is a one-to-one correspondence between open subschemes and localizations. Since open subscheme of an irreducible scheme is irreducible and being reduced scheme is an open-local property, every open subscheme of an integral affine scheme is also integral. We arrived at the first algebraic fact derived from geometry.
 
-\note{TODO - continue from here}
+\begin{remark}
+	Every localization of an integral domain is an integral domain
+\end{remark}
+
+Moreover, every stalk of an integral affine scheme is an integral domain. Scheme is covered by affine schemes, being reduced is open-local and open subscheme is irreducible, hence each affine scheme is integral. Hence, every stalk of an integral scheme is an integral domain. However, the converse is not true.
 
 \begin{proposition}
-	Let $X$ be a scheme, $X$ is integral if and only if the global sections of every nonempty open subscheme is an integral domain. If $X$ is integral then every stalk is an integral domain. However, the converse does not hold, that is, being integral is not a stalk-local property.
+	Every stalk of an integral scheme is an integral domain.
 \end{proposition}
+
+Similar to reduced scheme, an integral scheme is also decided by its global sections of open subschemes
+
+\begin{proposition}
+	A scheme is integral if and only if the global sections of every open subscheme is an integral domain.
+\end{proposition}
+
+\begin{longproof}
+	($\impliedby$) It suffices to show that if $\Gamma(U, \ms{O}_X)$ is an integral domain for every open subscheme $U \subseteq X$, then $X$ is irreducible. \note{(here, we just follow GW's book)} Suppose $X$ is not irreducible, that is $X = U \cup V$ for some nonempty open subschemes $U, V$. Then
+	$$
+		\Gamma(X, \ms{O}_X) = \Gamma(U \cup V, \ms{O}_X) = \Gamma(U, \ms{O}_X) \times \Gamma(V, \ms{O}_X)
+	$$
+	
+	The right hand side product contains zero divisors: $(1, 0) \cdot (0, 1) = (0, 0)$
+	
+	($\implies$) It suffices to show that $\Gamma(X, \ms{O}_X)$ is an integral domain since every localization of an integral domain is an integral domain.
+	
+	\note{(TODO - not sure why in GW's book, the proof is similar to my proof in affine case, they talked about $V(f) \subseteq \Spec A$ for some $f \in A = \Gamma(X, \ms{O}_X)$) then invoke the irreducibilty of $X$ for $V(f)$, clearly $X$ differs from $\Spec A$}
+\end{longproof}
+
+\subsubsection{FUNCTION FIELD OF AN INTEGRAL SCHEME}
+
+Around the generic point of an integral scheme, pick an open affine scheme. The affine scheme corresponds to an integral domain and the generic point corresponds to the zero ideal, hence its stalk is a field.
+
+\begin{definition}[function field]
+	Let $X$ be an integral scheme and $\eta \in X$ be its generic point. Then the stalk $\ms{O}_{X, \eta}$ is a field which is called the function field of $X$ and denoted by $K(X)$
+\end{definition}
+
+For an integral scheme, every ring of functions is contained in the function field which is formalized as follows:
+
+\begin{proposition}
+	Let $X$ be an integral scheme with generic point $\eta$ and let $K(X)$ be its function field
+	\begin{enumerate}
+		\item if $\Spec A \subseteq X$ is a non-empty open affine subscheme, then $\Frac(A) = K(X)$. if $x \in X$, then $K(X) = \Frac(\ms{O}_{X, x})$
+		
+		\item let $U \subseteq V \subseteq X$ be non-empty open subschemes, the maps \footnote{since $\eta$ is dense, $\eta$ is contained in any open subset} below are injective
+		$$
+			\Gamma(V, \ms{O}_X) \xrightarrow{\res} \Gamma(U, \ms{O}_X)\to \ms{O}_{X, \eta} = K(X)
+		$$
+
+		\item for every non-empty open subset $U \subseteq X$ and every open cover $\set{U_i}$ of $U$, then
+		$$
+			\Gamma(U, \ms{O}_X) = \bigcap_i \Gamma(U_i, \ms{O}_X) = \bigcap_{x \in U} \ms{O}_{X, x}
+		$$
+		
+		where the intersections take place in $K(X)$ by the injective maps $\Gamma(U_i, \ms{O}_X) \to \ms{O}_{X, \eta} = K(X)$ and $\ms{O}_{X, x} \to \Frac(\ms{O}_{X, x}) = K(X)$
+	\end{enumerate}
+\end{proposition}
+
+\section{PREVARIETIES AS SCHEMES}
+
+\note{I skipped this part as prevariety seems like a uglier version of scheme, and this part feels like a historical note rather than something interesting}
+
+\section{SUBMERSION AND IMMERSION}
+
+\subsection{OPEN IMMERSION}
+
+\begin{definition}[open immersion]
+	A morphism $j: Y \to X$ of schemes is called an open immersion if
+	\begin{enumerate}
+		\item the underlying continuous map is a homeomorphism from $Y$ into an open subset $U \subseteq X$
+		\item the morphism of sheaves $\ms{O}_X \to j_* \ms{O}_Y$ induces an isomorphism $\ms{O}_X\vert_U \xrightarrow{\sim} j_* \ms{O}_Y$
+	\end{enumerate}
+\end{definition}
+
+\subsection{CLOSED SUBSCHEME}
+
+\begin{remark}[sheaf of ideals, quotient sheaf]
+	Given a ringed space $(X, \ms{O}_X)$, we said the subsheaf $\ms{J} \subseteq \ms{O}_X$ a sheaf of ideals if for every open subset $U \subseteq X$, the sections $\Gamma(U, \ms{J})$ is an ideal in $\Gamma(U, \ms{O}_X)$. The quotient sheaf which is a sheaf of rings, denoted by $\ms{O}_X / \ms{J}$, is defined as the sheaf associated to the presheaf
+	$$
+		U \mapsto \ms{O}_X(U) / \ms{J}(U)
+	$$
+	
+	The canonical projection $\ms{O}_X \to \ms{O}_X / \ms{J}$ is an epimorphism.
+\end{remark}
+
+\begin{definition}
+	Let $X$ be a scheme
+	\begin{enumerate}
+		\item A closed subscheme $Z$ of $X$ is a scheme such that $Z$ is a closed subset of $X$, $i: Z \to X$ is the inclusion, and the sheaf $i_* \ms{O}_Z$ on $X$ is isomorphic to a quotient sheaf $\ms{O}_X / \ms{J}$
+		
+		\item A morphism of schemes $i: Z \to X$  is called a closed immersion if 
+		\begin{enumerate}
+			\item the underlying continuous map is a hemeomorphism from $Z$ into a closed subset of $X$
+			\item the morphism of sheaves $i^\flat: \ms{O}_X \to i_* \ms{O}_Z$ is an epimorphism.
+		\end{enumerate}
+		
+		\item If $Z \subseteq X$ is a closed subscheme, then there is a closed immersion $(i, i^\flat): Z \to X$. On the other hand, if $i: Z \to X$ is a closed immersion, then $Z$ is ismorphic to some closed subscheme of $X$.
+	\end{enumerate}
+\end{definition}
+
+\note{(this is important)} In part (1) GW specifically requires $Z$ to be a scheme since this is not true for arbitrary $\ms{J}$. \note{(sheaf of ideals defines a closed subscheme if and only if it is a quasi-coherent sheaf)}
+
+In an affine scheme, every closed subscheme is identified by an ideal. More formally,
+
+\begin{theorem}
+	Let $X = \Spec A$ be an affine scheme, there is a bijection between the set of ideals of $A$ and the set of closed subschemes of $X$ given by
+	$$
+	\mf{a} \mapsto V(\mf{a}) \cong \Spec A / \mf{a}
+	$$
+	In particular, every closed subscheme of an affine scheme is affine.
+\end{theorem}
+
+\note{(GW didn't give any example, below is my take)}
+
+\textbf{example:} (affine scheme) Let $A$ be a ring and $\mf{a}\subseteq A$ be an ideal. Let $X = \Spec A$ and $\ms{J} \subseteq \ms{O}_X$ be the sheaf of ideals defined as follows: for every $f \in A$,
+$$
+	\ms{J}(D(f)) = \mf{a}_f \subseteq A_f
+$$
+
+where $\mf{a}_f$ is the image of $\mf{a}$ under the canonical map $A \to A_f$. Let $\ms{Q} = \ms{O}_X / \ms{J}$ be the quotient sheaf, that is
+$$
+	\ms{Q}(D(f)) = A_f / \mf{a}_f = (A / \mf{a})_f
+$$
+
+This is a quasi-coherent sheaf. For every $x \in X$ with associated prime ideal $\mf{p} \subseteq A$, the stalk of $\ms{Q}$ at $x$ is
+$$
+	\ms{Q}_x = \colim_{f \notin \mf{p}} A_f / \mf{a}_f  = \colim_{f \notin \mf{p}} (A / \mf{a})_f
+$$
+
+If $\mf{p}$ is a prime in $A / \mf{a}$, in other words, $x \in V(\mf{a})$, then $\ms{Q}_x = (A / \mf{a})_\mf{p}$. Otherwise, there exists $a \in \mf{a}$ but $a \notin \mf{p}$, then $(A / \mf{a})_a = 0$ is in the colimit diagram of $\ms{Q}_x$, that is, there is a ring map $(A / \mf{a})_a = 0 \to \ms{Q}_x$. Hence, $\ms{Q}_x = 0$.
+
+$$
+	\ms{Q}_x = \begin{cases}
+		(A / \mf{a})_\mf{p} &\text{if $x \in V(\mf{a})$} \\
+		0 &\text{otherwise}
+	\end{cases}
+$$
+
+The zero ring is not a local ring, hence $(X, \ms{Q})$ is not a scheme or any restriction to any closed set not inside $V(\mf{a})$. From the theorem above, $(V(\mf{a}), \ms{Q})$ is the canonical closed subscheme of the affine scheme $X$. \note{(talk about closed subset of $V(\mf{a})$ being a scheme, not sure)}
+
+\subsection{SUBSCHEME AND IMMERSION}
+
+Open and closed subschemes are special cases of locally closed subscheme
+\begin{definition}
+	
+\end{definition}
+
+
+
 
 
 
