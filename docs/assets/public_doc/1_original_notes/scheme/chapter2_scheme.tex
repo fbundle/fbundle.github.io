@@ -195,6 +195,26 @@ $$
 
 This scheme is called projective space of relative dimension $n$ over $R$. We consider the open subscheme $U_i$ of $\PP^n_R$ and denoted them by $D_+(X_i)$. The canonical ring morphism $R \to \Gamma(\PP^n_R)$ is an ismorphism. Hence, projective space is not affine.
 
+
+\textbf{example:} ($\A^{n+1}_R - \set{0} \to \PP^n_R$) Let $R[T_0, ..., T_n] \to R$ be the $R$-algebra morphism sending $T_i$ into $0$ for every $i$. The corresponding scheme morphism is $0: \Spec R \to \A^{n+1}_R$ that defines a isomorphism $\Spec R \to V(T_0, ..., T_n)$ where $V(T_0, ..., T_n)$ is a closed subscheme of $\A^{n+1}_R$ corresponding to the ideal $(T_0, ..., T_n)$. We denote $0 = V(T_0, ..., T_n)$ and $\A^{n+1}_R - \set{0}$ as the complement of $V(T_0, ..., T_n)$ considered as an open subscheme of $\A^{n+1}_R$. We have $\A^{n+1}_R - \set{0} = \bigcup_{i=0}^n D(T_i)$. For every $i$, define the scheme morphism
+
+\begin{align*}
+	p_i: D(T_i) &\to D_+(T_i) \\
+			\Spec R[T_0, ..., T_n, T_i^{-1}] &\to \Spec R\bracket{Y_0, ..., \widehat{Y}_i, ..., Y_n} \\
+\end{align*}
+
+corresponding to the $R$-algebra morphism given by $Y_j \mapsto T_j / T_i$. Then $\set{p_i}$ glues together into a scheme morphism
+$$
+	p: \A^{n+1}_R - \set{0} \to \PP^n_R
+$$
+
+
+\textbf{example:} (vanishing schemes in projective space)
+
+\note{TODO}
+
+
+
 \section{BASIC PROPERTIES OF SCHEME AND MORPHISM OF SCHEMES}
 
 
@@ -488,18 +508,18 @@ For an integral scheme, every ring of functions is contained in the function fie
 		U \mapsto \ms{O}_X(U) / \ms{J}(U)
 	$$
 	
-	The canonical projection $\ms{O}_X \to \ms{O}_X / \ms{J}$ is an epimorphism.
+	The canonical projection $\ms{O}_X \to \ms{O}_X / \ms{J}$ is epi.
 \end{remark}
 
 \begin{definition}
 	Let $X$ be a scheme
 	\begin{enumerate}
-		\item A closed subscheme $Z$ of $X$ is a scheme such that $Z$ is a closed subset of $X$, $i: Z \to X$ is the inclusion, and the sheaf $i_* \ms{O}_Z$ on $X$ is isomorphic to a quotient sheaf $\ms{O}_X / \ms{J}$
+		\item A closed subscheme $(Z, \ms{O}_Z)$ of $X$ is a scheme such that $Z$ is a closed subset of $X$, $i: Z \to X$ is the inclusion, and the sheaf $i_* \ms{O}_Z$ on $X$ is isomorphic to a quotient sheaf $\ms{O}_X / \ms{J}$
 		
 		\item A morphism of schemes $i: Z \to X$  is called a closed immersion if 
 		\begin{enumerate}
 			\item the underlying continuous map is a hemeomorphism from $Z$ into a closed subset of $X$
-			\item the morphism of sheaves $i^\flat: \ms{O}_X \to i_* \ms{O}_Z$ is an epimorphism.
+			\item the morphism of sheaves $i^\flat: \ms{O}_X \to i_* \ms{O}_Z$ is epi.
 		\end{enumerate}
 		
 		\item If $Z \subseteq X$ is a closed subscheme, then there is a closed immersion $(i, i^\flat): Z \to X$. On the other hand, if $i: Z \to X$ is a closed immersion, then $Z$ is ismorphic to some closed subscheme of $X$.
@@ -544,14 +564,127 @@ $$
 	\end{cases}
 $$
 
+\note{(this feels like analysis, when a function value at a point doesn't exist but the limit exists)}
+
 The zero ring is not a local ring, hence $(X, \ms{Q})$ is not a scheme or any restriction to any closed set not inside $V(\mf{a})$. From the theorem above, $(V(\mf{a}), \ms{Q})$ is the canonical closed subscheme of the affine scheme $X$. \note{(talk about closed subset of $V(\mf{a})$ being a scheme, not sure)}
 
 \subsection{SUBSCHEME AND IMMERSION}
 
-Open and closed subschemes are special cases of locally closed subscheme
-\begin{definition}
-	
+\begin{remark}[locally closed subset]
+	Let $X$ be a topological space, a subset $Y \subseteq X$ is called locally closed if one of the following conditions satisfies
+	\begin{enumerate}
+		\item $Y$ is the intersection of an open set and a closed set in $X$
+		\item for each point $x \in Y$, there exists a neighbourhood $U_x$ of $x$ such that $Y \cap U_x$ is closed in $U_x$
+		\item $Y$ is open in its closure $\overline{Y}$
+		\item the set $\overline{Y} - Y$ is closed in $X$
+		\item $Y$ is the difference of two closed sets in $X$
+		\item $Y$ is the difference of two open sets in $X$
+	\end{enumerate}
+\end{remark}
+
+Open and closed subschemes are special cases of (locally closed) subscheme 
+\begin{definition}[subscheme, immersion]
+	Let $X$ be a scheme.
+	\begin{enumerate}
+		\item A subscheme $(Y, \ms{O}_Y)$ of $X$ is a scheme such that $Y$ is a locally closed subset of $X$ and moreover, let $U$ be the largest open subset \footnote{that is $U = X - (\overline{Y} - Y)$} of $X$ containing $Y$, $Y$ is a closed subscheme in $U$. Then, there is a natural morphism of schemes $Y \to X$
+		
+		\item A morphism of schemes  $i: Y \to X$ is called an immersion if
+		\begin{enumerate}
+			\item the underlying continuous map is a homeomorphism from $Y$ into a locally closed subset of $X$
+			\item for all $y \in Y$, the ring map $i^\#_y: \ms{O}_{X, i(y)} \to \ms{O}_{Y, y}$ between stalks is epi. \footnote{this is equivalent to $i^\#: i^{-1} \ms{O}_X \to \ms{O}_Y$ is epi}
+		\end{enumerate}
+		
+		\item If $Y$ is a subscheme of $X$, then the natural morphism $Y \to X$ is a immersion. On the other hand, if $i: Y \to X$ is an immersion, then $Y$ is isomorphic to some subscheme of $X$
+	\end{enumerate}
 \end{definition}
+
+\begin{remark}[Remark 3.47]
+	Any immersion $i: Y \to X$ can be factored into a closed immersion $Y \to U$ followed by an open immersion $U \to X$ where $U = X - (\overline{i Y} - i Y)$.
+\end{remark}
+
+\note{Even though they did not say so, from (3.17) in GW's book, GW implied that this notion is equivalent to the notion of locally closed immersion in stacks project}
+
+\begin{remark}[locally closed immersion]
+	A morphism of schemes is called an immersion or locally closed immersion if it can be factored into $j \circ i$ where $i$ is a closed immersion and $j$ is an open immersion.
+	ref: \url{https://stacks.math.columbia.edu/tag/01IM}
+\end{remark}
+
+
+\textbf{example:} \note{TODO}
+
+\begin{definition}[partial order on subschemes]
+	Let $X$ be a scheme, for any two subschemes $A$ and $B$, $B$ is called majorizes $A$ if the inclusion $B \to X$ factors through the inclusion $A \to X$
+	\begin{center}
+		\begin{tikzcd}
+			B \arrow[rr] \arrow[rd, dashed] &              & X \\
+			& A \arrow[ru] &  
+		\end{tikzcd}
+	\end{center}
+	
+	This defines a partial order on subschemes of $X$, we write $A \leq B$
+\end{definition}
+
+\begin{remark}
+	Let $P$ be the property of a morphism being either open-immersion, closed-immersion, or immersion.
+	\begin{enumerate}
+		\item $P$ is local on the target, that is if $f: Z \to X$ is a morphism of schemes and $\set{U_i}$ be an open cover for $X$, then $P(f)$ if and only if for every $i$, the restriction on $U_i$ satisfies $P$
+		
+		\item if $P(f)$ and $P(g)$, so is $P(f \circ g)$
+	\end{enumerate}
+\end{remark}
+
+\textbf{example:} \note{TODO}
+
+\subsection{PROJECTIVE AND QUASI-PROJECTIVE SCHEMES OVER FIELD}
+
+It is often useful if one knows that a certain scheme can be embedded into projective space.
+
+\begin{definition}[projective scheme, quasi-projective scheme]
+	Let $k$ be a field
+	\begin{enumerate}
+		\item A $k$-scheme $X$ is called projective if there exists a closed immersion $X \hookrightarrow \PP^n_k$ for some $n \geq 0$
+		\item A $k$-scheme $X$ is called quasi-projective if there exists an immersion $X \hookrightarrow \PP^n_k$ for some $n \geq 0$
+	\end{enumerate}
+\end{definition}
+
+
+Every affine $k$-scheme $X$ of finite type is quasi-projective. Recall that $X = \Spec A$ for $A = k[T_1, ..., T_n] / \mf{a}$. There exists a closed immersion $i: X \to \A^n_k$. Moreover, $\PP^n_k$ is covered by open subschemes that are isomorphic to $\A^n_k$, hence an open immersion $j: \A^n_k \to \PP^n_k$. The composition $j \circ i$ is an immersion $X \to \PP^n_k$ (by Remark 3.47) \note{hence GW's notion of immersion is likely the same with stacks, at least for this case}
+
+\subsection{UNDERLYING REDUCED SUBSCHEME OF A SCHEME}
+
+Let $X$ be a scheme, there exists several closed subschemes of $X$ over the same topological space. Among these, the smallest one which is characterized by being reduced. 
+
+\begin{definition}[nilradical of a scheme]
+	Let $\ms{N} = \ms{N}_X \subseteq \ms{O}_X$ be the sheaf of ideals associated the the presheaf
+	$$
+		\ms{N}_X(U) = \nil(\Gamma(U, \ms{O}_X))
+	$$
+	
+	where $\nil(A)$ denotes the nilradical of ring $A$ and $U$ is some open subset of $X$. The sheaf is called nilradical of $X$.
+\end{definition}
+
+\begin{proposition}
+	The ringed space $X_{\red} = (X, \ms{O}_X / \ms{N})$ is a reduced scheme and the map $X_{\red} \to X$ is a closed immersion. Moreover, if $Y \to X$ is any closed immersion and $Y$ is over the same topological space, then $X_{\red} \to X$ factors through $Y \to X$
+	\begin{center}
+		\begin{tikzcd}
+			X_{\red} \arrow[rr, hook] \arrow[rd, dashed] &                    & X \\
+			& Y \arrow[ru, hook] &  
+		\end{tikzcd}
+	\end{center}
+\end{proposition}
+
+\begin{proof}
+	\note{TODO}
+\end{proof}
+
+
+
+
+
+
+
+
+
 
 
 
